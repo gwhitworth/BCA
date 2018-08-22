@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <Description />
+  <DataSet Name="qryYN">
+    <Query>
+      <DataSourceReference>EDW</DataSourceReference>
+      <CommandText>SELECT        dimYesNo_SK, YesNo_BK, YesNoCode, YesNoDesc, RowSortOrder
+FROM            edw.dimYesNo
+ORDER BY RowSortOrder</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="dimYesNo_SK">
+        <DataField>dimYesNo_SK</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+      <Field Name="YesNo_BK">
+        <DataField>YesNo_BK</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="YesNoCode">
+        <DataField>YesNoCode</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="YesNoDesc">
+        <DataField>YesNoDesc</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="RowSortOrder">
+        <DataField>RowSortOrder</DataField>
+        <rd:TypeName>System.Int64</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>

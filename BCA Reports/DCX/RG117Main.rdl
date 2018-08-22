@@ -178,6 +178,33 @@ END</CommandText>
         </Field>
       </Fields>
     </DataSet>
+    <DataSet Name="qryYN">
+      <SharedDataSet>
+        <SharedDataSetReference>qryYN</SharedDataSetReference>
+      </SharedDataSet>
+      <Fields>
+        <Field Name="dimYesNo_SK">
+          <DataField>dimYesNo_SK</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="YesNo_BK">
+          <DataField>YesNo_BK</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="YesNoCode">
+          <DataField>YesNoCode</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="YesNoDesc">
+          <DataField>YesNoDesc</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="RowSortOrder">
+          <DataField>RowSortOrder</DataField>
+          <rd:TypeName>System.Int64</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
   </DataSets>
   <ReportSections>
     <ReportSection>
@@ -473,7 +500,6 @@ END</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
-              <Top>0in</Top>
               <Height>0.25in</Height>
               <Width>12.89388in</Width>
               <Style>
@@ -505,7 +531,6 @@ END</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
-              <Top>0in</Top>
               <Left>11.48763in</Left>
               <Height>0.25in</Height>
               <Width>1.40625in</Width>
@@ -538,7 +563,6 @@ END</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>ReportName</rd:DefaultName>
-              <Top>0in</Top>
               <Height>0.25in</Height>
               <Width>1.88784in</Width>
               <ZIndex>2</ZIndex>
