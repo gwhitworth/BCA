@@ -153,7 +153,7 @@ FROM
 					 INNER JOIN [edw].[dimFolio] AS FO
 						ON FO.dimFolio_SK = AV.dimFolio_SK
 				WHERE SD.[Roll Year] = @p_RY
-
+					  AND [AV].[Property Class Code] &lt; 99
 					  AND FO.[Folio Status Code] ='01'
 					  AND AG.[Roll Category Code] = '1'
 					  AND [AV].[Cycle Number] &lt;= @p_CN
@@ -188,7 +188,7 @@ INNER JOIN
 					ON FO.dimFolio_SK = AV.dimFolio_SK
 		WHERE 
 				SD.[Roll Year] = @p_RY
-
+                                                                           AND [AV].[Property Class Code] &lt; 99
 				AND FO.[Folio Status Code] ='01'
 				AND AG.[Roll Category Code] = '1'
 				AND [AV].[Cycle Number] &lt;= @p_CN
