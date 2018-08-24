@@ -372,9 +372,8 @@ END</CommandText>
                 </Paragraph>
               </Paragraphs>
               <Top>0.00001in</Top>
-              <Left>2.61006in</Left>
               <Height>0.85292in</Height>
-              <Width>6.66249in</Width>
+              <Width>12.9043in</Width>
               <ZIndex>1</ZIndex>
               <Style />
             </Textbox>
@@ -500,6 +499,7 @@ END</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
+              <Top>0in</Top>
               <Height>0.25in</Height>
               <Width>12.89388in</Width>
               <Style>
@@ -531,6 +531,7 @@ END</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
+              <Top>0in</Top>
               <Left>11.48763in</Left>
               <Height>0.25in</Height>
               <Width>1.40625in</Width>
@@ -563,6 +564,7 @@ END</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>ReportName</rd:DefaultName>
+              <Top>0in</Top>
               <Height>0.25in</Height>
               <Width>1.88784in</Width>
               <ZIndex>2</ZIndex>

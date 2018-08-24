@@ -19,6 +19,14 @@
   </DataSets>
   <Reports>
     <ProjectItem>
+      <Name>Detail Report (cascading prompts) Template.rdl</Name>
+      <FullPath>Detail Report (cascading prompts) Template.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Detail Report Template.rdl</Name>
+      <FullPath>Detail Report Template.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>RG117Main.rdl</Name>
       <FullPath>RG117Main.rdl</FullPath>
     </ProjectItem>
@@ -31,16 +39,12 @@
       <FullPath>RG117SubSD.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>Detail Report (cascading prompts) Template.rdl</Name>
-      <FullPath>Detail Report (cascading prompts) Template.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>Detail Report Template.rdl</Name>
-      <FullPath>Detail Report Template.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
       <Name>Summary Report Template.rdl</Name>
       <FullPath>Summary Report Template.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RG238.rdl</Name>
+      <FullPath>RG238.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>
