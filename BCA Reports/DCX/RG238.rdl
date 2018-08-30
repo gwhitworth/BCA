@@ -75,16 +75,16 @@
         <CommandText>SELECT [FA].[Roll Year], 
        [AG].[Area], 
        [AG].[Jurisdiction Code], 
-       [AG].[Jurisdiction Desc],
+       [AG].[Jurisdiction Desc], 
+       [FO].[School  District Code], 
+       [PC].[RowSortOrder], 
+       [PC].[Property Class Code],
        CASE
            WHEN [PC].[Property Class Code] = '01'
            THEN 'RES'
            WHEN [PC].[Property Class Code] &lt;&gt; '01'
            THEN 'NONRES'
        END AS [RESNONRES], 
-       [FO].[School  District Code], 
-       [PC].[RowSortOrder], 
-       [PC].[Property Class Code], 
        ISNULL([PC].[Property Sub Class Desc], [PC].[Property Class Desc]) AS [Property Class], 
        SUM([Occur Count]) AS [Occurrences], 
        IIF(COUNT(CASE
@@ -96,12 +96,12 @@
                                                                             AND [PC].[Property Class Code] = '01'
                                                                        THEN [FA].[dimFolio_SK]
                                                                    END)) AS [Folio_Count], 
-       SUM([FA].[Gross Other Land Value]) AS [Gross Land], 
-       SUM([FA].[Gross Other Building Value]) AS [Gross_Improvements], 
-       SUM([FA].[Other Exemptions Land Value]) * -1 AS [Exempt_Land], 
-       SUM([FA].[Other Exemptions Building Value]) * -1 AS [Exempt_Improvements], 
-       SUM([FA].[Net Other Land Value]) AS [Net_Land], 
-       SUM([FA].[Net Other Building Value]) AS [Net_Improvements]
+       IIF(SUM([FA].[Gross Other Land Value]) = 0, NULL, SUM([FA].[Gross Other Land Value])) AS [Gross Land], 
+       IIF(SUM([FA].[Gross Other Building Value]) = 0, NULL, SUM([FA].[Gross Other Building Value])) AS [Gross_Improvements], 
+       IIF(SUM([FA].[Other Exemptions Land Value]) * -1 = 0, NULL, SUM([FA].[Other Exemptions Land Value]) * -1) AS [Exempt_Land], 
+       IIF(SUM([FA].[Other Exemptions Building Value]) * -1 = 0, NULL, SUM([FA].[Other Exemptions Building Value]) * -1) AS [Exempt_Improvements], 
+       IIF(SUM([FA].[Net Other Land Value]) = 0, NULL, SUM([FA].[Net Other Land Value])) AS [Net_Land], 
+       IIF(SUM([FA].[Net Other Building Value]) = 0, NULL, SUM([FA].[Net Other Building Value])) AS [Net_Improvements]
 FROM [edw].[FactAllAssessedAmounts] AS [FA]
      INNER JOIN [edw].[dimPropertyClass] AS [PC] ON [FA].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
      INNER JOIN [edw].[dimAssessmentGeography] AS [AG] ON [FA].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
@@ -118,35 +118,37 @@ FROM [edw].[FactAllAssessedAmounts] AS [FA]
     WHERE [FAV].[Roll Year] = @p_RY
           AND AG.[Roll Category Code] = '1'
           AND [FAV].[Cycle Number] &lt;= @p_CN
-          AND [AG].[Area Code] IN('01', '08', '09', '10', '11', '14')
+          AND [AG].[Area Code] IN('01', '08', '09', '10', '11', '14', '15')
          AND [Assessment Code] = '02'
     GROUP BY [FAV].dimFolio_SK, 
              [FAV].[Property Class Code]
     HAVING COUNT(*) &gt; 1
 ) AS [OCCUR] ON [OCCUR].dimFolio_SK = [FA].dimFolio_SK
-WHERE [AG].[Roll Year] = @p_RY
+WHERE [FA].[Roll Year] = @p_RY
       AND AG.[Roll Category Code] = '1'
-      AND [FA].[Cycle Number] = @p_CN
+      AND [AG].[Area Code] IN('01', '08', '09', '10', '11', '14', '15')
+AND [FA].[Cycle Number] = @p_CN
+--AND [AG].[Jurisdiction Code] in ('213','317')
 GROUP BY [FA].[Roll Year], 
          [AG].[Area], 
          [AG].[Jurisdiction Code], 
-         [AG].[Jurisdiction Desc],
+         [AG].[Jurisdiction Desc], 
+         [FO].[School  District Code], 
+         [PC].[RowSortOrder], 
+         [PC].[Property Class Code],
          CASE
              WHEN [PC].[Property Class Code] = '01'
              THEN 'RES'
              WHEN [PC].[Property Class Code] &lt;&gt; '01'
              THEN 'NONRES'
          END, 
-         [FO].[School  District Code], 
-         [PC].[RowSortOrder], 
-         [PC].[Property Class Code], 
          ISNULL([PC].[Property Sub Class Desc], [PC].[Property Class Desc])
 ORDER BY [FA].[Roll Year], 
          [AG].[Area], 
          [AG].[Jurisdiction Code], 
          [AG].[Jurisdiction Desc], 
-         [RESNONRES] DESC, 
          [FO].[School  District Code], 
+         [RESNONRES] DESC, 
          [PC].[RowSortOrder];</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
@@ -230,7 +232,7 @@ ORDER BY [FA].[Roll Year],
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>3.08192in</Width>
+                  <Width>4in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>1in</Width>
@@ -239,24 +241,24 @@ ORDER BY [FA].[Roll Year],
                   <Width>0.60575in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.9in</Width>
+                  <Width>1.6in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.91546in</Width>
+                  <Width>1.6in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>0.44791in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.9in</Width>
+                  <Width>1.6in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.9in</Width>
+                  <Width>1.6in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>0.23958in</Height>
+                  <Height>0.22in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -711,7 +713,7 @@ ORDER BY [FA].[Roll Year],
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.21in</Height>
+                  <Height>0.18in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -722,9 +724,27 @@ ORDER BY [FA].[Roll Year],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Property_Class.Value</Value>
+                                  <Value>=IIF(Fields!RESNONRES.Value = "RES",Fields!Property_Class.Value,
+SWITCH(Fields!Property_Class.Value = "Utilities", "2 - Utilities",
+
+Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter", "S.644LGA/398VC",
+
+Fields!Property_Class.Value = "Supportive Housing", "3 - Supportive Housing",
+
+Fields!Property_Class.Value = "Major Industry", "4 - Major Industry",
+
+Fields!Property_Class.Value = "Light Industry", "5 - Light Industry",
+
+Fields!Property_Class.Value = "Business And Other", "6 - Business And Other",
+
+Fields!Property_Class.Value = "Managed Forest Land", "7 - Managed Forest Land",
+
+Fields!Property_Class.Value = "Rec/Non Profit", "8 - Rec/Non Profit",
+
+Fields!Property_Class.Value = "Farm", "9 - Farm"))</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -760,6 +780,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=IIF(IsNothing(Fields!Occurrences.Value), Fields!Folio_Count.Value, Fields!Occurrences.Value + Fields!Folio_Count.Value)</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -798,6 +819,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>Gross</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -812,6 +834,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value />
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -850,6 +873,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Fields!Gross_Land.Value</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -888,6 +912,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Fields!Gross_Improvements.Value</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -926,6 +951,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>Net</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -964,6 +990,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Fields!Net_Land.Value</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -1002,6 +1029,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Fields!Net_Improvements.Value</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -1031,7 +1059,7 @@ ORDER BY [FA].[Roll Year],
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.21in</Height>
+                  <Height>0.18in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -1123,6 +1151,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>Exempt</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -1161,6 +1190,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Fields!Exempt_Land.Value</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -1199,6 +1229,8 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Fields!Exempt_Improvements.Value</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
+                                    <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1526,6 +1558,7 @@ ORDER BY [FA].[Roll Year],
                               <Style>None</Style>
                             </Border>
                             <TopBorder>
+                              <Color>Black</Color>
                               <Style>None</Style>
                             </TopBorder>
                             <BottomBorder>
@@ -1575,6 +1608,7 @@ ORDER BY [FA].[Roll Year],
                               <Style>None</Style>
                             </Border>
                             <TopBorder>
+                              <Color>Black</Color>
                               <Style>None</Style>
                             </TopBorder>
                             <BottomBorder>
@@ -1672,6 +1706,7 @@ ORDER BY [FA].[Roll Year],
                               <Style>None</Style>
                             </Border>
                             <TopBorder>
+                              <Color>Black</Color>
                               <Style>None</Style>
                             </TopBorder>
                             <BottomBorder>
@@ -1720,6 +1755,9 @@ ORDER BY [FA].[Roll Year],
                               <Color>LightGrey</Color>
                               <Style>None</Style>
                             </Border>
+                            <TopBorder>
+                              <Color>Black</Color>
+                            </TopBorder>
                             <RightBorder>
                               <Style>Solid</Style>
                             </RightBorder>
@@ -1937,6 +1975,7 @@ ORDER BY [FA].[Roll Year],
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontWeight>Bold</FontWeight>
+                                    <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -2022,18 +2061,17 @@ ORDER BY [FA].[Roll Year],
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox536">
-                          <CanShrink>true</CanShrink>
+                        <Textbox Name="Textbox40">
+                          <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!Net_Land.Value)</Value>
+                                  <Value />
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontWeight>Bold</FontWeight>
-                                    <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -2042,7 +2080,7 @@ ORDER BY [FA].[Roll Year],
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox534</rd:DefaultName>
+                          <rd:DefaultName>Textbox40</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -2071,18 +2109,17 @@ ORDER BY [FA].[Roll Year],
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox537">
-                          <CanShrink>true</CanShrink>
+                        <Textbox Name="Textbox41">
+                          <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!Net_Improvements.Value)</Value>
+                                  <Value />
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontWeight>Bold</FontWeight>
-                                    <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -2091,7 +2128,7 @@ ORDER BY [FA].[Roll Year],
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox535</rd:DefaultName>
+                          <rd:DefaultName>Textbox41</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -2107,7 +2144,6 @@ ORDER BY [FA].[Roll Year],
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -2488,9 +2524,6 @@ ORDER BY [FA].[Roll Year],
                               <Color>LightGrey</Color>
                               <Style>None</Style>
                             </Border>
-                            <BottomBorder>
-                              <Style>Solid</Style>
-                            </BottomBorder>
                             <RightBorder>
                               <Style>Solid</Style>
                             </RightBorder>
@@ -2625,6 +2658,7 @@ ORDER BY [FA].[Roll Year],
                             <TopBorder>
                               <Style>None</Style>
                             </TopBorder>
+                            <BackgroundColor>WhiteSmoke</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -2768,7 +2802,7 @@ ORDER BY [FA].[Roll Year],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!Net_Land.Value)</Value>
+                                  <Value>=Sum(Fields!Net_Land.Value, "Area")</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -2809,17 +2843,16 @@ ORDER BY [FA].[Roll Year],
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox41">
-                          <CanShrink>true</CanShrink>
+                        <Textbox Name="Textbox5">
+                          <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!Net_Improvements.Value)</Value>
+                                  <Value />
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
-                                    <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -2828,7 +2861,7 @@ ORDER BY [FA].[Roll Year],
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox37</rd:DefaultName>
+                          <rd:DefaultName>Textbox5</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -3209,6 +3242,7 @@ ORDER BY [FA].[Roll Year],
                   <Group Name="Area">
                     <GroupExpressions>
                       <GroupExpression>=Fields!Area.Value</GroupExpression>
+                      <GroupExpression>=Fields!Jurisdiction_Code.Value</GroupExpression>
                     </GroupExpressions>
                     <PageBreak>
                       <BreakLocation>Between</BreakLocation>
@@ -3286,10 +3320,9 @@ ORDER BY [FA].[Roll Year],
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>qryData</DataSetName>
-            <Top>0in</Top>
             <Left>0.13417in</Left>
-            <Height>2.27833in</Height>
-            <Width>12.75104in</Width>
+            <Height>2.19875in</Height>
+            <Width>12.45366in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -3297,7 +3330,7 @@ ORDER BY [FA].[Roll Year],
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>2.27833in</Height>
+        <Height>4.40333in</Height>
         <Style>
           <Border>
             <Style>None</Style>
@@ -3517,7 +3550,6 @@ ORDER BY [FA].[Roll Year],
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
-              <Top>0in</Top>
               <Left>1.23091in</Left>
               <Height>0.25in</Height>
               <Width>9.51888in</Width>
@@ -3550,7 +3582,6 @@ ORDER BY [FA].[Roll Year],
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
-              <Top>0in</Top>
               <Left>11.47896in</Left>
               <Height>0.25in</Height>
               <Width>1.40625in</Width>
@@ -3583,7 +3614,6 @@ ORDER BY [FA].[Roll Year],
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>ReportName</rd:DefaultName>
-              <Top>0in</Top>
               <Height>0.25in</Height>
               <Width>1.88784in</Width>
               <ZIndex>2</ZIndex>
@@ -3609,8 +3639,8 @@ ORDER BY [FA].[Roll Year],
         <PageWidth>14in</PageWidth>
         <LeftMargin>0.5in</LeftMargin>
         <RightMargin>0.5in</RightMargin>
-        <TopMargin>0.5in</TopMargin>
-        <BottomMargin>0.5in</BottomMargin>
+        <TopMargin>0.1in</TopMargin>
+        <BottomMargin>0.1in</BottomMargin>
         <Style>
           <Border>
             <Style>None</Style>
@@ -3647,7 +3677,7 @@ ORDER BY [FA].[Roll Year],
       <DataType>String</DataType>
       <DefaultValue>
         <Values>
-          <Value>12</Value>
+          <Value>-1</Value>
         </Values>
       </DefaultValue>
       <Prompt>Roll Version</Prompt>
