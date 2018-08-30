@@ -9,12 +9,12 @@
   </DataSources>
   <DataSets>
     <ProjectItem>
-      <Name>qryRY.rsd</Name>
-      <FullPath>qryRY.rsd</FullPath>
+      <Name>qryRCN.rsd</Name>
+      <FullPath>qryRCN.rsd</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>qryYN.rsd</Name>
-      <FullPath>qryYN.rsd</FullPath>
+      <Name>qryRY.rsd</Name>
+      <FullPath>qryRY.rsd</FullPath>
     </ProjectItem>
   </DataSets>
   <Reports>
@@ -39,12 +39,16 @@
       <FullPath>RG117SubSD.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>Summary Report Template.rdl</Name>
-      <FullPath>Summary Report Template.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
       <Name>RG238.rdl</Name>
       <FullPath>RG238.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Roll Totals.rdl</Name>
+      <FullPath>Roll Totals.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Summary Report Template.rdl</Name>
+      <FullPath>Summary Report Template.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>

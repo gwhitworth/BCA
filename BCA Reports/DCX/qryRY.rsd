@@ -3,13 +3,20 @@
   <DataSet Name="DataSet1">
     <Query>
       <DataSourceReference>EDW</DataSourceReference>
-      <CommandText>SELECT        dimRollYear_SK, dimRollYear_BK, [Roll Year], StartDate_BK, EndDate_BK
-FROM            edw.dimRollYear AS RY
-WHERE        EXISTS
-                             (SELECT        1 AS Expr1
-                               FROM            edw.FactRollSummary AS AV
-                               WHERE        (RY.dimRollYear_SK = dimRollYear_SK))
-ORDER BY [Roll Year] DESC</CommandText>
+      <CommandText>SELECT dimRollYear_SK, 
+       dimRollYear_BK, 
+       [Roll Year], 
+       StartDate_BK, 
+       EndDate_BK
+FROM edw.dimRollYear AS RY
+WHERE EXISTS
+(
+    SELECT 1 AS Expr1
+    FROM edw.FactRollSummary AS AV
+    WHERE(RY.dimRollYear_SK = dimRollYear_SK)
+)
+ORDER BY [Roll Year] DESC;</CommandText>
+      <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
     </Query>
     <Fields>
       <Field Name="dimRollYear_SK">
