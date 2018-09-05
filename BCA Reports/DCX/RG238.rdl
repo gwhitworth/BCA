@@ -356,6 +356,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>="Jurisdiction:  " + Fields!Jurisdiction_Code.Value + " " + Fields!Jurisdiction_Desc.Value + " (SD" + Fields!School__District_Code.Value + ")"</Value>
                                   <Style>
+                                    <FontFamily>Arial</FontFamily>
                                     <FontSize>11pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -390,6 +391,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>HOSPITAL TAXABLE VALUES</Value>
                                   <Style>
+                                    <FontFamily>Arial</FontFamily>
                                     <FontSize>11pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -6952,7 +6954,7 @@ Fields!Property_Class.Value = "Farm", "9 - Farm"))</Value>
                   <TextRuns>
                     <TextRun>
                       <Label>CYCLE_DESC</Label>
-                      <Value>=Parameters!p_CN.Label</Value>
+                      <Value>= Mid(Parameters!p_CN.Label,1,InStr(Parameters!p_CN.Label," run on "))</Value>
                       <Style>
                         <FontFamily>Arial</FontFamily>
                       </Style>
@@ -7023,14 +7025,37 @@ Fields!Property_Class.Value = "Farm", "9 - Farm"))</Value>
                 <PaddingBottom>2pt</PaddingBottom>
               </Style>
             </Textbox>
-            <Textbox Name="Textbox2">
+            <Image Name="RiskRating11">
+              <Source>Embedded</Source>
+              <Value>RiskRating11</Value>
+              <Sizing>FitProportional</Sizing>
+              <ActionInfo>
+                <Actions>
+                  <Action>
+                    <Hyperlink>https://insite.bcassessment.ca/04/0404/Documents/Risk%20Rating%20Guide.pdf</Hyperlink>
+                  </Action>
+                </Actions>
+              </ActionInfo>
+              <Top>0.36459in</Top>
+              <Left>12.49979in</Left>
+              <Height>0.35639in</Height>
+              <Width>0.36458in</Width>
+              <ZIndex>3</ZIndex>
+              <ToolTip>="The risk rating"</ToolTip>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+              </Style>
+            </Image>
+            <Textbox Name="Textbox6">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
               <Paragraphs>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Globals!ExecutionTime</Value>
+                      <Value>="Processed Date: " + Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3)</Value>
                       <Style>
                         <Format>MMM d, yyyy</Format>
                       </Style>
@@ -7043,40 +7068,48 @@ Fields!Property_Class.Value = "Farm", "9 - Farm"))</Value>
               </Paragraphs>
               <rd:DefaultName>Textbox2</rd:DefaultName>
               <Top>0.00001in</Top>
-              <Left>11.84354in</Left>
-              <Height>0.20708in</Height>
-              <Width>1.04167in</Width>
-              <ZIndex>3</ZIndex>
+              <Left>9.22283in</Left>
+              <Height>0.15972in</Height>
+              <Width>3.61561in</Width>
+              <ZIndex>4</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
                 </Border>
-                <PaddingTop>5pt</PaddingTop>
+                <VerticalAlign>Top</VerticalAlign>
               </Style>
             </Textbox>
-            <Image Name="RiskRating11">
-              <Source>Embedded</Source>
-              <Value>RiskRating11</Value>
-              <Sizing>FitProportional</Sizing>
-              <ActionInfo>
-                <Actions>
-                  <Action>
-                    <Hyperlink>https://insite.bcassessment.ca/04/0404/Documents/Risk%20Rating%20Guide.pdf</Hyperlink>
-                  </Action>
-                </Actions>
-              </ActionInfo>
-              <Top>0.22098in</Top>
-              <Left>12.38521in</Left>
-              <Height>0.5in</Height>
-              <Width>0.5in</Width>
-              <ZIndex>4</ZIndex>
-              <ToolTip>="The risk rating"</ToolTip>
+            <Textbox Name="Textbox7">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>="Printed Date: " + Format(Globals!ExecutionTime,"dd/MMM/yyyy")</Value>
+                      <Style>
+                        <Format>MMM d, yyyy</Format>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox2</rd:DefaultName>
+              <Top>0.19098in</Top>
+              <Left>9.22283in</Left>
+              <Height>0.15972in</Height>
+              <Width>3.61561in</Width>
+              <ZIndex>5</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
                 </Border>
+                <VerticalAlign>Top</VerticalAlign>
               </Style>
-            </Image>
+            </Textbox>
           </ReportItems>
           <Style>
             <Border>
