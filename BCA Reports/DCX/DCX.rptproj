@@ -43,12 +43,32 @@
       <FullPath>RG238.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>RG618.rdl</Name>
+      <FullPath>RG618.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>Roll Totals.rdl</Name>
       <FullPath>Roll Totals.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>Summary Report Template.rdl</Name>
       <FullPath>Summary Report Template.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Roll Totals - General Taxable.rdl</Name>
+      <FullPath>Roll Totals - General Taxable.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Roll Totals - Hospital Taxable.rdl</Name>
+      <FullPath>Roll Totals - Hospital Taxable.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Roll Totals - Net Taxable.rdl</Name>
+      <FullPath>Roll Totals - Net Taxable.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Roll Totals - School Taxable.rdl</Name>
+      <FullPath>Roll Totals - School Taxable.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>
