@@ -12,17 +12,10 @@
           <rd:DbType>Object</rd:DbType>
         </DataSetParameter>
       </DataSetParameters>
-      <CommandText>SELECT [dimRegionalDistrict_SK]
-      ,[dimRegionalDistrict_BK]
-      ,[dimRollYear_SK]
-      ,[Roll Year]
-      ,[Regional District]
-      ,[Regional District Code]
-      ,[Regional District Desc]
-      ,[RowSortOrder]
-  FROM [EDW].[edw].[dimRegionalDistrict]
-WHERE [Roll Year] = @p_RY
-  order by [RowSortOrder]</CommandText>
+      <CommandText>SELECT        dimRegionalDistrict_SK, dimRegionalDistrict_BK, dimRollYear_SK, [Roll Year], [Regional District], [Regional District Code], [Regional District Desc], RowSortOrder
+FROM            edw.dimRegionalDistrict
+WHERE        ([Roll Year] = @p_RY) AND (NOT ([Regional District Code] IN ('00', '88', '99')))
+ORDER BY RowSortOrder</CommandText>
     </Query>
     <Fields>
       <Field Name="dimRegionalDistrict_SK">

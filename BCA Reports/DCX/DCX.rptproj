@@ -20,6 +20,10 @@
       <Name>qryRD.rsd</Name>
       <FullPath>qryRD.rsd</FullPath>
     </ProjectItem>
+    <ProjectItem>
+      <Name>qryProvTotal.rsd</Name>
+      <FullPath>qryProvTotal.rsd</FullPath>
+    </ProjectItem>
   </DataSets>
   <Reports>
     <ProjectItem>
