@@ -178,33 +178,6 @@ END</CommandText>
         </Field>
       </Fields>
     </DataSet>
-    <DataSet Name="qryYN">
-      <SharedDataSet>
-        <SharedDataSetReference>qryYN</SharedDataSetReference>
-      </SharedDataSet>
-      <Fields>
-        <Field Name="dimYesNo_SK">
-          <DataField>dimYesNo_SK</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="YesNo_BK">
-          <DataField>YesNo_BK</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="YesNoCode">
-          <DataField>YesNoCode</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="YesNoDesc">
-          <DataField>YesNoDesc</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="RowSortOrder">
-          <DataField>RowSortOrder</DataField>
-          <rd:TypeName>System.Int64</rd:TypeName>
-        </Field>
-      </Fields>
-    </DataSet>
   </DataSets>
   <ReportSections>
     <ReportSection>
@@ -360,7 +333,7 @@ END</CommandText>
                   <TextRuns>
                     <TextRun>
                       <Label>CYCLE_DESC</Label>
-                      <Value>=Parameters!p_CN.Label</Value>
+                      <Value>= Mid(Parameters!p_CN.Label,1,InStr(Parameters!p_CN.Label," run on "))</Value>
                       <Style>
                         <FontFamily>Arial</FontFamily>
                       </Style>
@@ -410,34 +383,6 @@ END</CommandText>
                 <PaddingBottom>2pt</PaddingBottom>
               </Style>
             </Textbox>
-            <Textbox Name="Textbox2">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>=Globals!ExecutionTime</Value>
-                      <Style>
-                        <Format>MMM d, yyyy</Format>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style />
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox2</rd:DefaultName>
-              <Top>0.00001in</Top>
-              <Left>11.86263in</Left>
-              <Height>0.20708in</Height>
-              <Width>1.04167in</Width>
-              <ZIndex>3</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-              </Style>
-            </Textbox>
             <Image Name="RiskRating11">
               <Source>Embedded</Source>
               <Value>RiskRating11</Value>
@@ -449,11 +394,11 @@ END</CommandText>
                   </Action>
                 </Actions>
               </ActionInfo>
-              <Top>0.22098in</Top>
-              <Left>12.4043in</Left>
-              <Height>0.5in</Height>
-              <Width>0.5in</Width>
-              <ZIndex>4</ZIndex>
+              <Top>0.41666in</Top>
+              <Left>12.4668in</Left>
+              <Height>0.42932in</Height>
+              <Width>0.4375in</Width>
+              <ZIndex>3</ZIndex>
               <ToolTip>="The risk rating"</ToolTip>
               <Style>
                 <Border>
@@ -461,6 +406,67 @@ END</CommandText>
                 </Border>
               </Style>
             </Image>
+            <Textbox Name="Textbox8">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>="Processed Date: " + Mid(Parameters!p_CN.Label, InStr(Parameters!p_CN.Label, "on ") + 3)</Value>
+                      <Style>
+                        <Format>MMM d, yyyy</Format>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox2</rd:DefaultName>
+              <Left>9.26934in</Left>
+              <Height>0.15972in</Height>
+              <Width>3.61561in</Width>
+              <ZIndex>4</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <VerticalAlign>Top</VerticalAlign>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox10">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>="Printed Date: " + Format(Globals!ExecutionTime,"dd/MMM/yyyy")</Value>
+                      <Style>
+                        <Format>MMM d, yyyy</Format>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox2</rd:DefaultName>
+              <Top>0.21528in</Top>
+              <Left>9.26934in</Left>
+              <Height>0.15972in</Height>
+              <Width>3.61561in</Width>
+              <ZIndex>5</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <VerticalAlign>Top</VerticalAlign>
+              </Style>
+            </Textbox>
           </ReportItems>
           <Style>
             <Border>

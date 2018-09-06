@@ -16,6 +16,10 @@
       <Name>qryRY.rsd</Name>
       <FullPath>qryRY.rsd</FullPath>
     </ProjectItem>
+    <ProjectItem>
+      <Name>qryRD.rsd</Name>
+      <FullPath>qryRD.rsd</FullPath>
+    </ProjectItem>
   </DataSets>
   <Reports>
     <ProjectItem>
@@ -47,14 +51,6 @@
       <FullPath>RG618.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>Roll Totals.rdl</Name>
-      <FullPath>Roll Totals.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>Summary Report Template.rdl</Name>
-      <FullPath>Summary Report Template.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
       <Name>Roll Totals - General Taxable.rdl</Name>
       <FullPath>Roll Totals - General Taxable.rdl</FullPath>
     </ProjectItem>
@@ -69,6 +65,38 @@
     <ProjectItem>
       <Name>Roll Totals - School Taxable.rdl</Name>
       <FullPath>Roll Totals - School Taxable.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Roll Totals.rdl</Name>
+      <FullPath>Roll Totals.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Summary Report Template.rdl</Name>
+      <FullPath>Summary Report Template.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RG618_Sub1.rdl</Name>
+      <FullPath>RG618_Sub1.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RG618_Sub2.rdl</Name>
+      <FullPath>RG618_Sub2.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Copy of RG618.rdl</Name>
+      <FullPath>Copy of RG618.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Report1.rdl</Name>
+      <FullPath>Report1.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RG618Main.rdl</Name>
+      <FullPath>RG618Main.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RG618_Sub3.rdl</Name>
+      <FullPath>RG618_Sub3.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>

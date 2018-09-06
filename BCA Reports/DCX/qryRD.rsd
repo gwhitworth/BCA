@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <Description />
+  <DataSet Name="qryRD">
+    <Query>
+      <DataSourceReference>EDW</DataSourceReference>
+      <DataSetParameters>
+        <DataSetParameter Name="@p_RY">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:DbType>Object</rd:DbType>
+        </DataSetParameter>
+      </DataSetParameters>
+      <CommandText>SELECT [dimRegionalDistrict_SK]
+      ,[dimRegionalDistrict_BK]
+      ,[dimRollYear_SK]
+      ,[Roll Year]
+      ,[Regional District]
+      ,[Regional District Code]
+      ,[Regional District Desc]
+      ,[RowSortOrder]
+  FROM [EDW].[edw].[dimRegionalDistrict]
+WHERE [Roll Year] = @p_RY
+  order by [RowSortOrder]</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="dimRegionalDistrict_SK">
+        <DataField>dimRegionalDistrict_SK</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+      <Field Name="dimRegionalDistrict_BK">
+        <DataField>dimRegionalDistrict_BK</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="dimRollYear_SK">
+        <DataField>dimRollYear_SK</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+      <Field Name="Roll_Year">
+        <DataField>Roll Year</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+      <Field Name="Regional_District">
+        <DataField>Regional District</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Regional_District_Code">
+        <DataField>Regional District Code</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Regional_District_Desc">
+        <DataField>Regional District Desc</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="RowSortOrder">
+        <DataField>RowSortOrder</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>

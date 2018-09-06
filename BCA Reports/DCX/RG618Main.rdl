@@ -251,7 +251,7 @@ ORDER BY [FA].[Roll Year],
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Subreport Name="Subreport1">
+                        <Subreport Name="Subreport7">
                           <ReportName>RG618_Sub1</ReportName>
                           <Parameters>
                             <Parameter Name="p_RY">
@@ -264,6 +264,7 @@ ORDER BY [FA].[Roll Year],
                               <Value>=Fields!Regional_District_Code.Value</Value>
                             </Parameter>
                           </Parameters>
+                          <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -275,7 +276,7 @@ ORDER BY [FA].[Roll Year],
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.25in</Height>
+                  <Height>0.23958in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -292,6 +293,7 @@ ORDER BY [FA].[Roll Year],
                               <Value>=Fields!Regional_District_Code.Value</Value>
                             </Parameter>
                           </Parameters>
+                          <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -307,31 +309,26 @@ ORDER BY [FA].[Roll Year],
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox7">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value />
-                                  <Style />
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox7</rd:DefaultName>
+                        <Subreport Name="Subreport1">
+                          <ReportName>RG618_Sub3</ReportName>
+                          <Parameters>
+                            <Parameter Name="p_RY">
+                              <Value>=Fields!Roll_Year.Value</Value>
+                            </Parameter>
+                            <Parameter Name="p_CN">
+                              <Value>=Parameters!p_CN.Value</Value>
+                            </Parameter>
+                            <Parameter Name="p_RD">
+                              <Value>=Fields!Regional_District_Code.Value</Value>
+                            </Parameter>
+                          </Parameters>
+                          <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
                           <Style>
                             <Border>
                               <Style>None</Style>
                             </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
                           </Style>
-                        </Textbox>
+                        </Subreport>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -350,9 +347,6 @@ ORDER BY [FA].[Roll Year],
                     <GroupExpressions>
                       <GroupExpression>=Fields!Regional_District_Code.Value</GroupExpression>
                     </GroupExpressions>
-                    <PageBreak>
-                      <BreakLocation>Between</BreakLocation>
-                    </PageBreak>
                   </Group>
                   <SortExpressions>
                     <SortExpression>
@@ -360,18 +354,9 @@ ORDER BY [FA].[Roll Year],
                     </SortExpression>
                   </SortExpressions>
                   <TablixMembers>
-                    <TablixMember>
-                      <Group Name="Details" />
-                      <TablixMembers>
-                        <TablixMember />
-                        <TablixMember />
-                        <TablixMember>
-                          <Visibility>
-                            <Hidden>true</Hidden>
-                          </Visibility>
-                        </TablixMember>
-                      </TablixMembers>
-                    </TablixMember>
+                    <TablixMember />
+                    <TablixMember />
+                    <TablixMember />
                   </TablixMembers>
                 </TablixMember>
               </TablixMembers>
@@ -391,17 +376,18 @@ ORDER BY [FA].[Roll Year],
                 <Value>=Fields!RowSortOrder.Value</Value>
               </SortExpression>
             </SortExpressions>
-            <Left>0.12375in</Left>
-            <Height>0.75in</Height>
+            <Left>0.5in</Left>
+            <Height>0.73958in</Height>
             <Width>12.125in</Width>
             <Style>
               <Border>
+                <Color>White</Color>
                 <Style>None</Style>
               </Border>
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>0.75in</Height>
+        <Height>0.81819in</Height>
         <Style>
           <Border>
             <Style>None</Style>
@@ -741,7 +727,7 @@ and 383(1) Local Government Act</Value>
         <PageWidth>14in</PageWidth>
         <LeftMargin>0.5in</LeftMargin>
         <RightMargin>0.5in</RightMargin>
-        <TopMargin>0.1in</TopMargin>
+        <TopMargin>0.15in</TopMargin>
         <BottomMargin>0.1in</BottomMargin>
         <Style>
           <Border>
@@ -806,7 +792,6 @@ and 383(1) Local Government Act</Value>
           <LabelField>Regional_District</LabelField>
         </DataSetReference>
       </ValidValues>
-      <MultiValue>true</MultiValue>
     </ReportParameter>
   </ReportParameters>
   <ReportParametersLayout>
