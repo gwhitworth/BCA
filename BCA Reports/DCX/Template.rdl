@@ -182,63 +182,6 @@ END</CommandText>
   <ReportSections>
     <ReportSection>
       <Body>
-        <ReportItems>
-          <Subreport Name="SubreportJT">
-            <ReportName>RG117SubJT</ReportName>
-            <Parameters>
-              <Parameter Name="p_RY">
-                <Value>=Parameters!p_RY.Value</Value>
-              </Parameter>
-              <Parameter Name="p_CN">
-                <Value>=Parameters!p_CN.Value</Value>
-              </Parameter>
-              <Parameter Name="p_JT">
-                <Value>=Parameters!p_JT.Value</Value>
-              </Parameter>
-            </Parameters>
-            <Left>0.13542in</Left>
-            <Height>0.125in</Height>
-            <Width>9.26213in</Width>
-            <Visibility>
-              <Hidden>=IIF(Parameters!p_RT.Value = "JT",false,true)</Hidden>
-            </Visibility>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-            </Style>
-          </Subreport>
-          <Subreport Name="SubreportSD">
-            <ReportName>RG117SubSD</ReportName>
-            <Parameters>
-              <Parameter Name="p_RY">
-                <Value>=Parameters!p_RY.Value</Value>
-              </Parameter>
-              <Parameter Name="p_CN">
-                <Value>=Parameters!p_CN.Value</Value>
-              </Parameter>
-              <Parameter Name="p_SD">
-                <Value>=Parameters!p_SD.Value</Value>
-              </Parameter>
-              <Parameter Name="p_SDT">
-                <Value>=Parameters!p_SDT.Value</Value>
-              </Parameter>
-            </Parameters>
-            <Top>0.14582in</Top>
-            <Left>0.13542in</Left>
-            <Height>0.125in</Height>
-            <Width>9.26213in</Width>
-            <ZIndex>1</ZIndex>
-            <Visibility>
-              <Hidden>=IIF(Parameters!p_RT.Value = "JT",true,false)</Hidden>
-            </Visibility>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-            </Style>
-          </Subreport>
-        </ReportItems>
         <Height>0.29167in</Height>
         <Style>
           <Border>
@@ -505,7 +448,6 @@ END</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
-              <Top>0in</Top>
               <Height>0.25in</Height>
               <Width>12.89388in</Width>
               <Style>
@@ -537,7 +479,6 @@ END</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
-              <Top>0in</Top>
               <Left>11.48763in</Left>
               <Height>0.25in</Height>
               <Width>1.40625in</Width>
@@ -570,7 +511,6 @@ END</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>ReportName</rd:DefaultName>
-              <Top>0in</Top>
               <Height>0.25in</Height>
               <Width>1.88784in</Width>
               <ZIndex>2</ZIndex>

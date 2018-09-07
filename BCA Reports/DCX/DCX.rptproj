@@ -9,23 +9,27 @@
   </DataSources>
   <DataSets>
     <ProjectItem>
-      <Name>qryRCN.rsd</Name>
-      <FullPath>qryRCN.rsd</FullPath>
+      <Name>qryProvTotal.rsd</Name>
+      <FullPath>qryProvTotal.rsd</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>qryRY.rsd</Name>
-      <FullPath>qryRY.rsd</FullPath>
+      <Name>qryRCN.rsd</Name>
+      <FullPath>qryRCN.rsd</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>qryRD.rsd</Name>
       <FullPath>qryRD.rsd</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>qryProvTotal.rsd</Name>
-      <FullPath>qryProvTotal.rsd</FullPath>
+      <Name>qryRY.rsd</Name>
+      <FullPath>qryRY.rsd</FullPath>
     </ProjectItem>
   </DataSets>
   <Reports>
+    <ProjectItem>
+      <Name>Copy of RG618.rdl</Name>
+      <FullPath>Copy of RG618.rdl</FullPath>
+    </ProjectItem>
     <ProjectItem>
       <Name>Detail Report (cascading prompts) Template.rdl</Name>
       <FullPath>Detail Report (cascading prompts) Template.rdl</FullPath>
@@ -35,8 +39,8 @@
       <FullPath>Detail Report Template.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>RG117Main.rdl</Name>
-      <FullPath>RG117Main.rdl</FullPath>
+      <Name>RG117_Main.rdl</Name>
+      <FullPath>RG117_Main.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>RG117SubJT.rdl</Name>
@@ -51,8 +55,20 @@
       <FullPath>RG238.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>RG618.rdl</Name>
-      <FullPath>RG618.rdl</FullPath>
+      <Name>RG618_Sub1.rdl</Name>
+      <FullPath>RG618_Sub1.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RG618_Sub2.rdl</Name>
+      <FullPath>RG618_Sub2.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RG618_Sub3.rdl</Name>
+      <FullPath>RG618_Sub3.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RG618_Main.rdl</Name>
+      <FullPath>RG618_Main.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>Roll Totals - General Taxable.rdl</Name>
@@ -79,28 +95,20 @@
       <FullPath>Summary Report Template.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>RG618_Sub1.rdl</Name>
-      <FullPath>RG618_Sub1.rdl</FullPath>
+      <Name>Template.rdl</Name>
+      <FullPath>Template.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>RG618_Sub2.rdl</Name>
-      <FullPath>RG618_Sub2.rdl</FullPath>
+      <Name>RG734.rdl</Name>
+      <FullPath>RG734.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>Copy of RG618.rdl</Name>
-      <FullPath>Copy of RG618.rdl</FullPath>
+      <Name>RG734_Main.rdl</Name>
+      <FullPath>RG734_Main.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>Report1.rdl</Name>
-      <FullPath>Report1.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>RG618Main.rdl</Name>
-      <FullPath>RG618Main.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>RG618_Sub3.rdl</Name>
-      <FullPath>RG618_Sub3.rdl</FullPath>
+      <Name>RG734_Sub1.rdl</Name>
+      <FullPath>RG734_Sub1.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>

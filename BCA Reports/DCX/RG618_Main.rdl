@@ -2299,7 +2299,7 @@ ORDER BY [FA].[Roll Year],
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>4.2893in</Height>
+        <Height>3.6643in</Height>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2604,7 +2604,7 @@ and 383(1) Local Government Act</Value>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Replace(Globals!ReportName,"Main","")</Value>
+                      <Value>=Replace(Globals!ReportName,"_Main","")</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>
@@ -2638,7 +2638,7 @@ and 383(1) Local Government Act</Value>
         <PageHeight>8.5in</PageHeight>
         <PageWidth>14in</PageWidth>
         <LeftMargin>0.5in</LeftMargin>
-        <RightMargin>0.5in</RightMargin>
+        <RightMargin>0.3in</RightMargin>
         <TopMargin>0.15in</TopMargin>
         <BottomMargin>0.1in</BottomMargin>
         <Style>
@@ -2696,7 +2696,7 @@ and 383(1) Local Government Act</Value>
           <Value>2017</Value>
         </Values>
       </DefaultValue>
-      <Prompt>Reginal District</Prompt>
+      <Prompt>Regional District</Prompt>
       <ValidValues>
         <DataSetReference>
           <DataSetName>qryRD</DataSetName>
