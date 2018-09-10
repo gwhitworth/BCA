@@ -27,10 +27,6 @@
   </DataSets>
   <Reports>
     <ProjectItem>
-      <Name>Copy of RG618.rdl</Name>
-      <FullPath>Copy of RG618.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
       <Name>Detail Report (cascading prompts) Template.rdl</Name>
       <FullPath>Detail Report (cascading prompts) Template.rdl</FullPath>
     </ProjectItem>
@@ -55,6 +51,10 @@
       <FullPath>RG238.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>RG618_Main.rdl</Name>
+      <FullPath>RG618_Main.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>RG618_Sub1.rdl</Name>
       <FullPath>RG618_Sub1.rdl</FullPath>
     </ProjectItem>
@@ -67,8 +67,20 @@
       <FullPath>RG618_Sub3.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>RG618_Main.rdl</Name>
-      <FullPath>RG618_Main.rdl</FullPath>
+      <Name>RG734.rdl</Name>
+      <FullPath>RG734.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RG734_Main.rdl</Name>
+      <FullPath>RG734_Main.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RG734_Sub1.rdl</Name>
+      <FullPath>RG734_Sub1.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RG734_Sub2.rdl</Name>
+      <FullPath>RG734_Sub2.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>Roll Totals - General Taxable.rdl</Name>
@@ -99,16 +111,8 @@
       <FullPath>Template.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>RG734.rdl</Name>
-      <FullPath>RG734.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>RG734_Main.rdl</Name>
-      <FullPath>RG734_Main.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>RG734_Sub1.rdl</Name>
-      <FullPath>RG734_Sub1.rdl</FullPath>
+      <Name>ReportFooter.rdl</Name>
+      <FullPath>ReportFooter.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>

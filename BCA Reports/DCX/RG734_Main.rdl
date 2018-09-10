@@ -152,7 +152,7 @@ FROM [edw].[dimFolio] AS [FO]
      INNER JOIN [edw].[dimJurisdictionType] AS [JT] ON [JT].dimJurisdictionType_SK = [JR].dimJurisdictionType_SK
 WHERE [FO].[Roll Year] = @p_RY
       AND [FO].[Folio Status Code] = '01'
-      AND [RD].[Regional District Code] = @p_RD
+      AND [RD].[Regional District Code] IN (@p_RD)
       AND [JT].[Jurisdiction Type Code] IN('T', 'D', 'C', 'V')
 ORDER BY [JR].[Jurisdiction Code];</CommandText>
       </Query>
@@ -172,12 +172,12 @@ ORDER BY [JR].[Jurisdiction Code];</CommandText>
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>12.67787in</Width>
+                  <Width>11.54792in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>0.375in</Height>
+                  <Height>0.275in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -197,9 +197,10 @@ ORDER BY [JR].[Jurisdiction Code];</CommandText>
                                 </Parameter>
                               </Parameters>
                               <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
-                              <Left>0.11458in</Left>
-                              <Height>0.36458in</Height>
-                              <Width>11.81329in</Width>
+                              <Top>0in</Top>
+                              <Left>0.1in</Left>
+                              <Height>0.275in</Height>
+                              <Width>11in</Width>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -229,6 +230,13 @@ ORDER BY [JR].[Jurisdiction Code];</CommandText>
               <TablixMembers>
                 <TablixMember>
                   <Group Name="Details" />
+                  <TablixMembers>
+                    <TablixMember>
+                      <Visibility>
+                        <Hidden>=IIf(Parameters!p_RT.Value = "SUM",True,False)</Hidden>
+                      </Visibility>
+                    </TablixMember>
+                  </TablixMembers>
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
@@ -236,8 +244,98 @@ ORDER BY [JR].[Jurisdiction Code];</CommandText>
             <RepeatRowHeaders>true</RepeatRowHeaders>
             <KeepTogether>true</KeepTogether>
             <DataSetName>qryData</DataSetName>
-            <Height>0.375in</Height>
-            <Width>12.67787in</Width>
+            <Height>0.275in</Height>
+            <Width>11.54792in</Width>
+            <Visibility>
+              <Hidden>=IIf(Parameters!p_RT.Value = "SUM", True,False)</Hidden>
+            </Visibility>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Tablix>
+          <Tablix Name="Tablix2">
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>11.54792in</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>0.28541in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Rectangle Name="Rectangle2">
+                          <ReportItems>
+                            <Subreport Name="Subreport2">
+                              <ReportName>RG734_Sub2</ReportName>
+                              <Parameters>
+                                <Parameter Name="p_RY">
+                                  <Value>=Parameters!p_RY.Value</Value>
+                                </Parameter>
+                                <Parameter Name="p_CN">
+                                  <Value>=Parameters!p_CN.Value</Value>
+                                </Parameter>
+                                <Parameter Name="p_RD">
+                                  <Value>=Fields!Regional_District_Code.Value</Value>
+                                </Parameter>
+                              </Parameters>
+                              <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
+                              <Left>0.1in</Left>
+                              <Height>0.26458in</Height>
+                              <Width>10.90209in</Width>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                              </Style>
+                            </Subreport>
+                          </ReportItems>
+                          <KeepTogether>true</KeepTogether>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                        </Rectangle>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <Group Name="Details1" />
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <DataSetName>qryRD</DataSetName>
+            <Filters>
+              <Filter>
+                <FilterExpression>=Fields!Regional_District_Code.Value</FilterExpression>
+                <Operator>In</Operator>
+                <FilterValues>
+                  <FilterValue>=Parameters!p_RD.Value</FilterValue>
+                </FilterValues>
+              </Filter>
+            </Filters>
+            <Top>0in</Top>
+            <Height>0.28541in</Height>
+            <Width>11.54792in</Width>
+            <ZIndex>1</ZIndex>
+            <Visibility>
+              <Hidden>=IIf(Parameters!p_RT.Value = "SUM", False,True)</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -245,7 +343,7 @@ ORDER BY [JR].[Jurisdiction Code];</CommandText>
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>0.375in</Height>
+        <Height>0.38542in</Height>
         <Style>
           <Border>
             <Style>None</Style>
@@ -495,6 +593,7 @@ ORDER BY [JR].[Jurisdiction Code];</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
+              <Top>0in</Top>
               <Height>0.25in</Height>
               <Width>12.89388in</Width>
               <Style>
@@ -526,6 +625,7 @@ ORDER BY [JR].[Jurisdiction Code];</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
+              <Top>0in</Top>
               <Left>11.48763in</Left>
               <Height>0.25in</Height>
               <Width>1.40625in</Width>
@@ -558,6 +658,7 @@ ORDER BY [JR].[Jurisdiction Code];</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>ReportName</rd:DefaultName>
+              <Top>0in</Top>
               <Height>0.25in</Height>
               <Width>1.88784in</Width>
               <ZIndex>2</ZIndex>
