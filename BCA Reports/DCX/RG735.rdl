@@ -189,7 +189,7 @@ FROM [edw].[FactAllAssessedAmounts] AS [FA]
 WHERE [FA].[Roll Year] = @p_RY
       AND [FA].[Cycle Number] = @p_CN
       AND ([FA].[Current Cycle Flag] = 'Current Cycle Only')
-      AND [RD].[Regional District Code] = @p_RD
+      AND [RD].[Regional District Code] in (@p_RD)
 	  AND [AG].[Jurisdiction Type Code] = 'R'
 	  AND [ED].[BCA Code] &lt;&gt; 'Z'
 GROUP BY [FA].[Roll Year], 
@@ -307,7 +307,7 @@ WHERE [FA].[Roll Year] = @p_RY
       AND [FA].[Cycle Number] = @p_CN
       AND ([FA].[Current Cycle Flag] = 'Current Cycle Only')
       AND [PC].[Property Sub Class Code] = '0202'
-      AND [RD].[Regional District Code] = @p_RD
+      AND [RD].[Regional District Code] in (@p_RD)
       AND [AG].[Jurisdiction Type Code] = 'R'
       AND [ED].[BCA Code] &lt;&gt; 'Z'
 GROUP BY [FA].[Roll Year], 
@@ -3945,7 +3945,6 @@ FOR REGIONAL DISTRICT ELECTORAL AREAS
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
-              <Top>0in</Top>
               <Left>0.01056in</Left>
               <Height>0.25in</Height>
               <Width>12.89388in</Width>
@@ -3978,7 +3977,6 @@ FOR REGIONAL DISTRICT ELECTORAL AREAS
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
-              <Top>0in</Top>
               <Left>11.49819in</Left>
               <Height>0.25in</Height>
               <Width>1.40625in</Width>
@@ -4011,7 +4009,6 @@ FOR REGIONAL DISTRICT ELECTORAL AREAS
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>ReportName</rd:DefaultName>
-              <Top>0in</Top>
               <Left>0.01056in</Left>
               <Height>0.25in</Height>
               <Width>1.88784in</Width>

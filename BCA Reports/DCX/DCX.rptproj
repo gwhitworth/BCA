@@ -107,28 +107,8 @@
       <FullPath>Template.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>ReportFooter.rdl</Name>
-      <FullPath>ReportFooter.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
       <Name>RG735.rdl</Name>
       <FullPath>RG735.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>RG735_Sub1.rdl</Name>
-      <FullPath>RG735_Sub1.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>RG735_Sub2.rdl</Name>
-      <FullPath>RG735_Sub2.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>ElectoralDistricts.rdl</Name>
-      <FullPath>ElectoralDistricts.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>Copy of RG735_Sub2.rdl</Name>
-      <FullPath>Copy of RG735_Sub2.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>ElectoralJuristiction.rdl</Name>
