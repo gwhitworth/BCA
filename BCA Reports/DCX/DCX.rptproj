@@ -24,6 +24,10 @@
       <Name>qryRY.rsd</Name>
       <FullPath>qryRY.rsd</FullPath>
     </ProjectItem>
+    <ProjectItem>
+      <Name>qryRHD.rsd</Name>
+      <FullPath>qryRHD.rsd</FullPath>
+    </ProjectItem>
   </DataSets>
   <Reports>
     <ProjectItem>
@@ -33,6 +37,10 @@
     <ProjectItem>
       <Name>Detail Report Template.rdl</Name>
       <FullPath>Detail Report Template.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>ElectoralJuristiction.rdl</Name>
+      <FullPath>ElectoralJuristiction.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>RG117_Main.rdl</Name>
@@ -79,6 +87,10 @@
       <FullPath>RG734_Sub2.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>RG735.rdl</Name>
+      <FullPath>RG735.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>Roll Totals - General Taxable.rdl</Name>
       <FullPath>Roll Totals - General Taxable.rdl</FullPath>
     </ProjectItem>
@@ -107,12 +119,24 @@
       <FullPath>Template.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>RG735.rdl</Name>
-      <FullPath>RG735.rdl</FullPath>
+      <Name>RGH39.rdl</Name>
+      <FullPath>RGH39.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>ElectoralJuristiction.rdl</Name>
-      <FullPath>ElectoralJuristiction.rdl</FullPath>
+      <Name>RGH39_Sub1.rdl</Name>
+      <FullPath>RGH39_Sub1.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RGH39_Main.rdl</Name>
+      <FullPath>RGH39_Main.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RGH39_Sub2.rdl</Name>
+      <FullPath>RGH39_Sub2.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>ProvTotal_Sub.rdl</Name>
+      <FullPath>ProvTotal_Sub.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>

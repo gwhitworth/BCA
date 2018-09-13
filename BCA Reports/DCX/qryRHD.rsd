@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <Description />
+  <DataSet Name="qryRHD">
+    <Query>
+      <DataSourceReference>EDW</DataSourceReference>
+      <DataSetParameters>
+        <DataSetParameter Name="@p_RY">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>true</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:DbType>Object</rd:DbType>
+          <rd:IsMultiValued>false</rd:IsMultiValued>
+        </DataSetParameter>
+      </DataSetParameters>
+      <CommandText>SELECT [dimRegionalHospitalDistrict_SK], 
+       [dimRegionalHospitalDistrict_BK], 
+       [dimRollYear_SK], 
+       [Roll Year], 
+       [Region Hospital District], 
+       [Region Hospital District Code], 
+       [Region Hospital District Desc], 
+       [RowSortOrder]
+FROM [EDW].[edw].[dimRegionalHospitalDistrict]
+WHERE [Roll Year] = @p_RY
+      AND [Region Hospital District Code] BETWEEN '01' AND '40'
+ORDER BY [Region Hospital District Code];</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="dimRegionalHospitalDistrict_SK">
+        <DataField>dimRegionalHospitalDistrict_SK</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+      <Field Name="dimRegionalHospitalDistrict_BK">
+        <DataField>dimRegionalHospitalDistrict_BK</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="dimRollYear_SK">
+        <DataField>dimRollYear_SK</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+      <Field Name="Roll_Year">
+        <DataField>Roll Year</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+      <Field Name="Region_Hospital_District">
+        <DataField>Region Hospital District</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Region_Hospital_District_Code">
+        <DataField>Region Hospital District Code</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Region_Hospital_District_Desc">
+        <DataField>Region Hospital District Desc</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="RowSortOrder">
+        <DataField>RowSortOrder</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>
