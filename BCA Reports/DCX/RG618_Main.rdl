@@ -595,7 +595,7 @@ ORDER BY [FA].[Roll Year],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Prop Class</Value>
+                                  <Value />
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -814,6 +814,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Sum(Fields!Gen_Folio.Value)</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -849,6 +850,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Sum(Fields!Gen_Land.Value)</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -884,6 +886,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Sum(Fields!Gen_Improvements.Value)</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -919,6 +922,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Sum(Fields!Gen_Land.Value) + Sum(Fields!Gen_Improvements.Value)</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -1141,7 +1145,7 @@ ORDER BY [FA].[Roll Year],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Prop Class</Value>
+                                  <Value />
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -1360,6 +1364,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Sum(Fields!Gen_Folio.Value) + Sum(Fields!Hosp_Folio.Value)</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -1395,6 +1400,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Sum(Fields!Hosp_Land.Value)</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -1430,6 +1436,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Sum(Fields!Hosp_Improvements.Value)</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -1465,6 +1472,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Sum(Fields!Gen_Land.Value) + Sum(Fields!Gen_Improvements.Value)</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -2693,7 +2701,7 @@ and 383(1) Local Government Act</Value>
       <DataType>String</DataType>
       <DefaultValue>
         <Values>
-          <Value>2017</Value>
+          <Value>03</Value>
         </Values>
       </DefaultValue>
       <Prompt>Regional District</Prompt>

@@ -88,20 +88,20 @@
                       END) AS [Gen Folio], 
        SUM(CASE
                WHEN [FA].[Assessment Code] = '01'
-               THEN [FA].[Net General Land Value]
+               THEN IIF([FA].[Net General Land Value]=0,NULL,[FA].[Net General Land Value])
            END) AS [Gen Land], 
        SUM(CASE
                WHEN [FA].[Assessment Code] = '02'
-               THEN [FA].[Net General Building Value]
+               THEN IIF([FA].[Net General Building Value]=0,NULL,[FA].[Net General Building Value])
            END) AS [Gen Improvements], 
        COUNT([OCCUR].[Occur Count]) AS [Hosp Folio], 
        SUM(CASE
                WHEN [FA].[Assessment Code] = '01'
-               THEN [FA].[Net Other Land Value]
+               THEN IIF([FA].[Net Other Land Value]=0,NULL,[FA].[Net Other Land Value])
            END) AS [Hosp Land], 
        SUM(CASE
                WHEN [FA].[Assessment Code] = '02'
-               THEN [FA].[Net Other Building Value]
+               THEN IIF([FA].[Net Other Building Value]=0,NULL,[FA].[Net Other Building Value])
            END) AS [Hosp Improvements]
 FROM [edw].[FactAllAssessedAmounts] AS [FA]
      INNER JOIN [edw].[dimPropertyClass] AS [PC] ON [FA].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
@@ -165,10 +165,6 @@ ORDER BY [FA].[Roll Year],
           <DataField>Jurisdiction</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Gen_Folio">
-          <DataField>Gen Folio</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
         <Field Name="Property_Class_Code">
           <DataField>Property Class Code</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -177,24 +173,28 @@ ORDER BY [FA].[Roll Year],
           <DataField>Property Class Desc</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Hosp_Folio">
-          <DataField>Hosp Folio</DataField>
+        <Field Name="BCA_Code">
+          <DataField>BCA Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Gen_Folio">
+          <DataField>Gen Folio</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="Gen_Land">
           <DataField>Gen Land</DataField>
           <rd:TypeName>System.Double</rd:TypeName>
         </Field>
-        <Field Name="Hosp_Land">
-          <DataField>Hosp Land</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
-        </Field>
-        <Field Name="BCA_Code">
-          <DataField>BCA Code</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="Gen_Improvements">
           <DataField>Gen Improvements</DataField>
+          <rd:TypeName>System.Double</rd:TypeName>
+        </Field>
+        <Field Name="Hosp_Folio">
+          <DataField>Hosp Folio</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Hosp_Land">
+          <DataField>Hosp Land</DataField>
           <rd:TypeName>System.Double</rd:TypeName>
         </Field>
         <Field Name="Hosp_Improvements">
@@ -2908,7 +2908,7 @@ ORDER BY [FA].[Roll Year],
       <DataType>String</DataType>
       <DefaultValue>
         <Values>
-          <Value>2017</Value>
+          <Value>03</Value>
         </Values>
       </DefaultValue>
       <Prompt>Reginal District</Prompt>

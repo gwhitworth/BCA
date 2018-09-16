@@ -197,7 +197,6 @@ ORDER BY [JR].[Jurisdiction Code];</CommandText>
                                 </Parameter>
                               </Parameters>
                               <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
-                              <Top>0in</Top>
                               <Left>0.1in</Left>
                               <Height>0.275in</Height>
                               <Width>11in</Width>
@@ -329,7 +328,6 @@ ORDER BY [JR].[Jurisdiction Code];</CommandText>
                 </FilterValues>
               </Filter>
             </Filters>
-            <Top>0in</Top>
             <Height>0.28541in</Height>
             <Width>11.54792in</Width>
             <ZIndex>1</ZIndex>
@@ -362,27 +360,13 @@ ORDER BY [JR].[Jurisdiction Code];</CommandText>
           </RightBorder>
         </Style>
       </Body>
-      <Width>12.9043in</Width>
+      <Width>13.0293in</Width>
       <Page>
         <PageHeader>
           <Height>0.87723in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
-            <Image Name="BCALogo">
-              <Source>Embedded</Source>
-              <Value>BCA_BigBlueLogo</Value>
-              <Sizing>FitProportional</Sizing>
-              <Left>0.01042in</Left>
-              <Height>0.25001in</Height>
-              <Width>1.88784in</Width>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-              </Style>
-            </Image>
             <Textbox Name="textbox99">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
@@ -433,11 +417,27 @@ ORDER BY [JR].[Jurisdiction Code];</CommandText>
                 </Paragraph>
               </Paragraphs>
               <Top>0.00001in</Top>
+              <Left>0.125in</Left>
               <Height>0.85292in</Height>
               <Width>12.9043in</Width>
-              <ZIndex>1</ZIndex>
               <Style />
             </Textbox>
+            <Image Name="BCALogo">
+              <Source>Embedded</Source>
+              <Value>BCA_BigBlueLogo</Value>
+              <Sizing>FitProportional</Sizing>
+              <Top>0.125in</Top>
+              <Left>0.13542in</Left>
+              <Height>0.30208in</Height>
+              <Width>2.35069in</Width>
+              <ZIndex>1</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+              </Style>
+            </Image>
             <Textbox Name="Textbox4">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
@@ -452,14 +452,16 @@ ORDER BY [JR].[Jurisdiction Code];</CommandText>
                       </Style>
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>0.25001in</Top>
-              <Left>0.33334in</Left>
+              <Top>0.62501in</Top>
+              <Left>0.11633in</Left>
               <Height>0.1875in</Height>
-              <Width>1.28367in</Width>
+              <Width>2.35069in</Width>
               <ZIndex>2</ZIndex>
               <Style>
                 <Border>

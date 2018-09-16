@@ -741,7 +741,7 @@ ORDER BY [FA].[Roll Year],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Improvement</Value>
+                                  <Value>Improvements</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                   </Style>
@@ -1131,7 +1131,9 @@ ORDER BY [FA].[Roll Year],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100)</Value>
+                                  <Value>=IIF(IsNothing(Fields!Gen_Improvements.Value), 
+Nothing,
+Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <Format>#,0</Format>
@@ -2157,7 +2159,7 @@ ORDER BY [FA].[Roll Year],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Improvement</Value>
+                                  <Value>Improvements</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                   </Style>
@@ -2547,7 +2549,9 @@ ORDER BY [FA].[Roll Year],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Hosp_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100)</Value>
+                                  <Value>=IIF(IsNothing(Fields!Hosp_Improvements.Value)
+,Nothing
+,Fields!Hosp_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <Format>#,0</Format>

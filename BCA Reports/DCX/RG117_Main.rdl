@@ -184,7 +184,7 @@ END</CommandText>
       <Body>
         <ReportItems>
           <Subreport Name="SubreportJT">
-            <ReportName>RG117SubJT</ReportName>
+            <ReportName>RG117_Sub1</ReportName>
             <Parameters>
               <Parameter Name="p_RY">
                 <Value>=Parameters!p_RY.Value</Value>
@@ -196,7 +196,8 @@ END</CommandText>
                 <Value>=Parameters!p_JT.Value</Value>
               </Parameter>
             </Parameters>
-            <Left>0.13542in</Left>
+            <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
+            <Left>0.14584in</Left>
             <Height>0.125in</Height>
             <Width>9.26213in</Width>
             <Visibility>
@@ -209,7 +210,7 @@ END</CommandText>
             </Style>
           </Subreport>
           <Subreport Name="SubreportSD">
-            <ReportName>RG117SubSD</ReportName>
+            <ReportName>RG117 Sub2</ReportName>
             <Parameters>
               <Parameter Name="p_RY">
                 <Value>=Parameters!p_RY.Value</Value>
@@ -224,8 +225,9 @@ END</CommandText>
                 <Value>=Parameters!p_SDT.Value</Value>
               </Parameter>
             </Parameters>
+            <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
             <Top>0.14582in</Top>
-            <Left>0.13542in</Left>
+            <Left>0.14584in</Left>
             <Height>0.125in</Height>
             <Width>9.26213in</Width>
             <ZIndex>1</ZIndex>
@@ -258,27 +260,13 @@ END</CommandText>
           </RightBorder>
         </Style>
       </Body>
-      <Width>12.9043in</Width>
+      <Width>12.91472in</Width>
       <Page>
         <PageHeader>
-          <Height>0.90848in</Height>
+          <Height>1.10293in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
-            <Image Name="BCALogo">
-              <Source>Embedded</Source>
-              <Value>BCA_BigBlueLogo</Value>
-              <Sizing>FitProportional</Sizing>
-              <Left>0.01042in</Left>
-              <Height>0.25001in</Height>
-              <Width>1.88784in</Width>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-              </Style>
-            </Image>
             <Textbox Name="textbox99">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
@@ -344,12 +332,31 @@ END</CommandText>
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>0.00001in</Top>
               <Height>0.85292in</Height>
               <Width>12.9043in</Width>
-              <ZIndex>1</ZIndex>
-              <Style />
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>5pt</PaddingLeft>
+                <PaddingRight>5pt</PaddingRight>
+                <PaddingTop>5pt</PaddingTop>
+              </Style>
             </Textbox>
+            <Image Name="BCALogo">
+              <Source>Embedded</Source>
+              <Value>BCA_BigBlueLogo</Value>
+              <Top>0.125in</Top>
+              <Left>0.14584in</Left>
+              <Height>0.30208in</Height>
+              <Width>2.35069in</Width>
+              <ZIndex>1</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+              </Style>
+            </Image>
             <Textbox Name="Textbox4">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
@@ -364,14 +371,16 @@ END</CommandText>
                       </Style>
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>0.25001in</Top>
-              <Left>0.33334in</Left>
+              <Top>0.65848in</Top>
+              <Left>0.11633in</Left>
               <Height>0.1875in</Height>
-              <Width>1.28367in</Width>
+              <Width>2.35069in</Width>
               <ZIndex>2</ZIndex>
               <Style>
                 <Border>
@@ -395,7 +404,7 @@ END</CommandText>
                 </Actions>
               </ActionInfo>
               <Top>0.41666in</Top>
-              <Left>12.4668in</Left>
+              <Left>12.47722in</Left>
               <Height>0.42932in</Height>
               <Width>0.4375in</Width>
               <ZIndex>3</ZIndex>
@@ -425,7 +434,7 @@ END</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox2</rd:DefaultName>
-              <Left>9.26934in</Left>
+              <Left>9.27976in</Left>
               <Height>0.15972in</Height>
               <Width>3.61561in</Width>
               <ZIndex>4</ZIndex>
@@ -456,7 +465,7 @@ END</CommandText>
               </Paragraphs>
               <rd:DefaultName>Textbox2</rd:DefaultName>
               <Top>0.21528in</Top>
-              <Left>9.26934in</Left>
+              <Left>9.27976in</Left>
               <Height>0.15972in</Height>
               <Width>3.61561in</Width>
               <ZIndex>5</ZIndex>
@@ -505,6 +514,8 @@ END</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
+              <Top>0in</Top>
+              <Left>0.01042in</Left>
               <Height>0.25in</Height>
               <Width>12.89388in</Width>
               <Style>
@@ -536,7 +547,8 @@ END</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
-              <Left>11.48763in</Left>
+              <Top>0in</Top>
+              <Left>11.49805in</Left>
               <Height>0.25in</Height>
               <Width>1.40625in</Width>
               <ZIndex>1</ZIndex>
@@ -568,6 +580,8 @@ END</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>ReportName</rd:DefaultName>
+              <Top>0in</Top>
+              <Left>0.01042in</Left>
               <Height>0.25in</Height>
               <Width>1.88784in</Width>
               <ZIndex>2</ZIndex>
@@ -594,7 +608,7 @@ END</CommandText>
         <LeftMargin>0.5in</LeftMargin>
         <RightMargin>0.5in</RightMargin>
         <TopMargin>0.5in</TopMargin>
-        <BottomMargin>0.5in</BottomMargin>
+        <BottomMargin>0.2in</BottomMargin>
         <Style>
           <Border>
             <Style>None</Style>
@@ -630,7 +644,7 @@ END</CommandText>
       <DataType>String</DataType>
       <DefaultValue>
         <Values>
-          <Value>12</Value>
+          <Value>-1</Value>
         </Values>
       </DefaultValue>
       <Prompt>Roll Version</Prompt>

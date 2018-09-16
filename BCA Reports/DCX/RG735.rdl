@@ -1057,6 +1057,9 @@ ORDER BY [FA].[Roll Year],
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Gen_Folio</rd:DefaultName>
+                          <Visibility>
+                            <Hidden>=IIF(Fields!Hosp_Folio.Value = 0, True,False)</Hidden>
+                          </Visibility>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -1092,6 +1095,9 @@ ORDER BY [FA].[Roll Year],
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Gen_Land</rd:DefaultName>
+                          <Visibility>
+                            <Hidden>=IIF(Fields!Hosp_Land.Value = 0, True,False)</Hidden>
+                          </Visibility>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -1127,6 +1133,9 @@ ORDER BY [FA].[Roll Year],
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox4</rd:DefaultName>
+                          <Visibility>
+                            <Hidden>=IIF(Fields!Hosp_Land.Value = 0, True,False)</Hidden>
+                          </Visibility>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -1162,6 +1171,9 @@ ORDER BY [FA].[Roll Year],
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Gen_Improvements</rd:DefaultName>
+                          <Visibility>
+                            <Hidden>=IIF(Fields!Hosp_Improvements.Value = 0,True,False)</Hidden>
+                          </Visibility>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -1197,6 +1209,9 @@ ORDER BY [FA].[Roll Year],
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox4</rd:DefaultName>
+                          <Visibility>
+                            <Hidden>=IIF(Fields!Hosp_Improvements.Value = 0,True,False)</Hidden>
+                          </Visibility>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -3038,6 +3053,9 @@ ORDER BY [FA].[Roll Year],
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Gen_Folio</rd:DefaultName>
+                          <Visibility>
+                            <Hidden>=IIF(Fields!Hosp_Folio.Value = 0, True,False)</Hidden>
+                          </Visibility>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -3073,6 +3091,9 @@ ORDER BY [FA].[Roll Year],
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Gen_Land</rd:DefaultName>
+                          <Visibility>
+                            <Hidden>=IIF(Fields!Hosp_Land.Value = 0, True,False)</Hidden>
+                          </Visibility>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -3108,6 +3129,9 @@ ORDER BY [FA].[Roll Year],
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox4</rd:DefaultName>
+                          <Visibility>
+                            <Hidden>=IIF(Fields!Hosp_Land.Value = 0, True,False)</Hidden>
+                          </Visibility>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -3143,6 +3167,9 @@ ORDER BY [FA].[Roll Year],
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Gen_Improvements</rd:DefaultName>
+                          <Visibility>
+                            <Hidden>=IIF(Fields!Hosp_Improvements.Value = 0,True,False)</Hidden>
+                          </Visibility>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -3178,6 +3205,9 @@ ORDER BY [FA].[Roll Year],
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox4</rd:DefaultName>
+                          <Visibility>
+                            <Hidden>=IIF(Fields!Hosp_Improvements.Value = 0,True,False)</Hidden>
+                          </Visibility>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -4051,7 +4081,7 @@ ORDER BY [FA].[Roll Year],
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>1.70416in</Height>
+        <Height>1.69374in</Height>
         <Style>
           <Border>
             <Style>None</Style>
@@ -4073,24 +4103,10 @@ ORDER BY [FA].[Roll Year],
       <Width>13.17542in</Width>
       <Page>
         <PageHeader>
-          <Height>0.90709in</Height>
+          <Height>0.93751in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
-            <Image Name="BCALogo">
-              <Source>Embedded</Source>
-              <Value>BCA_BigBlueLogo</Value>
-              <Sizing>FitProportional</Sizing>
-              <Left>0.02098in</Left>
-              <Height>0.25001in</Height>
-              <Width>1.88784in</Width>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-              </Style>
-            </Image>
             <Textbox Name="textbox99">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
@@ -4145,9 +4161,24 @@ FOR REGIONAL DISTRICT ELECTORAL AREAS
               <Left>0.01056in</Left>
               <Height>0.90708in</Height>
               <Width>12.9043in</Width>
-              <ZIndex>1</ZIndex>
               <Style />
             </Textbox>
+            <Image Name="BCALogo">
+              <Source>Embedded</Source>
+              <Value>BCA_BigBlueLogo</Value>
+              <Sizing>FitProportional</Sizing>
+              <Top>0.125in</Top>
+              <Left>0.14598in</Left>
+              <Height>0.30208in</Height>
+              <Width>2.35069in</Width>
+              <ZIndex>1</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+              </Style>
+            </Image>
             <Textbox Name="Textbox4">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
@@ -4162,14 +4193,16 @@ FOR REGIONAL DISTRICT ELECTORAL AREAS
                       </Style>
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>0.25001in</Top>
-              <Left>0.3439in</Left>
+              <Top>0.75001in</Top>
+              <Left>0.11633in</Left>
               <Height>0.1875in</Height>
-              <Width>1.28367in</Width>
+              <Width>2.35069in</Width>
               <ZIndex>2</ZIndex>
               <Style>
                 <Border>
@@ -4303,6 +4336,7 @@ FOR REGIONAL DISTRICT ELECTORAL AREAS
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
+              <Top>0in</Top>
               <Left>0.01056in</Left>
               <Height>0.25in</Height>
               <Width>12.89388in</Width>
@@ -4335,6 +4369,7 @@ FOR REGIONAL DISTRICT ELECTORAL AREAS
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
+              <Top>0in</Top>
               <Left>11.49819in</Left>
               <Height>0.25in</Height>
               <Width>1.40625in</Width>
@@ -4367,6 +4402,7 @@ FOR REGIONAL DISTRICT ELECTORAL AREAS
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>ReportName</rd:DefaultName>
+              <Top>0in</Top>
               <Left>0.01056in</Left>
               <Height>0.25in</Height>
               <Width>1.88784in</Width>

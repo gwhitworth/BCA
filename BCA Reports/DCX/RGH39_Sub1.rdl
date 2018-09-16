@@ -816,6 +816,7 @@ ORDER BY [FA].[Roll Year],
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -979,6 +980,9 @@ ORDER BY [FA].[Roll Year],
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Total_Gen</rd:DefaultName>
+                          <Visibility>
+                            <Hidden>=IIf(Fields!Total_Gen.Value = 0,True,False)</Hidden>
+                          </Visibility>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -1192,6 +1196,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Sum(Fields!Total_Gen.Value)</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -1414,6 +1419,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Sum(Fields!Total_Gen.Value)</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -2437,6 +2443,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Sum(Fields!Total_Oth.Value)</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -2659,6 +2666,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Sum(Fields!Total_Oth.Value)</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>

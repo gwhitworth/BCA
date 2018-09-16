@@ -231,6 +231,7 @@ ORDER BY [Region Hospital District Code];</CommandText>
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>qryData</DataSetName>
+            <Top>0in</Top>
             <Left>0.13in</Left>
             <Height>0.57292in</Height>
             <Width>4.96875in</Width>
@@ -361,8 +362,9 @@ ORDER BY [Region Hospital District Code];</CommandText>
               <Source>Embedded</Source>
               <Value>BCA_BigBlueLogo</Value>
               <Sizing>FitProportional</Sizing>
+              <Top>0.125in</Top>
               <Left>0.11633in</Left>
-              <Height>0.25001in</Height>
+              <Height>0.36459in</Height>
               <Width>1.88784in</Width>
               <ZIndex>1</ZIndex>
               <Style>
@@ -387,14 +389,16 @@ ORDER BY [Region Hospital District Code];</CommandText>
                       </Style>
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>0.25001in</Top>
-              <Left>0.43925in</Left>
+              <Top>0.50001in</Top>
+              <Left>0.11633in</Left>
               <Height>0.1875in</Height>
-              <Width>1.28367in</Width>
+              <Width>1.88784in</Width>
               <ZIndex>2</ZIndex>
               <Style>
                 <Border>
@@ -529,7 +533,6 @@ ORDER BY [Region Hospital District Code];</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
-              <Top>0in</Top>
               <Height>0.25in</Height>
               <Width>12.88521in</Width>
               <Style>
@@ -561,7 +564,6 @@ ORDER BY [Region Hospital District Code];</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
-              <Top>0in</Top>
               <Left>11.47896in</Left>
               <Height>0.25in</Height>
               <Width>1.40625in</Width>
@@ -594,7 +596,6 @@ ORDER BY [Region Hospital District Code];</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>ReportName</rd:DefaultName>
-              <Top>0in</Top>
               <Height>0.25in</Height>
               <Width>1.88784in</Width>
               <ZIndex>2</ZIndex>
