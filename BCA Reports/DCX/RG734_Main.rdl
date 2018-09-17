@@ -595,7 +595,6 @@ ORDER BY [JR].[Jurisdiction Code];</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
-              <Top>0in</Top>
               <Height>0.25in</Height>
               <Width>12.89388in</Width>
               <Style>
@@ -627,7 +626,6 @@ ORDER BY [JR].[Jurisdiction Code];</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
-              <Top>0in</Top>
               <Left>11.48763in</Left>
               <Height>0.25in</Height>
               <Width>1.40625in</Width>
@@ -660,7 +658,6 @@ ORDER BY [JR].[Jurisdiction Code];</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>ReportName</rd:DefaultName>
-              <Top>0in</Top>
               <Height>0.25in</Height>
               <Width>1.88784in</Width>
               <ZIndex>2</ZIndex>
@@ -758,6 +755,11 @@ ORDER BY [JR].[Jurisdiction Code];</CommandText>
     </ReportParameter>
     <ReportParameter Name="p_RD">
       <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>03</Value>
+        </Values>
+      </DefaultValue>
       <Prompt>Regional District</Prompt>
       <ValidValues>
         <DataSetReference>

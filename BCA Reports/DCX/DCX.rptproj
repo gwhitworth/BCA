@@ -31,6 +31,10 @@
   </DataSets>
   <Reports>
     <ProjectItem>
+      <Name>Copy of RG238.rdl</Name>
+      <FullPath>Copy of RG238.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>Detail Report (cascading prompts) Template.rdl</Name>
       <FullPath>Detail Report (cascading prompts) Template.rdl</FullPath>
     </ProjectItem>
@@ -135,8 +139,8 @@
       <FullPath>Template.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>Copy of RG238.rdl</Name>
-      <FullPath>Copy of RG238.rdl</FullPath>
+      <Name>Copy of RG735.rdl</Name>
+      <FullPath>Copy of RG735.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>

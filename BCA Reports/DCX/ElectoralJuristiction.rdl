@@ -56,7 +56,7 @@ ORDER BY [Jurisdiction];</CommandText>
                   <Width>1.14in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.30729in</Width>
+                  <Width>3.66146in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -141,7 +141,7 @@ ORDER BY [Jurisdiction];</CommandText>
             </TablixRowHierarchy>
             <DataSetName>qryData</DataSetName>
             <Height>0.20833in</Height>
-            <Width>3.44729in</Width>
+            <Width>4.80146in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -152,7 +152,7 @@ ORDER BY [Jurisdiction];</CommandText>
         <Height>0.20833in</Height>
         <Style />
       </Body>
-      <Width>3.52687in</Width>
+      <Width>4.80146in</Width>
       <Page>
         <LeftMargin>1in</LeftMargin>
         <RightMargin>1in</RightMargin>
