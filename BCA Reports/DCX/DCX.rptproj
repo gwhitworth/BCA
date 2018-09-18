@@ -9,6 +9,10 @@
   </DataSources>
   <DataSets>
     <ProjectItem>
+      <Name>qryPC.rsd</Name>
+      <FullPath>qryPC.rsd</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>qryProvTotal.rsd</Name>
       <FullPath>qryProvTotal.rsd</FullPath>
     </ProjectItem>
@@ -29,8 +33,8 @@
       <FullPath>qryRY.rsd</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>qryPC.rsd</Name>
-      <FullPath>qryPC.rsd</FullPath>
+      <Name>qryCN.rsd</Name>
+      <FullPath>qryCN.rsd</FullPath>
     </ProjectItem>
   </DataSets>
   <Reports>
@@ -111,6 +115,22 @@
       <FullPath>RGH39_Sub2.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>RGP42_Main.rdl</Name>
+      <FullPath>RGP42_Main.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RGP42_Sub1.rdl</Name>
+      <FullPath>RGP42_Sub1.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RGP42_Sub2.rdl</Name>
+      <FullPath>RGP42_Sub2.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RGP42_Sub3.rdl</Name>
+      <FullPath>RGP42_Sub3.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>Roll Totals - General Taxable.rdl</Name>
       <FullPath>Roll Totals - General Taxable.rdl</FullPath>
     </ProjectItem>
@@ -139,20 +159,8 @@
       <FullPath>Template.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>RGP42_Main.rdl</Name>
-      <FullPath>RGP42_Main.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>RGP42_Sub1.rdl</Name>
-      <FullPath>RGP42_Sub1.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>RGP42_Sub2.rdl</Name>
-      <FullPath>RGP42_Sub2.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>RGP42_Sub3.rdl</Name>
-      <FullPath>RGP42_Sub3.rdl</FullPath>
+      <Name>MHVSAF - Municipal Hospital Value Summarized Assessment File.rdl</Name>
+      <FullPath>MHVSAF - Municipal Hospital Value Summarized Assessment File.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>

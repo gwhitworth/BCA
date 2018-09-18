@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <Description />
+  <DataSet Name="qryCN">
+    <Query>
+      <DataSourceReference>EDW</DataSourceReference>
+      <DataSetParameters>
+        <DataSetParameter Name="@p_RY">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>true</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:DbType>Object</rd:DbType>
+        </DataSetParameter>
+      </DataSetParameters>
+      <CommandText>SELECT [Cycle Number],
+       CASE
+           WHEN [Cycle Number] = -1
+           THEN 'Completed Roll run on '+FORMAT([Roll Entry Run Date], 'dd-MMM-yyyy', 'en-CA')
+           WHEN [Cycle Number] = 0
+           THEN 'Revised Roll run on '+FORMAT([Roll Entry Run Date], 'dd-MMM-yyyy', 'en-CA')
+           ELSE 'Cycle '+[Cycle Number]+' run on '+FORMAT([Roll Entry Run Date], 'dd-MMM-yyyy', 'en-CA')
+       END AS [Cycle Display], 
+       [Roll Entry Run Date]
+FROM [edw].[dimRollCycle]
+WHERE [Roll Year] = @p_RY
+      AND [Cycle Number] &gt;= 0
+ORDER BY [Roll Entry Run Date] DESC;</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="Cycle_Number">
+        <DataField>Cycle Number</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Cycle_Display">
+        <DataField>Cycle Display</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Roll_Entry_Run_Date">
+        <DataField>Roll Entry Run Date</DataField>
+        <rd:TypeName>System.DateTime</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>
