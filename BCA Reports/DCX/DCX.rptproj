@@ -28,12 +28,12 @@
       <Name>qryRY.rsd</Name>
       <FullPath>qryRY.rsd</FullPath>
     </ProjectItem>
+    <ProjectItem>
+      <Name>qryPC.rsd</Name>
+      <FullPath>qryPC.rsd</FullPath>
+    </ProjectItem>
   </DataSets>
   <Reports>
-    <ProjectItem>
-      <Name>Copy of RG238.rdl</Name>
-      <FullPath>Copy of RG238.rdl</FullPath>
-    </ProjectItem>
     <ProjectItem>
       <Name>Detail Report (cascading prompts) Template.rdl</Name>
       <FullPath>Detail Report (cascading prompts) Template.rdl</FullPath>
@@ -139,8 +139,20 @@
       <FullPath>Template.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>Copy of RG735.rdl</Name>
-      <FullPath>Copy of RG735.rdl</FullPath>
+      <Name>RGP42_Main.rdl</Name>
+      <FullPath>RGP42_Main.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RGP42_Sub1.rdl</Name>
+      <FullPath>RGP42_Sub1.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RGP42_Sub2.rdl</Name>
+      <FullPath>RGP42_Sub2.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RGP42_Sub3.rdl</Name>
+      <FullPath>RGP42_Sub3.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>

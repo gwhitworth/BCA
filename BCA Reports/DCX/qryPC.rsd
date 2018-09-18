@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <Description />
+  <DataSet Name="qryPC">
+    <Query>
+      <DataSourceReference>EDW</DataSourceReference>
+      <DataSetParameters>
+        <DataSetParameter Name="@p_RY">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>true</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:DbType>Object</rd:DbType>
+          <rd:IsMultiValued>false</rd:IsMultiValued>
+        </DataSetParameter>
+      </DataSetParameters>
+      <CommandText>SELECT [dimPropertyClass_SK]
+      ,[dimPropertyClass_BK]
+      ,[dimRollYear_SK]
+      ,[Roll Year]
+      ,[Property Class Code]
+      ,[Property Class Desc]
+      ,[Property Class]
+      ,[Property Class Short Name]
+      ,[Property Sub Class Code]
+      ,[Property Sub Class]
+      ,[Property Sub Class Desc]
+      ,[Property Conversion Factor]
+      ,[RowSortOrder]
+  FROM [EDW].[edw].[dimPropertyClass]
+WHERE [Roll Year] = @p_RY</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="dimPropertyClass_SK">
+        <DataField>dimPropertyClass_SK</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+      <Field Name="dimPropertyClass_BK">
+        <DataField>dimPropertyClass_BK</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="dimRollYear_SK">
+        <DataField>dimRollYear_SK</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+      <Field Name="Roll_Year">
+        <DataField>Roll Year</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+      <Field Name="Property_Class_Code">
+        <DataField>Property Class Code</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Property_Class_Desc">
+        <DataField>Property Class Desc</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Property_Class">
+        <DataField>Property Class</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Property_Class_Short_Name">
+        <DataField>Property Class Short Name</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Property_Sub_Class_Code">
+        <DataField>Property Sub Class Code</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Property_Sub_Class">
+        <DataField>Property Sub Class</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Property_Sub_Class_Desc">
+        <DataField>Property Sub Class Desc</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Property_Conversion_Factor">
+        <DataField>Property Conversion Factor</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+      <Field Name="RowSortOrder">
+        <DataField>RowSortOrder</DataField>
+        <rd:TypeName>System.Int64</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>
