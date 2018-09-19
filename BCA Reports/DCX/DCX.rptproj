@@ -36,6 +36,10 @@
       <Name>qryCN.rsd</Name>
       <FullPath>qryCN.rsd</FullPath>
     </ProjectItem>
+    <ProjectItem>
+      <Name>qryJR.rsd</Name>
+      <FullPath>qryJR.rsd</FullPath>
+    </ProjectItem>
   </DataSets>
   <Reports>
     <ProjectItem>
@@ -161,6 +165,14 @@
     <ProjectItem>
       <Name>MHVSAF - Municipal Hospital Value Summarized Assessment File.rdl</Name>
       <FullPath>MHVSAF - Municipal Hospital Value Summarized Assessment File.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RG099_Main.rdl</Name>
+      <FullPath>RG099_Main.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RG099_Sub1.rdl</Name>
+      <FullPath>RG099_Sub1.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>
