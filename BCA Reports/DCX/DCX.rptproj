@@ -9,6 +9,18 @@
   </DataSources>
   <DataSets>
     <ProjectItem>
+      <Name>qryAR.rsd</Name>
+      <FullPath>qryAR.rsd</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>qryCN.rsd</Name>
+      <FullPath>qryCN.rsd</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>qryJR.rsd</Name>
+      <FullPath>qryJR.rsd</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>qryPC.rsd</Name>
       <FullPath>qryPC.rsd</FullPath>
     </ProjectItem>
@@ -32,14 +44,6 @@
       <Name>qryRY.rsd</Name>
       <FullPath>qryRY.rsd</FullPath>
     </ProjectItem>
-    <ProjectItem>
-      <Name>qryCN.rsd</Name>
-      <FullPath>qryCN.rsd</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>qryJR.rsd</Name>
-      <FullPath>qryJR.rsd</FullPath>
-    </ProjectItem>
   </DataSets>
   <Reports>
     <ProjectItem>
@@ -55,8 +59,24 @@
       <FullPath>ElectoralJuristiction.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>MHVSAF - Municipal Hospital Value Summarized Assessment File.rdl</Name>
+      <FullPath>MHVSAF - Municipal Hospital Value Summarized Assessment File.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>ProvTotal_Sub.rdl</Name>
       <FullPath>ProvTotal_Sub.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RG099_Main.rdl</Name>
+      <FullPath>RG099_Main.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RG099_Sub1.rdl</Name>
+      <FullPath>RG099_Sub1.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RG099_Sub2.rdl</Name>
+      <FullPath>RG099_Sub2.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>RG117 Sub2.rdl</Name>
@@ -163,16 +183,16 @@
       <FullPath>Template.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>MHVSAF - Municipal Hospital Value Summarized Assessment File.rdl</Name>
-      <FullPath>MHVSAF - Municipal Hospital Value Summarized Assessment File.rdl</FullPath>
+      <Name>RG930_Main.rdl</Name>
+      <FullPath>RG930_Main.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>RG099_Main.rdl</Name>
-      <FullPath>RG099_Main.rdl</FullPath>
+      <Name>RG930_Sub1.rdl</Name>
+      <FullPath>RG930_Sub1.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>RG099_Sub1.rdl</Name>
-      <FullPath>RG099_Sub1.rdl</FullPath>
+      <Name>PropClass_ProvTotal_Sub.rdl</Name>
+      <FullPath>PropClass_ProvTotal_Sub.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>

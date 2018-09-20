@@ -71,15 +71,12 @@
           <QueryParameter Name="@p_CN">
             <Value>=Parameters!p_CN.Value</Value>
           </QueryParameter>
-          <QueryParameter Name="@p_JR">
-            <Value>=Parameters!p_JR.Value</Value>
+          <QueryParameter Name="@p_AR">
+            <Value>=Parameters!p_AR.Value</Value>
           </QueryParameter>
         </QueryParameters>
         <CommandText>SELECT [FA].[Roll Year], 
        [AG].[Area], 
-       [AG].[Jurisdiction Code], 
-       [AG].[Jurisdiction Desc], 
-       [FO].[School  District Code], 
        IIF([PC].[Property Sub Class Code] = '0202', 999, [PC].[RowSortOrder]) AS [RowSortOrder], 
        [PC].[Property Class Code],
        CASE
@@ -121,8 +118,6 @@ FROM [edw].[FactAllAssessedAmounts] AS [FA]
      INNER JOIN [edw].[dimPropertyClass] AS [PC] ON [FA].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
      INNER JOIN [edw].[dimAssessmentGeography] AS [AG] ON [FA].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
                                                           AND AG.[Roll Category Code] = '1'
-     INNER JOIN [edw].[dimFolio] AS [FO] ON [FO].[dimFolio_SK] = [FA].[dimFolio_SK]
-                                            AND FO.[Folio Status Code] = '01'
      LEFT OUTER JOIN
 (
     SELECT [FAV].dimFolio_SK, 
@@ -135,19 +130,16 @@ FROM [edw].[FactAllAssessedAmounts] AS [FA]
     WHERE [FAV].[Roll Year] = @p_RY
           AND [FAV].[Cycle Number] &lt;= @p_CN
           AND [Assessment Code] = '02'
-          AND [AG].[Jurisdiction Code] = @p_JR
+          AND [AG].[Area Code] = @p_AR
     GROUP BY [FAV].dimFolio_SK, 
              [FAV].[Property Class Code]
     HAVING COUNT(*) &gt; 1
 ) AS [OCCUR] ON [OCCUR].dimFolio_SK = [FA].dimFolio_SK
 WHERE [FA].[Roll Year] = @p_RY
       AND [FA].[Cycle Number] = @p_CN
-      AND [AG].[Jurisdiction Code] = @p_JR
+      AND [AG].[Area Code] = @p_AR
 GROUP BY [FA].[Roll Year], 
          [AG].[Area], 
-         [AG].[Jurisdiction Code], 
-         [AG].[Jurisdiction Desc], 
-         [FO].[School  District Code], 
          IIF([PC].[Property Sub Class Code] = '0202', 999, [PC].[RowSortOrder]), 
          [PC].[Property Class Code],
          CASE
@@ -159,9 +151,6 @@ GROUP BY [FA].[Roll Year],
          ISNULL([PC].[Property Sub Class Desc], [PC].[Property Class Desc])
 ORDER BY [FA].[Roll Year], 
          [AG].[Area], 
-         [AG].[Jurisdiction Code], 
-         [AG].[Jurisdiction Desc], 
-         [FO].[School  District Code], 
          [RESNONRES] DESC, 
          [RowSortOrder];</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
@@ -173,18 +162,6 @@ ORDER BY [FA].[Roll Year],
         </Field>
         <Field Name="Area">
           <DataField>Area</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Jurisdiction_Code">
-          <DataField>Jurisdiction Code</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Jurisdiction_Desc">
-          <DataField>Jurisdiction Desc</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="School__District_Code">
-          <DataField>School  District Code</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="RowSortOrder">
@@ -285,9 +262,9 @@ ORDER BY [FA].[Roll Year],
         </Field>
       </Fields>
     </DataSet>
-    <DataSet Name="qryJR">
+    <DataSet Name="qryAR">
       <SharedDataSet>
-        <SharedDataSetReference>qryJR</SharedDataSetReference>
+        <SharedDataSetReference>qryAR</SharedDataSetReference>
         <QueryParameters>
           <QueryParameter Name="@p_RY">
             <Value>=Parameters!p_RY.Value</Value>
@@ -295,49 +272,37 @@ ORDER BY [FA].[Roll Year],
         </QueryParameters>
       </SharedDataSet>
       <Fields>
-        <Field Name="dimJurisdiction_SK">
-          <DataField>dimJurisdiction_SK</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="dimJurisdiction_BK">
-          <DataField>dimJurisdiction_BK</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="dimArea_SK">
           <DataField>dimArea_SK</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="dimArea_BK">
+          <DataField>dimArea_BK</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="dimRollYear_SK">
           <DataField>dimRollYear_SK</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
-        <Field Name="dimJurisdictionType_SK">
-          <DataField>dimJurisdictionType_SK</DataField>
+        <Field Name="dimRegion_SK">
+          <DataField>dimRegion_SK</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
-        <Field Name="Jurisdiction_Code">
-          <DataField>Jurisdiction_Code</DataField>
+        <Field Name="Area">
+          <DataField>Area</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Jurisdiction_Desc">
-          <DataField>Jurisdiction_Desc</DataField>
+        <Field Name="Area_Code">
+          <DataField>Area_Code</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Jurisdiction">
-          <DataField>Jurisdiction</DataField>
+        <Field Name="Area_Desc">
+          <DataField>Area_Desc</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Amalgamation">
-          <DataField>Amalgamation</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Amalgamation_Code">
-          <DataField>Amalgamation_Code</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Amalgamation_Desc">
-          <DataField>Amalgamation_Desc</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
+        <Field Name="Roll_Year">
+          <DataField>Roll_Year</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="RowSortOrder">
           <DataField>RowSortOrder</DataField>
@@ -383,7 +348,7 @@ ORDER BY [FA].[Roll Year],
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>0.22758in</Height>
+                  <Height>0.19633in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -442,128 +407,6 @@ ORDER BY [FA].[Roll Year],
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox137</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>None</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox624">
-                          <CanShrink>true</CanShrink>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value />
-                                  <Style>
-                                    <FontFamily>Arial</FontFamily>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Right</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox624</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <BottomBorder>
-                              <Style>None</Style>
-                            </BottomBorder>
-                            <BackgroundColor>LightSteelBlue</BackgroundColor>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                        <ColSpan>7</ColSpan>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell />
-                    <TablixCell />
-                    <TablixCell />
-                    <TablixCell />
-                    <TablixCell />
-                    <TablixCell />
-                  </TablixCells>
-                </TablixRow>
-                <TablixRow>
-                  <Height>0.25758in</Height>
-                  <TablixCells>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox8">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>Jurisdiction:</Value>
-                                  <Style>
-                                    <FontFamily>Arial</FontFamily>
-                                    <FontSize>11pt</FontSize>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Right</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox8</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>None</Style>
-                            </Border>
-                            <PaddingLeft>15pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox65">
-                          <CanShrink>true</CanShrink>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!Jurisdiction_Code.Value 
-+ Space(2) 
-+ Replace(Fields!Jurisdiction_Desc.Value,"(" + Fields!Jurisdiction_Code.Value + ")","")</Value>
-                                  <Style>
-                                    <FontFamily>Arial</FontFamily>
-                                    <FontSize>11pt</FontSize>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Left</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox63</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -914,7 +757,7 @@ ORDER BY [FA].[Roll Year],
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.18in</Height>
+                  <Height>0.16958in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -925,7 +768,20 @@ ORDER BY [FA].[Roll Year],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=IIF(Fields!RESNONRES.Value = "RES", Fields!Property_Class.Value, SWITCH(Fields!Property_Class.Value = "Utilities", "2 - Utilities", Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter", "S.644LGA/398VC", Fields!Property_Class.Value = "Supportive Housing", "3 - Supportive Housing", Fields!Property_Class.Value = "Major Industry", "4 - Major Industry", Fields!Property_Class.Value = "Light Industry", "5 - Light Industry", Fields!Property_Class.Value = "Business And Other", "6 - Business And Other", Fields!Property_Class.Value = "Managed Forest Land", "7 - Managed Forest Land", Fields!Property_Class.Value = "Rec/Non Profit", "8 - Rec/Non Profit", Fields!Property_Class.Value = "Farm", "9 - Farm"))</Value>
+                                  <Value>=IIF(Fields!RESNONRES.Value = "RES"
+, Fields!Property_Class.Value
+, SWITCH(Fields!Property_Class.Value = "Utilities", "2 - Utilities"
+, Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter"
+, "S.644LGA/398VC"
+, Fields!Property_Class.Value = "Supportive Housing"
+, "3 - Supportive Housing"
+, Fields!Property_Class.Value = "Major Industry"
+, "4 - Major Industry", Fields!Property_Class.Value = "Light Industry"
+, "5 - Light Industry", Fields!Property_Class.Value = "Business And Other"
+, "6 - Business And Other", Fields!Property_Class.Value = "Managed Forest Land"
+, "7 - Managed Forest Land", Fields!Property_Class.Value = "Rec/Non Profit"
+, "8 - Rec/Non Profit"
+, Fields!Property_Class.Value = "Farm", "9 - Farm"))</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -956,14 +812,15 @@ ORDER BY [FA].[Roll Year],
                     <TablixCell />
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Occurrences8">
+                        <Textbox Name="Occurrences2">
                           <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(IIF(IsNothing(Fields!Occurrences.Value), Fields!Folio_Count.Value, IIF(Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter", Fields!Occurrences.Value + Fields!Folio_Count.Value, Fields!Folio_Count.Value)))</Value>
+                                  <Value>=Sum(IIF(IsNothing(Fields!Occurrences.Value), Fields!Folio_Count.Value
+, IIF(Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter", Fields!Occurrences.Value + Fields!Folio_Count.Value, Fields!Folio_Count.Value)))</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -995,7 +852,7 @@ ORDER BY [FA].[Roll Year],
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox69">
+                        <Textbox Name="Textbox156">
                           <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -1080,8 +937,8 @@ ORDER BY [FA].[Roll Year],
                             </BottomBorder>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
+                            <PaddingTop>1pt</PaddingTop>
+                            <PaddingBottom>1pt</PaddingBottom>
                           </Style>
                         </Textbox>
                       </CellContents>
@@ -1127,7 +984,7 @@ ORDER BY [FA].[Roll Year],
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox70">
+                        <Textbox Name="Textbox155">
                           <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -1245,12 +1102,12 @@ ORDER BY [FA].[Roll Year],
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.18in</Height>
+                  <Height>0.19in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox13">
-                          <CanGrow>true</CanGrow>
+                          <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
@@ -1293,7 +1150,7 @@ ORDER BY [FA].[Roll Year],
                     <TablixCell />
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox10">
+                        <Textbox Name="Textbox265">
                           <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -1312,15 +1169,15 @@ ORDER BY [FA].[Roll Year],
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox6</rd:DefaultName>
+                          <rd:DefaultName>Textbox261</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <TopBorder>
+                            <BottomBorder>
                               <Style>None</Style>
-                            </TopBorder>
+                            </BottomBorder>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -1331,7 +1188,7 @@ ORDER BY [FA].[Roll Year],
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox19">
+                        <Textbox Name="Textbox162">
                           <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -1404,8 +1261,8 @@ ORDER BY [FA].[Roll Year],
                             </BottomBorder>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
+                            <PaddingTop>1pt</PaddingTop>
+                            <PaddingBottom>1pt</PaddingBottom>
                           </Style>
                         </Textbox>
                       </CellContents>
@@ -1451,7 +1308,7 @@ ORDER BY [FA].[Roll Year],
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox23">
+                        <Textbox Name="Textbox24">
                           <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -1489,7 +1346,7 @@ ORDER BY [FA].[Roll Year],
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox24">
+                        <Textbox Name="Textbox25">
                           <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -1528,7 +1385,7 @@ ORDER BY [FA].[Roll Year],
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox25">
+                        <Textbox Name="Textbox161">
                           <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -1568,7 +1425,7 @@ ORDER BY [FA].[Roll Year],
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.18633in</Height>
+                  <Height>0.1655in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -1621,19 +1478,18 @@ ORDER BY [FA].[Roll Year],
                     <TablixCell />
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox529">
+                        <Textbox Name="Textbox502">
                           <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(IIF(IsNothing(Fields!Occurrences.Value),Fields!Folio_Count.Value,Fields!Occurrences.Value+Fields!Folio_Count.Value))</Value>
+                                  <Value />
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
-                                    <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1642,7 +1498,7 @@ ORDER BY [FA].[Roll Year],
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox529</rd:DefaultName>
+                          <rd:DefaultName>Textbox502</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -1778,8 +1634,8 @@ ORDER BY [FA].[Roll Year],
                             <BackgroundColor>WhiteSmoke</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
+                            <PaddingTop>1pt</PaddingTop>
+                            <PaddingBottom>1pt</PaddingBottom>
                           </Style>
                         </Textbox>
                       </CellContents>
@@ -1989,12 +1845,11 @@ ORDER BY [FA].[Roll Year],
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.18633in</Height>
+                  <Height>0.1655in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox15">
-                          <CanGrow>true</CanGrow>
                           <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -2040,7 +1895,6 @@ ORDER BY [FA].[Roll Year],
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox642">
-                          <CanGrow>true</CanGrow>
                           <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -2090,7 +1944,6 @@ ORDER BY [FA].[Roll Year],
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox29">
-                          <CanGrow>true</CanGrow>
                           <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -2140,7 +1993,6 @@ ORDER BY [FA].[Roll Year],
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox86">
-                          <CanGrow>true</CanGrow>
                           <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -2182,8 +2034,8 @@ ORDER BY [FA].[Roll Year],
                             <BackgroundColor>WhiteSmoke</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
+                            <PaddingTop>1pt</PaddingTop>
+                            <PaddingBottom>1pt</PaddingBottom>
                           </Style>
                         </Textbox>
                       </CellContents>
@@ -2191,7 +2043,6 @@ ORDER BY [FA].[Roll Year],
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Exempt_Gen_Improvements">
-                          <CanGrow>true</CanGrow>
                           <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -2242,7 +2093,6 @@ ORDER BY [FA].[Roll Year],
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox646">
-                          <CanGrow>true</CanGrow>
                           <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -2292,7 +2142,6 @@ ORDER BY [FA].[Roll Year],
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox40">
-                          <CanGrow>true</CanGrow>
                           <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -2343,7 +2192,6 @@ ORDER BY [FA].[Roll Year],
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox41">
-                          <CanGrow>true</CanGrow>
                           <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -2385,7 +2233,7 @@ ORDER BY [FA].[Roll Year],
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.17591in</Height>
+                  <Height>0.15508in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -2398,11 +2246,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>="Totals for"
 + Space(1)
-+Parameters!p_JR.Value
-+Space(1)
-+"-"
-+Space(1)
-+ Replace(Fields!Jurisdiction_Desc.Value,"(" + Fields!Jurisdiction_Code.Value + ")","")</Value>
++Fields!Area.Value</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -2598,8 +2442,8 @@ ORDER BY [FA].[Roll Year],
                             <BackgroundColor>WhiteSmoke</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
+                            <PaddingTop>1pt</PaddingTop>
+                            <PaddingBottom>1pt</PaddingBottom>
                           </Style>
                         </Textbox>
                       </CellContents>
@@ -2812,7 +2656,7 @@ ORDER BY [FA].[Roll Year],
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.19875in</Height>
+                  <Height>0.18833in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -2983,8 +2827,8 @@ ORDER BY [FA].[Roll Year],
                             <BackgroundColor>WhiteSmoke</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
+                            <PaddingTop>1pt</PaddingTop>
+                            <PaddingBottom>1pt</PaddingBottom>
                           </Style>
                         </Textbox>
                       </CellContents>
@@ -3227,7 +3071,7 @@ ORDER BY [FA].[Roll Year],
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.18633in</Height>
+                  <Height>0.17591in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -3412,8 +3256,8 @@ ORDER BY [FA].[Roll Year],
                             <BackgroundColor>LightGrey</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
+                            <PaddingTop>1pt</PaddingTop>
+                            <PaddingBottom>1pt</PaddingBottom>
                           </Style>
                         </Textbox>
                       </CellContents>
@@ -3495,7 +3339,7 @@ ORDER BY [FA].[Roll Year],
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.19792in</Height>
+                  <Height>0.17708in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -3716,8 +3560,8 @@ ORDER BY [FA].[Roll Year],
                             <BackgroundColor>LightGrey</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
+                            <PaddingTop>1pt</PaddingTop>
+                            <PaddingBottom>1pt</PaddingBottom>
                           </Style>
                         </Textbox>
                       </CellContents>
@@ -3801,7 +3645,7 @@ ORDER BY [FA].[Roll Year],
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.17708in</Height>
+                  <Height>0.1875in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -4022,8 +3866,8 @@ ORDER BY [FA].[Roll Year],
                             <BackgroundColor>LightGrey</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
+                            <PaddingTop>1pt</PaddingTop>
+                            <PaddingBottom>1pt</PaddingBottom>
                           </Style>
                         </Textbox>
                       </CellContents>
@@ -4113,7 +3957,7 @@ ORDER BY [FA].[Roll Year],
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.1875in</Height>
+                  <Height>0.17708in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -4334,8 +4178,8 @@ ORDER BY [FA].[Roll Year],
                             <BackgroundColor>LightGrey</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
+                            <PaddingTop>1pt</PaddingTop>
+                            <PaddingBottom>1pt</PaddingBottom>
                           </Style>
                         </Textbox>
                       </CellContents>
@@ -4447,7 +4291,6 @@ ORDER BY [FA].[Roll Year],
                   <Group Name="Area">
                     <GroupExpressions>
                       <GroupExpression>=Fields!Area.Value</GroupExpression>
-                      <GroupExpression>=Fields!Jurisdiction_Code.Value</GroupExpression>
                     </GroupExpressions>
                     <PageBreak>
                       <BreakLocation>Between</BreakLocation>
@@ -4459,12 +4302,7 @@ ORDER BY [FA].[Roll Year],
                     </SortExpression>
                   </SortExpressions>
                   <TablixMembers>
-                    <TablixMember>
-                      <KeepWithGroup>After</KeepWithGroup>
-                    </TablixMember>
-                    <TablixMember>
-                      <KeepWithGroup>After</KeepWithGroup>
-                    </TablixMember>
+                    <TablixMember />
                     <TablixMember>
                       <Group Name="RESNONRES">
                         <GroupExpressions>
@@ -4482,7 +4320,6 @@ ORDER BY [FA].[Roll Year],
                           <Visibility>
                             <Hidden>=IIF(Fields!RESNONRES.Value = "RES", false,true)</Hidden>
                           </Visibility>
-                          <KeepWithGroup>After</KeepWithGroup>
                         </TablixMember>
                         <TablixMember>
                           <Group Name="Details" />
@@ -4495,54 +4332,43 @@ ORDER BY [FA].[Roll Year],
                           <Visibility>
                             <Hidden>=IIf(Fields!RESNONRES.Value = "RES", False, True)</Hidden>
                           </Visibility>
-                          <KeepWithGroup>Before</KeepWithGroup>
                         </TablixMember>
                         <TablixMember>
                           <Visibility>
                             <Hidden>=IIf(Fields!RESNONRES.Value = "RES", False, True)</Hidden>
                           </Visibility>
-                          <KeepWithGroup>Before</KeepWithGroup>
                         </TablixMember>
                         <TablixMember>
                           <Visibility>
                             <Hidden>=IIf(Fields!RESNONRES.Value = "RES", True, False)</Hidden>
                           </Visibility>
-                          <KeepWithGroup>Before</KeepWithGroup>
                         </TablixMember>
                         <TablixMember>
                           <Visibility>
                             <Hidden>=IIf(Fields!RESNONRES.Value = "RES", True, False)</Hidden>
                           </Visibility>
-                          <KeepWithGroup>Before</KeepWithGroup>
                         </TablixMember>
                       </TablixMembers>
                       <KeepTogether>true</KeepTogether>
                     </TablixMember>
-                    <TablixMember>
-                      <KeepWithGroup>Before</KeepWithGroup>
-                    </TablixMember>
-                    <TablixMember>
-                      <KeepWithGroup>Before</KeepWithGroup>
-                    </TablixMember>
-                    <TablixMember>
-                      <KeepWithGroup>Before</KeepWithGroup>
-                    </TablixMember>
-                    <TablixMember>
-                      <KeepWithGroup>Before</KeepWithGroup>
-                    </TablixMember>
-                    <TablixMember>
-                      <KeepWithGroup>Before</KeepWithGroup>
-                    </TablixMember>
+                    <TablixMember />
+                    <TablixMember />
+                    <TablixMember />
+                    <TablixMember />
+                    <TablixMember />
                   </TablixMembers>
                   <KeepTogether>true</KeepTogether>
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
-            <RepeatColumnHeaders>true</RepeatColumnHeaders>
-            <RepeatRowHeaders>true</RepeatRowHeaders>
+            <FixedColumnHeaders>true</FixedColumnHeaders>
+            <FixedRowHeaders>true</FixedRowHeaders>
             <KeepTogether>true</KeepTogether>
             <DataSetName>qryData</DataSetName>
-            <Height>2.63961in</Height>
+            <PageBreak>
+              <BreakLocation>Start</BreakLocation>
+            </PageBreak>
+            <Height>2.2462in</Height>
             <Width>12.74521in</Width>
             <Style>
               <Border>
@@ -4644,126 +4470,6 @@ ORDER BY [FA].[Roll Year],
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox137</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>None</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox625">
-                          <CanShrink>true</CanShrink>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value />
-                                  <Style>
-                                    <FontFamily>Arial</FontFamily>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Right</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox624</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <BottomBorder>
-                              <Style>None</Style>
-                            </BottomBorder>
-                            <BackgroundColor>LightSteelBlue</BackgroundColor>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                        <ColSpan>7</ColSpan>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell />
-                    <TablixCell />
-                    <TablixCell />
-                    <TablixCell />
-                    <TablixCell />
-                    <TablixCell />
-                  </TablixCells>
-                </TablixRow>
-                <TablixRow>
-                  <Height>0.25758in</Height>
-                  <TablixCells>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox9">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>Jurisdiction:</Value>
-                                  <Style>
-                                    <FontFamily>Arial</FontFamily>
-                                    <FontSize>11pt</FontSize>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Right</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox8</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>None</Style>
-                            </Border>
-                            <PaddingLeft>15pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox73">
-                          <CanShrink>true</CanShrink>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!Jurisdiction_Code.Value + Space(2) + Replace(Fields!Jurisdiction_Desc.Value, "(" + Fields!Jurisdiction_Code.Value + ")", "")</Value>
-                                  <Style>
-                                    <FontFamily>Arial</FontFamily>
-                                    <FontSize>11pt</FontSize>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Left</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox63</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -5156,15 +4862,14 @@ ORDER BY [FA].[Roll Year],
                     <TablixCell />
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Occurrences2">
+                        <Textbox Name="Occurrences4">
                           <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(IIF(IsNothing(Fields!Occurrences.Value), Fields!Folio_Count.Value
-, IIF(Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter", Fields!Occurrences.Value + Fields!Folio_Count.Value, Fields!Folio_Count.Value)))</Value>
+                                  <Value>=Sum(IIF(IsNothing(Fields!Occurrences.Value), Fields!Folio_Count.Value, IIF(Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter", Fields!Occurrences.Value + Fields!Folio_Count.Value, Fields!Folio_Count.Value)))</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -5504,6 +5209,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value />
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -5541,6 +5247,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>Exempt</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -5579,6 +5286,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Fields!Exempt_School_Land.Value</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -5620,6 +5328,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Fields!Exempt_School_Improvements.Value</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -5658,6 +5367,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value />
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -5695,6 +5405,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value />
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -5733,6 +5444,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value />
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -5762,7 +5474,7 @@ ORDER BY [FA].[Roll Year],
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.17591in</Height>
+                  <Height>0.19675in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -5815,19 +5527,18 @@ ORDER BY [FA].[Roll Year],
                     <TablixCell />
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox531">
+                        <Textbox Name="Textbox501">
                           <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(IIF(IsNothing(Fields!Occurrences.Value), Fields!Folio_Count.Value, Fields!Occurrences.Value + Fields!Folio_Count.Value))</Value>
+                                  <Value />
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
-                                    <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -5836,7 +5547,7 @@ ORDER BY [FA].[Roll Year],
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox529</rd:DefaultName>
+                          <rd:DefaultName>Textbox501</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -6183,12 +5894,11 @@ ORDER BY [FA].[Roll Year],
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.18633in</Height>
+                  <Height>0.19675in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox16">
-                          <CanGrow>true</CanGrow>
                           <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -6481,7 +6191,6 @@ ORDER BY [FA].[Roll Year],
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox48">
-                          <CanGrow>true</CanGrow>
                           <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -6532,7 +6241,6 @@ ORDER BY [FA].[Roll Year],
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox90">
-                          <CanGrow>true</CanGrow>
                           <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -6574,7 +6282,7 @@ ORDER BY [FA].[Roll Year],
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.17591in</Height>
+                  <Height>0.18633in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -6585,7 +6293,9 @@ ORDER BY [FA].[Roll Year],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>="Totals for" + Space(1) + Parameters!p_JR.Value + Space(1) + "-" + Space(1) + Replace(Fields!Jurisdiction_Desc.Value, "(" + Fields!Jurisdiction_Code.Value + ")", "")</Value>
+                                  <Value>="Totals for"
++ Space(1)
++Fields!Area.Value</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -6995,13 +6705,12 @@ ORDER BY [FA].[Roll Year],
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.18833in</Height>
+                  <Height>0.20917in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox97">
                           <CanGrow>true</CanGrow>
-                          <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
@@ -7314,7 +7023,6 @@ ORDER BY [FA].[Roll Year],
                       <CellContents>
                         <Textbox Name="Textbox6">
                           <CanGrow>true</CanGrow>
-                          <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
@@ -7357,7 +7065,7 @@ ORDER BY [FA].[Roll Year],
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.1553in</Height>
+                  <Height>0.0928in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -7411,7 +7119,7 @@ ORDER BY [FA].[Roll Year],
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.21758in</Height>
+                  <Height>0.19675in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -7426,6 +7134,7 @@ ORDER BY [FA].[Roll Year],
 + CStr(FORMAT(Sum(Fields!Folio_Count.Value), "N0"))</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -7466,6 +7175,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value />
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -7504,6 +7214,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value />
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -7539,6 +7250,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value />
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -7574,6 +7286,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value />
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -7609,6 +7322,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value />
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -7646,6 +7360,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value />
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -7692,7 +7407,6 @@ ORDER BY [FA].[Roll Year],
                   <Group Name="Area2">
                     <GroupExpressions>
                       <GroupExpression>=Fields!Area.Value</GroupExpression>
-                      <GroupExpression>=Fields!Jurisdiction_Code.Value</GroupExpression>
                     </GroupExpressions>
                     <PageBreak>
                       <BreakLocation>Between</BreakLocation>
@@ -7704,9 +7418,6 @@ ORDER BY [FA].[Roll Year],
                     </SortExpression>
                   </SortExpressions>
                   <TablixMembers>
-                    <TablixMember>
-                      <KeepWithGroup>After</KeepWithGroup>
-                    </TablixMember>
                     <TablixMember>
                       <KeepWithGroup>After</KeepWithGroup>
                     </TablixMember>
@@ -7779,8 +7490,8 @@ ORDER BY [FA].[Roll Year],
             <PageBreak>
               <BreakLocation>Start</BreakLocation>
             </PageBreak>
-            <Top>2.74074in</Top>
-            <Height>2.17086in</Height>
+            <Top>2.24074in</Top>
+            <Height>1.89245in</Height>
             <Width>12.74521in</Width>
             <ZIndex>1</ZIndex>
             <Style>
@@ -7883,126 +7594,6 @@ ORDER BY [FA].[Roll Year],
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox137</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>None</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox627">
-                          <CanShrink>true</CanShrink>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value />
-                                  <Style>
-                                    <FontFamily>Arial</FontFamily>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Right</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox624</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <BottomBorder>
-                              <Style>None</Style>
-                            </BottomBorder>
-                            <BackgroundColor>LightSteelBlue</BackgroundColor>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                        <ColSpan>7</ColSpan>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell />
-                    <TablixCell />
-                    <TablixCell />
-                    <TablixCell />
-                    <TablixCell />
-                    <TablixCell />
-                  </TablixCells>
-                </TablixRow>
-                <TablixRow>
-                  <Height>0.25758in</Height>
-                  <TablixCells>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox12">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>Jurisdiction:</Value>
-                                  <Style>
-                                    <FontFamily>Arial</FontFamily>
-                                    <FontSize>11pt</FontSize>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Right</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox8</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>None</Style>
-                            </Border>
-                            <PaddingLeft>15pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox105">
-                          <CanShrink>true</CanShrink>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!Jurisdiction_Code.Value + Space(2) + Replace(Fields!Jurisdiction_Desc.Value, "(" + Fields!Jurisdiction_Code.Value + ")", "")</Value>
-                                  <Style>
-                                    <FontFamily>Arial</FontFamily>
-                                    <FontSize>11pt</FontSize>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Left</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox63</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -8395,14 +7986,15 @@ ORDER BY [FA].[Roll Year],
                     <TablixCell />
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Occurrences3">
+                        <Textbox Name="Occurrences8">
                           <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(IIF(IsNothing(Fields!Occurrences.Value), Fields!Folio_Count.Value, IIF(Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter", Fields!Occurrences.Value + Fields!Folio_Count.Value, Fields!Folio_Count.Value)))</Value>
+                                  <Value>=Sum(IIF(IsNothing(Fields!Occurrences.Value)
+, Fields!Folio_Count.Value, IIF(Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter", Fields!Occurrences.Value + Fields!Folio_Count.Value, Fields!Folio_Count.Value)))</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -9007,7 +8599,7 @@ ORDER BY [FA].[Roll Year],
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.21758in</Height>
+                  <Height>0.17591in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -9021,6 +8613,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=IIf(Fields!RESNONRES.Value = "RES", "1 - *Total Residential*", "other")</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -9059,18 +8652,18 @@ ORDER BY [FA].[Roll Year],
                     <TablixCell />
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox535">
-                          <CanShrink>true</CanShrink>
+                        <Textbox Name="Textbox500">
+                          <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(IIF(IsNothing(Fields!Occurrences.Value), Fields!Folio_Count.Value, Fields!Occurrences.Value + Fields!Folio_Count.Value))</Value>
+                                  <Value />
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
-                                    <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -9079,7 +8672,7 @@ ORDER BY [FA].[Roll Year],
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox529</rd:DefaultName>
+                          <rd:DefaultName>Textbox500</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -9118,6 +8711,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>Gross</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -9132,6 +8726,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value />
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -9180,6 +8775,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Sum(Fields!Gross_Hosp_Land.Value)</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -9230,6 +8826,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Sum(Fields!Gross_Hosp_Improvements.Value)</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -9280,6 +8877,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value />
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -9328,6 +8926,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Sum(Fields!Net_Hosp_Land.Value)</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -9378,6 +8977,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Sum(Fields!Net_Hosp_Improvements.Value)</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -9419,7 +9019,7 @@ ORDER BY [FA].[Roll Year],
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.21758in</Height>
+                  <Height>0.20716in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -9433,6 +9033,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value />
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -9477,6 +9078,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value />
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -9525,6 +9127,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>Exempt</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -9573,6 +9176,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Sum(Fields!Exempt_Hosp_Land.Value)</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -9622,6 +9226,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Sum(Fields!Exempt_Hosp_Improvements.Value)</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -9671,6 +9276,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value />
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -9719,6 +9325,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value />
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -9768,6 +9375,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value />
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -9799,7 +9407,7 @@ ORDER BY [FA].[Roll Year],
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.21758in</Height>
+                  <Height>0.17591in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -9810,9 +9418,12 @@ ORDER BY [FA].[Roll Year],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>="Totals for" + Space(1) + Parameters!p_JR.Value + Space(1) + "-" + Space(1) + Replace(Fields!Jurisdiction_Desc.Value, "(" + Fields!Jurisdiction_Code.Value + ")", "")</Value>
+                                  <Value>="Totals for"
++ Space(1)
++Fields!Area.Value</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -9858,6 +9469,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value />
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -9906,6 +9518,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>Gross</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -9920,6 +9533,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value />
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -9968,6 +9582,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Sum(Fields!Gross_Hosp_Land.Value, "Area3")</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -10018,6 +9633,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Sum(Fields!Gross_Hosp_Improvements.Value, "Area3")</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -10068,6 +9684,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>Net</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -10116,6 +9733,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Sum(Fields!Net_Hosp_Land.Value, "Area3")</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -10166,6 +9784,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Sum(Fields!Net_Hosp_Improvements.Value, "Area3")</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -10207,7 +9826,7 @@ ORDER BY [FA].[Roll Year],
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.23in</Height>
+                  <Height>0.19875in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -10221,6 +9840,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value />
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -10262,6 +9882,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value />
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -10310,6 +9931,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>Exempt</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -10349,6 +9971,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Sum(Fields!Exempt_Hosp_Land.Value, "Area3")</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -10392,6 +10015,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Sum(Fields!Exempt_Hosp_Improvements.Value, "Area3")</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -10435,6 +10059,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>Totals</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -10477,6 +10102,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Sum(Fields!Net_Hosp_Land.Value, "Area3") + Sum(Fields!Net_Hosp_Improvements.Value, "Area3")</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -10525,6 +10151,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -10559,7 +10186,7 @@ ORDER BY [FA].[Roll Year],
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.1553in</Height>
+                  <Height>0.12405in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -10893,7 +10520,6 @@ ORDER BY [FA].[Roll Year],
                   <Group Name="Area3">
                     <GroupExpressions>
                       <GroupExpression>=Fields!Area.Value</GroupExpression>
-                      <GroupExpression>=Fields!Jurisdiction_Code.Value</GroupExpression>
                     </GroupExpressions>
                     <PageBreak>
                       <BreakLocation>Between</BreakLocation>
@@ -10905,9 +10531,6 @@ ORDER BY [FA].[Roll Year],
                     </SortExpression>
                   </SortExpressions>
                   <TablixMembers>
-                    <TablixMember>
-                      <KeepWithGroup>After</KeepWithGroup>
-                    </TablixMember>
                     <TablixMember>
                       <KeepWithGroup>After</KeepWithGroup>
                     </TablixMember>
@@ -10980,8 +10603,8 @@ ORDER BY [FA].[Roll Year],
             <PageBreak>
               <BreakLocation>Start</BreakLocation>
             </PageBreak>
-            <Top>4.99769in</Top>
-            <Height>2.32711in</Height>
+            <Top>4.12269in</Top>
+            <Height>1.91328in</Height>
             <Width>12.74521in</Width>
             <ZIndex>2</ZIndex>
             <Style>
@@ -11081,273 +10704,6 @@ ORDER BY [FA].[Roll Year],
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox137</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>None</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox636">
-                          <CanShrink>true</CanShrink>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value />
-                                  <Style>
-                                    <FontFamily>Arial</FontFamily>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Right</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox624</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <BottomBorder>
-                              <Style>None</Style>
-                            </BottomBorder>
-                            <BackgroundColor>LightSteelBlue</BackgroundColor>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                        <ColSpan>2</ColSpan>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell />
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox251">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value />
-                                  <Style>
-                                    <FontFamily>Arial</FontFamily>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Right</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox251</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <BottomBorder>
-                              <Style>None</Style>
-                            </BottomBorder>
-                            <BackgroundColor>LightSteelBlue</BackgroundColor>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox265">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value />
-                                  <Style>
-                                    <FontFamily>Arial</FontFamily>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Right</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox265</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <BottomBorder>
-                              <Style>None</Style>
-                            </BottomBorder>
-                            <BackgroundColor>LightSteelBlue</BackgroundColor>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox279">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value />
-                                  <Style>
-                                    <FontFamily>Arial</FontFamily>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Right</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox279</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <BottomBorder>
-                              <Style>None</Style>
-                            </BottomBorder>
-                            <BackgroundColor>LightSteelBlue</BackgroundColor>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox293">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value />
-                                  <Style>
-                                    <FontFamily>Arial</FontFamily>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Right</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox293</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <BottomBorder>
-                              <Style>None</Style>
-                            </BottomBorder>
-                            <BackgroundColor>LightSteelBlue</BackgroundColor>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                  </TablixCells>
-                </TablixRow>
-                <TablixRow>
-                  <Height>0.25758in</Height>
-                  <TablixCells>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox148">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>Jurisdiction:</Value>
-                                  <Style>
-                                    <FontFamily>Arial</FontFamily>
-                                    <FontSize>11pt</FontSize>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Right</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox8</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>None</Style>
-                            </Border>
-                            <PaddingLeft>15pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox149">
-                          <CanShrink>true</CanShrink>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!Jurisdiction_Code.Value + Space(2) + Replace(Fields!Jurisdiction_Desc.Value, "(" + Fields!Jurisdiction_Code.Value + ")", "")</Value>
-                                  <Style>
-                                    <FontFamily>Arial</FontFamily>
-                                    <FontSize>11pt</FontSize>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Left</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox63</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -11703,7 +11059,7 @@ ORDER BY [FA].[Roll Year],
                     <TablixCell />
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Occurrences4">
+                        <Textbox Name="Occurrences5">
                           <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -11711,7 +11067,10 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Sum(IIF(IsNothing(Fields!Occurrences.Value)
-, Fields!Folio_Count.Value, IIF(Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter", Fields!Occurrences.Value + Fields!Folio_Count.Value, Fields!Folio_Count.Value)))</Value>
+, Fields!Folio_Count.Value
+, IIF(Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter"
+,Fields!Occurrences.Value + Fields!Folio_Count.Value
+,Fields!Folio_Count.Value)))</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <Format>#,0</Format>
@@ -11780,7 +11139,7 @@ ORDER BY [FA].[Roll Year],
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Occurrences5">
+                        <Textbox Name="Occurrences6">
                           <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -11788,7 +11147,10 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Sum(IIF(IsNothing(Fields!Occurrences.Value)
-, Fields!Folio_Count.Value, IIF(Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter", Fields!Occurrences.Value + Fields!Folio_Count.Value, Fields!Folio_Count.Value)))</Value>
+, Fields!Folio_Count.Value
+, IIF(Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter"
+,Fields!Occurrences.Value + Fields!Folio_Count.Value
+,Fields!Folio_Count.Value)))</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <Format>#,0</Format>
@@ -11857,7 +11219,7 @@ ORDER BY [FA].[Roll Year],
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Occurrences6">
+                        <Textbox Name="Occurrences7">
                           <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -11866,7 +11228,9 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(IIF(IsNothing(Fields!Occurrences.Value)
 , Fields!Folio_Count.Value
-, IIF(Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter", Fields!Occurrences.Value + Fields!Folio_Count.Value, Fields!Folio_Count.Value)))</Value>
+, IIF(Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter"
+,Fields!Occurrences.Value + Fields!Folio_Count.Value
+,Fields!Folio_Count.Value)))</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <Format>#,0</Format>
@@ -12294,7 +11658,9 @@ ORDER BY [FA].[Roll Year],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>="Totals for" + Space(1) + Parameters!p_JR.Value + Space(1) + "-" + Space(1) + Replace(Fields!Jurisdiction_Desc.Value, "(" + Fields!Jurisdiction_Code.Value + ")", "")</Value>
+                                  <Value>="Totals for"
++ Space(1)
++Fields!Area.Value</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontWeight>Bold</FontWeight>
@@ -14028,7 +13394,6 @@ ORDER BY [FA].[Roll Year],
                   <Group Name="Area4">
                     <GroupExpressions>
                       <GroupExpression>=Fields!Area.Value</GroupExpression>
-                      <GroupExpression>=Fields!Jurisdiction_Code.Value</GroupExpression>
                     </GroupExpressions>
                     <PageBreak>
                       <BreakLocation>Between</BreakLocation>
@@ -14040,9 +13405,6 @@ ORDER BY [FA].[Roll Year],
                     </SortExpression>
                   </SortExpressions>
                   <TablixMembers>
-                    <TablixMember>
-                      <KeepWithGroup>After</KeepWithGroup>
-                    </TablixMember>
                     <TablixMember>
                       <KeepWithGroup>After</KeepWithGroup>
                     </TablixMember>
@@ -14109,10 +13471,10 @@ ORDER BY [FA].[Roll Year],
             <KeepTogether>true</KeepTogether>
             <DataSetName>qryData</DataSetName>
             <PageBreak>
-              <BreakLocation>StartAndEnd</BreakLocation>
+              <BreakLocation>Start</BreakLocation>
             </PageBreak>
-            <Top>7.44155in</Top>
-            <Height>2.50711in</Height>
+            <Top>6.06655in</Top>
+            <Height>2.24953in</Height>
             <Width>12.74521in</Width>
             <ZIndex>3</ZIndex>
             <Style>
@@ -14124,7 +13486,7 @@ ORDER BY [FA].[Roll Year],
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>9.95674in</Height>
+        <Height>8.56608in</Height>
         <Style>
           <Border>
             <Style>None</Style>
@@ -14186,19 +13548,19 @@ ORDER BY [FA].[Roll Year],
         </DataSetReference>
       </ValidValues>
     </ReportParameter>
-    <ReportParameter Name="p_JR">
+    <ReportParameter Name="p_AR">
       <DataType>String</DataType>
       <DefaultValue>
         <Values>
-          <Value>213</Value>
+          <Value>01</Value>
         </Values>
       </DefaultValue>
-      <Prompt>Juristiction</Prompt>
+      <Prompt>Assessment Area</Prompt>
       <ValidValues>
         <DataSetReference>
-          <DataSetName>qryJR</DataSetName>
-          <ValueField>Jurisdiction_Code</ValueField>
-          <LabelField>Jurisdiction</LabelField>
+          <DataSetName>qryAR</DataSetName>
+          <ValueField>Area_Code</ValueField>
+          <LabelField>Area</LabelField>
         </DataSetReference>
       </ValidValues>
     </ReportParameter>
@@ -14221,7 +13583,7 @@ ORDER BY [FA].[Roll Year],
         <CellDefinition>
           <ColumnIndex>2</ColumnIndex>
           <RowIndex>0</RowIndex>
-          <ParameterName>p_JR</ParameterName>
+          <ParameterName>p_AR</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>

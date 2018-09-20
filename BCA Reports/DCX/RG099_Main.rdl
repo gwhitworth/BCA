@@ -68,219 +68,73 @@
           <QueryParameter Name="@p_RY">
             <Value>=Parameters!p_RY.Value</Value>
           </QueryParameter>
-          <QueryParameter Name="@p_CN">
-            <Value>=Parameters!p_CN.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="@p_RD">
-            <Value>=Parameters!p_RD.Value</Value>
-          </QueryParameter>
         </QueryParameters>
-        <CommandText>SELECT [FA].[Roll Year], 
-       [RD].[Regional District], 
-       '(AA'+[AG].[Area Code]+')' AS [Area Code], 
-       AG.[Jurisdiction Code]+' '+AG.[Jurisdiction Type Desc]+' of '+AG.[Jurisdiction Desc] AS [Jurisdiction], 
-       [ED].[BCA Code], 
-       COUNT(DISTINCT CASE
-                          WHEN [FA].[Assessment Code] = '01'
-                      -- AND [FA].[Net General Land Value] &gt; 1
-                          THEN [FA].dimFolio_SK
-                      END) AS [Gen Folio], 
-       SUM(CASE
-               WHEN [FA].[Assessment Code] = '01'
-               THEN [FA].[Net General Land Value]
-           END) AS [Gen Land], 
-       SUM(CASE
-               WHEN [FA].[Assessment Code] = '02'
-               THEN [FA].[Net General Building Value]
-           END) AS [Gen Improvements], 
-       COUNT([OCCUR].[Occur Count]) AS [Hosp Folio], 
-       SUM(CASE
-               WHEN [FA].[Assessment Code] = '01'
-               THEN [FA].[Net Other Land Value]
-           END) AS [Hosp Land], 
-       SUM(CASE
-               WHEN [FA].[Assessment Code] = '02'
-               THEN [FA].[Net Other Building Value]
-           END) AS [Hosp Improvements]
-FROM [edw].[FactAllAssessedAmounts] AS [FA]
-     INNER JOIN [edw].[dimPropertyClass] AS [PC] ON [FA].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
-     INNER JOIN [edw].[dimAssessmentGeography] AS [AG] ON [FA].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
-     INNER JOIN [edw].[dimFolio] AS [FO] ON [FO].[dimFolio_SK] = [FA].[dimFolio_SK]
-                                            AND FO.[Folio Status Code] = '01'
-     INNER JOIN [edw].[dimRegionalDistrict] AS [RD] ON [RD].dimRegionalDistrict_SK = [FO].dimRegionalDistrict_SK
-     LEFT OUTER JOIN [edw].[dimElectoralDistrict] AS [ED] ON [ED].dimJurisdiction_SK = [AG].dimJurisdiction_SK
-     LEFT OUTER JOIN
-(
-    SELECT [FAV].dimFolio_SK, 
-           [FAV].[Property Class Code], 
-           COUNT(*) - 1 AS [Occur Count]
-    FROM [EDW].[edw].[FactAllAssessedAmounts] AS [FAV]
-         INNER JOIN [edw].[dimPropertyClass] AS [PC] ON [FAV].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
-         INNER JOIN [edw].[dimAssessmentGeography] AS [AG] ON [FAV].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
-    WHERE [FAV].[Roll Year] = @p_RY
-          AND AG.[Roll Category Code] = '1'
-          AND [FAV].[Cycle Number] &lt;= @p_CN
-          AND [Assessment Code] = '02'
-    GROUP BY [FAV].dimFolio_SK, 
-             [FAV].[Property Class Code]
-    HAVING COUNT(*) &gt; 1
-) AS [OCCUR] ON [OCCUR].dimFolio_SK = [FA].dimFolio_SK
-WHERE [FA].[Roll Year] = @p_RY
-      AND AG.[Roll Category Code] = '1'
-      AND [FA].[Cycle Number] = @p_CN
-      AND ([FA].[Current Cycle Flag] = 'Current Cycle Only')
-      AND [RD].[Regional District Code] IN (@p_RD)
-GROUP BY [FA].[Roll Year], 
-         [RD].[Regional District], 
-         '(AA'+[AG].[Area Code]+')', 
-         AG.[Jurisdiction Code]+' '+AG.[Jurisdiction Type Desc]+' of '+AG.[Jurisdiction Desc], 
-         [ED].[BCA Code]
-ORDER BY [FA].[Roll Year], 
-         [RD].[Regional District], 
-         [Area Code], 
-         [Jurisdiction];</CommandText>
+        <CommandText>SELECT [AR].[Area Code], 
+       [Jurisdiction Code]
+FROM edw.dimJurisdiction AS [JR]
+     INNER JOIN [edw].[dimArea] AS [AR] ON [JR].dimArea_SK = [AR].dimArea_SK
+WHERE([JR].dimRollYear_SK = @p_RY)
+     AND [Jurisdiction Code] &gt; '199'
+ORDER BY [AR].[Area Code], 
+         [Jurisdiction Code];</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>
-        <Field Name="Roll_Year">
-          <DataField>Roll Year</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Regional_District">
-          <DataField>Regional District</DataField>
+        <Field Name="Jurisdiction_Code">
+          <DataField>Jurisdiction Code</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Area_Code">
           <DataField>Area Code</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Jurisdiction">
-          <DataField>Jurisdiction</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Gen_Folio">
-          <DataField>Gen Folio</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Hosp_Folio">
-          <DataField>Hosp Folio</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Gen_Land">
-          <DataField>Gen Land</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
-        </Field>
-        <Field Name="Hosp_Land">
-          <DataField>Hosp Land</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
-        </Field>
-        <Field Name="BCA_Code">
-          <DataField>BCA Code</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Gen_Improvements">
-          <DataField>Gen Improvements</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
-        </Field>
-        <Field Name="Hosp_Improvements">
-          <DataField>Hosp Improvements</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
-        </Field>
       </Fields>
     </DataSet>
-    <DataSet Name="qryRD">
+    <DataSet Name="qryAR">
       <SharedDataSet>
-        <SharedDataSetReference>qryRD</SharedDataSetReference>
+        <SharedDataSetReference>qryAR</SharedDataSetReference>
         <QueryParameters>
           <QueryParameter Name="@p_RY">
             <Value>=Parameters!p_RY.Value</Value>
-            <rd:UserDefined>true</rd:UserDefined>
           </QueryParameter>
         </QueryParameters>
       </SharedDataSet>
       <Fields>
-        <Field Name="dimRegionalDistrict_SK">
-          <DataField>dimRegionalDistrict_SK</DataField>
+        <Field Name="dimArea_SK">
+          <DataField>dimArea_SK</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
-        <Field Name="dimRegionalDistrict_BK">
-          <DataField>dimRegionalDistrict_BK</DataField>
+        <Field Name="dimArea_BK">
+          <DataField>dimArea_BK</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="dimRollYear_SK">
           <DataField>dimRollYear_SK</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
+        <Field Name="dimRegion_SK">
+          <DataField>dimRegion_SK</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Area">
+          <DataField>Area</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Area_Code">
+          <DataField>Area_Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Area_Desc">
+          <DataField>Area_Desc</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="Roll_Year">
           <DataField>Roll_Year</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Regional_District">
-          <DataField>Regional_District</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Regional_District_Code">
-          <DataField>Regional_District_Code</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Regional_District_Desc">
-          <DataField>Regional_District_Desc</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="RowSortOrder">
           <DataField>RowSortOrder</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-      </Fields>
-    </DataSet>
-    <DataSet Name="qryProvTotal">
-      <SharedDataSet>
-        <SharedDataSetReference>qryProvTotal</SharedDataSetReference>
-        <QueryParameters>
-          <QueryParameter Name="@p_RY">
-            <Value>=Parameters!p_RY.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="@p_CN">
-            <Value>=Parameters!p_CN.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-      </SharedDataSet>
-      <Fields>
-        <Field Name="Roll_Year">
-          <DataField>Roll_Year</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Property_Class_Code">
-          <DataField>Property_Class_Code</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Gen_Folio">
-          <DataField>Gen_Folio</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Property_Class_Desc">
-          <DataField>Property_Class_Desc</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Gen_Land">
-          <DataField>Gen_Land</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
-        </Field>
-        <Field Name="Gen_Improvements">
-          <DataField>Gen_Improvements</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
-        </Field>
-        <Field Name="Hosp_Folio">
-          <DataField>Hosp_Folio</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Hosp_Land">
-          <DataField>Hosp_Land</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
-        </Field>
-        <Field Name="Hosp_Improvements">
-          <DataField>Hosp_Improvements</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
         </Field>
       </Fields>
     </DataSet>
@@ -293,46 +147,59 @@ ORDER BY [FA].[Roll Year],
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>12.125in</Width>
+                  <Width>9.84375in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>0.25in</Height>
+                  <Height>0.23264in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Subreport Name="Subreport1">
-                          <ReportName>RGP42_Sub1</ReportName>
-                          <Parameters>
-                            <Parameter Name="p_RY">
-                              <Value>=Parameters!p_RY.Value</Value>
-                            </Parameter>
-                            <Parameter Name="p_CN">
-                              <Value>=Parameters!p_CN.Value</Value>
-                            </Parameter>
-                            <Parameter Name="p_RD">
-                              <Value>=Fields!Regional_District_Code.Value</Value>
-                            </Parameter>
-                          </Parameters>
-                          <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
+                        <Rectangle Name="Rectangle1">
+                          <ReportItems>
+                            <Subreport Name="Subreport1">
+                              <ReportName>RG099_Sub1</ReportName>
+                              <Parameters>
+                                <Parameter Name="p_RY">
+                                  <Value>=Parameters!p_RY.Value</Value>
+                                </Parameter>
+                                <Parameter Name="p_CN">
+                                  <Value>=Parameters!p_CN.Value</Value>
+                                </Parameter>
+                                <Parameter Name="p_JR">
+                                  <Value>=Fields!Jurisdiction_Code.Value</Value>
+                                </Parameter>
+                              </Parameters>
+                              <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
+                              <Top>0.01389in</Top>
+                              <Height>0.21875in</Height>
+                              <Width>9.84375in</Width>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                              </Style>
+                            </Subreport>
+                          </ReportItems>
+                          <KeepTogether>true</KeepTogether>
                           <Style>
                             <Border>
                               <Style>None</Style>
                             </Border>
                           </Style>
-                        </Subreport>
+                        </Rectangle>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.23958in</Height>
+                  <Height>0.25in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
                         <Subreport Name="Subreport2">
-                          <ReportName>RGP42_Sub2</ReportName>
+                          <ReportName>RG099_Sub2</ReportName>
                           <Parameters>
                             <Parameter Name="p_RY">
                               <Value>=Parameters!p_RY.Value</Value>
@@ -340,39 +207,11 @@ ORDER BY [FA].[Roll Year],
                             <Parameter Name="p_CN">
                               <Value>=Parameters!p_CN.Value</Value>
                             </Parameter>
-                            <Parameter Name="p_RD">
-                              <Value>=Fields!Regional_District_Code.Value</Value>
+                            <Parameter Name="p_AR">
+                              <Value>=Fields!Area_Code.Value</Value>
                             </Parameter>
                           </Parameters>
                           <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
-                          <Style>
-                            <Border>
-                              <Style>None</Style>
-                            </Border>
-                          </Style>
-                        </Subreport>
-                      </CellContents>
-                    </TablixCell>
-                  </TablixCells>
-                </TablixRow>
-                <TablixRow>
-                  <Height>0.25in</Height>
-                  <TablixCells>
-                    <TablixCell>
-                      <CellContents>
-                        <Subreport Name="Subreport7">
-                          <ReportName>RGP42_Sub3</ReportName>
-                          <Parameters>
-                            <Parameter Name="p_RY">
-                              <Value>=Parameters!p_RY.Value</Value>
-                            </Parameter>
-                            <Parameter Name="p_CN">
-                              <Value>=Parameters!p_CN.Value</Value>
-                            </Parameter>
-                            <Parameter Name="p_RD">
-                              <Value>=Fields!Regional_District_Code.Value</Value>
-                            </Parameter>
-                          </Parameters>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -393,51 +232,53 @@ ORDER BY [FA].[Roll Year],
             <TablixRowHierarchy>
               <TablixMembers>
                 <TablixMember>
-                  <Group Name="Regional_District_Code">
+                  <Group Name="Area_Code">
                     <GroupExpressions>
-                      <GroupExpression>=Fields!Regional_District_Code.Value</GroupExpression>
+                      <GroupExpression>=Fields!Area_Code.Value</GroupExpression>
                     </GroupExpressions>
+                    <PageBreak>
+                      <BreakLocation>Between</BreakLocation>
+                    </PageBreak>
                   </Group>
                   <SortExpressions>
                     <SortExpression>
-                      <Value>=Fields!Regional_District_Code.Value</Value>
+                      <Value>=Fields!Area_Code.Value</Value>
                     </SortExpression>
                   </SortExpressions>
                   <TablixMembers>
-                    <TablixMember />
-                    <TablixMember />
-                    <TablixMember />
+                    <TablixMember>
+                      <Group Name="Details" />
+                    </TablixMember>
+                    <TablixMember>
+                      <KeepWithGroup>Before</KeepWithGroup>
+                    </TablixMember>
                   </TablixMembers>
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
-            <DataSetName>qryRD</DataSetName>
+            <KeepTogether>true</KeepTogether>
+            <DataSetName>qryData</DataSetName>
             <Filters>
               <Filter>
-                <FilterExpression>=Fields!Regional_District_Code.Value</FilterExpression>
+                <FilterExpression>=Fields!Area_Code.Value</FilterExpression>
                 <Operator>In</Operator>
                 <FilterValues>
-                  <FilterValue>=Parameters!p_RD.Value</FilterValue>
+                  <FilterValue>=Parameters!p_AR.Value</FilterValue>
                 </FilterValues>
               </Filter>
             </Filters>
-            <SortExpressions>
-              <SortExpression>
-                <Value>=Fields!RowSortOrder.Value</Value>
-              </SortExpression>
-            </SortExpressions>
-            <Left>0.13011in</Left>
-            <Height>0.73958in</Height>
-            <Width>12.125in</Width>
+            <Top>0.01389in</Top>
+            <Left>0.125in</Left>
+            <Height>0.48264in</Height>
+            <Width>9.84375in</Width>
             <Style>
               <Border>
-                <Color>White</Color>
                 <Style>None</Style>
               </Border>
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>0.73958in</Height>
+        <Height>0.50694in</Height>
         <Style>
           <Border>
             <Style>None</Style>
@@ -459,7 +300,7 @@ ORDER BY [FA].[Roll Year],
       <Width>12.88521in</Width>
       <Page>
         <PageHeader>
-          <Height>0.97223in</Height>
+          <Height>0.70834in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -506,7 +347,7 @@ ORDER BY [FA].[Roll Year],
                 </Paragraph>
               </Paragraphs>
               <Top>0.00001in</Top>
-              <Height>0.97222in</Height>
+              <Height>0.70833in</Height>
               <Width>12.88521in</Width>
               <Style>
                 <Border>
@@ -519,7 +360,6 @@ ORDER BY [FA].[Roll Year],
             <Image Name="BCALogo">
               <Source>Embedded</Source>
               <Value>BCA_BigBlueLogo</Value>
-              <Top>0.125in</Top>
               <Left>0.11633in</Left>
               <Height>0.37153in</Height>
               <Width>2.35069in</Width>
@@ -552,7 +392,7 @@ ORDER BY [FA].[Roll Year],
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>0.62501in</Top>
+              <Top>0.50001in</Top>
               <Left>0.11633in</Left>
               <Height>0.1875in</Height>
               <Width>2.35069in</Width>
@@ -578,10 +418,10 @@ ORDER BY [FA].[Roll Year],
                   </Action>
                 </Actions>
               </ActionInfo>
-              <Top>0.47098in</Top>
+              <Top>0.38in</Top>
               <Left>12.38521in</Left>
-              <Height>0.5in</Height>
-              <Width>0.5in</Width>
+              <Height>0.32834in</Height>
+              <Width>0.375in</Width>
               <ZIndex>3</ZIndex>
               <ToolTip>="The risk rating"</ToolTip>
               <Style>
@@ -639,7 +479,7 @@ ORDER BY [FA].[Roll Year],
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox2</rd:DefaultName>
-              <Top>0.25174in</Top>
+              <Top>0.18in</Top>
               <Left>9.2598in</Left>
               <Height>0.15972in</Height>
               <Width>3.61561in</Width>
@@ -689,7 +529,8 @@ ORDER BY [FA].[Roll Year],
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
-              <Height>0.25in</Height>
+              <Top>0.04167in</Top>
+              <Height>0.20833in</Height>
               <Width>12.88521in</Width>
               <Style>
                 <Border>
@@ -777,7 +618,7 @@ ORDER BY [FA].[Roll Year],
         <PageWidth>14in</PageWidth>
         <LeftMargin>0.5in</LeftMargin>
         <RightMargin>0.1in</RightMargin>
-        <TopMargin>0.15in</TopMargin>
+        <TopMargin>0.1in</TopMargin>
         <BottomMargin>0.1in</BottomMargin>
         <Style>
           <Border>
@@ -827,19 +668,19 @@ ORDER BY [FA].[Roll Year],
         </DataSetReference>
       </ValidValues>
     </ReportParameter>
-    <ReportParameter Name="p_RD">
+    <ReportParameter Name="p_AR">
       <DataType>String</DataType>
       <DefaultValue>
         <Values>
-          <Value>03</Value>
+          <Value>24</Value>
         </Values>
       </DefaultValue>
-      <Prompt>Regional District</Prompt>
+      <Prompt>Assessment Area</Prompt>
       <ValidValues>
         <DataSetReference>
-          <DataSetName>qryRD</DataSetName>
-          <ValueField>Regional_District_Code</ValueField>
-          <LabelField>Regional_District</LabelField>
+          <DataSetName>qryAR</DataSetName>
+          <ValueField>Area_Code</ValueField>
+          <LabelField>Area</LabelField>
         </DataSetReference>
       </ValidValues>
       <MultiValue>true</MultiValue>
@@ -863,7 +704,7 @@ ORDER BY [FA].[Roll Year],
         <CellDefinition>
           <ColumnIndex>2</ColumnIndex>
           <RowIndex>0</RowIndex>
-          <ParameterName>p_RD</ParameterName>
+          <ParameterName>p_AR</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>
