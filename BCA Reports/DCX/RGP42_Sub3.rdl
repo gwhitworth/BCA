@@ -1369,7 +1369,6 @@ ORDER BY [FA].[Roll Year],
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox9">
-                          <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
@@ -1397,7 +1396,6 @@ ORDER BY [FA].[Roll Year],
                           </Style>
                         </Textbox>
                         <ColSpan>8</ColSpan>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
@@ -1410,7 +1408,6 @@ ORDER BY [FA].[Roll Year],
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox137">
-                          <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
@@ -1447,7 +1444,6 @@ ORDER BY [FA].[Roll Year],
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox10">
-                          <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
@@ -1476,14 +1472,12 @@ ORDER BY [FA].[Roll Year],
                           </Style>
                         </Textbox>
                         <ColSpan>2</ColSpan>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox114">
-                          <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
@@ -1518,7 +1512,6 @@ ORDER BY [FA].[Roll Year],
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox70">
-                          <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
@@ -1553,7 +1546,6 @@ ORDER BY [FA].[Roll Year],
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox20">
-                          <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
@@ -1591,7 +1583,6 @@ ORDER BY [FA].[Roll Year],
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox74">
-                          <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
@@ -1626,7 +1617,6 @@ ORDER BY [FA].[Roll Year],
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox22">
-                          <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
@@ -1664,7 +1654,6 @@ ORDER BY [FA].[Roll Year],
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox16">
-                          <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
@@ -1699,7 +1688,6 @@ ORDER BY [FA].[Roll Year],
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox25">
-                          <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
@@ -1771,7 +1759,6 @@ ORDER BY [FA].[Roll Year],
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -2089,7 +2076,6 @@ ORDER BY [FA].[Roll Year],
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -2385,7 +2371,6 @@ ORDER BY [FA].[Roll Year],
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox18">
-                          <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
@@ -2415,14 +2400,12 @@ ORDER BY [FA].[Roll Year],
                           </Style>
                         </Textbox>
                         <ColSpan>2</ColSpan>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox61">
-                          <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
@@ -2458,7 +2441,6 @@ ORDER BY [FA].[Roll Year],
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox62">
-                          <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
@@ -2495,7 +2477,6 @@ ORDER BY [FA].[Roll Year],
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Converted_Land3">
-                          <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
@@ -2532,7 +2513,6 @@ ORDER BY [FA].[Roll Year],
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox64">
-                          <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
@@ -2569,7 +2549,6 @@ ORDER BY [FA].[Roll Year],
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Converted_Improvement3">
-                          <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
@@ -2606,7 +2585,6 @@ ORDER BY [FA].[Roll Year],
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox65">
-                          <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
@@ -2643,7 +2621,6 @@ ORDER BY [FA].[Roll Year],
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Converted_Total3">
-                          <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
@@ -2746,7 +2723,7 @@ ORDER BY [FA].[Roll Year],
             <PageBreak>
               <BreakLocation>Start</BreakLocation>
             </PageBreak>
-            <Top>0.99271in</Top>
+            <Top>0.98in</Top>
             <Height>1.12291in</Height>
             <Width>12.9175in</Width>
             <ZIndex>1</ZIndex>

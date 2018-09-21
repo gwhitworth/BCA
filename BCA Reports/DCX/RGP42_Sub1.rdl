@@ -1803,7 +1803,7 @@ ORDER BY [FA].[Roll Year],
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>1.29584in</Height>
+        <Height>1.22292in</Height>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1812,26 +1812,6 @@ ORDER BY [FA].[Roll Year],
       </Body>
       <Width>12.95917in</Width>
       <Page>
-        <PageHeader>
-          <Height>0.15625in</Height>
-          <PrintOnFirstPage>true</PrintOnFirstPage>
-          <PrintOnLastPage>true</PrintOnLastPage>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-          </Style>
-        </PageHeader>
-        <PageFooter>
-          <Height>0.19792in</Height>
-          <PrintOnFirstPage>true</PrintOnFirstPage>
-          <PrintOnLastPage>true</PrintOnLastPage>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-          </Style>
-        </PageFooter>
         <PageHeight>8.5in</PageHeight>
         <PageWidth>14in</PageWidth>
         <LeftMargin>0.5in</LeftMargin>

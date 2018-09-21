@@ -362,7 +362,7 @@ AND Parameters!p_RD.Count = 1,true,false)</Hidden>
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>1.01958in</Height>
+        <Height>0.98958in</Height>
         <Style>
           <Border>
             <Style>None</Style>
@@ -622,6 +622,7 @@ PER SEC. 3 (1) POLICE ACT</Value>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
+              <Top>0in</Top>
               <Height>0.25in</Height>
               <Width>12.88521in</Width>
               <Style>
@@ -653,6 +654,7 @@ PER SEC. 3 (1) POLICE ACT</Value>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
+              <Top>0in</Top>
               <Left>11.47896in</Left>
               <Height>0.25in</Height>
               <Width>1.40625in</Width>
@@ -685,6 +687,7 @@ PER SEC. 3 (1) POLICE ACT</Value>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>ReportName</rd:DefaultName>
+              <Top>0in</Top>
               <Height>0.25in</Height>
               <Width>1.88784in</Width>
               <ZIndex>2</ZIndex>

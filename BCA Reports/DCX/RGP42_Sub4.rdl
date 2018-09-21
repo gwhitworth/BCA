@@ -3010,7 +3010,7 @@ ORDER BY [FA].[Roll Year],
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>2.26666in</Height>
+        <Height>2.15208in</Height>
         <Style>
           <Border>
             <Color>White</Color>
@@ -3020,28 +3020,6 @@ ORDER BY [FA].[Roll Year],
       </Body>
       <Width>12.95917in</Width>
       <Page>
-        <PageHeader>
-          <Height>0.15626in</Height>
-          <PrintOnFirstPage>true</PrintOnFirstPage>
-          <PrintOnLastPage>true</PrintOnLastPage>
-          <Style>
-            <Border>
-              <Color>White</Color>
-              <Style>None</Style>
-            </Border>
-          </Style>
-        </PageHeader>
-        <PageFooter>
-          <Height>0.25in</Height>
-          <PrintOnFirstPage>true</PrintOnFirstPage>
-          <PrintOnLastPage>true</PrintOnLastPage>
-          <Style>
-            <Border>
-              <Color>White</Color>
-              <Style>None</Style>
-            </Border>
-          </Style>
-        </PageFooter>
         <PageHeight>8.5in</PageHeight>
         <PageWidth>14in</PageWidth>
         <LeftMargin>0.2in</LeftMargin>
