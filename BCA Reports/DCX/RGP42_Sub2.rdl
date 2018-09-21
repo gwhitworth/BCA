@@ -147,14 +147,15 @@ ORDER BY [Cycle Number Sort] DESC</CommandText>
             <Value>=Parameters!p_RD.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>SELECT FA.[Roll Year], 
-       RD.[Regional District Code], 
-       RD.[Regional District], 
-       ED.[BCA Code], 
-       AG.[Jurisdiction Code]+' '+AG.[Jurisdiction Type Desc]+' of '+AG.[Jurisdiction Desc] AS Jurisdiction, 
-       PC.[Property Class Code], 
-       PC.[Property Class Desc], 
-       PC.[Property Conversion Factor], 
+        <CommandText>SELECT [FA].[Roll Year], 
+       [RD].[Regional District Code], 
+       [RD].[Regional District], 
+       [ED].[BCA Code],
+	   [AG].[Jurisdiction Code], 
+       [AG].[Jurisdiction Code]+' '+[AG].[Jurisdiction Type Desc]+' of '+[AG].[Jurisdiction Desc] AS Jurisdiction, 
+       [PC].[Property Class Code], 
+       [PC].[Property Class Desc], 
+       [PC].[Property Conversion Factor], 
        IIF(COUNT(OCCUR.[Occur Count]) = 0, NULL, COUNT(OCCUR.[Occur Count])) AS [Hosp Folio], 
        SUM(CASE
                WHEN [FA].[Assessment Code] = '01'
@@ -164,48 +165,49 @@ ORDER BY [Cycle Number Sort] DESC</CommandText>
                WHEN [FA].[Assessment Code] = '02'
                THEN IIF([FA].[Net Other Building Value] = 0, NULL, [FA].[Net Other Building Value])
            END) AS [Hosp Improvements]
-FROM edw.FactAllAssessedAmounts AS FA
-     INNER JOIN edw.dimPropertyClass AS PC ON FA.dimPropertyClass_SK = PC.dimPropertyClass_SK
-     INNER JOIN edw.dimAssessmentGeography AS AG ON FA.dimAssessmentGeography_SK = AG.dimAssessmentGeography_SK
-     INNER JOIN edw.dimFolio AS FO ON FO.dimFolio_SK = FA.dimFolio_SK
-                                      AND FO.[Folio Status Code] = '01'
-     INNER JOIN edw.dimRegionalDistrict AS RD ON RD.dimRegionalDistrict_SK = FO.dimRegionalDistrict_SK
-     INNER JOIN edw.dimElectoralDistrict AS ED ON ED.dimJurisdiction_SK = AG.dimJurisdiction_SK
+FROM [EDW].FactAllAssessedAmounts AS [FA]
+     INNER JOIN [EDW].[dimPropertyClass] AS [PC] ON [FA].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
+     INNER JOIN [EDW].[dimAssessmentGeography] AS [AG] ON [FA].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
+     INNER JOIN [EDW].[dimFolio] AS [FO] ON [FO].[dimFolio_SK] = [FA].[dimFolio_SK]
+                                      AND [FO].[Folio Status Code] = '01'
+     INNER JOIN [EDW].[dimRegionalDistrict] AS [RD] ON [RD].[dimRegionalDistrict_SK] = [FO].[dimRegionalDistrict_SK]
+     INNER JOIN [EDW].[dimElectoralDistrict] AS [ED] ON [ED].[dimJurisdiction_SK] = [AG].[dimJurisdiction_SK]
      LEFT OUTER JOIN
 (
-    SELECT FAV.dimFolio_SK, 
-           FAV.[Property Class Code], 
+    SELECT [FA].dimFolio_SK, 
+           [FA].[Property Class Code], 
            COUNT(*) - 1 AS [Occur Count]
-    FROM edw.FactAllAssessedAmounts AS FAV
-         INNER JOIN edw.dimPropertyClass AS PC ON FAV.dimPropertyClass_SK = PC.dimPropertyClass_SK
-         INNER JOIN edw.dimAssessmentGeography AS AG ON FAV.dimAssessmentGeography_SK = AG.dimAssessmentGeography_SK
-    WHERE(FAV.[Roll Year] = @p_RY)
-         AND (AG.[Roll Category Code] = '1')
-         AND (FAV.[Cycle Number] &lt;= @p_CN)
-         AND (FAV.[Assessment Code] = '02')
-    GROUP BY FAV.dimFolio_SK, 
-             FAV.[Property Class Code]
+    FROM [EDW].[FactAllAssessedAmounts] AS [FA]
+         INNER JOIN [EDW].[dimPropertyClass] AS [PC] ON [FA].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
+         INNER JOIN [EDW].[dimAssessmentGeography] AS [AG] ON [FA].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
+    WHERE([FA].[Roll Year] = @p_RY)
+         AND ([AG].[Roll Category Code] = '1')
+         AND ([FA].[Cycle Number] &lt;= @p_CN)
+         AND ([FA].[Assessment Code] = '02')
+    GROUP BY [FA].dimFolio_SK, 
+             [FA].[Property Class Code]
     HAVING(COUNT(*) &gt; 1)
-) AS OCCUR ON OCCUR.dimFolio_SK = FA.dimFolio_SK
-WHERE(FA.[Roll Year] = @p_RY)
-     AND (FA.[Cycle Number] = @p_CN)
-     AND (FA.[Current Cycle Flag] = 'Current Cycle Only')
-     AND (RD.[Regional District Code] IN(@p_RD))
-     AND (AG.[Jurisdiction Type Code] = 'R')
-     AND (ED.[BCA Code] &lt;&gt; 'Z')
-GROUP BY FA.[Roll Year], 
-         RD.[Regional District Code], 
-         RD.[Regional District], 
-         ED.[BCA Code], 
-         AG.[Jurisdiction Code]+' '+AG.[Jurisdiction Type Desc]+' of '+AG.[Jurisdiction Desc], 
-         PC.[Property Class Code], 
-         PC.[Property Class Desc], 
-         PC.[Property Conversion Factor]
-ORDER BY FA.[Roll Year], 
-         RD.[Regional District Code], 
-         ED.[BCA Code], 
-         Jurisdiction, 
-         PC.[Property Class Code];</CommandText>
+) AS [OCCUR] ON [OCCUR].[dimFolio_SK] = [FA].[dimFolio_SK]
+WHERE([FA].[Roll Year] = @p_RY)
+     AND ([FA].[Cycle Number] = @p_CN)
+     AND ([FA].[Current Cycle Flag] = 'Current Cycle Only')
+     AND ([RD].[Regional District Code] IN(@p_RD))
+     AND ([AG].[Jurisdiction Type Code] = 'R')
+     AND ([ED].[BCA Code] &lt;&gt; 'Z')
+GROUP BY [FA].[Roll Year], 
+         [RD].[Regional District Code], 
+         [RD].[Regional District], 
+         [ED].[BCA Code], 
+		  [AG].[Jurisdiction Code],
+         [AG].[Jurisdiction Code]+' '+[AG].[Jurisdiction Type Desc]+' of '+[AG].[Jurisdiction Desc], 
+         [PC].[Property Class Code], 
+         [PC].[Property Class Desc], 
+         [PC].[Property Conversion Factor]
+ORDER BY [FA].[Roll Year], 
+         [RD].[Regional District Code], 
+         [ED].[BCA Code], 
+          [AG].[Jurisdiction Code], 
+         [PC].[Property Class Code];</CommandText>
       </Query>
       <Fields>
         <Field Name="Roll_Year">
@@ -222,6 +224,10 @@ ORDER BY FA.[Roll Year],
         </Field>
         <Field Name="BCA_Code">
           <DataField>BCA Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Jurisdiction_Code">
+          <DataField>Jurisdiction Code</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Jurisdiction">
@@ -431,8 +437,7 @@ ORDER BY [FA].[Roll Year],
 + "Electoral Area: " + Fields!BCA_Code.Value
 + System.Environment.NewLine
 + Space(10)
-+ "Juristiction: " 
-+ Fields!Jurisdiction.Value</Value>
++ Replace(Fields!Jurisdiction.Value,"(" + Fields!Jurisdiction_Code.Value + ")","")</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                   </Style>
@@ -568,6 +573,9 @@ ORDER BY [FA].[Roll Year],
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
+                            <RightBorder>
+                              <Style>None</Style>
+                            </RightBorder>
                             <BackgroundColor>LightSteelBlue</BackgroundColor>
                             <VerticalAlign>Bottom</VerticalAlign>
                             <PaddingLeft>2pt</PaddingLeft>
@@ -604,6 +612,9 @@ ORDER BY [FA].[Roll Year],
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
+                            <LeftBorder>
+                              <Style>None</Style>
+                            </LeftBorder>
                             <BackgroundColor>LightSteelBlue</BackgroundColor>
                             <VerticalAlign>Bottom</VerticalAlign>
                             <PaddingLeft>2pt</PaddingLeft>
@@ -939,6 +950,9 @@ ORDER BY [FA].[Roll Year],
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
+                            <RightBorder>
+                              <Style>None</Style>
+                            </RightBorder>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -970,6 +984,9 @@ ORDER BY [FA].[Roll Year],
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
+                            <LeftBorder>
+                              <Style>None</Style>
+                            </LeftBorder>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -987,7 +1004,7 @@ ORDER BY [FA].[Roll Year],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!Hosp_Folio.Value)</Value>
+                                  <Value>=IIf(Sum(Fields!Hosp_Folio.Value)=0,nothing,Sum(Fields!Hosp_Folio.Value))</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <Format>#,0</Format>

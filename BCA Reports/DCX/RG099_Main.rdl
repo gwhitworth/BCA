@@ -267,7 +267,7 @@ ORDER BY [AR].[Area Code],
                 </FilterValues>
               </Filter>
             </Filters>
-            <Top>0.01389in</Top>
+            <Top>-0.20777in</Top>
             <Left>0.125in</Left>
             <Height>0.48264in</Height>
             <Width>9.84375in</Width>
@@ -300,7 +300,7 @@ ORDER BY [AR].[Area Code],
       <Width>12.88521in</Width>
       <Page>
         <PageHeader>
-          <Height>0.70834in</Height>
+          <Height>0.93in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -360,7 +360,7 @@ ORDER BY [AR].[Area Code],
             <Image Name="BCALogo">
               <Source>Embedded</Source>
               <Value>BCA_BigBlueLogo</Value>
-              <Left>0.11633in</Left>
+              <Left>0.1in</Left>
               <Height>0.37153in</Height>
               <Width>2.35069in</Width>
               <ZIndex>1</ZIndex>
@@ -382,6 +382,7 @@ ORDER BY [AR].[Area Code],
                       <Value>www.bcassessment.ca</Value>
                       <Style>
                         <FontStyle>Italic</FontStyle>
+                        <FontFamily>Arial</FontFamily>
                         <FontSize>8pt</FontSize>
                       </Style>
                     </TextRun>
@@ -392,8 +393,8 @@ ORDER BY [AR].[Area Code],
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>0.50001in</Top>
-              <Left>0.11633in</Left>
+              <Top>0.35in</Top>
+              <Left>0.1in</Left>
               <Height>0.1875in</Height>
               <Width>2.35069in</Width>
               <ZIndex>2</ZIndex>
@@ -418,10 +419,10 @@ ORDER BY [AR].[Area Code],
                   </Action>
                 </Actions>
               </ActionInfo>
-              <Top>0.38in</Top>
-              <Left>12.38521in</Left>
-              <Height>0.32834in</Height>
-              <Width>0.375in</Width>
+              <Top>0.05in</Top>
+              <Left>10.32924in</Left>
+              <Height>0.5in</Height>
+              <Width>0.5in</Width>
               <ZIndex>3</ZIndex>
               <ToolTip>="The risk rating"</ToolTip>
               <Style>
@@ -437,8 +438,13 @@ ORDER BY [AR].[Area Code],
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>="Processed Date: " + Mid(Parameters!p_CN.Label, InStr(Parameters!p_CN.Label, "on ") + 3)</Value>
+                      <Value>
+                        ="Processed Date: "
+                        + Replace(Mid(Parameters!p_CN.Label
+                        , InStr(Parameters!p_CN.Label, "on ") + 3),"-","/")
+                      </Value>
                       <Style>
+                        <FontFamily>Arial</FontFamily>
                         <Format>MMM d, yyyy</Format>
                       </Style>
                     </TextRun>
@@ -449,15 +455,17 @@ ORDER BY [AR].[Area Code],
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox2</rd:DefaultName>
-              <Left>9.2598in</Left>
+              <Top>0.05in</Top>
+              <Left>10.84313in</Left>
               <Height>0.15972in</Height>
-              <Width>3.61561in</Width>
+              <Width>2.03228in</Width>
               <ZIndex>4</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
                 </Border>
-                <VerticalAlign>Top</VerticalAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+                <PaddingTop>3pt</PaddingTop>
               </Style>
             </Textbox>
             <Textbox Name="Textbox10">
@@ -469,7 +477,7 @@ ORDER BY [AR].[Area Code],
                     <TextRun>
                       <Value>="Printed Date: " + Format(Globals!ExecutionTime,"dd/MMM/yyyy")</Value>
                       <Style>
-                        <Format>MMM d, yyyy</Format>
+                        <FontFamily>Arial</FontFamily>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -479,16 +487,16 @@ ORDER BY [AR].[Area Code],
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox2</rd:DefaultName>
-              <Top>0.18in</Top>
-              <Left>9.2598in</Left>
+              <Top>0.23in</Top>
+              <Left>10.84313in</Left>
               <Height>0.15972in</Height>
-              <Width>3.61561in</Width>
+              <Width>2.03228in</Width>
               <ZIndex>5</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
                 </Border>
-                <VerticalAlign>Top</VerticalAlign>
+                <VerticalAlign>Middle</VerticalAlign>
               </Style>
             </Textbox>
           </ReportItems>
@@ -529,7 +537,7 @@ ORDER BY [AR].[Area Code],
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
-              <Top>0.04167in</Top>
+              <Top>-0.17999in</Top>
               <Height>0.20833in</Height>
               <Width>12.88521in</Width>
               <Style>
@@ -561,6 +569,7 @@ ORDER BY [AR].[Area Code],
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
+              <Top>-0.22166in</Top>
               <Left>11.47896in</Left>
               <Height>0.25in</Height>
               <Width>1.40625in</Width>
@@ -593,6 +602,7 @@ ORDER BY [AR].[Area Code],
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>ReportName</rd:DefaultName>
+              <Top>-0.22166in</Top>
               <Height>0.25in</Height>
               <Width>1.88784in</Width>
               <ZIndex>2</ZIndex>

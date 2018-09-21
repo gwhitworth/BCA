@@ -7123,10 +7123,8 @@ ORDER BY [FA].[Roll Year],
             <Image Name="BCALogo">
               <Source>Embedded</Source>
               <Value>BCA_BigBlueLogo</Value>
-              <Sizing>FitProportional</Sizing>
-              <Top>0.125in</Top>
-              <Left>0.11633in</Left>
-              <Height>0.30208in</Height>
+              <Left>0.1in</Left>
+              <Height>0.37153in</Height>
               <Width>2.35069in</Width>
               <ZIndex>1</ZIndex>
               <Style>
@@ -7147,6 +7145,7 @@ ORDER BY [FA].[Roll Year],
                       <Value>www.bcassessment.ca</Value>
                       <Style>
                         <FontStyle>Italic</FontStyle>
+                        <FontFamily>Arial</FontFamily>
                         <FontSize>8pt</FontSize>
                       </Style>
                     </TextRun>
@@ -7157,8 +7156,8 @@ ORDER BY [FA].[Roll Year],
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>0.50001in</Top>
-              <Left>0.11633in</Left>
+              <Top>0.35in</Top>
+              <Left>0.1in</Left>
               <Height>0.1875in</Height>
               <Width>2.35069in</Width>
               <ZIndex>2</ZIndex>
@@ -7183,10 +7182,10 @@ ORDER BY [FA].[Roll Year],
                   </Action>
                 </Actions>
               </ActionInfo>
-              <Top>0.36459in</Top>
-              <Left>12.49979in</Left>
-              <Height>0.35639in</Height>
-              <Width>0.36458in</Width>
+              <Top>0.43in</Top>
+              <Left>12.38521in</Left>
+              <Height>0.5in</Height>
+              <Width>0.5in</Width>
               <ZIndex>3</ZIndex>
               <ToolTip>="The risk rating"</ToolTip>
               <Style>
@@ -7195,15 +7194,20 @@ ORDER BY [FA].[Roll Year],
                 </Border>
               </Style>
             </Image>
-            <Textbox Name="Textbox6">
+            <Textbox Name="Textbox8">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
               <Paragraphs>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>="Processed Date: " + Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3)</Value>
+                      <Value>
+                        ="Processed Date: "
+                        + Replace(Mid(Parameters!p_CN.Label
+                        , InStr(Parameters!p_CN.Label, "on ") + 3),"-","/")
+                      </Value>
                       <Style>
+                        <FontFamily>Arial</FontFamily>
                         <Format>MMM d, yyyy</Format>
                       </Style>
                     </TextRun>
@@ -7214,19 +7218,20 @@ ORDER BY [FA].[Roll Year],
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox2</rd:DefaultName>
-              <Top>0.00001in</Top>
-              <Left>9.22283in</Left>
+              <Top>0.05in</Top>
+              <Left>10.84313in</Left>
               <Height>0.15972in</Height>
-              <Width>3.61561in</Width>
+              <Width>2.03228in</Width>
               <ZIndex>4</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
                 </Border>
-                <VerticalAlign>Top</VerticalAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+                <PaddingTop>3pt</PaddingTop>
               </Style>
             </Textbox>
-            <Textbox Name="Textbox7">
+            <Textbox Name="Textbox10">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
               <Paragraphs>
@@ -7235,7 +7240,7 @@ ORDER BY [FA].[Roll Year],
                     <TextRun>
                       <Value>="Printed Date: " + Format(Globals!ExecutionTime,"dd/MMM/yyyy")</Value>
                       <Style>
-                        <Format>MMM d, yyyy</Format>
+                        <FontFamily>Arial</FontFamily>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -7245,16 +7250,16 @@ ORDER BY [FA].[Roll Year],
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox2</rd:DefaultName>
-              <Top>0.19098in</Top>
-              <Left>9.22283in</Left>
+              <Top>0.23in</Top>
+              <Left>10.84313in</Left>
               <Height>0.15972in</Height>
-              <Width>3.61561in</Width>
+              <Width>2.03228in</Width>
               <ZIndex>5</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
                 </Border>
-                <VerticalAlign>Top</VerticalAlign>
+                <VerticalAlign>Middle</VerticalAlign>
               </Style>
             </Textbox>
           </ReportItems>

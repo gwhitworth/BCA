@@ -44,6 +44,10 @@
       <Name>qryRY.rsd</Name>
       <FullPath>qryRY.rsd</FullPath>
     </ProjectItem>
+    <ProjectItem>
+      <Name>qryData.rsd</Name>
+      <FullPath>qryData.rsd</FullPath>
+    </ProjectItem>
   </DataSets>
   <Reports>
     <ProjectItem>
@@ -61,6 +65,10 @@
     <ProjectItem>
       <Name>MHVSAF - Municipal Hospital Value Summarized Assessment File.rdl</Name>
       <FullPath>MHVSAF - Municipal Hospital Value Summarized Assessment File.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>PropClass_ProvTotal_Sub.rdl</Name>
+      <FullPath>PropClass_ProvTotal_Sub.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>ProvTotal_Sub.rdl</Name>
@@ -127,6 +135,14 @@
       <FullPath>RG735.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>RG930_Main.rdl</Name>
+      <FullPath>RG930_Main.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RG930_Sub1.rdl</Name>
+      <FullPath>RG930_Sub1.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>RGH39_Main.rdl</Name>
       <FullPath>RGH39_Main.rdl</FullPath>
     </ProjectItem>
@@ -183,16 +199,8 @@
       <FullPath>Template.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>RG930_Main.rdl</Name>
-      <FullPath>RG930_Main.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>RG930_Sub1.rdl</Name>
-      <FullPath>RG930_Sub1.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>PropClass_ProvTotal_Sub.rdl</Name>
-      <FullPath>PropClass_ProvTotal_Sub.rdl</FullPath>
+      <Name>RGP42_Sub4.rdl</Name>
+      <FullPath>RGP42_Sub4.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>

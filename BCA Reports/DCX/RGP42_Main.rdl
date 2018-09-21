@@ -68,125 +68,64 @@
           <QueryParameter Name="@p_RY">
             <Value>=Parameters!p_RY.Value</Value>
           </QueryParameter>
-          <QueryParameter Name="@p_CN">
-            <Value>=Parameters!p_CN.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="@p_RD">
-            <Value>=Parameters!p_RD.Value</Value>
-          </QueryParameter>
         </QueryParameters>
-        <CommandText>SELECT [FA].[Roll Year], 
-       [RD].[Regional District], 
-       '(AA'+[AG].[Area Code]+')' AS [Area Code], 
-       AG.[Jurisdiction Code]+' '+AG.[Jurisdiction Type Desc]+' of '+AG.[Jurisdiction Desc] AS [Jurisdiction], 
-       [ED].[BCA Code], 
-       COUNT(DISTINCT CASE
-                          WHEN [FA].[Assessment Code] = '01'
-                      -- AND [FA].[Net General Land Value] &gt; 1
-                          THEN [FA].dimFolio_SK
-                      END) AS [Gen Folio], 
-       SUM(CASE
-               WHEN [FA].[Assessment Code] = '01'
-               THEN [FA].[Net General Land Value]
-           END) AS [Gen Land], 
-       SUM(CASE
-               WHEN [FA].[Assessment Code] = '02'
-               THEN [FA].[Net General Building Value]
-           END) AS [Gen Improvements], 
-       COUNT([OCCUR].[Occur Count]) AS [Hosp Folio], 
-       SUM(CASE
-               WHEN [FA].[Assessment Code] = '01'
-               THEN [FA].[Net Other Land Value]
-           END) AS [Hosp Land], 
-       SUM(CASE
-               WHEN [FA].[Assessment Code] = '02'
-               THEN [FA].[Net Other Building Value]
-           END) AS [Hosp Improvements]
-FROM [edw].[FactAllAssessedAmounts] AS [FA]
-     INNER JOIN [edw].[dimPropertyClass] AS [PC] ON [FA].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
-     INNER JOIN [edw].[dimAssessmentGeography] AS [AG] ON [FA].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
-     INNER JOIN [edw].[dimFolio] AS [FO] ON [FO].[dimFolio_SK] = [FA].[dimFolio_SK]
-                                            AND FO.[Folio Status Code] = '01'
-     INNER JOIN [edw].[dimRegionalDistrict] AS [RD] ON [RD].dimRegionalDistrict_SK = [FO].dimRegionalDistrict_SK
-     LEFT OUTER JOIN [edw].[dimElectoralDistrict] AS [ED] ON [ED].dimJurisdiction_SK = [AG].dimJurisdiction_SK
-     LEFT OUTER JOIN
-(
-    SELECT [FAV].dimFolio_SK, 
-           [FAV].[Property Class Code], 
-           COUNT(*) - 1 AS [Occur Count]
-    FROM [EDW].[edw].[FactAllAssessedAmounts] AS [FAV]
-         INNER JOIN [edw].[dimPropertyClass] AS [PC] ON [FAV].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
-         INNER JOIN [edw].[dimAssessmentGeography] AS [AG] ON [FAV].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
-    WHERE [FAV].[Roll Year] = @p_RY
-          AND AG.[Roll Category Code] = '1'
-          AND [FAV].[Cycle Number] &lt;= @p_CN
-          AND [Assessment Code] = '02'
-    GROUP BY [FAV].dimFolio_SK, 
-             [FAV].[Property Class Code]
-    HAVING COUNT(*) &gt; 1
-) AS [OCCUR] ON [OCCUR].dimFolio_SK = [FA].dimFolio_SK
-WHERE [FA].[Roll Year] = @p_RY
-      AND AG.[Roll Category Code] = '1'
-      AND [FA].[Cycle Number] = @p_CN
-      AND ([FA].[Current Cycle Flag] = 'Current Cycle Only')
-      AND [RD].[Regional District Code] IN (@p_RD)
-GROUP BY [FA].[Roll Year], 
-         [RD].[Regional District], 
-         '(AA'+[AG].[Area Code]+')', 
-         AG.[Jurisdiction Code]+' '+AG.[Jurisdiction Type Desc]+' of '+AG.[Jurisdiction Desc], 
-         [ED].[BCA Code]
-ORDER BY [FA].[Roll Year], 
-         [RD].[Regional District], 
-         [Area Code], 
-         [Jurisdiction];</CommandText>
+        <CommandText>SELECT dimRegionalDistrict_SK, 
+       dimRegionalDistrict_BK, 
+       dimRollYear_SK, 
+       [Roll Year], 
+       [Regional District], 
+       [Regional District Code], 
+       [Regional District Desc], 
+       IIF([Regional District Code] = 'XX', 999,RowSortOrder) AS [RowSortOrder]
+FROM edw.dimRegionalDistrict
+WHERE([Roll Year] = @p_RY)
+     AND (NOT([Regional District Code] IN('00', '88', '99')))
+</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>
+        <Field Name="dimRegionalDistrict_SK">
+          <DataField>dimRegionalDistrict_SK</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
         <Field Name="Roll_Year">
           <DataField>Roll Year</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="dimRegionalDistrict_BK">
+          <DataField>dimRegionalDistrict_BK</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Regional_District">
           <DataField>Regional District</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Area_Code">
-          <DataField>Area Code</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Jurisdiction">
-          <DataField>Jurisdiction</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Gen_Folio">
-          <DataField>Gen Folio</DataField>
+        <Field Name="dimRollYear_SK">
+          <DataField>dimRollYear_SK</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
-        <Field Name="Hosp_Folio">
-          <DataField>Hosp Folio</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Gen_Land">
-          <DataField>Gen Land</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
-        </Field>
-        <Field Name="Hosp_Land">
-          <DataField>Hosp Land</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
-        </Field>
-        <Field Name="BCA_Code">
-          <DataField>BCA Code</DataField>
+        <Field Name="Regional_District_Code">
+          <DataField>Regional District Code</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Gen_Improvements">
-          <DataField>Gen Improvements</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+        <Field Name="Regional_District_Desc">
+          <DataField>Regional District Desc</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Hosp_Improvements">
-          <DataField>Hosp Improvements</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+        <Field Name="RowSortOrder">
+          <DataField>RowSortOrder</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
       </Fields>
+      <Filters>
+        <Filter>
+          <FilterExpression>=Fields!Regional_District_Code.Value</FilterExpression>
+          <Operator>In</Operator>
+          <FilterValues>
+            <FilterValue>=Parameters!p_RD.Value</FilterValue>
+          </FilterValues>
+        </Filter>
+      </Filters>
     </DataSet>
     <DataSet Name="qryRD">
       <SharedDataSet>
@@ -230,57 +169,6 @@ ORDER BY [FA].[Roll Year],
         <Field Name="RowSortOrder">
           <DataField>RowSortOrder</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-      </Fields>
-    </DataSet>
-    <DataSet Name="qryProvTotal">
-      <SharedDataSet>
-        <SharedDataSetReference>qryProvTotal</SharedDataSetReference>
-        <QueryParameters>
-          <QueryParameter Name="@p_RY">
-            <Value>=Parameters!p_RY.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="@p_CN">
-            <Value>=Parameters!p_CN.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-      </SharedDataSet>
-      <Fields>
-        <Field Name="Roll_Year">
-          <DataField>Roll_Year</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Property_Class_Code">
-          <DataField>Property_Class_Code</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Gen_Folio">
-          <DataField>Gen_Folio</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Property_Class_Desc">
-          <DataField>Property_Class_Desc</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Gen_Land">
-          <DataField>Gen_Land</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
-        </Field>
-        <Field Name="Gen_Improvements">
-          <DataField>Gen_Improvements</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
-        </Field>
-        <Field Name="Hosp_Folio">
-          <DataField>Hosp_Folio</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Hosp_Land">
-          <DataField>Hosp_Land</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
-        </Field>
-        <Field Name="Hosp_Improvements">
-          <DataField>Hosp_Improvements</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
         </Field>
       </Fields>
     </DataSet>
@@ -373,6 +261,36 @@ ORDER BY [FA].[Roll Year],
                               <Value>=Fields!Regional_District_Code.Value</Value>
                             </Parameter>
                           </Parameters>
+                          <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                        </Subreport>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.25in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Subreport Name="Subreport4">
+                          <ReportName>RGP42_Sub4</ReportName>
+                          <Parameters>
+                            <Parameter Name="p_RY">
+                              <Value>=Parameters!p_RY.Value</Value>
+                            </Parameter>
+                            <Parameter Name="p_CN">
+                              <Value>=Parameters!p_CN.Value</Value>
+                            </Parameter>
+                          </Parameters>
+                          <ZIndex>1</ZIndex>
+                          <Visibility>
+                            <Hidden>=IIF(Array.IndexOf(Parameters!p_RD.Value, "PROV") &gt; -1,false,true)</Hidden>
+                          </Visibility>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -409,6 +327,9 @@ ORDER BY [FA].[Roll Year],
                     <TablixMember />
                   </TablixMembers>
                 </TablixMember>
+                <TablixMember>
+                  <KeepWithGroup>Before</KeepWithGroup>
+                </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>qryRD</DataSetName>
@@ -426,9 +347,13 @@ ORDER BY [FA].[Roll Year],
                 <Value>=Fields!RowSortOrder.Value</Value>
               </SortExpression>
             </SortExpressions>
-            <Left>0.13011in</Left>
-            <Height>0.73958in</Height>
+            <Left>0.1in</Left>
+            <Height>0.98958in</Height>
             <Width>12.125in</Width>
+            <Visibility>
+              <Hidden>=IIF(Array.IndexOf(Parameters!p_RD.Value, "PROV") &gt; -1 
+AND Parameters!p_RD.Count = 1,true,false)</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Color>White</Color>
@@ -437,7 +362,7 @@ ORDER BY [FA].[Roll Year],
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>0.73958in</Height>
+        <Height>1.01958in</Height>
         <Style>
           <Border>
             <Style>None</Style>
@@ -520,8 +445,7 @@ PER SEC. 3 (1) POLICE ACT</Value>
             <Image Name="BCALogo">
               <Source>Embedded</Source>
               <Value>BCA_BigBlueLogo</Value>
-              <Top>0.125in</Top>
-              <Left>0.11633in</Left>
+              <Left>0.1in</Left>
               <Height>0.37153in</Height>
               <Width>2.35069in</Width>
               <ZIndex>1</ZIndex>
@@ -543,6 +467,7 @@ PER SEC. 3 (1) POLICE ACT</Value>
                       <Value>www.bcassessment.ca</Value>
                       <Style>
                         <FontStyle>Italic</FontStyle>
+                        <FontFamily>Arial</FontFamily>
                         <FontSize>8pt</FontSize>
                       </Style>
                     </TextRun>
@@ -553,8 +478,8 @@ PER SEC. 3 (1) POLICE ACT</Value>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>0.62501in</Top>
-              <Left>0.11633in</Left>
+              <Top>0.35in</Top>
+              <Left>0.1in</Left>
               <Height>0.1875in</Height>
               <Width>2.35069in</Width>
               <ZIndex>2</ZIndex>
@@ -579,7 +504,7 @@ PER SEC. 3 (1) POLICE ACT</Value>
                   </Action>
                 </Actions>
               </ActionInfo>
-              <Top>0.47098in</Top>
+              <Top>0.43in</Top>
               <Left>12.38521in</Left>
               <Height>0.5in</Height>
               <Width>0.5in</Width>
@@ -598,8 +523,13 @@ PER SEC. 3 (1) POLICE ACT</Value>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>="Processed Date: " + Mid(Parameters!p_CN.Label, InStr(Parameters!p_CN.Label, "on ") + 3)</Value>
+                      <Value>
+                        ="Processed Date: "
+                        + Replace(Mid(Parameters!p_CN.Label
+                        , InStr(Parameters!p_CN.Label, "on ") + 3),"-","/")
+                      </Value>
                       <Style>
+                        <FontFamily>Arial</FontFamily>
                         <Format>MMM d, yyyy</Format>
                       </Style>
                     </TextRun>
@@ -610,15 +540,17 @@ PER SEC. 3 (1) POLICE ACT</Value>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox2</rd:DefaultName>
-              <Left>9.2598in</Left>
+              <Top>0.05in</Top>
+              <Left>10.84313in</Left>
               <Height>0.15972in</Height>
-              <Width>3.61561in</Width>
+              <Width>2.03228in</Width>
               <ZIndex>4</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
                 </Border>
-                <VerticalAlign>Top</VerticalAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+                <PaddingTop>3pt</PaddingTop>
               </Style>
             </Textbox>
             <Textbox Name="Textbox10">
@@ -630,7 +562,7 @@ PER SEC. 3 (1) POLICE ACT</Value>
                     <TextRun>
                       <Value>="Printed Date: " + Format(Globals!ExecutionTime,"dd/MMM/yyyy")</Value>
                       <Style>
-                        <Format>MMM d, yyyy</Format>
+                        <FontFamily>Arial</FontFamily>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -640,16 +572,16 @@ PER SEC. 3 (1) POLICE ACT</Value>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox2</rd:DefaultName>
-              <Top>0.25174in</Top>
-              <Left>9.2598in</Left>
+              <Top>0.23in</Top>
+              <Left>10.84313in</Left>
               <Height>0.15972in</Height>
-              <Width>3.61561in</Width>
+              <Width>2.03228in</Width>
               <ZIndex>5</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
                 </Border>
-                <VerticalAlign>Top</VerticalAlign>
+                <VerticalAlign>Middle</VerticalAlign>
               </Style>
             </Textbox>
           </ReportItems>
@@ -776,9 +708,9 @@ PER SEC. 3 (1) POLICE ACT</Value>
         </PageFooter>
         <PageHeight>8.5in</PageHeight>
         <PageWidth>14in</PageWidth>
-        <LeftMargin>0.5in</LeftMargin>
-        <RightMargin>0.1in</RightMargin>
-        <TopMargin>0.15in</TopMargin>
+        <LeftMargin>0.4in</LeftMargin>
+        <RightMargin>0.4in</RightMargin>
+        <TopMargin>0.1in</TopMargin>
         <BottomMargin>0.1in</BottomMargin>
         <Style>
           <Border>

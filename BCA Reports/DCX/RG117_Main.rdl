@@ -346,15 +346,16 @@ END</CommandText>
             <Image Name="BCALogo">
               <Source>Embedded</Source>
               <Value>BCA_BigBlueLogo</Value>
-              <Top>0.125in</Top>
-              <Left>0.14584in</Left>
-              <Height>0.30208in</Height>
+              <Left>0.1in</Left>
+              <Height>0.37153in</Height>
               <Width>2.35069in</Width>
               <ZIndex>1</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
                 </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingTop>5pt</PaddingTop>
               </Style>
             </Image>
             <Textbox Name="Textbox4">
@@ -367,6 +368,7 @@ END</CommandText>
                       <Value>www.bcassessment.ca</Value>
                       <Style>
                         <FontStyle>Italic</FontStyle>
+                        <FontFamily>Arial</FontFamily>
                         <FontSize>8pt</FontSize>
                       </Style>
                     </TextRun>
@@ -377,8 +379,8 @@ END</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>0.53348in</Top>
-              <Left>0.11633in</Left>
+              <Top>0.35in</Top>
+              <Left>0.1in</Left>
               <Height>0.1875in</Height>
               <Width>2.35069in</Width>
               <ZIndex>2</ZIndex>
@@ -403,10 +405,10 @@ END</CommandText>
                   </Action>
                 </Actions>
               </ActionInfo>
-              <Top>0.41666in</Top>
-              <Left>12.47722in</Left>
-              <Height>0.42932in</Height>
-              <Width>0.4375in</Width>
+              <Top>0.43in</Top>
+              <Left>12.38521in</Left>
+              <Height>0.5in</Height>
+              <Width>0.5in</Width>
               <ZIndex>3</ZIndex>
               <ToolTip>="The risk rating"</ToolTip>
               <Style>
@@ -422,8 +424,13 @@ END</CommandText>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>="Processed Date: " + Mid(Parameters!p_CN.Label, InStr(Parameters!p_CN.Label, "on ") + 3)</Value>
+                      <Value>
+                        ="Processed Date: "
+                        + Replace(Mid(Parameters!p_CN.Label
+                        , InStr(Parameters!p_CN.Label, "on ") + 3),"-","/")
+                      </Value>
                       <Style>
+                        <FontFamily>Arial</FontFamily>
                         <Format>MMM d, yyyy</Format>
                       </Style>
                     </TextRun>
@@ -434,15 +441,17 @@ END</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox2</rd:DefaultName>
-              <Left>9.27976in</Left>
+              <Top>0.05in</Top>
+              <Left>10.84313in</Left>
               <Height>0.15972in</Height>
-              <Width>3.61561in</Width>
+              <Width>2.03228in</Width>
               <ZIndex>4</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
                 </Border>
-                <VerticalAlign>Top</VerticalAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+                <PaddingTop>3pt</PaddingTop>
               </Style>
             </Textbox>
             <Textbox Name="Textbox10">
@@ -454,7 +463,7 @@ END</CommandText>
                     <TextRun>
                       <Value>="Printed Date: " + Format(Globals!ExecutionTime,"dd/MMM/yyyy")</Value>
                       <Style>
-                        <Format>MMM d, yyyy</Format>
+                        <FontFamily>Arial</FontFamily>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -464,16 +473,16 @@ END</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox2</rd:DefaultName>
-              <Top>0.21528in</Top>
-              <Left>9.27976in</Left>
+              <Top>0.23in</Top>
+              <Left>10.84313in</Left>
               <Height>0.15972in</Height>
-              <Width>3.61561in</Width>
+              <Width>2.03228in</Width>
               <ZIndex>5</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
                 </Border>
-                <VerticalAlign>Top</VerticalAlign>
+                <VerticalAlign>Middle</VerticalAlign>
               </Style>
             </Textbox>
           </ReportItems>

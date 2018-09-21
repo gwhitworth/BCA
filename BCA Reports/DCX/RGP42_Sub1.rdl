@@ -269,13 +269,13 @@ ORDER BY [FA].[Roll Year],
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>1.88542in</Width>
+                  <Width>2.01042in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>0.53125in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.79167in</Width>
+                  <Width>0.9375in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>1.58in</Width>
@@ -462,7 +462,7 @@ ORDER BY [FA].[Roll Year],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Folios</Value>
+                                  <Value>Occurrences</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                   </Style>
@@ -1387,7 +1387,8 @@ ORDER BY [FA].[Roll Year],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Total</Value>
+                                  <Value>="Totals for Regional District " 
++Left( Fields!Regional_District.Value,3)</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontWeight>Bold</FontWeight>
@@ -1793,7 +1794,7 @@ ORDER BY [FA].[Roll Year],
               </Filter>
             </Filters>
             <Height>1.20209in</Height>
-            <Width>12.68834in</Width>
+            <Width>12.95917in</Width>
             <Style>
               <Border>
                 <Color>Red</Color>
@@ -1802,14 +1803,14 @@ ORDER BY [FA].[Roll Year],
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>1.47292in</Height>
+        <Height>1.29584in</Height>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
         </Style>
       </Body>
-      <Width>12.68834in</Width>
+      <Width>12.95917in</Width>
       <Page>
         <PageHeader>
           <Height>0.15625in</Height>
