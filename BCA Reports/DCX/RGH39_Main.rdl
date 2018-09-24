@@ -362,7 +362,6 @@ ORDER BY [Region Hospital District Code];</CommandText>
               <Source>Embedded</Source>
               <Value>BCA_BigBlueLogo</Value>
               <Sizing>FitProportional</Sizing>
-              <Top>0.125in</Top>
               <Left>0.11633in</Left>
               <Height>0.36459in</Height>
               <Width>1.88784in</Width>
@@ -395,7 +394,7 @@ ORDER BY [Region Hospital District Code];</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>0.50001in</Top>
+              <Top>0.37501in</Top>
               <Left>0.11633in</Left>
               <Height>0.1875in</Height>
               <Width>1.88784in</Width>

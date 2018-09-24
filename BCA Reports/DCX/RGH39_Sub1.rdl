@@ -501,6 +501,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>GENERAL VALUES </Value>
                                   <Style>
+                                    <FontFamily />
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -532,7 +533,7 @@ ORDER BY [FA].[Roll Year],
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.22917in</Height>
+                  <Height>0.21875in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -816,7 +817,6 @@ ORDER BY [FA].[Roll Year],
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -1484,6 +1484,9 @@ ORDER BY [FA].[Roll Year],
                         <GroupExpressions>
                           <GroupExpression>=Fields!Jurisdiction_Type_Code.Value</GroupExpression>
                         </GroupExpressions>
+                        <PageBreak>
+                          <BreakLocation>Between</BreakLocation>
+                        </PageBreak>
                       </Group>
                       <SortExpressions>
                         <SortExpression>
@@ -1533,7 +1536,7 @@ ORDER BY [FA].[Roll Year],
               </SortExpression>
             </SortExpressions>
             <Top>0.02812in</Top>
-            <Height>1.34375in</Height>
+            <Height>1.33333in</Height>
             <Width>12.02667in</Width>
             <Style>
               <Border>
@@ -1756,6 +1759,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>HOSPITAL VALUES </Value>
                                   <Style>
+                                    <FontFamily />
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -2713,6 +2717,9 @@ ORDER BY [FA].[Roll Year],
                     <GroupExpressions>
                       <GroupExpression>=Fields!Region_Hospital_District.Value</GroupExpression>
                     </GroupExpressions>
+                    <PageBreak>
+                      <BreakLocation>Between</BreakLocation>
+                    </PageBreak>
                   </Group>
                   <SortExpressions>
                     <SortExpression>
@@ -2731,6 +2738,9 @@ ORDER BY [FA].[Roll Year],
                         <GroupExpressions>
                           <GroupExpression>=Fields!Jurisdiction_Type_Code.Value</GroupExpression>
                         </GroupExpressions>
+                        <PageBreak>
+                          <BreakLocation>Between</BreakLocation>
+                        </PageBreak>
                       </Group>
                       <SortExpressions>
                         <SortExpression>
@@ -2771,7 +2781,7 @@ ORDER BY [FA].[Roll Year],
             <KeepTogether>true</KeepTogether>
             <DataSetName>qryData</DataSetName>
             <PageBreak>
-              <BreakLocation>Start</BreakLocation>
+              <BreakLocation>StartAndEnd</BreakLocation>
             </PageBreak>
             <SortExpressions>
               <SortExpression>

@@ -513,7 +513,7 @@ ORDER BY [AG].[Jurisdiction Code],
                                   <Value>HOSPITAL VALUES</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
-                                    <FontSize>11pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -539,6 +539,7 @@ ORDER BY [AG].[Jurisdiction Code],
                           </Style>
                         </Textbox>
                         <ColSpan>4</ColSpan>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
@@ -1508,7 +1509,7 @@ Fields!Occurrences.Value
                                   <Value>HOSPITAL VALUES</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
-                                    <FontSize>11pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1534,6 +1535,7 @@ Fields!Occurrences.Value
                           </Style>
                         </Textbox>
                         <ColSpan>4</ColSpan>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
@@ -2374,7 +2376,6 @@ Fields!Occurrences.Value
                           </Style>
                         </Textbox>
                         <ColSpan>4</ColSpan>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
