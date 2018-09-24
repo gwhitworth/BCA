@@ -267,7 +267,6 @@ ORDER BY [AR].[Area Code],
                 </FilterValues>
               </Filter>
             </Filters>
-            <Top>-0.20777in</Top>
             <Left>0.125in</Left>
             <Height>0.48264in</Height>
             <Width>9.84375in</Width>
@@ -278,7 +277,7 @@ ORDER BY [AR].[Area Code],
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>0.50694in</Height>
+        <Height>0.71471in</Height>
         <Style>
           <Border>
             <Style>None</Style>
@@ -419,16 +418,18 @@ ORDER BY [AR].[Area Code],
                   </Action>
                 </Actions>
               </ActionInfo>
-              <Top>0.05in</Top>
-              <Left>10.32924in</Left>
-              <Height>0.5in</Height>
-              <Width>0.5in</Width>
+              <Top>0.35in</Top>
+              <Left>12.56291in</Left>
+              <Height>0.35834in</Height>
+              <Width>0.3125in</Width>
               <ZIndex>3</ZIndex>
               <ToolTip>="The risk rating"</ToolTip>
               <Style>
                 <Border>
                   <Style>None</Style>
                 </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingTop>5pt</PaddingTop>
               </Style>
             </Image>
             <Textbox Name="Textbox8">
@@ -516,7 +517,7 @@ ORDER BY [AR].[Area Code],
           </Style>
         </PageHeader>
         <PageFooter>
-          <Height>0.25in</Height>
+          <Height>0.29223in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -537,8 +538,7 @@ ORDER BY [AR].[Area Code],
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
-              <Top>-0.17999in</Top>
-              <Height>0.20833in</Height>
+              <Height>0.25in</Height>
               <Width>12.88521in</Width>
               <Style>
                 <Border>
@@ -569,7 +569,6 @@ ORDER BY [AR].[Area Code],
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
-              <Top>-0.22166in</Top>
               <Left>11.47896in</Left>
               <Height>0.25in</Height>
               <Width>1.40625in</Width>
@@ -602,7 +601,6 @@ ORDER BY [AR].[Area Code],
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>ReportName</rd:DefaultName>
-              <Top>-0.22166in</Top>
               <Height>0.25in</Height>
               <Width>1.88784in</Width>
               <ZIndex>2</ZIndex>
@@ -627,7 +625,7 @@ ORDER BY [AR].[Area Code],
         <PageHeight>8.5in</PageHeight>
         <PageWidth>14in</PageWidth>
         <LeftMargin>0.5in</LeftMargin>
-        <RightMargin>0.1in</RightMargin>
+        <RightMargin>0.5in</RightMargin>
         <TopMargin>0.1in</TopMargin>
         <BottomMargin>0.1in</BottomMargin>
         <Style>
