@@ -68,12 +68,6 @@
           <QueryParameter Name="@p_RY">
             <Value>=Parameters!p_RY.Value</Value>
           </QueryParameter>
-          <QueryParameter Name="@p_JR">
-            <Value>=Parameters!p_JR.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="@p_NEIGH">
-            <Value>=Parameters!p_NEIGH.Value</Value>
-          </QueryParameter>
           <QueryParameter Name="@p_AR">
             <Value>=Parameters!p_AR.Value</Value>
           </QueryParameter>
@@ -83,9 +77,7 @@
        [Jurisdiction Code], 
        [Neighbourhood Code]
 FROM [edw].[dimAssessmentGeography] AS [GEO]
-WHERE(dimRollYear_SK = @p_RY)
-     AND [Jurisdiction Code] IN(@p_JR)
-	 AND [Neighbourhood Code] IN(@p_NEIGH)
+
 UNION
 SELECT DISTINCT 
        [AR].[Area Code], 
@@ -132,7 +124,7 @@ ORDER BY [Area Code],
           <FilterExpression>=Fields!Neighbourhood_Code.Value</FilterExpression>
           <Operator>In</Operator>
           <FilterValues>
-            <FilterValue>=Parameters!p_NEIGH.Value</FilterValue>
+            <FilterValue>=Parameters!p_N.Value</FilterValue>
           </FilterValues>
         </Filter>
       </Filters>
@@ -177,11 +169,6 @@ ORDER BY [Area Code];</CommandText>
     <DataSet Name="qryNEIGH">
       <Query>
         <DataSourceName>EDW</DataSourceName>
-        <QueryParameters>
-          <QueryParameter Name="@p_RY">
-            <Value>000</Value>
-          </QueryParameter>
-        </QueryParameters>
         <CommandText>SELECT DISTINCT 
        [A1].[Jurisdiction Code], 
        [A2].[Neighbourhood Code], 
@@ -190,10 +177,7 @@ ORDER BY [Area Code];</CommandText>
 FROM [EDW].[edw].[dimAssessmentGeography] AS [A1], 
      [EDW].[edw].[dimAssessmentGeography] AS [A2]
 WHERE [A1].[Jurisdiction Code] = [A2].[Jurisdiction Code]
-AND [A1].[Roll Year] = @p_RY
-      AND [A2].[Roll Year] = @p_RY
-      AND [A1].[Jurisdiction Code] &gt; '199'
-      AND [A2].[Jurisdiction Code] &gt; '199'
+
 ORDER BY [A1].[Jurisdiction Code];</CommandText>
       </Query>
       <Fields>
@@ -835,7 +819,7 @@ AND Parameters!p_JR.Value(0) = "000"
       </ValidValues>
       <MultiValue>true</MultiValue>
     </ReportParameter>
-    <ReportParameter Name="p_NEIGH">
+    <ReportParameter Name="p_N">
       <DataType>String</DataType>
       <Prompt>Neighbourhood</Prompt>
       <ValidValues>
@@ -876,7 +860,7 @@ AND Parameters!p_JR.Value(0) = "000"
         <CellDefinition>
           <ColumnIndex>2</ColumnIndex>
           <RowIndex>1</RowIndex>
-          <ParameterName>p_NEIGH</ParameterName>
+          <ParameterName>p_N</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>
