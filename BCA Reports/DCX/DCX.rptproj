@@ -17,6 +17,10 @@
       <FullPath>qryCN.rsd</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>qryData.rsd</Name>
+      <FullPath>qryData.rsd</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>qryJR.rsd</Name>
       <FullPath>qryJR.rsd</FullPath>
     </ProjectItem>
@@ -45,8 +49,8 @@
       <FullPath>qryRY.rsd</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>qryData.rsd</Name>
-      <FullPath>qryData.rsd</FullPath>
+      <Name>qryAR_JR.rsd</Name>
+      <FullPath>qryAR_JR.rsd</FullPath>
     </ProjectItem>
   </DataSets>
   <Reports>
@@ -171,6 +175,10 @@
       <FullPath>RGP42_Sub3.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>RGP42_Sub4.rdl</Name>
+      <FullPath>RGP42_Sub4.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>Roll Totals - General Taxable.rdl</Name>
       <FullPath>Roll Totals - General Taxable.rdl</FullPath>
     </ProjectItem>
@@ -191,16 +199,24 @@
       <FullPath>Roll Totals.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>RollTotal_Main.rdl</Name>
+      <FullPath>RollTotal_Main.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RollTotal_Sub1.rdl</Name>
+      <FullPath>RollTotal_Sub1.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RollTotal_Sub2.rdl</Name>
+      <FullPath>RollTotal_Sub2.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>Summary Report Template.rdl</Name>
       <FullPath>Summary Report Template.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>Template.rdl</Name>
       <FullPath>Template.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>RGP42_Sub4.rdl</Name>
-      <FullPath>RGP42_Sub4.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>

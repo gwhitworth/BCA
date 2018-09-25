@@ -68,36 +68,72 @@
           <QueryParameter Name="@p_RY">
             <Value>=Parameters!p_RY.Value</Value>
           </QueryParameter>
+          <QueryParameter Name="@p_JR">
+            <Value>=Parameters!p_JR.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@p_AR">
+            <Value>=Parameters!p_AR.Value</Value>
+          </QueryParameter>
         </QueryParameters>
-        <CommandText>SELECT [AR].[Area Code], 
+        <CommandText>SELECT DISTINCT 
+       [AR].[Area Code], 
        [Jurisdiction Code]
 FROM edw.dimJurisdiction AS [JR]
      INNER JOIN [edw].[dimArea] AS [AR] ON [JR].dimArea_SK = [AR].dimArea_SK
-WHERE([JR].dimRollYear_SK = @p_RY)
-     AND [Jurisdiction Code] &gt; '199'
+WHERE ([JR].dimRollYear_SK = @p_RY)
+     AND [Jurisdiction Code] IN(@p_JR)
+UNION
+SELECT DISTINCT 
+       [AR].[Area Code], 
+       NULL
+FROM [edw].[dimArea] AS [AR]
+WHERE ([AR].dimRollYear_SK = @p_RY)
+      AND [AR].[Area Code] IN (@p_AR)
 ORDER BY [AR].[Area Code], 
          [Jurisdiction Code];</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>
-        <Field Name="Jurisdiction_Code">
-          <DataField>Jurisdiction Code</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="Area_Code">
           <DataField>Area Code</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Jurisdiction_Code">
+          <DataField>Jurisdiction Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
-      <Filters>
-        <Filter>
-          <FilterExpression>=Fields!Area_Code.Value</FilterExpression>
-          <Operator>In</Operator>
-          <FilterValues>
-            <FilterValue>=Parameters!p_AR.Value</FilterValue>
-          </FilterValues>
-        </Filter>
-      </Filters>
+    </DataSet>
+    <DataSet Name="qryAR_JR">
+      <SharedDataSet>
+        <SharedDataSetReference>qryAR_JR</SharedDataSetReference>
+        <QueryParameters>
+          <QueryParameter Name="@p_RY">
+            <Value>=Parameters!p_RY.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@p_AR">
+            <Value>=Parameters!p_AR.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+      </SharedDataSet>
+      <Fields>
+        <Field Name="Area_Code">
+          <DataField>Area_Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Jurisdiction_Code">
+          <DataField>Jurisdiction_Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Jurisdiction">
+          <DataField>Jurisdiction</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Jurisdiction_Desc">
+          <DataField>Jurisdiction_Desc</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
     </DataSet>
     <DataSet Name="qryAR">
       <SharedDataSet>
@@ -156,19 +192,19 @@ ORDER BY [AR].[Area Code],
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>9.84375in</Width>
+                  <Width>12.55208in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>0.23264in</Height>
+                  <Height>0.36458in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
                         <Rectangle Name="Rectangle1">
                           <ReportItems>
                             <Subreport Name="Subreport1">
-                              <ReportName>RG099_Sub1</ReportName>
+                              <ReportName>RollTotal_Sub1</ReportName>
                               <Parameters>
                                 <Parameter Name="p_RY">
                                   <Value>=Parameters!p_RY.Value</Value>
@@ -181,9 +217,8 @@ ORDER BY [AR].[Area Code],
                                 </Parameter>
                               </Parameters>
                               <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
-                              <Top>0.01389in</Top>
-                              <Height>0.21875in</Height>
-                              <Width>9.84375in</Width>
+                              <Height>0.36458in</Height>
+                              <Width>12.55208in</Width>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -203,12 +238,12 @@ ORDER BY [AR].[Area Code],
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.25in</Height>
+                  <Height>0.28125in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
                         <Subreport Name="Subreport2">
-                          <ReportName>RG099_Sub2</ReportName>
+                          <ReportName>RollTotal_Sub2</ReportName>
                           <Parameters>
                             <Parameter Name="p_RY">
                               <Value>=Parameters!p_RY.Value</Value>
@@ -220,7 +255,6 @@ ORDER BY [AR].[Area Code],
                               <Value>=Fields!Area_Code.Value</Value>
                             </Parameter>
                           </Parameters>
-                          <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -241,44 +275,32 @@ ORDER BY [AR].[Area Code],
             <TablixRowHierarchy>
               <TablixMembers>
                 <TablixMember>
-                  <Group Name="Area_Code">
-                    <GroupExpressions>
-                      <GroupExpression>=Fields!Area_Code.Value</GroupExpression>
-                    </GroupExpressions>
-                    <PageBreak>
-                      <BreakLocation>Between</BreakLocation>
-                    </PageBreak>
-                  </Group>
-                  <SortExpressions>
-                    <SortExpression>
-                      <Value>=Fields!Area_Code.Value</Value>
-                    </SortExpression>
-                  </SortExpressions>
+                  <Group Name="Details" />
                   <TablixMembers>
                     <TablixMember>
-                      <Group Name="Details" />
+                      <Visibility>
+                        <Hidden>=IIf(Parameters!p_JR.Count = 1 
+AND Parameters!p_JR.Value(0) = "000"
+,True
+,False)</Hidden>
+                      </Visibility>
                     </TablixMember>
                     <TablixMember>
-                      <KeepWithGroup>Before</KeepWithGroup>
+                      <Visibility>
+                        <Hidden>=IIf(Parameters!p_JR.Count = 1 
+AND Parameters!p_JR.Value(0) = "000"
+,False
+,True)</Hidden>
+                      </Visibility>
                     </TablixMember>
                   </TablixMembers>
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
-            <KeepTogether>true</KeepTogether>
             <DataSetName>qryData</DataSetName>
-            <Filters>
-              <Filter>
-                <FilterExpression>=Fields!Area_Code.Value</FilterExpression>
-                <Operator>In</Operator>
-                <FilterValues>
-                  <FilterValue>=Parameters!p_AR.Value</FilterValue>
-                </FilterValues>
-              </Filter>
-            </Filters>
-            <Left>0.125in</Left>
-            <Height>0.48264in</Height>
-            <Width>9.84375in</Width>
+            <Left>0.17583in</Left>
+            <Height>0.64583in</Height>
+            <Width>12.55208in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -286,7 +308,7 @@ ORDER BY [AR].[Area Code],
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>0.71471in</Height>
+        <Height>0.64583in</Height>
         <Style>
           <Border>
             <Style>None</Style>
@@ -308,7 +330,7 @@ ORDER BY [AR].[Area Code],
       <Width>12.88521in</Width>
       <Page>
         <PageHeader>
-          <Height>0.93in</Height>
+          <Height>0.73208in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -327,7 +349,7 @@ ORDER BY [AR].[Area Code],
                       </Style>
                     </TextRun>
                     <TextRun>
-                      <Value>   T A X A B L E    V A L U E S</Value>
+                      <Value>   ROLL TOTALS</Value>
                       <Style>
                         <FontFamily>Arial</FontFamily>
                         <FontSize>14pt</FontSize>
@@ -526,7 +548,7 @@ ORDER BY [AR].[Area Code],
           </Style>
         </PageHeader>
         <PageFooter>
-          <Height>0.29223in</Height>
+          <Height>0.25056in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -547,7 +569,8 @@ ORDER BY [AR].[Area Code],
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
-              <Height>0.25in</Height>
+              <Top>0.01389in</Top>
+              <Height>0.23611in</Height>
               <Width>12.88521in</Width>
               <Style>
                 <Border>
@@ -633,8 +656,8 @@ ORDER BY [AR].[Area Code],
         </PageFooter>
         <PageHeight>8.5in</PageHeight>
         <PageWidth>14in</PageWidth>
-        <LeftMargin>0.5in</LeftMargin>
-        <RightMargin>0.5in</RightMargin>
+        <LeftMargin>0.1in</LeftMargin>
+        <RightMargin>0.1in</RightMargin>
         <TopMargin>0.1in</TopMargin>
         <BottomMargin>0.1in</BottomMargin>
         <Style>
@@ -687,11 +710,6 @@ ORDER BY [AR].[Area Code],
     </ReportParameter>
     <ReportParameter Name="p_AR">
       <DataType>String</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>24</Value>
-        </Values>
-      </DefaultValue>
       <Prompt>Assessment Area</Prompt>
       <ValidValues>
         <DataSetReference>
@@ -702,11 +720,29 @@ ORDER BY [AR].[Area Code],
       </ValidValues>
       <MultiValue>true</MultiValue>
     </ReportParameter>
+    <ReportParameter Name="p_JR">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>000</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>Jurisdiction</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>qryAR_JR</DataSetName>
+          <ValueField>Jurisdiction_Code</ValueField>
+          <LabelField>Jurisdiction</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
   </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
       <NumberOfColumns>3</NumberOfColumns>
-      <NumberOfRows>1</NumberOfRows>
+      <NumberOfRows>2</NumberOfRows>
       <CellDefinitions>
         <CellDefinition>
           <ColumnIndex>0</ColumnIndex>
@@ -719,9 +755,14 @@ ORDER BY [AR].[Area Code],
           <ParameterName>p_CN</ParameterName>
         </CellDefinition>
         <CellDefinition>
-          <ColumnIndex>2</ColumnIndex>
-          <RowIndex>0</RowIndex>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>1</RowIndex>
           <ParameterName>p_AR</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>1</RowIndex>
+          <ParameterName>p_JR</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>

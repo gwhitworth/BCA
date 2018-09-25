@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <Description />
+  <DataSet Name="qryAR_JR">
+    <Query>
+      <DataSourceReference>EDW</DataSourceReference>
+      <DataSetParameters>
+        <DataSetParameter Name="@p_RY">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>true</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+        </DataSetParameter>
+        <DataSetParameter Name="@p_AR">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>true</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+        </DataSetParameter>
+      </DataSetParameters>
+      <CommandText>SELECT [AR].[Area Code], 
+       [Jurisdiction Code], 
+       [Jurisdiction], 
+       [Jurisdiction Desc]
+FROM edw.dimJurisdiction AS [JR]
+     INNER JOIN [edw].[dimArea] AS [AR] ON [JR].dimArea_SK = [AR].dimArea_SK
+WHERE([JR].dimRollYear_SK = @p_RY)
+     AND [Jurisdiction Code] &gt; '199'
+     AND [AR].[Area Code] = @p_AR
+UNION
+SELECT @p_AR, 
+       '000', 
+       'N/A', 
+       'N/A'
+ORDER BY [AR].[Area Code], 
+         [Jurisdiction Code];</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="Area_Code">
+        <DataField>Area Code</DataField>
+        <rd:TypeName>System.Object</rd:TypeName>
+      </Field>
+      <Field Name="Jurisdiction_Code">
+        <DataField>Jurisdiction Code</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Jurisdiction">
+        <DataField>Jurisdiction</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Jurisdiction_Desc">
+        <DataField>Jurisdiction Desc</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>
