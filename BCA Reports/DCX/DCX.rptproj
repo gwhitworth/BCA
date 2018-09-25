@@ -13,6 +13,10 @@
       <FullPath>qryAR.rsd</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>qryAR_JR.rsd</Name>
+      <FullPath>qryAR_JR.rsd</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>qryCN.rsd</Name>
       <FullPath>qryCN.rsd</FullPath>
     </ProjectItem>
@@ -49,8 +53,8 @@
       <FullPath>qryRY.rsd</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>qryAR_JR.rsd</Name>
-      <FullPath>qryAR_JR.rsd</FullPath>
+      <Name>qryNEIGH.rsd</Name>
+      <FullPath>qryNEIGH.rsd</FullPath>
     </ProjectItem>
   </DataSets>
   <Reports>

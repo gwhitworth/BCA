@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <Description />
+  <DataSet Name="qryNEIGH">
+    <Query>
+      <DataSourceReference>EDW</DataSourceReference>
+      <DataSetParameters>
+        <DataSetParameter Name="@p_RC">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>true</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+        </DataSetParameter>
+        <DataSetParameter Name="@p_RY">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>true</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+        </DataSetParameter>
+        <DataSetParameter Name="@p_AA">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>true</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+        </DataSetParameter>
+        <DataSetParameter Name="@p_JUR">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>true</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+        </DataSetParameter>
+      </DataSetParameters>
+      <CommandText>SELECT DISTINCT NULL AS [Neighbourhood Code], 'Select All' AS Neighbourhood
+UNION ALL
+SELECT DISTINCT NEIGH.[Neighbourhood Code], NEIGH.Neighbourhood
+FROM            edw.dimAssessmentGeography AS GEO INNER JOIN
+                         edw.dimRollYear AS YR ON GEO.dimRollYear_SK = YR.dimRollYear_SK INNER JOIN
+                         edw.dimRollCategory AS CAT ON GEO.dimRollCategory_BK = CAT.dimRollCategory_BK INNER JOIN
+                         edw.dimNeighbourhood AS NEIGH ON GEO.dimNeighbourhood_SK = NEIGH.dimNeighbourhood_SK
+WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])) AND (YR.[Roll Year] = @p_RY) AND (GEO.[Area Code] = @p_AA) AND (GEO.[Jurisdiction Code] = @p_JUR)
+ORDER BY [Neighbourhood Code]</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="Neighbourhood_Code">
+        <DataField>Neighbourhood Code</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Neighbourhood">
+        <DataField>Neighbourhood</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>

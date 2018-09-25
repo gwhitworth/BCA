@@ -71,26 +71,32 @@
           <QueryParameter Name="@p_JR">
             <Value>=Parameters!p_JR.Value</Value>
           </QueryParameter>
+          <QueryParameter Name="@p_NEIGH">
+            <Value>=Parameters!p_NEIGH.Value</Value>
+          </QueryParameter>
           <QueryParameter Name="@p_AR">
             <Value>=Parameters!p_AR.Value</Value>
           </QueryParameter>
         </QueryParameters>
         <CommandText>SELECT DISTINCT 
-       [AR].[Area Code], 
-       [Jurisdiction Code]
-FROM edw.dimJurisdiction AS [JR]
-     INNER JOIN [edw].[dimArea] AS [AR] ON [JR].dimArea_SK = [AR].dimArea_SK
-WHERE ([JR].dimRollYear_SK = @p_RY)
+       [Area Code], 
+       [Jurisdiction Code], 
+       [Neighbourhood Code]
+FROM [edw].[dimAssessmentGeography] AS [GEO]
+WHERE(dimRollYear_SK = @p_RY)
      AND [Jurisdiction Code] IN(@p_JR)
+	 AND [Neighbourhood Code] IN(@p_NEIGH)
 UNION
 SELECT DISTINCT 
        [AR].[Area Code], 
+       NULL, 
        NULL
 FROM [edw].[dimArea] AS [AR]
-WHERE ([AR].dimRollYear_SK = @p_RY)
-      AND [AR].[Area Code] IN (@p_AR)
-ORDER BY [AR].[Area Code], 
-         [Jurisdiction Code];</CommandText>
+WHERE([AR].dimRollYear_SK = @p_RY)
+     AND [AR].[Area Code] IN(@p_AR)
+ORDER BY [Area Code], 
+         [Jurisdiction Code], 
+         [Neighbourhood Code];</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>
@@ -102,86 +108,178 @@ ORDER BY [AR].[Area Code],
           <DataField>Jurisdiction Code</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Neighbourhood_Code">
+          <DataField>Neighbourhood Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
+      <Filters>
+        <Filter>
+          <FilterExpression>=Fields!Area_Code.Value</FilterExpression>
+          <Operator>In</Operator>
+          <FilterValues>
+            <FilterValue>=Parameters!p_AR.Value</FilterValue>
+          </FilterValues>
+        </Filter>
+        <Filter>
+          <FilterExpression>=Fields!Jurisdiction_Code.Value</FilterExpression>
+          <Operator>In</Operator>
+          <FilterValues>
+            <FilterValue>=Parameters!p_JR.Value</FilterValue>
+          </FilterValues>
+        </Filter>
+        <Filter>
+          <FilterExpression>=Fields!Neighbourhood_Code.Value</FilterExpression>
+          <Operator>In</Operator>
+          <FilterValues>
+            <FilterValue>=Parameters!p_NEIGH.Value</FilterValue>
+          </FilterValues>
+        </Filter>
+      </Filters>
     </DataSet>
-    <DataSet Name="qryAR_JR">
-      <SharedDataSet>
-        <SharedDataSetReference>qryAR_JR</SharedDataSetReference>
+    <DataSet Name="qryAR">
+      <Query>
+        <DataSourceName>EDW</DataSourceName>
         <QueryParameters>
           <QueryParameter Name="@p_RY">
             <Value>=Parameters!p_RY.Value</Value>
           </QueryParameter>
-          <QueryParameter Name="@p_AR">
-            <Value>=Parameters!p_AR.Value</Value>
+        </QueryParameters>
+        <CommandText>SELECT DISTINCT 
+       [dimArea_SK], 
+       [Area Code], 
+       [Area Desc], 
+       [Area]
+FROM [EDW].[edw].[dimAssessmentGeography]
+WHERE [Roll Year] = @p_RY
+      AND [Area Code] BETWEEN 01 AND 27
+ORDER BY [Area Code];</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="dimArea_SK">
+          <DataField>dimArea_SK</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Area_Code">
+          <DataField>Area Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Area_Desc">
+          <DataField>Area Desc</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Area">
+          <DataField>Area</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="qryNEIGH">
+      <Query>
+        <DataSourceName>EDW</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@p_RY">
+            <Value>000</Value>
           </QueryParameter>
         </QueryParameters>
-      </SharedDataSet>
+        <CommandText>SELECT DISTINCT 
+       [A1].[Jurisdiction Code], 
+       [A2].[Neighbourhood Code], 
+       [A2].[Neighbourhood Desc], 
+       [A2].[Neighbourhood]
+FROM [EDW].[edw].[dimAssessmentGeography] AS [A1], 
+     [EDW].[edw].[dimAssessmentGeography] AS [A2]
+WHERE [A1].[Jurisdiction Code] = [A2].[Jurisdiction Code]
+AND [A1].[Roll Year] = @p_RY
+      AND [A2].[Roll Year] = @p_RY
+      AND [A1].[Jurisdiction Code] &gt; '199'
+      AND [A2].[Jurisdiction Code] &gt; '199'
+ORDER BY [A1].[Jurisdiction Code];</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="Jurisdiction_Code">
+          <DataField>Jurisdiction Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Neighbourhood_Code">
+          <DataField>Neighbourhood Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Neighbourhood_Desc">
+          <DataField>Neighbourhood Desc</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Neighbourhood">
+          <DataField>Neighbourhood</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <Filters>
+        <Filter>
+          <FilterExpression>=Fields!Jurisdiction_Code.Value</FilterExpression>
+          <Operator>In</Operator>
+          <FilterValues>
+            <FilterValue>=Parameters!p_JR.Value</FilterValue>
+          </FilterValues>
+        </Filter>
+      </Filters>
+    </DataSet>
+    <DataSet Name="qryJR">
+      <Query>
+        <DataSourceName>EDW</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@p_RY">
+            <Value>=Parameters!p_RY.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>SELECT DISTINCT 
+       [A1].[Area Code], 
+       [A2].[dimJurisdiction_SK], 
+       [A2].[dimJurisdiction_BK], 
+       [A2].[Jurisdiction Code], 
+       [A2].[Jurisdiction Desc], 
+       [A2].[Jurisdiction]
+FROM [EDW].[edw].[dimAssessmentGeography] AS [A1], 
+     [EDW].[edw].[dimAssessmentGeography] AS [A2]
+WHERE [A1].[Area Code] = [A2].[Area Code]
+      AND [A2].[Roll Year] = @p_RY
+	  AND [A1].[Jurisdiction Code] &gt; '199';</CommandText>
+      </Query>
       <Fields>
         <Field Name="Area_Code">
-          <DataField>Area_Code</DataField>
+          <DataField>Area Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="dimJurisdiction_SK">
+          <DataField>dimJurisdiction_SK</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="dimJurisdiction_BK">
+          <DataField>dimJurisdiction_BK</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Jurisdiction_Code">
-          <DataField>Jurisdiction_Code</DataField>
+          <DataField>Jurisdiction Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Jurisdiction_Desc">
+          <DataField>Jurisdiction Desc</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Jurisdiction">
           <DataField>Jurisdiction</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Jurisdiction_Desc">
-          <DataField>Jurisdiction_Desc</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
       </Fields>
-    </DataSet>
-    <DataSet Name="qryAR">
-      <SharedDataSet>
-        <SharedDataSetReference>qryAR</SharedDataSetReference>
-        <QueryParameters>
-          <QueryParameter Name="@p_RY">
-            <Value>=Parameters!p_RY.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-      </SharedDataSet>
-      <Fields>
-        <Field Name="dimArea_SK">
-          <DataField>dimArea_SK</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="dimArea_BK">
-          <DataField>dimArea_BK</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="dimRollYear_SK">
-          <DataField>dimRollYear_SK</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="dimRegion_SK">
-          <DataField>dimRegion_SK</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Area">
-          <DataField>Area</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Area_Code">
-          <DataField>Area_Code</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Area_Desc">
-          <DataField>Area_Desc</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Roll_Year">
-          <DataField>Roll_Year</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="RowSortOrder">
-          <DataField>RowSortOrder</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-      </Fields>
+      <Filters>
+        <Filter>
+          <FilterExpression>=Fields!Area_Code.Value</FilterExpression>
+          <Operator>In</Operator>
+          <FilterValues>
+            <FilterValue>=Parameters!p_AR.Value</FilterValue>
+          </FilterValues>
+        </Filter>
+      </Filters>
     </DataSet>
   </DataSets>
   <ReportSections>
@@ -197,7 +295,7 @@ ORDER BY [AR].[Area Code],
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>0.36458in</Height>
+                  <Height>0.26041in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -217,7 +315,7 @@ ORDER BY [AR].[Area Code],
                                 </Parameter>
                               </Parameters>
                               <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
-                              <Height>0.36458in</Height>
+                              <Height>0.22916in</Height>
                               <Width>12.55208in</Width>
                               <Style>
                                 <Border>
@@ -238,7 +336,7 @@ ORDER BY [AR].[Area Code],
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.28125in</Height>
+                  <Height>0.21181in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -299,7 +397,7 @@ AND Parameters!p_JR.Value(0) = "000"
             </TablixRowHierarchy>
             <DataSetName>qryData</DataSetName>
             <Left>0.17583in</Left>
-            <Height>0.64583in</Height>
+            <Height>0.47222in</Height>
             <Width>12.55208in</Width>
             <Style>
               <Border>
@@ -727,13 +825,24 @@ AND Parameters!p_JR.Value(0) = "000"
           <Value>000</Value>
         </Values>
       </DefaultValue>
-      <AllowBlank>true</AllowBlank>
       <Prompt>Jurisdiction</Prompt>
       <ValidValues>
         <DataSetReference>
-          <DataSetName>qryAR_JR</DataSetName>
+          <DataSetName>qryJR</DataSetName>
           <ValueField>Jurisdiction_Code</ValueField>
           <LabelField>Jurisdiction</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
+    <ReportParameter Name="p_NEIGH">
+      <DataType>String</DataType>
+      <Prompt>Neighbourhood</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>qryNEIGH</DataSetName>
+          <ValueField>Neighbourhood_Code</ValueField>
+          <LabelField>Neighbourhood</LabelField>
         </DataSetReference>
       </ValidValues>
       <MultiValue>true</MultiValue>
@@ -763,6 +872,11 @@ AND Parameters!p_JR.Value(0) = "000"
           <ColumnIndex>1</ColumnIndex>
           <RowIndex>1</RowIndex>
           <ParameterName>p_JR</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>2</ColumnIndex>
+          <RowIndex>1</RowIndex>
+          <ParameterName>p_NEIGH</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>
@@ -812,6 +926,11 @@ exDJlEomoRAyH5AxgGLjgQ4GCENLC1ICaRjiFBQAww1kgZAcCIELPGiiQRTBghCMWh7h8AENVkABIdhh
     </EmbeddedImage>
   </EmbeddedImages>
   <Language>en-US</Language>
+  <Variables>
+    <Variable Name="v_JR">
+      <Value>=IIf(Parameters!p_JR.Value = Nothing,"000",Parameters!p_JR.Value)</Value>
+    </Variable>
+  </Variables>
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>93155e4c-2e30-4034-9de3-c29dfa24627d</rd:ReportID>
