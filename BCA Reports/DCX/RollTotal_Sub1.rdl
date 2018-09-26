@@ -4086,10 +4086,9 @@ ORDER BY [FA].[Roll Year],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Lookup("Section 644 LGA/Section 398 Vancouver Charter"
-,Fields!Property_Class.Value
-,Fields!Net_Gen_Improvements.Value
-,"qryData")</Value>
+                                  <Value>=IIf( 
+CStr(Variables!vSection644.Value) ="","0"
+,Format(Variables!vSection644.Value, "#,0"))</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -4400,10 +4399,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Gen_Land.Value ,"Area")
 +Sum(Fields!Net_Gen_Improvements.Value,"Area")
--Lookup("Section 644 LGA/Section 398 Vancouver Charter"
-,Fields!Property_Class.Value
-,Fields!Net_Gen_Improvements.Value
-,"qryData")</Value>
+-Variables!vSection644.Value</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -13581,7 +13577,8 @@ ORDER BY [FA].[Roll Year],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!Net_Gen_Land.Value, "Area4")</Value>
+                                  <Value>=Sum(Fields!Net_Gen_Land.Value ,"Area4")
++Sum(Fields!Net_Gen_Improvements.Value,"Area4")</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <Format>#,0</Format>
@@ -13919,10 +13916,9 @@ ORDER BY [FA].[Roll Year],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Lookup("Section 644 LGA/Section 398 Vancouver Charter"
-,Fields!Property_Class.Value
-,Fields!Net_Gen_Improvements.Value
-,"qryData")</Value>
+                                  <Value>=IIf( 
+CStr(Variables!vSection644.Value) ="","0"
+,Format(Variables!vSection644.Value, "#,0"))</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <Format>#,0</Format>
@@ -13951,6 +13947,7 @@ ORDER BY [FA].[Roll Year],
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -14279,10 +14276,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Gen_Land.Value ,"Area4")
 +Sum(Fields!Net_Gen_Improvements.Value,"Area4")
--Lookup("Section 644 LGA/Section 398 Vancouver Charter"
-,Fields!Property_Class.Value
-,Fields!Net_Gen_Improvements.Value
-,"qryData")</Value>
+-Variables!vSection644.Value</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <Format>#,0</Format>
@@ -15911,7 +15905,11 @@ ORDER BY [FA].[Roll Year],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>="(" + Format(Lookup("Section 644 LGA/Section 398 Vancouver Charter", Fields!Property_Class.Value, Fields!Net_Gen_Improvements.Value, "qryData"), "#,0") + ") Included in Utilities above"</Value>
+                                  <Value>="(" 
++IIf( 
+CStr(Variables!vSection644.Value) ="","0"
+,Format(Variables!vSection644.Value, "#,0")) 
++ ") Included in Utilities above"</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                   </Style>
@@ -16979,6 +16977,7 @@ ORDER BY [FA].[Roll Year],
                   <Group Name="Area5">
                     <GroupExpressions>
                       <GroupExpression>=Fields!Area.Value</GroupExpression>
+                      <GroupExpression>=Fields!Jurisdiction_Code.Value</GroupExpression>
                     </GroupExpressions>
                     <PageBreak>
                       <BreakLocation>Between</BreakLocation>
@@ -17205,6 +17204,14 @@ exDJlEomoRAyH5AxgGLjgQ4GCENLC1ICaRjiFBQAww1kgZAcCIELPGiiQRTBghCMWh7h8AENVkABIdhh
     </EmbeddedImage>
   </EmbeddedImages>
   <Language>en-US</Language>
+  <Variables>
+    <Variable Name="vSection644">
+      <Value>=Lookup("Section 644 LGA/Section 398 Vancouver Charter"
+,Fields!Property_Class.Value
+,Fields!Net_Gen_Improvements.Value
+,"qryData")</Value>
+    </Variable>
+  </Variables>
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>93155e4c-2e30-4034-9de3-c29dfa24627d</rd:ReportID>
