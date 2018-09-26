@@ -182,11 +182,27 @@ ORDER BY [Area Code];</CommandText>
 FROM [EDW].[edw].[dimAssessmentGeography] AS [A1], 
      [EDW].[edw].[dimAssessmentGeography] AS [A2]
 WHERE [A1].[Jurisdiction Code] = [A2].[Jurisdiction Code]
-AND [A1].[Roll Year] = @p_RY
+      AND [A1].[Roll Year] = @p_RY
       AND [A2].[Roll Year] = @p_RY
-AND [A1].[Jurisdiction Code] &gt; '199'
-AND [A2].[Jurisdiction Code] &gt; '199'
-ORDER BY [A1].[Jurisdiction Code];</CommandText>
+      AND [A1].[Jurisdiction Code] &gt; '199'
+      AND [A2].[Jurisdiction Code] &gt; '199'
+      AND [A2].[Neighbourhood] NOT LIKE '%DO NOT USE%'
+UNION
+SELECT DISTINCT 
+       [Jurisdiction Code], 
+       'NA', 
+       'Not Applicable', 
+       'Not Applicable'
+FROM [EDW].[edw].[dimAssessmentGeography]
+WHERE [Roll Year] = @p_RY
+      AND ([Jurisdiction Code] &gt; '199')
+UNION
+SELECT DISTINCT 
+       'NA', 
+       'NA', 
+       'Not Applicable', 
+       'Not Applicable'
+ORDER BY [Jurisdiction Code],[Neighbourhood Code] DESC;</CommandText>
       </Query>
       <Fields>
         <Field Name="Jurisdiction_Code">
@@ -233,9 +249,25 @@ ORDER BY [A1].[Jurisdiction Code];</CommandText>
        [A2].[Jurisdiction]
 FROM [EDW].[edw].[dimAssessmentGeography] AS [A1], 
      [EDW].[edw].[dimAssessmentGeography] AS [A2]
-WHERE [A1].[Area Code] = [A2].[Area Code]
+WHERE([A1].[Area Code] = [A2].[Area Code]
+      AND [A1].[Roll Year] = @p_RY
+      AND [A1].[Jurisdiction Code] &gt; '199'
       AND [A2].[Roll Year] = @p_RY
-	  AND [A1].[Jurisdiction Code] &gt; '199';</CommandText>
+      AND [A2].[Jurisdiction Code] &gt; '199')
+UNION
+SELECT DISTINCT 
+       [Area Code], 
+       -3, 
+       'NA', 
+       'NA', 
+       'Not Applicable', 
+       'Not Applicable'
+FROM [EDW].[edw].[dimAssessmentGeography]
+WHERE [Roll Year] = @p_RY
+      AND [Jurisdiction Code] &gt; '199'
+ORDER BY [Area Code], 
+         [dimJurisdiction_SK], 
+         [Jurisdiction Code] DESC;</CommandText>
       </Query>
       <Fields>
         <Field Name="Area_Code">
@@ -268,7 +300,7 @@ WHERE [A1].[Area Code] = [A2].[Area Code]
           <FilterExpression>=Fields!Area_Code.Value</FilterExpression>
           <Operator>In</Operator>
           <FilterValues>
-            <FilterValue>=Parameters!p_AR.Value</FilterValue>
+            <FilterValue>=Join(Parameters!p_AR.Value,",")</FilterValue>
           </FilterValues>
         </Filter>
       </Filters>
@@ -814,7 +846,7 @@ AND Parameters!p_JR.Value(0) = "000"
       <DataType>String</DataType>
       <DefaultValue>
         <Values>
-          <Value>000</Value>
+          <Value>NA</Value>
         </Values>
       </DefaultValue>
       <Prompt>Jurisdiction</Prompt>
@@ -829,6 +861,11 @@ AND Parameters!p_JR.Value(0) = "000"
     </ReportParameter>
     <ReportParameter Name="p_N">
       <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>NA</Value>
+        </Values>
+      </DefaultValue>
       <Prompt>Neighbourhood</Prompt>
       <ValidValues>
         <DataSetReference>
