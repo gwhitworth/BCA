@@ -480,7 +480,7 @@ ORDER BY [FA].[Roll Year],
 + Space(2) 
 + Fields!Area_Code.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -514,7 +514,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>GENERAL PURPOSE NET TAXABLE VALUES</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -564,7 +564,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Prop</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -600,7 +600,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Class</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -635,7 +635,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Occurrences</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -670,7 +670,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Land</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -705,7 +705,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Converted Land</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -740,7 +740,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value EvaluationMode="Constant">Improvements</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -775,7 +775,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Converted </Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                                 <TextRun>
@@ -814,7 +814,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Total</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -849,7 +849,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Converted Total</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -884,7 +884,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Conv %</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -924,7 +924,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Property_Class_Code.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -958,7 +958,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=IIf(Fields!Property_Class_Desc.Value
 = "0201 - Utilities", "Utilities",Fields!Property_Class_Desc.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -990,7 +990,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Hosp_Folio.Value + Fields!Gen_Folio.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -1025,7 +1025,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Gen_Land.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -1060,7 +1060,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Gen_Land.Value * (Fields!Property_Conversion_Factor.Value/100)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -1095,7 +1095,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Gen_Improvements.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -1132,7 +1132,7 @@ ORDER BY [FA].[Roll Year],
 Nothing,
 Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -1167,7 +1167,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value>=Sum(Fields!Gen_Land.Value) + Sum(Fields!Gen_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -1203,7 +1203,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                   <Value>=Sum(Fields!Gen_Land.Value * (Fields!Property_Conversion_Factor.Value/100))
 + Sum(Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -1238,7 +1238,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value>=Fields!Property_Conversion_Factor.Value/100</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0.00</Format>
                                   </Style>
                                 </TextRun>
@@ -1278,7 +1278,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value>Total</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -1350,7 +1350,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value>=Sum(Fields!Gen_Land.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1387,7 +1387,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value>=Sum(Fields!Gen_Land.Value)* (Fields!Property_Conversion_Factor.Value/100)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -1426,7 +1426,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value>=Sum(Fields!Gen_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1467,7 +1467,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                   <Value>=Sum(Fields!Gen_Improvements.Value) 
 * (Fields!Property_Conversion_Factor.Value / 100)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1504,7 +1504,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value>=Sum(Fields!Gen_Land.Value) + Sum(Fields!Gen_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1542,7 +1542,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                   <Value>=Sum(Fields!Gen_Land.Value) * (Fields!Property_Conversion_Factor.Value/100)
 + Sum(Fields!Gen_Improvements.Value) * (Fields!Property_Conversion_Factor.Value / 100)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1579,7 +1579,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -1727,7 +1727,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1767,7 +1767,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1799,7 +1799,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1836,7 +1836,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1870,7 +1870,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value>HOSPITAL PURPOSE NET TAXABLE VALUES</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -1920,7 +1920,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value>Prop</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1956,7 +1956,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value>Class</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1991,7 +1991,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value>Occurrences</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -2026,7 +2026,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value>Land</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -2061,7 +2061,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value>Converted Land</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -2096,7 +2096,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value EvaluationMode="Constant">Improvements</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -2131,7 +2131,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value>Converted </Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                                 <TextRun>
@@ -2170,7 +2170,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value>Total</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -2205,7 +2205,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value>Converted Total</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -2240,7 +2240,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value>Conv %</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -2280,7 +2280,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value>=Fields!Property_Class_Code.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -2314,7 +2314,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                   <Value>=IIf(Fields!Property_Class_Desc.Value
 = "0201 - Utilities", "Utilities",Fields!Property_Class_Desc.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -2346,7 +2346,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value>=Fields!Hosp_Folio.Value + Fields!Gen_Folio.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -2381,7 +2381,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value>=Fields!Hosp_Land.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -2416,7 +2416,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value>=Fields!Hosp_Land.Value * (Fields!Property_Conversion_Factor.Value / 100)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -2451,7 +2451,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value>=Fields!Hosp_Improvements.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -2488,7 +2488,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
 ,Nothing
 ,Fields!Hosp_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -2524,7 +2524,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Land.Value) + Sum(Fields!Hosp_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -2559,7 +2559,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Land.Value * (Fields!Property_Conversion_Factor.Value / 100)) + Sum(Fields!Hosp_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -2594,7 +2594,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value>=Fields!Property_Conversion_Factor.Value / 100</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0.00</Format>
                                   </Style>
                                 </TextRun>
@@ -2634,7 +2634,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value>Total</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -2706,7 +2706,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Land.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -2743,7 +2743,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Land.Value) * (Fields!Property_Conversion_Factor.Value / 100)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -2783,7 +2783,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -2820,7 +2820,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Improvements.Value) * (Fields!Property_Conversion_Factor.Value / 100)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -2857,7 +2857,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Land.Value) + Sum(Fields!Hosp_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -2895,7 +2895,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                   <Value>=Sum(Fields!Hosp_Land.Value) * (Fields!Property_Conversion_Factor.Value / 100) 
 + Sum(Fields!Hosp_Improvements.Value) * (Fields!Property_Conversion_Factor.Value / 100)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -2932,7 +2932,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -2973,7 +2973,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value>Total (Less S.644LGA/398VC)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -3044,7 +3044,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -3081,7 +3081,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                   <Value>=Sum(Fields!Hosp_Land.Value) * (Fields!Property_Conversion_Factor.Value / 100)
 - Sum(Fields!Hosp_Land.Value, "qryDataUtil")</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -3118,7 +3118,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -3155,7 +3155,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                   <Value>=Sum(Fields!Hosp_Improvements.Value) * (Fields!Property_Conversion_Factor.Value / 100)
  - Sum(Fields!Hosp_Improvements.Value, "qryDataUtil")</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -3192,7 +3192,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -3230,7 +3230,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
 + Sum(Fields!Hosp_Improvements.Value) * (Fields!Property_Conversion_Factor.Value / 100)
  - Sum(Fields!Hosp_Improvements.Value, "qryDataUtil")</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -3267,7 +3267,7 @@ Fields!Gen_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100))
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>

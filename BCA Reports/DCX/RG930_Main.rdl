@@ -210,7 +210,7 @@ WHERE([Roll Year] = @p_RY)
               <Border>
                 <Style>None</Style>
               </Border>
-              <FontFamily>Arial</FontFamily>
+              <FontFamily>Tahoma</FontFamily>
             </Style>
           </Tablix>
           <Subreport Name="Subreport2">
@@ -271,7 +271,7 @@ WHERE([Roll Year] = @p_RY)
                     <TextRun>
                       <Value>=Parameters!p_RY.Value</Value>
                       <Style>
-                        <FontFamily>Arial</FontFamily>
+                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>11pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
@@ -281,7 +281,7 @@ WHERE([Roll Year] = @p_RY)
 AND SUBJECT TO SOUTH COAST BRITISH COLUMBIA TRANSPORTATION AUTHORITY LEVY
 UNDER SECTION 25 SOUTH COAST BRITISH COLUMBIA TRANSPORTION AUTHORITY ACT</Value>
                       <Style>
-                        <FontFamily>Arial</FontFamily>
+                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>11pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
@@ -297,7 +297,7 @@ UNDER SECTION 25 SOUTH COAST BRITISH COLUMBIA TRANSPORTION AUTHORITY ACT</Value>
                       <Label>CYCLE_DESC</Label>
                       <Value>= Mid(Parameters!p_CN.Label,1,InStr(Parameters!p_CN.Label," run on "))</Value>
                       <Style>
-                        <FontFamily>Arial</FontFamily>
+                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>11pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
@@ -344,7 +344,7 @@ UNDER SECTION 25 SOUTH COAST BRITISH COLUMBIA TRANSPORTION AUTHORITY ACT</Value>
                       <Value>www.bcassessment.ca</Value>
                       <Style>
                         <FontStyle>Italic</FontStyle>
-                        <FontFamily>Arial</FontFamily>
+                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>8pt</FontSize>
                       </Style>
                     </TextRun>
@@ -406,7 +406,7 @@ UNDER SECTION 25 SOUTH COAST BRITISH COLUMBIA TRANSPORTION AUTHORITY ACT</Value>
                         , InStr(Parameters!p_CN.Label, "on ") + 3),"-","/")
                       </Value>
                       <Style>
-                        <FontFamily>Arial</FontFamily>
+                        <FontFamily>Tahoma</FontFamily>
                         <Format>MMM d, yyyy</Format>
                       </Style>
                     </TextRun>
@@ -439,7 +439,7 @@ UNDER SECTION 25 SOUTH COAST BRITISH COLUMBIA TRANSPORTION AUTHORITY ACT</Value>
                     <TextRun>
                       <Value>="Printed Date: " + Format(Globals!ExecutionTime,"dd/MMM/yyyy")</Value>
                       <Style>
-                        <FontFamily>Arial</FontFamily>
+                        <FontFamily>Tahoma</FontFamily>
                       </Style>
                     </TextRun>
                   </TextRuns>

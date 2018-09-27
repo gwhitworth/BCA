@@ -293,7 +293,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>="Jurisdiction Totals - " + Fields!Jurisdiction_Type_Desc.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>11pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -326,7 +326,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>11pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -361,7 +361,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>11pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -396,7 +396,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>11pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -431,7 +431,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>11pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -466,7 +466,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>11pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -507,7 +507,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>Property Class</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -540,7 +540,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>Folios</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -575,7 +575,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>Occurrences</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -610,7 +610,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>Net Land</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -645,7 +645,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>Net Improvements</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -680,7 +680,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>Net Total</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -720,7 +720,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Mid(Fields!Property_Class.Value,2)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -752,7 +752,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Fields!Folios.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -787,7 +787,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Fields!Occurrences.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -822,7 +822,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Fields!Net_Land.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -857,7 +857,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Fields!Net_Improvements.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -895,7 +895,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Fields!Net_Land.Value + Fields!Net_Improvements.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -935,7 +935,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=IIF(Fields!RESNONRES.Value = "RES", "Residential Total","Non-Residential Total")</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -969,7 +969,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Sum(Fields!Folios.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -1006,7 +1006,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Sum(Fields!Occurrences.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -1043,7 +1043,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Land.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -1080,7 +1080,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -1117,7 +1117,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Land.Value) + Sum(Fields!Net_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -1159,7 +1159,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>Total</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -1193,7 +1193,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Sum(Fields!Folios.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -1230,7 +1230,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Sum(Fields!Occurrences.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -1267,7 +1267,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Land.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -1304,7 +1304,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -1341,7 +1341,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Land.Value) + Sum(Fields!Net_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -1485,7 +1485,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>="Grand Totals"</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>11pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -1518,7 +1518,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>11pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -1553,7 +1553,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>11pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -1588,7 +1588,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>11pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -1623,7 +1623,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>11pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -1658,7 +1658,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>11pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -1698,7 +1698,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>Property Class</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1731,7 +1731,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>Folios</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1766,7 +1766,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>Occurrences</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1801,7 +1801,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>Net Land</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1836,7 +1836,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>Net Improvement</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1871,7 +1871,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>Net Total</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1911,7 +1911,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Mid(Fields!Property_Class.Value,2)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1943,7 +1943,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Fields!Folios.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -1978,7 +1978,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Fields!Occurrences.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -2013,7 +2013,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Fields!Net_Land.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -2048,7 +2048,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Fields!Net_Improvements.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -2086,7 +2086,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Fields!Net_Land.Value + Fields!Net_Improvements.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -2126,7 +2126,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Mid(Fields!Property_Class.Value,2)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -2159,7 +2159,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Sum(Fields!Folios.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -2194,7 +2194,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Sum(Fields!Occurrences.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -2229,7 +2229,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Land.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -2264,7 +2264,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -2302,7 +2302,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Land.Value) + Sum(Fields!Net_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -2342,7 +2342,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=IIF(Fields!RESNONRES.Value = "RES", "Residential Total", "Non-Residential Total")</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -2376,7 +2376,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Sum(Fields!Folios.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -2413,7 +2413,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Sum(Fields!Occurrences.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -2450,7 +2450,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Land.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -2487,7 +2487,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -2524,7 +2524,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Land.Value) + Sum(Fields!Net_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -2566,7 +2566,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>Total</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -2600,7 +2600,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Sum(Fields!Folios.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -2637,7 +2637,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Sum(Fields!Occurrences.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -2674,7 +2674,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Land.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -2711,7 +2711,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -2748,7 +2748,7 @@ ORDER BY [Jurisdiction Type Desc],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Land.Value) + Sum(Fields!Net_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>

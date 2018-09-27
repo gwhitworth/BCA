@@ -330,7 +330,7 @@ ORDER BY [AG].[Jurisdiction Code],
                                 <TextRun>
                                   <Value>ROLLYEAR</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -365,7 +365,7 @@ ORDER BY [AG].[Jurisdiction Code],
                                 <TextRun>
                                   <Value>ROLL DATE</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -400,7 +400,7 @@ ORDER BY [AG].[Jurisdiction Code],
                                 <TextRun>
                                   <Value>CYCLE NUM</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -435,7 +435,7 @@ ORDER BY [AG].[Jurisdiction Code],
                                 <TextRun>
                                   <Value>HSP NT LAND</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -470,7 +470,7 @@ ORDER BY [AG].[Jurisdiction Code],
                                 <TextRun>
                                   <Value>HSP NT IMPR</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -505,7 +505,7 @@ ORDER BY [AG].[Jurisdiction Code],
                                 <TextRun>
                                   <Value>OCCURRENCES</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -641,7 +641,7 @@ ORDER BY [AG].[Jurisdiction Code],
                                 <TextRun>
                                   <Value>=Fields!ROLLYEAR.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -677,7 +677,7 @@ ORDER BY [AG].[Jurisdiction Code],
 DateValue(Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3))
 ,"yyyyMMdd")</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -711,7 +711,7 @@ DateValue(Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3))
                                 <TextRun>
                                   <Value>=Parameters!p_CN.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -745,7 +745,7 @@ DateValue(Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3))
                                 <TextRun>
                                   <Value>=Fields!HSP_NT_LAND.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -778,7 +778,7 @@ DateValue(Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3))
                                 <TextRun>
                                   <Value>=Fields!HSP_NT_IMPR.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -811,7 +811,7 @@ DateValue(Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3))
                                 <TextRun>
                                   <Value>=Fields!OCCURRENCES.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -849,7 +849,7 @@ DateValue(Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3))
                                 <TextRun>
                                   <Value>3</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -883,7 +883,7 @@ DateValue(Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3))
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -917,7 +917,7 @@ DateValue(Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3))
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -951,7 +951,7 @@ DateValue(Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3))
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -985,7 +985,7 @@ DateValue(Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3))
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1019,7 +1019,7 @@ DateValue(Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3))
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1053,7 +1053,7 @@ DateValue(Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3))
                                 <TextRun>
                                   <Value>=Sum(Fields!HSP_NT_LAND.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -1086,7 +1086,7 @@ DateValue(Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3))
                                 <TextRun>
                                   <Value>=Sum(Fields!HSP_NT_IMPR.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -1119,7 +1119,7 @@ DateValue(Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3))
                                 <TextRun>
                                   <Value>=Sum(Fields!OCCURRENCES.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>

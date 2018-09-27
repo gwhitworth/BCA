@@ -68,67 +68,251 @@
           <QueryParameter Name="@p_RY">
             <Value>=Parameters!p_RY.Value</Value>
           </QueryParameter>
-          <QueryParameter Name="@p_RHD">
-            <Value>=Parameters!p_RHD.Value</Value>
+          <QueryParameter Name="@p_AR">
+            <Value>=Parameters!p_AR.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>SELECT [Region Hospital District Code]
-FROM [EDW].[edw].[dimRegionalHospitalDistrict]
-WHERE [Roll Year] = @p_RY
-      AND [Region Hospital District Code] IN (@p_RHD)
-ORDER BY [Region Hospital District Code];</CommandText>
+        <CommandText>SELECT DISTINCT 
+       [Area Code], 
+       [Jurisdiction Code], 
+       [Neighbourhood Code]
+FROM [edw].[dimAssessmentGeography] AS [GEO]
+WHERE(dimRollYear_SK = @p_RY)
+     AND [Area Code] IN(@p_AR)
+UNION
+SELECT DISTINCT 
+       [Area Code], 
+       [Jurisdiction Code], 
+       'NA' AS [Neighbourhood Code]
+FROM [edw].[dimAssessmentGeography] AS [GEO]
+WHERE([dimRollYear_SK] = @p_RY)
+     AND [Area Code] IN(@p_AR)
+UNION
+SELECT DISTINCT 
+       [AR].[Area Code], 
+       'NA' AS [Jurisdiction Code], 
+       'NA' AS [Neighbourhood Code]
+FROM [edw].[dimArea] AS [AR]
+WHERE([AR].dimRollYear_SK = @p_RY)
+     AND [AR].[Area Code] IN(@p_AR)
+ORDER BY [Area Code], 
+         [Jurisdiction Code] DESC, 
+         [Neighbourhood Code];</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>
-        <Field Name="Region_Hospital_District_Code">
-          <DataField>Region Hospital District Code</DataField>
+        <Field Name="Area_Code">
+          <DataField>Area Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Jurisdiction_Code">
+          <DataField>Jurisdiction Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Neighbourhood_Code">
+          <DataField>Neighbourhood Code</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
+      <Filters>
+        <Filter>
+          <FilterExpression>=Fields!Area_Code.Value</FilterExpression>
+          <Operator>In</Operator>
+          <FilterValues>
+            <FilterValue>=Parameters!p_AR.Value</FilterValue>
+          </FilterValues>
+        </Filter>
+        <Filter>
+          <FilterExpression>=Fields!Jurisdiction_Code.Value</FilterExpression>
+          <Operator>In</Operator>
+          <FilterValues>
+            <FilterValue>=Parameters!p_JR.Value</FilterValue>
+          </FilterValues>
+        </Filter>
+        <Filter>
+          <FilterExpression>=Fields!Neighbourhood_Code.Value</FilterExpression>
+          <Operator>In</Operator>
+          <FilterValues>
+            <FilterValue>=Parameters!p_N.Value</FilterValue>
+          </FilterValues>
+        </Filter>
+      </Filters>
     </DataSet>
-    <DataSet Name="qryRHD">
-      <SharedDataSet>
-        <SharedDataSetReference>qryRHD</SharedDataSetReference>
+    <DataSet Name="qryAR">
+      <Query>
+        <DataSourceName>EDW</DataSourceName>
         <QueryParameters>
           <QueryParameter Name="@p_RY">
             <Value>=Parameters!p_RY.Value</Value>
           </QueryParameter>
         </QueryParameters>
-      </SharedDataSet>
+        <CommandText>SELECT DISTINCT 
+       [dimArea_SK], 
+       [Area Code], 
+       [Area Desc], 
+       [Area]
+FROM [EDW].[edw].[dimAssessmentGeography]
+WHERE [Roll Year] = @p_RY
+      AND [Area Code] BETWEEN 01 AND 27
+ORDER BY [Area Code];</CommandText>
+      </Query>
       <Fields>
-        <Field Name="dimRegionalHospitalDistrict_SK">
-          <DataField>dimRegionalHospitalDistrict_SK</DataField>
+        <Field Name="dimArea_SK">
+          <DataField>dimArea_SK</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
-        <Field Name="dimRegionalHospitalDistrict_BK">
-          <DataField>dimRegionalHospitalDistrict_BK</DataField>
+        <Field Name="Area_Code">
+          <DataField>Area Code</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="dimRollYear_SK">
-          <DataField>dimRollYear_SK</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Roll_Year">
-          <DataField>Roll_Year</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Region_Hospital_District">
-          <DataField>Region_Hospital_District</DataField>
+        <Field Name="Area_Desc">
+          <DataField>Area Desc</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Region_Hospital_District_Code">
-          <DataField>Region_Hospital_District_Code</DataField>
+        <Field Name="Area">
+          <DataField>Area</DataField>
           <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Region_Hospital_District_Desc">
-          <DataField>Region_Hospital_District_Desc</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="RowSortOrder">
-          <DataField>RowSortOrder</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
       </Fields>
+    </DataSet>
+    <DataSet Name="qryNEIGH">
+      <Query>
+        <DataSourceName>EDW</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@p_RY">
+            <Value>=Parameters!p_RY.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>SELECT DISTINCT 
+       [A1].[Jurisdiction Code], 
+       [A2].[Neighbourhood Code], 
+       [A2].[Neighbourhood Desc], 
+       [A2].[Neighbourhood]
+FROM [EDW].[edw].[dimAssessmentGeography] AS [A1], 
+     [EDW].[edw].[dimAssessmentGeography] AS [A2]
+WHERE [A1].[Jurisdiction Code] = [A2].[Jurisdiction Code]
+      AND [A1].[Roll Year] = @p_RY
+      AND [A2].[Roll Year] = @p_RY
+      AND [A1].[Jurisdiction Code] &gt; '199'
+      AND [A2].[Jurisdiction Code] &gt; '199'
+      AND [A2].[Neighbourhood] NOT LIKE '%DO NOT USE%'
+UNION
+SELECT DISTINCT 
+       [Jurisdiction Code], 
+       'NA', 
+       'Not Applicable', 
+       'Not Applicable'
+FROM [EDW].[edw].[dimAssessmentGeography]
+WHERE [Roll Year] = @p_RY
+      AND ([Jurisdiction Code] &gt; '199')
+UNION
+SELECT DISTINCT 
+       'NA', 
+       'NA', 
+       'Not Applicable', 
+       'Not Applicable'
+ORDER BY [Jurisdiction Code],[Neighbourhood Code] DESC;</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="Jurisdiction_Code">
+          <DataField>Jurisdiction Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Neighbourhood_Code">
+          <DataField>Neighbourhood Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Neighbourhood_Desc">
+          <DataField>Neighbourhood Desc</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Neighbourhood">
+          <DataField>Neighbourhood</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <Filters>
+        <Filter>
+          <FilterExpression>=Fields!Jurisdiction_Code.Value</FilterExpression>
+          <Operator>In</Operator>
+          <FilterValues>
+            <FilterValue>=Parameters!p_JR.Value</FilterValue>
+          </FilterValues>
+        </Filter>
+      </Filters>
+    </DataSet>
+    <DataSet Name="qryJR">
+      <Query>
+        <DataSourceName>EDW</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@p_RY">
+            <Value>=Parameters!p_RY.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>SELECT DISTINCT 
+       [A1].[Area Code], 
+       [A2].[dimJurisdiction_SK], 
+       [A2].[dimJurisdiction_BK], 
+       [A2].[Jurisdiction Code], 
+       [A2].[Jurisdiction Desc], 
+       [A2].[Jurisdiction]
+FROM [EDW].[edw].[dimAssessmentGeography] AS [A1], 
+     [EDW].[edw].[dimAssessmentGeography] AS [A2]
+WHERE([A1].[Area Code] = [A2].[Area Code]
+      AND [A1].[Roll Year] = @p_RY
+      AND [A1].[Jurisdiction Code] &gt; '199'
+      AND [A2].[Roll Year] = @p_RY
+      AND [A2].[Jurisdiction Code] &gt; '199')
+UNION
+SELECT DISTINCT 
+       [Area Code], 
+       -3, 
+       'NA', 
+       'NA', 
+       'Not Applicable', 
+       'Not Applicable'
+FROM [EDW].[edw].[dimAssessmentGeography]
+WHERE [Roll Year] = @p_RY
+      AND [Jurisdiction Code] &gt; '199'
+ORDER BY [Area Code], 
+         [dimJurisdiction_SK], 
+         [Jurisdiction Code] DESC;</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="Area_Code">
+          <DataField>Area Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="dimJurisdiction_SK">
+          <DataField>dimJurisdiction_SK</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="dimJurisdiction_BK">
+          <DataField>dimJurisdiction_BK</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Jurisdiction_Code">
+          <DataField>Jurisdiction Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Jurisdiction_Desc">
+          <DataField>Jurisdiction Desc</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Jurisdiction">
+          <DataField>Jurisdiction</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <Filters>
+        <Filter>
+          <FilterExpression>=Fields!Area_Code.Value</FilterExpression>
+          <Operator>In</Operator>
+          <FilterValues>
+            <FilterValue>=Join(Parameters!p_AR.Value,",")</FilterValue>
+          </FilterValues>
+        </Filter>
+      </Filters>
     </DataSet>
   </DataSets>
   <ReportSections>
@@ -139,19 +323,22 @@ ORDER BY [Region Hospital District Code];</CommandText>
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>4.96875in</Width>
+                  <Width>12.55208in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>0.03125in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>0.32292in</Height>
+                  <Height>0.26041in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
                         <Rectangle Name="Rectangle1">
                           <ReportItems>
-                            <Subreport Name="Subreport2">
-                              <ReportName>RGH39_Sub1</ReportName>
+                            <Subreport Name="Subreport1">
+                              <ReportName>RollTotal_Sub1</ReportName>
                               <Parameters>
                                 <Parameter Name="p_RY">
                                   <Value>=Parameters!p_RY.Value</Value>
@@ -159,12 +346,13 @@ ORDER BY [Region Hospital District Code];</CommandText>
                                 <Parameter Name="p_CN">
                                   <Value>=Parameters!p_CN.Value</Value>
                                 </Parameter>
-                                <Parameter Name="p_RHD">
-                                  <Value>=Fields!Region_Hospital_District_Code.Value</Value>
+                                <Parameter Name="p_JR">
+                                  <Value>=Fields!Jurisdiction_Code.Value</Value>
                                 </Parameter>
                               </Parameters>
-                              <Height>0.28125in</Height>
-                              <Width>4.96875in</Width>
+                              <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
+                              <Height>0.22916in</Height>
+                              <Width>12.55208in</Width>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -181,15 +369,44 @@ ORDER BY [Region Hospital District Code];</CommandText>
                         </Rectangle>
                       </CellContents>
                     </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox12">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox12</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.25in</Height>
+                  <Height>0.21181in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Subreport Name="Subreport3">
-                          <ReportName>RGH39_Sub2</ReportName>
+                        <Subreport Name="Subreport2">
+                          <ReportName>RollTotal_Sub2</ReportName>
                           <Parameters>
                             <Parameter Name="p_RY">
                               <Value>=Parameters!p_RY.Value</Value>
@@ -197,8 +414,8 @@ ORDER BY [Region Hospital District Code];</CommandText>
                             <Parameter Name="p_CN">
                               <Value>=Parameters!p_CN.Value</Value>
                             </Parameter>
-                            <Parameter Name="p_RHD">
-                              <Value>=Fields!Region_Hospital_District_Code.Value</Value>
+                            <Parameter Name="p_AR">
+                              <Value>=Fields!Area_Code.Value</Value>
                             </Parameter>
                           </Parameters>
                           <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
@@ -210,12 +427,100 @@ ORDER BY [Region Hospital District Code];</CommandText>
                         </Subreport>
                       </CellContents>
                     </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox13">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox13</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.25in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Subreport Name="Subreport3">
+                          <ReportName>RollTotal_Sub3</ReportName>
+                          <Parameters>
+                            <Parameter Name="p_RY">
+                              <Value>=Parameters!p_RY.Value</Value>
+                            </Parameter>
+                            <Parameter Name="p_CN">
+                              <Value>=Parameters!p_CN.Value</Value>
+                            </Parameter>
+                            <Parameter Name="p_N">
+                              <Value>=Fields!Neighbourhood_Code.Value</Value>
+                            </Parameter>
+                          </Parameters>
+                          <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                        </Subreport>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox14">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox14</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
                   </TablixCells>
                 </TablixRow>
               </TablixRows>
             </TablixBody>
             <TablixColumnHierarchy>
               <TablixMembers>
+                <TablixMember />
                 <TablixMember />
               </TablixMembers>
             </TablixColumnHierarchy>
@@ -224,47 +529,48 @@ ORDER BY [Region Hospital District Code];</CommandText>
                 <TablixMember>
                   <Group Name="Details" />
                   <TablixMembers>
-                    <TablixMember />
-                    <TablixMember />
+                    <TablixMember>
+                      <Visibility>
+                        <Hidden>=IIf(Parameters!p_JR.Count &gt;= 1 
+
+,false
+,true)</Hidden>
+                      </Visibility>
+                    </TablixMember>
+                    <TablixMember>
+                      <Visibility>
+                        <Hidden>=IIf(Parameters!p_JR.Count = 1 
+AND Parameters!p_JR.Value(0) = "NA"
+AND Parameters!p_N.Count = 1 
+AND Parameters!p_N.Value(0) = "NA"
+,false
+,true)</Hidden>
+                      </Visibility>
+                    </TablixMember>
+                    <TablixMember>
+                      <Visibility>
+                        <Hidden>=IIf(Parameters!p_N.Count &gt;= 1 
+AND Parameters!p_N.Value(0) &lt;&gt; "NA"
+,false
+,true)</Hidden>
+                      </Visibility>
+                    </TablixMember>
                   </TablixMembers>
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>qryData</DataSetName>
-            <Top>0in</Top>
-            <Left>0.13in</Left>
-            <Height>0.57292in</Height>
-            <Width>4.96875in</Width>
+            <Left>0.17583in</Left>
+            <Height>0.72222in</Height>
+            <Width>12.58333in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
               </Border>
             </Style>
           </Tablix>
-          <Subreport Name="Subreport4">
-            <ReportName>ProvTotal_Sub</ReportName>
-            <Parameters>
-              <Parameter Name="p_RY">
-                <Value>=Parameters!p_RY.Value</Value>
-              </Parameter>
-              <Parameter Name="p_CN">
-                <Value>=Parameters!p_CN.Value</Value>
-              </Parameter>
-            </Parameters>
-            <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
-            <Top>0.68402in</Top>
-            <Left>0.13in</Left>
-            <Height>0.30208in</Height>
-            <Width>4.96875in</Width>
-            <ZIndex>1</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-            </Style>
-          </Subreport>
         </ReportItems>
-        <Height>1.09027in</Height>
+        <Height>1.77431in</Height>
         <Style>
           <Border>
             <Style>None</Style>
@@ -286,7 +592,7 @@ ORDER BY [Region Hospital District Code];</CommandText>
       <Width>12.88521in</Width>
       <Page>
         <PageHeader>
-          <Height>0.72098in</Height>
+          <Height>0.73208in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -305,22 +611,7 @@ ORDER BY [Region Hospital District Code];</CommandText>
                       </Style>
                     </TextRun>
                     <TextRun>
-                      <Value>  NET TAXABLE VALUES FOR REGIONAL HOSPITAL DISTRICT </Value>
-                      <Style>
-                        <FontFamily>Tahoma</FontFamily>
-                        <FontSize>14pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Center</TextAlign>
-                  </Style>
-                </Paragraph>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>Purpose Under Sec. 26 (1) &amp; (3) Hospital District Act </Value>
+                      <Value>   ROLL TOTALS</Value>
                       <Style>
                         <FontFamily>Tahoma</FontFamily>
                         <FontSize>14pt</FontSize>
@@ -348,7 +639,7 @@ ORDER BY [Region Hospital District Code];</CommandText>
                 </Paragraph>
               </Paragraphs>
               <Top>0.00001in</Top>
-              <Height>0.69666in</Height>
+              <Height>0.70833in</Height>
               <Width>12.88521in</Width>
               <Style>
                 <Border>
@@ -361,10 +652,9 @@ ORDER BY [Region Hospital District Code];</CommandText>
             <Image Name="BCALogo">
               <Source>Embedded</Source>
               <Value>BCA_BigBlueLogo</Value>
-              <Sizing>FitProportional</Sizing>
-              <Left>0.11633in</Left>
-              <Height>0.36459in</Height>
-              <Width>1.88784in</Width>
+              <Left>0.1in</Left>
+              <Height>0.37153in</Height>
+              <Width>2.35069in</Width>
               <ZIndex>1</ZIndex>
               <Style>
                 <Border>
@@ -384,6 +674,7 @@ ORDER BY [Region Hospital District Code];</CommandText>
                       <Value>www.bcassessment.ca</Value>
                       <Style>
                         <FontStyle>Italic</FontStyle>
+                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>8pt</FontSize>
                       </Style>
                     </TextRun>
@@ -394,10 +685,10 @@ ORDER BY [Region Hospital District Code];</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>0.37501in</Top>
-              <Left>0.11633in</Left>
+              <Top>0.35in</Top>
+              <Left>0.1in</Left>
               <Height>0.1875in</Height>
-              <Width>1.88784in</Width>
+              <Width>2.35069in</Width>
               <ZIndex>2</ZIndex>
               <Style>
                 <Border>
@@ -420,27 +711,34 @@ ORDER BY [Region Hospital District Code];</CommandText>
                   </Action>
                 </Actions>
               </ActionInfo>
-              <Top>0.36459in</Top>
-              <Left>12.49979in</Left>
-              <Height>0.35639in</Height>
-              <Width>0.36458in</Width>
+              <Top>0.35in</Top>
+              <Left>12.56291in</Left>
+              <Height>0.35834in</Height>
+              <Width>0.3125in</Width>
               <ZIndex>3</ZIndex>
               <ToolTip>="The risk rating"</ToolTip>
               <Style>
                 <Border>
                   <Style>None</Style>
                 </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingTop>5pt</PaddingTop>
               </Style>
             </Image>
-            <Textbox Name="Textbox6">
+            <Textbox Name="Textbox8">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
               <Paragraphs>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>="Processed Date: " + Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3)</Value>
+                      <Value>
+                        ="Processed Date: "
+                        + Replace(Mid(Parameters!p_CN.Label
+                        , InStr(Parameters!p_CN.Label, "on ") + 3),"-","/")
+                      </Value>
                       <Style>
+                        <FontFamily>Tahoma</FontFamily>
                         <Format>MMM d, yyyy</Format>
                       </Style>
                     </TextRun>
@@ -451,19 +749,20 @@ ORDER BY [Region Hospital District Code];</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox2</rd:DefaultName>
-              <Top>0.00001in</Top>
-              <Left>9.22283in</Left>
+              <Top>0.05in</Top>
+              <Left>10.84313in</Left>
               <Height>0.15972in</Height>
-              <Width>3.61561in</Width>
+              <Width>2.03228in</Width>
               <ZIndex>4</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
                 </Border>
-                <VerticalAlign>Top</VerticalAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+                <PaddingTop>3pt</PaddingTop>
               </Style>
             </Textbox>
-            <Textbox Name="Textbox7">
+            <Textbox Name="Textbox10">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
               <Paragraphs>
@@ -472,7 +771,7 @@ ORDER BY [Region Hospital District Code];</CommandText>
                     <TextRun>
                       <Value>="Printed Date: " + Format(Globals!ExecutionTime,"dd/MMM/yyyy")</Value>
                       <Style>
-                        <Format>MMM d, yyyy</Format>
+                        <FontFamily>Tahoma</FontFamily>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -482,16 +781,16 @@ ORDER BY [Region Hospital District Code];</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox2</rd:DefaultName>
-              <Top>0.19098in</Top>
-              <Left>9.22283in</Left>
+              <Top>0.23in</Top>
+              <Left>10.84313in</Left>
               <Height>0.15972in</Height>
-              <Width>3.61561in</Width>
+              <Width>2.03228in</Width>
               <ZIndex>5</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
                 </Border>
-                <VerticalAlign>Top</VerticalAlign>
+                <VerticalAlign>Middle</VerticalAlign>
               </Style>
             </Textbox>
           </ReportItems>
@@ -511,7 +810,7 @@ ORDER BY [Region Hospital District Code];</CommandText>
           </Style>
         </PageHeader>
         <PageFooter>
-          <Height>0.25in</Height>
+          <Height>0.25056in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -532,7 +831,8 @@ ORDER BY [Region Hospital District Code];</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
-              <Height>0.25in</Height>
+              <Top>0.01389in</Top>
+              <Height>0.23611in</Height>
               <Width>12.88521in</Width>
               <Style>
                 <Border>
@@ -563,6 +863,7 @@ ORDER BY [Region Hospital District Code];</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
+              <Top>0in</Top>
               <Left>11.47896in</Left>
               <Height>0.25in</Height>
               <Width>1.40625in</Width>
@@ -595,6 +896,7 @@ ORDER BY [Region Hospital District Code];</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>ReportName</rd:DefaultName>
+              <Top>0in</Top>
               <Height>0.25in</Height>
               <Width>1.88784in</Width>
               <ZIndex>2</ZIndex>
@@ -618,8 +920,8 @@ ORDER BY [Region Hospital District Code];</CommandText>
         </PageFooter>
         <PageHeight>8.5in</PageHeight>
         <PageWidth>14in</PageWidth>
-        <LeftMargin>0.5in</LeftMargin>
-        <RightMargin>0.5in</RightMargin>
+        <LeftMargin>0.1in</LeftMargin>
+        <RightMargin>0.1in</RightMargin>
         <TopMargin>0.1in</TopMargin>
         <BottomMargin>0.1in</BottomMargin>
         <Style>
@@ -670,19 +972,48 @@ ORDER BY [Region Hospital District Code];</CommandText>
         </DataSetReference>
       </ValidValues>
     </ReportParameter>
-    <ReportParameter Name="p_RHD">
+    <ReportParameter Name="p_AR">
+      <DataType>String</DataType>
+      <Prompt>Assessment Area</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>qryAR</DataSetName>
+          <ValueField>Area_Code</ValueField>
+          <LabelField>Area</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
+    <ReportParameter Name="p_JR">
       <DataType>String</DataType>
       <DefaultValue>
         <Values>
-          <Value>20</Value>
+          <Value>NA</Value>
         </Values>
       </DefaultValue>
-      <Prompt>Reginal Hospital District</Prompt>
+      <Prompt>Jurisdiction</Prompt>
       <ValidValues>
         <DataSetReference>
-          <DataSetName>qryRHD</DataSetName>
-          <ValueField>Region_Hospital_District_Code</ValueField>
-          <LabelField>Region_Hospital_District</LabelField>
+          <DataSetName>qryJR</DataSetName>
+          <ValueField>Jurisdiction_Code</ValueField>
+          <LabelField>Jurisdiction</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
+    <ReportParameter Name="p_N">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>NA</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>Neighbourhood</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>qryNEIGH</DataSetName>
+          <ValueField>Neighbourhood_Code</ValueField>
+          <LabelField>Neighbourhood</LabelField>
         </DataSetReference>
       </ValidValues>
       <MultiValue>true</MultiValue>
@@ -690,7 +1021,7 @@ ORDER BY [Region Hospital District Code];</CommandText>
   </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
-      <NumberOfColumns>2</NumberOfColumns>
+      <NumberOfColumns>3</NumberOfColumns>
       <NumberOfRows>2</NumberOfRows>
       <CellDefinitions>
         <CellDefinition>
@@ -706,7 +1037,17 @@ ORDER BY [Region Hospital District Code];</CommandText>
         <CellDefinition>
           <ColumnIndex>0</ColumnIndex>
           <RowIndex>1</RowIndex>
-          <ParameterName>p_RHD</ParameterName>
+          <ParameterName>p_AR</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>1</RowIndex>
+          <ParameterName>p_JR</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>2</ColumnIndex>
+          <RowIndex>1</RowIndex>
+          <ParameterName>p_N</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>

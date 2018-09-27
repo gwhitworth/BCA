@@ -179,7 +179,7 @@ WHERE     RC1.[Roll Year] = @p_RY
                                 <TextRun>
                                   <Value>Count</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>'$'#,0.00;('$'#,0.00)</Format>
@@ -218,7 +218,7 @@ WHERE     RC1.[Roll Year] = @p_RY
                                 <TextRun>
                                   <Value>Actual - Total</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -255,7 +255,7 @@ WHERE     RC1.[Roll Year] = @p_RY
                                 <TextRun>
                                   <Value>Average Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -297,7 +297,7 @@ WHERE     RC1.[Roll Year] = @p_RY
                                 <TextRun>
                                   <Value>=Sum(Fields!Actual_Folio_Count.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -339,7 +339,7 @@ WHERE     RC1.[Roll Year] = @p_RY
                                 <TextRun>
                                   <Value>=Sum(Fields!Actual_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>'$'#,0;('$'#,0)</Format>
                                     <rd:FormatSymbolCulture>en-US</rd:FormatSymbolCulture>
@@ -383,7 +383,7 @@ WHERE     RC1.[Roll Year] = @p_RY
                                 <TextRun>
                                   <Value>=Sum(Fields!Actual_Value.Value)/Sum(Fields!Actual_Folio_Count.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>'$'#,0;('$'#,0)</Format>
                                   </Style>
@@ -422,7 +422,7 @@ WHERE     RC1.[Roll Year] = @p_RY
                                 <TextRun>
                                   <Value>=Sum(Fields!Actual_Folio_Count.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -465,7 +465,7 @@ WHERE     RC1.[Roll Year] = @p_RY
                                 <TextRun>
                                   <Value>=Sum(Fields!Actual_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>'$'#,0;('$'#,0)</Format>
                                   </Style>
@@ -509,7 +509,7 @@ WHERE     RC1.[Roll Year] = @p_RY
                                 <TextRun>
                                   <Value>=Sum(Fields!Actual_Value.Value)/Sum(Fields!Actual_Folio_Count.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>'$'#,0;('$'#,0)</Format>
                                   </Style>
@@ -563,7 +563,7 @@ WHERE     RC1.[Roll Year] = @p_RY
                                 <TextRun>
                                   <Value>=Sum(Fields!Actual_Folio_Count.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -606,7 +606,7 @@ WHERE     RC1.[Roll Year] = @p_RY
                                 <TextRun>
                                   <Value>=Sum(Fields!Actual_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>'$'#,0;('$'#,0)</Format>
                                   </Style>
@@ -650,7 +650,7 @@ WHERE     RC1.[Roll Year] = @p_RY
                                 <TextRun>
                                   <Value>=Sum(Fields!Actual_Value.Value)/Sum(Fields!Actual_Folio_Count.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>'$'#,0;('$'#,0)</Format>
                                   </Style>
@@ -704,7 +704,7 @@ WHERE     RC1.[Roll Year] = @p_RY
                                 <TextRun>
                                   <Value>=Sum(Fields!Actual_Folio_Count.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
@@ -748,7 +748,7 @@ WHERE     RC1.[Roll Year] = @p_RY
                                 <TextRun>
                                   <Value>=Sum(Fields!Actual_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>'$'#,0;('$'#,0)</Format>
@@ -793,7 +793,7 @@ WHERE     RC1.[Roll Year] = @p_RY
                                 <TextRun>
                                   <Value>=Sum(Fields!Actual_Value.Value)/Sum(Fields!Actual_Folio_Count.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>'$'#,0;('$'#,0)</Format>
@@ -857,7 +857,7 @@ WHERE     RC1.[Roll Year] = @p_RY
                               <TextRun>
                                 <Value>Geographical Area</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
@@ -907,7 +907,7 @@ WHERE     RC1.[Roll Year] = @p_RY
                               <TextRun>
                                 <Value>=Fields!Area.Value</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontSize>8pt</FontSize>
                                   <TextDecoration>Underline</TextDecoration>
                                   <Color>Blue</Color>
@@ -983,7 +983,7 @@ WHERE     RC1.[Roll Year] = @p_RY
                                   <TextRun>
                                     <Value>=Fields!Jurisdiction.Value</Value>
                                     <Style>
-                                      <FontFamily>Arial</FontFamily>
+                                      <FontFamily>Tahoma</FontFamily>
                                       <FontSize>8pt</FontSize>
                                       <TextDecoration>Underline</TextDecoration>
                                       <Color>Blue</Color>
@@ -1059,7 +1059,7 @@ WHERE     RC1.[Roll Year] = @p_RY
                                       <TextRun>
                                         <Value>=Fields!Neighbourhood.Value</Value>
                                         <Style>
-                                          <FontFamily>Arial</FontFamily>
+                                          <FontFamily>Tahoma</FontFamily>
                                           <FontSize>8pt</FontSize>
                                           <TextDecoration>Underline</TextDecoration>
                                           <Color>Blue</Color>
@@ -1141,7 +1141,7 @@ WHERE     RC1.[Roll Year] = @p_RY
                                       <TextRun>
                                         <Value>="Total: "&amp;Fields!Jurisdiction.Value</Value>
                                         <Style>
-                                          <FontFamily>Arial</FontFamily>
+                                          <FontFamily>Tahoma</FontFamily>
                                           <FontSize>8pt</FontSize>
                                           <TextDecoration>None</TextDecoration>
                                         </Style>
@@ -1193,7 +1193,7 @@ WHERE     RC1.[Roll Year] = @p_RY
                                   <TextRun>
                                     <Value>="Total: "&amp;Fields!Area.Value</Value>
                                     <Style>
-                                      <FontFamily>Arial</FontFamily>
+                                      <FontFamily>Tahoma</FontFamily>
                                       <FontSize>8pt</FontSize>
                                     </Style>
                                   </TextRun>
@@ -1240,7 +1240,7 @@ WHERE     RC1.[Roll Year] = @p_RY
                               <TextRun>
                                 <Value>Total</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
@@ -1291,7 +1291,7 @@ WHERE     RC1.[Roll Year] = @p_RY
                 <Style>Solid</Style>
                 <Width>1pt</Width>
               </BottomBorder>
-              <FontFamily>Arial Black</FontFamily>
+              <FontFamily>Tahoma Black</FontFamily>
               <FontSize>6pt</FontSize>
             </Style>
           </Tablix>
@@ -1394,7 +1394,7 @@ WHERE     RC1.[Roll Year] = @p_RY
                         <Color>Gainsboro</Color>
                         <Style>None</Style>
                       </Border>
-                      <FontFamily>Arial</FontFamily>
+                      <FontFamily>Tahoma</FontFamily>
                       <FontSize>6pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <Color>#5c5c5c</Color>
@@ -1512,7 +1512,7 @@ WHERE     RC1.[Roll Year] = @p_RY
                         <Color>Gainsboro</Color>
                         <Style>None</Style>
                       </Border>
-                      <FontFamily>Arial</FontFamily>
+                      <FontFamily>Tahoma</FontFamily>
                       <FontSize>6pt</FontSize>
                       <Format>'$'#,0,;('$'#,0,)</Format>
                       <Color>#5c5c5c</Color>
@@ -1719,7 +1719,7 @@ WHERE     RC1.[Roll Year] = @p_RY
                     <TextRun>
                       <Value>Folio Count and Average Value</Value>
                       <Style>
-                        <FontFamily>Arial</FontFamily>
+                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>12pt</FontSize>
                         <FontWeight>Normal</FontWeight>
                       </Style>
@@ -1735,7 +1735,7 @@ WHERE     RC1.[Roll Year] = @p_RY
                       <Label>GEO_DESC</Label>
                       <Value>=" By Assessment Area, Jurisdiction and Neighbourhood "</Value>
                       <Style>
-                        <FontFamily>Arial</FontFamily>
+                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>8pt</FontSize>
                       </Style>
                     </TextRun>
@@ -1750,7 +1750,7 @@ WHERE     RC1.[Roll Year] = @p_RY
                       <Label>CYCLE_DESC</Label>
                       <Value>=Parameters!p_RY.Value &amp; " Supplemental/PAAB Cycle " &amp; First(Fields!Cycle_Number.Value, "qryRCN") &amp; " run on " &amp; Format(First(Fields!Roll_Entry_Run_Date.Value, "qryRCN"), "dd-MMM-yyyy")</Value>
                       <Style>
-                        <FontFamily>Arial</FontFamily>
+                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>8pt</FontSize>
                       </Style>
                     </TextRun>

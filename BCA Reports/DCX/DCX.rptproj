@@ -59,6 +59,10 @@
   </DataSets>
   <Reports>
     <ProjectItem>
+      <Name>Copy of RollTotal_MainTest.rdl</Name>
+      <FullPath>Copy of RollTotal_MainTest.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>Detail Report (cascading prompts) Template.rdl</Name>
       <FullPath>Detail Report (cascading prompts) Template.rdl</FullPath>
     </ProjectItem>
@@ -203,6 +207,14 @@
       <FullPath>Roll Totals.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>RollTotal_Main.rdl</Name>
+      <FullPath>RollTotal_Main.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RollTotal_Main_Tmp.rdl</Name>
+      <FullPath>RollTotal_Main_Tmp.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>RollTotal_MainTest.rdl</Name>
       <FullPath>RollTotal_MainTest.rdl</FullPath>
     </ProjectItem>
@@ -215,6 +227,14 @@
       <FullPath>RollTotal_Sub2.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>RollTotal_Sub3.rdl</Name>
+      <FullPath>RollTotal_Sub3.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RollTotal_Sub4.rdl</Name>
+      <FullPath>RollTotal_Sub4.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>Summary Report Template.rdl</Name>
       <FullPath>Summary Report Template.rdl</FullPath>
     </ProjectItem>
@@ -223,12 +243,8 @@
       <FullPath>Template.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>RollTotal_Sub3.rdl</Name>
-      <FullPath>RollTotal_Sub3.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>RollTotal_Main.rdl</Name>
-      <FullPath>RollTotal_Main.rdl</FullPath>
+      <Name>RollTotal_Sub5.rdl</Name>
+      <FullPath>RollTotal_Sub5.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>

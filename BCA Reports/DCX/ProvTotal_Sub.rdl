@@ -217,7 +217,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -251,7 +251,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -283,7 +283,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>GENERAL VALUES</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -397,7 +397,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>Folios</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -432,7 +432,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>Land</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -467,7 +467,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>Improvement</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -502,7 +502,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>Total</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -542,7 +542,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>PROVINCIAL TOTALS</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -578,7 +578,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -612,7 +612,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Gen_Folio.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -647,7 +647,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Gen_Land.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -682,7 +682,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Gen_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -717,7 +717,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Gen_Land.Value) + Sum(Fields!Gen_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -776,7 +776,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
               <Border>
                 <Style>None</Style>
               </Border>
-              <FontFamily>Arial</FontFamily>
+              <FontFamily>Tahoma</FontFamily>
             </Style>
           </Tablix>
           <Tablix Name="Tablix6">
@@ -819,7 +819,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -863,7 +863,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -897,7 +897,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -929,7 +929,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>HOSPITAL VALUES</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -1043,7 +1043,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>Occurrences</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1078,7 +1078,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>Land</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1113,7 +1113,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>Improvement</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1148,7 +1148,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>Total</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1188,7 +1188,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>PROVINCIAL TOTALS</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -1224,7 +1224,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -1258,7 +1258,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Folio.Value)+Sum(Fields!Gen_Folio.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -1293,7 +1293,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Land.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -1328,7 +1328,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -1363,7 +1363,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Gen_Land.Value) + Sum(Fields!Gen_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -1464,7 +1464,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1507,7 +1507,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>PROVINCIAL TOTALS</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1541,7 +1541,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>HOSPITAL VALUES</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -1622,7 +1622,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>Occurrences</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1657,7 +1657,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>Land</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1692,7 +1692,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>Improvement</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1727,7 +1727,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>Total</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1767,7 +1767,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>=Fields!Property_Class_Code.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1803,7 +1803,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
 +Space(3)
 +Fields!Property_Class_Desc.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1835,7 +1835,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>=Fields!Hosp_Folio.Value + Fields!Gen_Folio.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -1870,7 +1870,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>=Fields!Hosp_Land.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -1905,7 +1905,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>=Fields!Hosp_Improvements.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -1940,7 +1940,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Land.Value) + Sum(Fields!Hosp_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -1980,7 +1980,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>Total</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -2052,7 +2052,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Land.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -2089,7 +2089,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -2126,7 +2126,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Land.Value) + Sum(Fields!Hosp_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>

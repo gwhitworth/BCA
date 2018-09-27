@@ -431,21 +431,21 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>A C T U A L   V A L U E   T O T A L  -  F O R   S U P P   E N T R I E S  (</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                                 <TextRun>
                                   <Value>=Fields!Total_Folios.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                                 <TextRun>
                                   <Value> Folios)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -490,7 +490,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -634,7 +634,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>Gross</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -823,7 +823,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>A C T U A L   V A L U E   T OT A L S </Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -953,7 +953,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>Land</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -989,7 +989,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>Improverments</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -1025,7 +1025,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>Total</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -1066,7 +1066,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Fields!Total_Land_Value.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -1101,7 +1101,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Fields!Total_Building_Value.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -1136,7 +1136,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Fields!Total_Actual_Value.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>'$'#,0;('$'#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -1177,7 +1177,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Total_Land_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -1217,7 +1217,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Total_Building_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -1257,7 +1257,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Total_Actual_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>'$'#,0;('$'#,0)</Format>
                                   </Style>
@@ -1303,7 +1303,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Total_Land_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -1344,7 +1344,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Total_Building_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -1385,7 +1385,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Total_Actual_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -1441,13 +1441,13 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>Area: </Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                 </Style>
                               </TextRun>
                               <TextRun>
                                 <Value>=Parameters!p_AA.Value</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                 </Style>
                               </TextRun>
                             </TextRuns>
@@ -1482,7 +1482,7 @@ ORDER BY Area</CommandText>
                                   <TextRun>
                                     <Value>Gross</Value>
                                     <Style>
-                                      <FontFamily>Arial</FontFamily>
+                                      <FontFamily>Tahoma</FontFamily>
                                     </Style>
                                   </TextRun>
                                 </TextRuns>
@@ -1521,13 +1521,13 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>Jurisdiction </Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                 </Style>
                               </TextRun>
                               <TextRun>
                                 <Value>=Parameters!p_JUR.Value</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                 </Style>
                               </TextRun>
                             </TextRuns>
@@ -1562,7 +1562,7 @@ ORDER BY Area</CommandText>
                                   <TextRun>
                                     <Value />
                                     <Style>
-                                      <FontFamily>Arial</FontFamily>
+                                      <FontFamily>Tahoma</FontFamily>
                                       <FontWeight>Bold</FontWeight>
                                     </Style>
                                   </TextRun>
@@ -1604,7 +1604,7 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>Neighbourhood </Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                 </Style>
                               </TextRun>
                               <TextRun>
@@ -1643,7 +1643,7 @@ ORDER BY Area</CommandText>
                                   <TextRun>
                                     <Value />
                                     <Style>
-                                      <FontFamily>Arial</FontFamily>
+                                      <FontFamily>Tahoma</FontFamily>
                                       <FontWeight>Bold</FontWeight>
                                     </Style>
                                   </TextRun>
@@ -1685,7 +1685,7 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>Property Class</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
                               </TextRun>
@@ -1722,7 +1722,7 @@ ORDER BY Area</CommandText>
                                   <TextRun>
                                     <Value>Total Folios</Value>
                                     <Style>
-                                      <FontFamily>Arial</FontFamily>
+                                      <FontFamily>Tahoma</FontFamily>
                                       <FontWeight>Bold</FontWeight>
                                     </Style>
                                   </TextRun>
@@ -1786,7 +1786,7 @@ ORDER BY Area</CommandText>
                                   <TextRun>
                                     <Value>=IIF(IsNothing(Fields!Property_Sub_Class.Value), Fields!Property_Class.Value, "     "&amp;Fields!Property_Sub_Class.Value)</Value>
                                     <Style>
-                                      <FontFamily>Arial</FontFamily>
+                                      <FontFamily>Tahoma</FontFamily>
                                     </Style>
                                   </TextRun>
                                 </TextRuns>
@@ -1831,7 +1831,7 @@ ORDER BY Area</CommandText>
                                       <TextRun>
                                         <Value>=Fields!Total_Folios.Value</Value>
                                         <Style>
-                                          <FontFamily>Arial</FontFamily>
+                                          <FontFamily>Tahoma</FontFamily>
                                           <Format>#,0;(#,0)</Format>
                                         </Style>
                                       </TextRun>
@@ -1874,7 +1874,7 @@ ORDER BY Area</CommandText>
                                   <TextRun>
                                     <Value>=Fields!Property_Class.Value</Value>
                                     <Style>
-                                      <FontFamily>Arial</FontFamily>
+                                      <FontFamily>Tahoma</FontFamily>
                                       <FontWeight>Bold</FontWeight>
                                     </Style>
                                   </TextRun>
@@ -1910,7 +1910,7 @@ ORDER BY Area</CommandText>
                                       <TextRun>
                                         <Value>=Sum(Fields!Total_Folios.Value)</Value>
                                         <Style>
-                                          <FontFamily>Arial</FontFamily>
+                                          <FontFamily>Tahoma</FontFamily>
                                           <FontWeight>Bold</FontWeight>
                                           <Format>#,0;(#,0)</Format>
                                         </Style>
@@ -1962,14 +1962,14 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>Total for </Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
                               </TextRun>
                               <TextRun>
                                 <Value>=First(Fields!Area.Value, "qryAA")</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
                               </TextRun>
@@ -2005,7 +2005,7 @@ ORDER BY Area</CommandText>
                                   <TextRun>
                                     <Value>=Sum(Fields!Total_Folios.Value)</Value>
                                     <Style>
-                                      <FontFamily>Arial</FontFamily>
+                                      <FontFamily>Tahoma</FontFamily>
                                       <FontWeight>Bold</FontWeight>
                                       <Format>#,0;(#,0)</Format>
                                     </Style>
@@ -2101,7 +2101,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>G E N E R A L    T A X A B L E    V A L U E S</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -2511,7 +2511,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Fields!General_Exemption_Land_Value.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -2546,7 +2546,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Fields!Gross_General_Building_Value.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -2560,7 +2560,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Fields!General_Exemption_Building_Value.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -2595,7 +2595,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>Net</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -2702,7 +2702,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>Gross</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -2716,7 +2716,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>Exempt</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -2755,7 +2755,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Gross_General_Land_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -2770,7 +2770,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!General_Exemption_Land_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -2811,7 +2811,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Gross_General_Building_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -2826,7 +2826,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!General_Exemption_Building_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -2866,7 +2866,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>Net</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -2905,7 +2905,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_General_Land_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -2945,7 +2945,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_General_Building_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -2990,7 +2990,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>Gross</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -3004,7 +3004,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>Exempt</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -3044,7 +3044,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Gross_General_Land_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -3059,7 +3059,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!General_Exemption_Land_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -3100,7 +3100,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Gross_General_Building_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -3115,7 +3115,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!General_Exemption_Building_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -3155,7 +3155,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>Net</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -3195,7 +3195,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_General_Land_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -3236,7 +3236,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_General_Building_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -3294,13 +3294,13 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>Area: </Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                 </Style>
                               </TextRun>
                               <TextRun>
                                 <Value>=First(Fields!Area.Value, "qryAA")</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                 </Style>
                               </TextRun>
                             </TextRuns>
@@ -3374,13 +3374,13 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>Jurisdiction </Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                 </Style>
                               </TextRun>
                               <TextRun>
                                 <Value>=Parameters!p_JUR.Value</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                 </Style>
                               </TextRun>
                             </TextRuns>
@@ -3457,7 +3457,7 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>Neighbourhood </Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                 </Style>
                               </TextRun>
                               <TextRun>
@@ -3538,7 +3538,7 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>Property Class</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
                               </TextRun>
@@ -3641,7 +3641,7 @@ ORDER BY Area</CommandText>
                                   <TextRun>
                                     <Value>=IIF(IsNothing(Fields!Property_Sub_Class.Value), Fields!Property_Class.Value, "     " &amp; Fields!Property_Sub_Class.Value)</Value>
                                     <Style>
-                                      <FontFamily>Arial</FontFamily>
+                                      <FontFamily>Tahoma</FontFamily>
                                     </Style>
                                   </TextRun>
                                 </TextRuns>
@@ -3686,7 +3686,7 @@ ORDER BY Area</CommandText>
                                       <TextRun>
                                         <Value>=Fields!Total_Folios.Value</Value>
                                         <Style>
-                                          <FontFamily>Arial</FontFamily>
+                                          <FontFamily>Tahoma</FontFamily>
                                           <Format>#,0;(#,0)</Format>
                                         </Style>
                                       </TextRun>
@@ -3700,7 +3700,7 @@ ORDER BY Area</CommandText>
                                       <TextRun>
                                         <Value />
                                         <Style>
-                                          <FontFamily>Arial</FontFamily>
+                                          <FontFamily>Tahoma</FontFamily>
                                           <Format>#,0;(#,0)</Format>
                                         </Style>
                                       </TextRun>
@@ -3743,7 +3743,7 @@ ORDER BY Area</CommandText>
                                   <TextRun>
                                     <Value>=Fields!Property_Class.Value</Value>
                                     <Style>
-                                      <FontFamily>Arial</FontFamily>
+                                      <FontFamily>Tahoma</FontFamily>
                                       <FontWeight>Bold</FontWeight>
                                     </Style>
                                   </TextRun>
@@ -3779,7 +3779,7 @@ ORDER BY Area</CommandText>
                                       <TextRun>
                                         <Value>=Sum(Fields!Total_Folios.Value)</Value>
                                         <Style>
-                                          <FontFamily>Arial</FontFamily>
+                                          <FontFamily>Tahoma</FontFamily>
                                           <FontWeight>Bold</FontWeight>
                                           <Format>#,0;(#,0)</Format>
                                         </Style>
@@ -3830,14 +3830,14 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>Total for </Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
                               </TextRun>
                               <TextRun>
                                 <Value>=First(Fields!Area.Value, "qryAA")</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
                               </TextRun>
@@ -3873,7 +3873,7 @@ ORDER BY Area</CommandText>
                                   <TextRun>
                                     <Value>=Sum(Fields!Total_Folios.Value)</Value>
                                     <Style>
-                                      <FontFamily>Arial</FontFamily>
+                                      <FontFamily>Tahoma</FontFamily>
                                       <FontWeight>Bold</FontWeight>
                                       <Format>#,0;(#,0)</Format>
                                     </Style>
@@ -4064,7 +4064,7 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>Net Taxable Asessment:</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
                               </TextRun>
@@ -4102,7 +4102,7 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>General:</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
@@ -4117,7 +4117,7 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>Less S.644LGA/398VC:</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
@@ -4139,7 +4139,7 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>otal:</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
@@ -4222,7 +4222,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>S C H O O L    T A X A B L E    V A L U E S</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -4576,7 +4576,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>Gross</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -4589,7 +4589,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>Exempt</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -4623,7 +4623,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Fields!Gross_School_Land_Value.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -4637,7 +4637,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Fields!School_Exemption_Land_Value.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -4672,7 +4672,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Fields!Gross_School_Building_Value.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -4686,7 +4686,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Fields!School_Exemption_Building_Value.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -4721,7 +4721,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>Net</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -4755,7 +4755,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Fields!Net_School_Land_Value.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -4790,7 +4790,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Fields!Net_School_Building_Value.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -4830,7 +4830,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>Gross</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -4844,7 +4844,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>Exempt</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -4883,7 +4883,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Gross_School_Land_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -4898,7 +4898,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!School_Exemption_Land_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -4939,7 +4939,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Gross_School_Building_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -4954,7 +4954,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!School_Exemption_Building_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -4994,7 +4994,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>Net</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -5033,7 +5033,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Fields!Net_School_Land_Value.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -5073,7 +5073,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_School_Building_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -5118,7 +5118,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>Gross</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -5132,7 +5132,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>Exempt</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -5172,7 +5172,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Gross_School_Land_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -5187,7 +5187,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!School_Exemption_Land_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -5227,7 +5227,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Gross_School_Building_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -5242,7 +5242,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!School_Exemption_Building_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -5282,7 +5282,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>Net</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -5322,7 +5322,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_School_Land_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -5362,7 +5362,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_School_Building_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -5420,13 +5420,13 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>Area: </Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                 </Style>
                               </TextRun>
                               <TextRun>
                                 <Value>=First(Fields!Area.Value, "qryAA")</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                 </Style>
                               </TextRun>
                             </TextRuns>
@@ -5500,13 +5500,13 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>Jurisdiction </Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                 </Style>
                               </TextRun>
                               <TextRun>
                                 <Value>=Parameters!p_JUR.Value</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                 </Style>
                               </TextRun>
                             </TextRuns>
@@ -5584,7 +5584,7 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>Neighbourhood </Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                 </Style>
                               </TextRun>
                               <TextRun>
@@ -5666,7 +5666,7 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>Property Class</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
                               </TextRun>
@@ -5770,7 +5770,7 @@ ORDER BY Area</CommandText>
                                   <TextRun>
                                     <Value>=IIF(IsNothing(Fields!Property_Sub_Class.Value), Fields!Property_Class.Value, "     " &amp; Fields!Property_Sub_Class.Value)</Value>
                                     <Style>
-                                      <FontFamily>Arial</FontFamily>
+                                      <FontFamily>Tahoma</FontFamily>
                                     </Style>
                                   </TextRun>
                                 </TextRuns>
@@ -5815,7 +5815,7 @@ ORDER BY Area</CommandText>
                                       <TextRun>
                                         <Value>=Fields!Total_Folios.Value</Value>
                                         <Style>
-                                          <FontFamily>Arial</FontFamily>
+                                          <FontFamily>Tahoma</FontFamily>
                                           <Format>#,0;(#,0)</Format>
                                         </Style>
                                       </TextRun>
@@ -5829,7 +5829,7 @@ ORDER BY Area</CommandText>
                                       <TextRun>
                                         <Value />
                                         <Style>
-                                          <FontFamily>Arial</FontFamily>
+                                          <FontFamily>Tahoma</FontFamily>
                                           <Format>#,0;(#,0)</Format>
                                         </Style>
                                       </TextRun>
@@ -5873,7 +5873,7 @@ ORDER BY Area</CommandText>
                                   <TextRun>
                                     <Value>=Fields!Property_Class.Value</Value>
                                     <Style>
-                                      <FontFamily>Arial</FontFamily>
+                                      <FontFamily>Tahoma</FontFamily>
                                       <FontWeight>Bold</FontWeight>
                                     </Style>
                                   </TextRun>
@@ -5909,7 +5909,7 @@ ORDER BY Area</CommandText>
                                       <TextRun>
                                         <Value>=Sum(Fields!Total_Folios.Value)</Value>
                                         <Style>
-                                          <FontFamily>Arial</FontFamily>
+                                          <FontFamily>Tahoma</FontFamily>
                                           <FontWeight>Bold</FontWeight>
                                           <Format>#,0;(#,0)</Format>
                                         </Style>
@@ -5961,14 +5961,14 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>Total for </Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
                               </TextRun>
                               <TextRun>
                                 <Value>=First(Fields!Area.Value, "qryAA")</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
                               </TextRun>
@@ -6004,7 +6004,7 @@ ORDER BY Area</CommandText>
                                   <TextRun>
                                     <Value>=Sum(Fields!Total_Folios.Value)</Value>
                                     <Style>
-                                      <FontFamily>Arial</FontFamily>
+                                      <FontFamily>Tahoma</FontFamily>
                                       <FontWeight>Bold</FontWeight>
                                       <Format>#,0;(#,0)</Format>
                                     </Style>
@@ -6195,7 +6195,7 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>Net Taxable Asessment:</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
                               </TextRun>
@@ -6233,7 +6233,7 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>School Residential:</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
@@ -6248,7 +6248,7 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>School Non-Residential</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
@@ -6345,7 +6345,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>H O S P I T A L    T A X A B L E    V A L U E S</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -6699,7 +6699,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>Gross</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -6712,7 +6712,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>Exempt</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -6746,7 +6746,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Fields!Gross_Other_Land_Value.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -6760,7 +6760,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Fields!Other_Exemption_Land_Value.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -6795,7 +6795,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Fields!Gross_Other_Building_Value.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -6809,7 +6809,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Fields!Other_Exemption_Building_Value.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -6844,7 +6844,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>Net</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -6878,7 +6878,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Fields!Net_Other_Land_Value.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -6913,7 +6913,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Fields!Net_Other_Building_Value.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -6953,7 +6953,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>Gross</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -6967,7 +6967,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>Exempt</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -7006,7 +7006,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Gross_Other_Land_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -7021,7 +7021,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Other_Exemption_Land_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -7062,7 +7062,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Gross_Other_Building_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -7077,7 +7077,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Other_Exemption_Building_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -7117,7 +7117,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>Net</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -7156,7 +7156,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Fields!Net_Other_Land_Value.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -7196,7 +7196,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Other_Building_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -7241,7 +7241,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>Gross</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -7255,7 +7255,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>Exempt</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -7295,7 +7295,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Gross_Other_Land_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -7310,7 +7310,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Other_Exemption_Land_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -7350,7 +7350,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Gross_Other_Building_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -7365,7 +7365,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Other_Exemption_Building_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -7405,7 +7405,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>Net</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -7445,7 +7445,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Other_Land_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -7485,7 +7485,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Other_Building_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -7543,13 +7543,13 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>Area: </Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                 </Style>
                               </TextRun>
                               <TextRun>
                                 <Value>=First(Fields!Area.Value, "qryAA")</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                 </Style>
                               </TextRun>
                             </TextRuns>
@@ -7623,13 +7623,13 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>Jurisdiction </Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                 </Style>
                               </TextRun>
                               <TextRun>
                                 <Value>=Parameters!p_JUR.Value</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                 </Style>
                               </TextRun>
                             </TextRuns>
@@ -7707,7 +7707,7 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>Neighbourhood </Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                 </Style>
                               </TextRun>
                               <TextRun>
@@ -7789,7 +7789,7 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>Property Class</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
                               </TextRun>
@@ -7893,7 +7893,7 @@ ORDER BY Area</CommandText>
                                   <TextRun>
                                     <Value>=IIF(IsNothing(Fields!Property_Sub_Class.Value), Fields!Property_Class.Value, "     " &amp; Fields!Property_Sub_Class.Value)</Value>
                                     <Style>
-                                      <FontFamily>Arial</FontFamily>
+                                      <FontFamily>Tahoma</FontFamily>
                                     </Style>
                                   </TextRun>
                                 </TextRuns>
@@ -7938,7 +7938,7 @@ ORDER BY Area</CommandText>
                                       <TextRun>
                                         <Value>=Fields!Total_Folios.Value</Value>
                                         <Style>
-                                          <FontFamily>Arial</FontFamily>
+                                          <FontFamily>Tahoma</FontFamily>
                                           <Format>#,0;(#,0)</Format>
                                         </Style>
                                       </TextRun>
@@ -7952,7 +7952,7 @@ ORDER BY Area</CommandText>
                                       <TextRun>
                                         <Value />
                                         <Style>
-                                          <FontFamily>Arial</FontFamily>
+                                          <FontFamily>Tahoma</FontFamily>
                                           <Format>#,0;(#,0)</Format>
                                         </Style>
                                       </TextRun>
@@ -7996,7 +7996,7 @@ ORDER BY Area</CommandText>
                                   <TextRun>
                                     <Value>=Fields!Property_Class.Value</Value>
                                     <Style>
-                                      <FontFamily>Arial</FontFamily>
+                                      <FontFamily>Tahoma</FontFamily>
                                       <FontWeight>Bold</FontWeight>
                                     </Style>
                                   </TextRun>
@@ -8032,7 +8032,7 @@ ORDER BY Area</CommandText>
                                       <TextRun>
                                         <Value>=Sum(Fields!Total_Folios.Value)</Value>
                                         <Style>
-                                          <FontFamily>Arial</FontFamily>
+                                          <FontFamily>Tahoma</FontFamily>
                                           <FontWeight>Bold</FontWeight>
                                           <Format>#,0;(#,0)</Format>
                                         </Style>
@@ -8084,14 +8084,14 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>Total for </Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
                               </TextRun>
                               <TextRun>
                                 <Value>=First(Fields!Area.Value, "qryAA")</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
                               </TextRun>
@@ -8127,7 +8127,7 @@ ORDER BY Area</CommandText>
                                   <TextRun>
                                     <Value>=Sum(Fields!Total_Folios.Value)</Value>
                                     <Style>
-                                      <FontFamily>Arial</FontFamily>
+                                      <FontFamily>Tahoma</FontFamily>
                                       <FontWeight>Bold</FontWeight>
                                       <Format>#,0;(#,0)</Format>
                                     </Style>
@@ -8217,7 +8217,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>N E T    T A X A B L E    V A L U E S    T O T A L S</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -8495,7 +8495,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>Net</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -8530,7 +8530,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Fields!Net_General_Value.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -8565,7 +8565,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Fields!Net_Other_Value.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -8639,7 +8639,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>Net</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -8678,7 +8678,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_General_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -8719,7 +8719,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Other_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -8759,7 +8759,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_School_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -8804,7 +8804,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>Net</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -8844,7 +8844,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_General_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -8885,7 +8885,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Other_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -8925,7 +8925,7 @@ ORDER BY Area</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_School_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -8982,13 +8982,13 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>Area: </Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                 </Style>
                               </TextRun>
                               <TextRun>
                                 <Value>=First(Fields!Area.Value, "qryAA")</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                 </Style>
                               </TextRun>
                             </TextRuns>
@@ -9063,13 +9063,13 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>Jurisdiction </Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                 </Style>
                               </TextRun>
                               <TextRun>
                                 <Value>=Parameters!p_JUR.Value</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                 </Style>
                               </TextRun>
                             </TextRuns>
@@ -9147,7 +9147,7 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>Neighbourhood </Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                 </Style>
                               </TextRun>
                               <TextRun>
@@ -9229,7 +9229,7 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>Property Class</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
                               </TextRun>
@@ -9333,7 +9333,7 @@ ORDER BY Area</CommandText>
                                   <TextRun>
                                     <Value>=IIF(IsNothing(Fields!Property_Sub_Class.Value), Fields!Property_Class.Value, "     " &amp; Fields!Property_Sub_Class.Value)</Value>
                                     <Style>
-                                      <FontFamily>Arial</FontFamily>
+                                      <FontFamily>Tahoma</FontFamily>
                                     </Style>
                                   </TextRun>
                                 </TextRuns>
@@ -9378,7 +9378,7 @@ ORDER BY Area</CommandText>
                                       <TextRun>
                                         <Value>=Fields!Total_Folios.Value</Value>
                                         <Style>
-                                          <FontFamily>Arial</FontFamily>
+                                          <FontFamily>Tahoma</FontFamily>
                                           <Format>#,0;(#,0)</Format>
                                         </Style>
                                       </TextRun>
@@ -9424,7 +9424,7 @@ ORDER BY Area</CommandText>
                                   <TextRun>
                                     <Value>=Fields!Property_Class.Value</Value>
                                     <Style>
-                                      <FontFamily>Arial</FontFamily>
+                                      <FontFamily>Tahoma</FontFamily>
                                       <FontWeight>Bold</FontWeight>
                                     </Style>
                                   </TextRun>
@@ -9460,7 +9460,7 @@ ORDER BY Area</CommandText>
                                       <TextRun>
                                         <Value>=Sum(Fields!Total_Folios.Value)</Value>
                                         <Style>
-                                          <FontFamily>Arial</FontFamily>
+                                          <FontFamily>Tahoma</FontFamily>
                                           <FontWeight>Bold</FontWeight>
                                           <Format>#,0;(#,0)</Format>
                                         </Style>
@@ -9512,14 +9512,14 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>Total for </Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
                               </TextRun>
                               <TextRun>
                                 <Value>=First(Fields!Area.Value, "qryAA")</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
                               </TextRun>
@@ -9555,7 +9555,7 @@ ORDER BY Area</CommandText>
                                   <TextRun>
                                     <Value>=Sum(Fields!Total_Folios.Value)</Value>
                                     <Style>
-                                      <FontFamily>Arial</FontFamily>
+                                      <FontFamily>Tahoma</FontFamily>
                                       <FontWeight>Bold</FontWeight>
                                       <Format>#,0;(#,0)</Format>
                                     </Style>
@@ -9746,7 +9746,7 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>Net Taxable Asessment:</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
                               </TextRun>
@@ -9784,7 +9784,7 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>General:</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
@@ -9799,7 +9799,7 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>Less S.644LGA/398VC:</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
@@ -9821,7 +9821,7 @@ ORDER BY Area</CommandText>
                               <TextRun>
                                 <Value>otal:</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
@@ -9902,7 +9902,7 @@ ORDER BY Area</CommandText>
                     <TextRun>
                       <Value>ROLL TOTALS</Value>
                       <Style>
-                        <FontFamily>Arial</FontFamily>
+                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>14pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
@@ -9918,7 +9918,7 @@ ORDER BY Area</CommandText>
                       <Label>CYCLE_DESC</Label>
                       <Value>=Parameters!p_RY.Value &amp; " Supplemental/PAAB Cycle " &amp; Parameters!p_CN.Value &amp; " run on " &amp; Format(First(Fields!Roll_Entry_Run_Date.Value, "qryRCN"), "dd-MMM-yyyy")</Value>
                       <Style>
-                        <FontFamily>Arial</FontFamily>
+                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>12pt</FontSize>
                       </Style>
                     </TextRun>
@@ -9933,7 +9933,7 @@ ORDER BY Area</CommandText>
                       <Label>CYCLE_DESC</Label>
                       <Value />
                       <Style>
-                        <FontFamily>Arial</FontFamily>
+                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>8pt</FontSize>
                       </Style>
                     </TextRun>

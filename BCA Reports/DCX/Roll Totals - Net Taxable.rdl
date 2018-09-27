@@ -325,7 +325,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                                 <TextRun>
                                   <Value>N E T    T A X A B L E    V A L U E S    T O T A L S</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -603,7 +603,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                                 <TextRun>
                                   <Value>Net</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -617,7 +617,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -651,7 +651,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                                 <TextRun>
                                   <Value>=Fields!Net_General_Value.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -665,7 +665,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -700,7 +700,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                                 <TextRun>
                                   <Value>=Fields!Net_Other_Value.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -714,7 +714,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
                                 </TextRun>
@@ -788,7 +788,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                                 <TextRun>
                                   <Value>Net</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -802,7 +802,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -841,7 +841,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_General_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -856,7 +856,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -897,7 +897,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Other_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -912,7 +912,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -952,7 +952,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_School_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -997,7 +997,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                                 <TextRun>
                                   <Value>Net</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -1011,7 +1011,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -1051,7 +1051,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_General_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -1066,7 +1066,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -1107,7 +1107,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Other_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -1122,7 +1122,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -1162,7 +1162,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_School_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
                                   </Style>
@@ -1219,13 +1219,13 @@ ORDER BY [Neighbourhood Code]</CommandText>
                               <TextRun>
                                 <Value>Area: </Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                 </Style>
                               </TextRun>
                               <TextRun>
                                 <Value>=First(Fields!Area.Value, "qryAA")</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                 </Style>
                               </TextRun>
                             </TextRuns>
@@ -1300,13 +1300,13 @@ ORDER BY [Neighbourhood Code]</CommandText>
                               <TextRun>
                                 <Value>Jurisdiction </Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                 </Style>
                               </TextRun>
                               <TextRun>
                                 <Value>=Parameters!p_JUR.Value</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                 </Style>
                               </TextRun>
                             </TextRuns>
@@ -1384,7 +1384,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                               <TextRun>
                                 <Value>Neighbourhood </Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                 </Style>
                               </TextRun>
                               <TextRun>
@@ -1466,7 +1466,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                               <TextRun>
                                 <Value>Property Class</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
                               </TextRun>
@@ -1570,7 +1570,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                                   <TextRun>
                                     <Value>=IIF(IsNothing(Fields!Property_Sub_Class.Value), Fields!Property_Class.Value, "     "&amp;Fields!Property_Sub_Class.Value)</Value>
                                     <Style>
-                                      <FontFamily>Arial</FontFamily>
+                                      <FontFamily>Tahoma</FontFamily>
                                     </Style>
                                   </TextRun>
                                 </TextRuns>
@@ -1615,7 +1615,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                                       <TextRun>
                                         <Value>=Fields!Total_Folios.Value</Value>
                                         <Style>
-                                          <FontFamily>Arial</FontFamily>
+                                          <FontFamily>Tahoma</FontFamily>
                                           <Format>#,0;(#,0)</Format>
                                         </Style>
                                       </TextRun>
@@ -1629,7 +1629,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                                       <TextRun>
                                         <Value />
                                         <Style>
-                                          <FontFamily>Arial</FontFamily>
+                                          <FontFamily>Tahoma</FontFamily>
                                           <Format>#,0;(#,0)</Format>
                                         </Style>
                                       </TextRun>
@@ -1673,7 +1673,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                                   <TextRun>
                                     <Value>=Fields!Property_Class.Value</Value>
                                     <Style>
-                                      <FontFamily>Arial</FontFamily>
+                                      <FontFamily>Tahoma</FontFamily>
                                       <FontWeight>Bold</FontWeight>
                                     </Style>
                                   </TextRun>
@@ -1709,7 +1709,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                                       <TextRun>
                                         <Value>=Sum(Fields!Total_Folios.Value)</Value>
                                         <Style>
-                                          <FontFamily>Arial</FontFamily>
+                                          <FontFamily>Tahoma</FontFamily>
                                           <FontWeight>Bold</FontWeight>
                                           <Format>#,0;(#,0)</Format>
                                         </Style>
@@ -1761,14 +1761,14 @@ ORDER BY [Neighbourhood Code]</CommandText>
                               <TextRun>
                                 <Value>Total for </Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
                               </TextRun>
                               <TextRun>
                                 <Value>=First(Fields!Area.Value, "qryAA")</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
                               </TextRun>
@@ -1804,7 +1804,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                                   <TextRun>
                                     <Value>=Sum(Fields!Total_Folios.Value)</Value>
                                     <Style>
-                                      <FontFamily>Arial</FontFamily>
+                                      <FontFamily>Tahoma</FontFamily>
                                       <FontWeight>Bold</FontWeight>
                                       <Format>#,0;(#,0)</Format>
                                     </Style>
@@ -1993,7 +1993,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                               <TextRun>
                                 <Value>Net Taxable Asessment:</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
                               </TextRun>
@@ -2031,7 +2031,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                               <TextRun>
                                 <Value>General:</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
@@ -2046,7 +2046,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                               <TextRun>
                                 <Value>Less S.644LGA/398VC:</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
@@ -2068,7 +2068,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                               <TextRun>
                                 <Value>otal:</Value>
                                 <Style>
-                                  <FontFamily>Arial</FontFamily>
+                                  <FontFamily>Tahoma</FontFamily>
                                   <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
@@ -2148,7 +2148,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                     <TextRun>
                       <Value>ROLL TOTALS</Value>
                       <Style>
-                        <FontFamily>Arial</FontFamily>
+                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>14pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
@@ -2164,7 +2164,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                       <Label>CYCLE_DESC</Label>
                       <Value>=Parameters!p_RY.Value &amp; " Supplemental/PAAB Cycle " &amp; Parameters!p_CN.Value &amp; " run on " &amp; Format(First(Fields!Roll_Entry_Run_Date.Value, "qryRCN"), "dd-MMM-yyyy")</Value>
                       <Style>
-                        <FontFamily>Arial</FontFamily>
+                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>12pt</FontSize>
                       </Style>
                     </TextRun>
@@ -2179,7 +2179,7 @@ ORDER BY [Neighbourhood Code]</CommandText>
                       <Label>CYCLE_DESC</Label>
                       <Value />
                       <Style>
-                        <FontFamily>Arial</FontFamily>
+                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>8pt</FontSize>
                       </Style>
                     </TextRun>

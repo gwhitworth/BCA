@@ -74,7 +74,7 @@ ORDER BY [Jurisdiction];</CommandText>
                                 <TextRun>
                                   <Value>=IIf(RowNumber(Nothing) = 1, "Jurisdiction:", Space(1))</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -105,7 +105,7 @@ ORDER BY [Jurisdiction];</CommandText>
                                 <TextRun>
                                   <Value>=Fields!Jurisdiction.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>

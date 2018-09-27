@@ -338,7 +338,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                                 <TextRun>
                                   <Value>Folio</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -353,7 +353,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                                 <TextRun>
                                   <Value>Number</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -390,7 +390,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                                 <TextRun>
                                   <Value>Area</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -427,7 +427,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                                 <TextRun>
                                   <Value>Jurisdiction</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -464,7 +464,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                                 <TextRun>
                                   <Value>Neighbourhood</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -501,7 +501,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                                 <TextRun>
                                   <Value>Property Class Code</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -538,7 +538,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                                 <TextRun>
                                   <Value>Exempt Tax Code</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -575,7 +575,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                                 <TextRun>
                                   <Value>Total Land Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -612,7 +612,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                                 <TextRun>
                                   <Value>Total Building Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -649,7 +649,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                                 <TextRun>
                                   <Value>Total Actual Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -691,7 +691,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                                 <TextRun>
                                   <Value>=Fields!Folio_ID.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>##-###-############</Format>
                                   </Style>
@@ -727,7 +727,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                                 <TextRun>
                                   <Value>=Fields!Area.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -762,7 +762,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                                 <TextRun>
                                   <Value>=Fields!Jurisdiction.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -797,7 +797,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                                 <TextRun>
                                   <Value>=Fields!Neighbourhood.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -832,7 +832,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                                 <TextRun>
                                   <Value>=Fields!Property_Class_Code.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -867,7 +867,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                                 <TextRun>
                                   <Value>=Fields!Exempt_Tax_Code.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -902,7 +902,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                                 <TextRun>
                                   <Value>=Fields!Total_Land_Value.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>'$'#,0;('$'#,0)</Format>
                                   </Style>
@@ -939,7 +939,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                                 <TextRun>
                                   <Value>=Fields!Total_Building_Value.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>'$'#,0;('$'#,0)</Format>
                                   </Style>
@@ -976,7 +976,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                                 <TextRun>
                                   <Value>=Fields!Total_Actual_Value.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>'$'#,0;('$'#,0)</Format>
                                   </Style>
@@ -1018,7 +1018,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                                 <TextRun>
                                   <Value>=Fields!Jurisdiction.Value</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -1052,7 +1052,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -1086,7 +1086,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -1120,7 +1120,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -1154,7 +1154,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -1188,7 +1188,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -1222,7 +1222,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                                 <TextRun>
                                   <Value>=Sum(Fields!Total_Land_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>'$'#,0;('$'#,0)</Format>
@@ -1258,7 +1258,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                                 <TextRun>
                                   <Value>=SUM(Fields!Total_Building_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>'$'#,0;('$'#,0)</Format>
@@ -1294,7 +1294,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                                 <TextRun>
                                   <Value>=Sum(Fields!Total_Actual_Value.Value)</Value>
                                   <Style>
-                                    <FontFamily>Arial</FontFamily>
+                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0;(#,0)</Format>
@@ -1362,7 +1362,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
               <Border>
                 <Style>None</Style>
               </Border>
-              <FontFamily>Arial Black</FontFamily>
+              <FontFamily>Tahoma Black</FontFamily>
               <FontSize>6pt</FontSize>
             </Style>
           </Tablix>
@@ -1390,7 +1390,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                     <TextRun>
                       <Value>Detail Report Template</Value>
                       <Style>
-                        <FontFamily>Arial</FontFamily>
+                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>12pt</FontSize>
                         <FontWeight>Normal</FontWeight>
                       </Style>
@@ -1406,7 +1406,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                       <Label>GEO_DESC</Label>
                       <Value>=IIF(Parameters!p_NEIGH.Value ="",IIF(Parameters!p_JUR.Value ="", "By Area: " &amp; First(Fields!Area.Value, "qryData"), "By Jurisdiction: " &amp; First(Fields!Jurisdiction.Value, "qryData")), "By Neighbourhood: " &amp; First(Fields!Neighbourhood.Value, "qryData"))</Value>
                       <Style>
-                        <FontFamily>Arial</FontFamily>
+                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>8pt</FontSize>
                       </Style>
                     </TextRun>
@@ -1515,7 +1515,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                     <TextRun>
                       <Value>Report Date: </Value>
                       <Style>
-                        <FontFamily>Arial</FontFamily>
+                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>8pt</FontSize>
                         <Format>MMM d, yyyy</Format>
                       </Style>
@@ -1523,7 +1523,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                     <TextRun>
                       <Value>=Globals!ExecutionTime</Value>
                       <Style>
-                        <FontFamily>Arial</FontFamily>
+                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>8pt</FontSize>
                         <Format>MMM d, yyyy</Format>
                       </Style>
@@ -1570,7 +1570,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                       <Value>="Page " &amp; Globals!PageNumber &amp; " of " &amp; Globals!TotalPages</Value>
                       <ToolTip>= "Ain;t this grand"</ToolTip>
                       <Style>
-                        <FontFamily>Arial</FontFamily>
+                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>8pt</FontSize>
                       </Style>
                     </TextRun>
@@ -1604,7 +1604,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                     <TextRun>
                       <Value>=IIF(Parameters!p_AA.Value ="","",First(Fields!Area.Value, "qryData"))</Value>
                       <Style>
-                        <FontFamily>Arial</FontFamily>
+                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>8pt</FontSize>
                       </Style>
                     </TextRun>
@@ -1650,7 +1650,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                     <TextRun>
                       <Value>Area</Value>
                       <Style>
-                        <FontFamily>Arial</FontFamily>
+                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>8pt</FontSize>
                       </Style>
                     </TextRun>
@@ -1698,7 +1698,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                     <TextRun>
                       <Value>Roll Year</Value>
                       <Style>
-                        <FontFamily>Arial</FontFamily>
+                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>8pt</FontSize>
                       </Style>
                     </TextRun>
@@ -1746,7 +1746,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                     <TextRun>
                       <Value>=Parameters!p_RY.Value</Value>
                       <Style>
-                        <FontFamily>Arial</FontFamily>
+                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>8pt</FontSize>
                       </Style>
                     </TextRun>
@@ -1794,7 +1794,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                     <TextRun>
                       <Value>Jurisdiction</Value>
                       <Style>
-                        <FontFamily>Arial</FontFamily>
+                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>8pt</FontSize>
                       </Style>
                     </TextRun>
@@ -1884,7 +1884,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                     <TextRun>
                       <Value>Neighbourhood</Value>
                       <Style>
-                        <FontFamily>Arial</FontFamily>
+                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>8pt</FontSize>
                       </Style>
                     </TextRun>
@@ -1929,7 +1929,7 @@ WHERE        (CAT.[Roll Category Code] = ISNULL(@p_RC, CAT.[Roll Category Code])
                     <TextRun>
                       <Value>=IIF(Parameters!p_NEIGH.Value ="","",First(Fields!Neighbourhood.Value, "qryData"))</Value>
                       <Style>
-                        <FontFamily>Arial</FontFamily>
+                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>8pt</FontSize>
                       </Style>
                     </TextRun>
