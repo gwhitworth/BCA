@@ -769,7 +769,6 @@ AND Parameters!p_N.Value(0) &lt;&gt; "NA"
                     <TextRun>
                       <Value>=Parameters!p_RY.Value</Value>
                       <Style>
-                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>14pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
@@ -777,7 +776,6 @@ AND Parameters!p_N.Value(0) &lt;&gt; "NA"
                     <TextRun>
                       <Value>   ROLL TOTALS</Value>
                       <Style>
-                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>14pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
@@ -792,9 +790,7 @@ AND Parameters!p_N.Value(0) &lt;&gt; "NA"
                     <TextRun>
                       <Label>CYCLE_DESC</Label>
                       <Value>= Mid(Parameters!p_CN.Label,1,InStr(Parameters!p_CN.Label," run on "))</Value>
-                      <Style>
-                        <FontFamily>Tahoma</FontFamily>
-                      </Style>
+                      <Style />
                     </TextRun>
                   </TextRuns>
                   <Style>
@@ -807,7 +803,6 @@ AND Parameters!p_N.Value(0) &lt;&gt; "NA"
                       <Label>Regional District Provincial Totals</Label>
                       <Value />
                       <Style>
-                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>12pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
@@ -854,7 +849,6 @@ AND Parameters!p_N.Value(0) &lt;&gt; "NA"
                       <Value>www.bcassessment.ca</Value>
                       <Style>
                         <FontStyle>Italic</FontStyle>
-                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>8pt</FontSize>
                       </Style>
                     </TextRun>
@@ -918,7 +912,6 @@ AND Parameters!p_N.Value(0) &lt;&gt; "NA"
                         , InStr(Parameters!p_CN.Label, "on ") + 3),"-","/")
                       </Value>
                       <Style>
-                        <FontFamily>Tahoma</FontFamily>
                         <Format>MMM d, yyyy</Format>
                       </Style>
                     </TextRun>
@@ -950,9 +943,7 @@ AND Parameters!p_N.Value(0) &lt;&gt; "NA"
                   <TextRuns>
                     <TextRun>
                       <Value>="Printed Date: " + Format(Globals!ExecutionTime,"dd/MMM/yyyy")</Value>
-                      <Style>
-                        <FontFamily>Tahoma</FontFamily>
-                      </Style>
+                      <Style />
                     </TextRun>
                   </TextRuns>
                   <Style>
@@ -993,9 +984,9 @@ AND Parameters!p_N.Value(0) &lt;&gt; "NA"
               </Paragraphs>
               <rd:DefaultName>Textbox2</rd:DefaultName>
               <Top>0.44667in</Top>
-              <Left>5.2175in</Left>
+              <Left>5.0925in</Left>
               <Height>0.25in</Height>
-              <Width>2.73958in</Width>
+              <Width>3.02083in</Width>
               <ZIndex>6</ZIndex>
               <Visibility>
                 <Hidden>=IIf(Parameters!p_RD.Value = "PROV",false,true)</Hidden>
@@ -1080,7 +1071,6 @@ AND Parameters!p_N.Value(0) &lt;&gt; "NA"
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
-              <Top>0in</Top>
               <Left>11.47896in</Left>
               <Height>0.25in</Height>
               <Width>1.40625in</Width>
@@ -1113,7 +1103,6 @@ AND Parameters!p_N.Value(0) &lt;&gt; "NA"
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>ReportName</rd:DefaultName>
-              <Top>0in</Top>
               <Height>0.25in</Height>
               <Width>1.88784in</Width>
               <ZIndex>2</ZIndex>
