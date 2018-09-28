@@ -739,7 +739,7 @@ AND Parameters!p_N.Value(0) &lt;&gt; "NA"
             <Width>12.55208in</Width>
             <ZIndex>1</ZIndex>
             <Visibility>
-              <Hidden>=IIf(Parameters!p_BY.Value = "AR"
+              <Hidden>=IIf(Parameters!p_BY.Value = "AR" OR Parameters!p_BY.Value = "AM"
 , True
 , IIf(Parameters!p_RD.Count = 1 AND 
 (Parameters!p_RD.Value = "PROV" OR Parameters!p_RD.Value = "RDPROV")
@@ -863,7 +863,7 @@ AND Parameters!p_N.Value(0) &lt;&gt; "NA"
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
-            <Textbox Name="textbox99">
+            <Textbox Name="tbHeader1">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
               <Paragraphs>
@@ -919,6 +919,91 @@ AND Parameters!p_N.Value(0) &lt;&gt; "NA"
               <Top>0.00001in</Top>
               <Height>0.70833in</Height>
               <Width>12.88521in</Width>
+              <Visibility>
+                <Hidden>=IIf(Parameters!p_BY.Value = "AM", True, False)</Hidden>
+              </Visibility>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <VerticalAlign>Top</VerticalAlign>
+                <PaddingTop>5pt</PaddingTop>
+              </Style>
+            </Textbox>
+            <Textbox Name="tbHeader2">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Parameters!p_RY.Value</Value>
+                      <Style>
+                        <FontSize>14pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value>   ROLL TOTALS</Value>
+                      <Style>
+                        <FontSize>14pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Amalgamation Report</Value>
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Label>CYCLE_DESC</Label>
+                      <Value>=Mid(Parameters!p_CN.Label, 1, InStr(Parameters!p_CN.Label, " run on "))</Value>
+                      <Style />
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Label>Regional District Provincial Totals</Label>
+                      <Value />
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <Top>0.01187in</Top>
+              <Height>0.70833in</Height>
+              <Width>12.88521in</Width>
+              <ZIndex>1</ZIndex>
+              <Visibility>
+                <Hidden>=IIf(Parameters!p_BY.Value = "AM", False, True)</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -933,7 +1018,7 @@ AND Parameters!p_N.Value(0) &lt;&gt; "NA"
               <Left>0.1in</Left>
               <Height>0.37153in</Height>
               <Width>2.35069in</Width>
-              <ZIndex>1</ZIndex>
+              <ZIndex>2</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -966,7 +1051,7 @@ AND Parameters!p_N.Value(0) &lt;&gt; "NA"
               <Left>0.1in</Left>
               <Height>0.1875in</Height>
               <Width>2.35069in</Width>
-              <ZIndex>2</ZIndex>
+              <ZIndex>3</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -992,7 +1077,7 @@ AND Parameters!p_N.Value(0) &lt;&gt; "NA"
               <Left>12.56291in</Left>
               <Height>0.35834in</Height>
               <Width>0.3125in</Width>
-              <ZIndex>3</ZIndex>
+              <ZIndex>4</ZIndex>
               <ToolTip>="The risk rating"</ToolTip>
               <Style>
                 <Border>
@@ -1029,7 +1114,7 @@ AND Parameters!p_N.Value(0) &lt;&gt; "NA"
               <Left>10.84313in</Left>
               <Height>0.15972in</Height>
               <Width>2.03228in</Width>
-              <ZIndex>4</ZIndex>
+              <ZIndex>5</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1059,56 +1144,12 @@ AND Parameters!p_N.Value(0) &lt;&gt; "NA"
               <Left>10.84313in</Left>
               <Height>0.15972in</Height>
               <Width>2.03228in</Width>
-              <ZIndex>5</ZIndex>
+              <ZIndex>6</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
                 </Border>
                 <VerticalAlign>Middle</VerticalAlign>
-              </Style>
-            </Textbox>
-            <Textbox Name="Textbox2">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Label>Regional District Provincial Totals</Label>
-                      <Value>=IIf(Parameters!p_RD.Value = "RDPROV"
-,"Regional District Provincial Totals"
-,"Provincial Totals")</Value>
-                      <Style>
-                        <FontSize>12pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Center</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox2</rd:DefaultName>
-              <Top>0.44667in</Top>
-              <Left>4.9675in</Left>
-              <Height>0.25in</Height>
-              <Width>3.02083in</Width>
-              <ZIndex>6</ZIndex>
-              <Visibility>
-                <Hidden>=IIf(
-Parameters!p_RD.Value = "PROV" OR Parameters!p_RD.Value = "RDPROV"
-,false,true
-)</Hidden>
-              </Visibility>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
               </Style>
             </Textbox>
           </ReportItems>

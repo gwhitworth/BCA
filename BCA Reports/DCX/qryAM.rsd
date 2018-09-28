@@ -21,15 +21,15 @@
 FROM [EDW].[edw].[dimJurisdiction]
 WHERE [Amalgamation Code] IS NOT NULL
       AND [dimRollYear_SK] = @p_RY
-UNION 
-SELECT
-       -1, 
-       -3, 
-       'Not Applicable', 
-       'NA', 
-       'Not Applicable', 
-       -1
-ORDER BY [RowSortOrder]</CommandText>
+UNION
+SELECT-1, 
+      -3, 
+      'Not Applicable', 
+      'NA', 
+      'Not Applicable', 
+      -1
+ORDER BY [RowSortOrder], 
+         [Amalgamation Desc];</CommandText>
     </Query>
     <Fields>
       <Field Name="dimArea_SK">

@@ -1218,7 +1218,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>="Totals for"
 + Space(1)
-+Fields!Amalgamation.Value</Value>
++Fields!Amalgamation_Desc.Value</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -4452,7 +4452,7 @@ CStr(Variables!vSection644.Value) ="","0"
                                 <TextRun>
                                   <Value>="Totals for"
 + Space(1)
-+Fields!Amalgamation.Value</Value>
++Fields!Amalgamation_Desc.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -5538,7 +5538,7 @@ CStr(Variables!vSection644.Value) ="","0"
                 <TablixMember>
                   <Group Name="Amalgamation2">
                     <GroupExpressions>
-                      <GroupExpression>=Fields!Amalgamation.Value</GroupExpression>
+                      <GroupExpression>=Fields!Amalgamation_Desc.Value</GroupExpression>
                     </GroupExpressions>
                     <PageBreak>
                       <BreakLocation>Between</BreakLocation>
@@ -5546,7 +5546,7 @@ CStr(Variables!vSection644.Value) ="","0"
                   </Group>
                   <SortExpressions>
                     <SortExpression>
-                      <Value>=Fields!Amalgamation.Value</Value>
+                      <Value>=Fields!Amalgamation_Desc.Value</Value>
                     </SortExpression>
                   </SortExpressions>
                   <TablixMembers>
@@ -7466,7 +7466,7 @@ CStr(Variables!vSection644.Value) ="","0"
                                 <TextRun>
                                   <Value>="Totals for"
 + Space(1)
-+Fields!Amalgamation.Value</Value>
++Fields!Amalgamation_Desc.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -8533,7 +8533,7 @@ CStr(Variables!vSection644.Value) ="","0"
                 <TablixMember>
                   <Group Name="Amalgamation3">
                     <GroupExpressions>
-                      <GroupExpression>=Fields!Amalgamation.Value</GroupExpression>
+                      <GroupExpression>=Fields!Amalgamation_Desc.Value</GroupExpression>
                     </GroupExpressions>
                     <PageBreak>
                       <BreakLocation>Between</BreakLocation>
@@ -8541,7 +8541,7 @@ CStr(Variables!vSection644.Value) ="","0"
                   </Group>
                   <SortExpressions>
                     <SortExpression>
-                      <Value>=Fields!Amalgamation.Value</Value>
+                      <Value>=Fields!Amalgamation_Desc.Value</Value>
                     </SortExpression>
                   </SortExpressions>
                   <TablixMembers>
@@ -9609,7 +9609,7 @@ CStr(Variables!vSection644.Value) ="","0"
                                 <TextRun>
                                   <Value>="Totals for"
 + Space(1)
-+Fields!Amalgamation.Value</Value>
++Fields!Amalgamation_Desc.Value</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -13190,7 +13190,7 @@ CStr(Variables!vSection644.Value) ="","0"
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>="Totals for" + Space(1) + Fields!Amalgamation.Value</Value>
+                                  <Value>="Totals for" + Space(1) + Fields!Amalgamation_Desc.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -15178,12 +15178,12 @@ CStr(Variables!vSection644.Value) ="","0"
                 <TablixMember>
                   <Group Name="Amalgamation5">
                     <GroupExpressions>
-                      <GroupExpression>=Fields!Amalgamation.Value</GroupExpression>
+                      <GroupExpression>=Fields!Amalgamation_Desc.Value</GroupExpression>
                     </GroupExpressions>
                   </Group>
                   <SortExpressions>
                     <SortExpression>
-                      <Value>=Fields!Amalgamation.Value</Value>
+                      <Value>=Fields!Amalgamation_Desc.Value</Value>
                     </SortExpression>
                   </SortExpressions>
                   <TablixMembers>
