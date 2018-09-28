@@ -56,6 +56,10 @@
       <Name>qryRY.rsd</Name>
       <FullPath>qryRY.rsd</FullPath>
     </ProjectItem>
+    <ProjectItem>
+      <Name>qryAM.rsd</Name>
+      <FullPath>qryAM.rsd</FullPath>
+    </ProjectItem>
   </DataSets>
   <Reports>
     <ProjectItem>
@@ -235,6 +239,10 @@
       <FullPath>RollTotal_Sub4.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>RollTotal_Sub5.rdl</Name>
+      <FullPath>RollTotal_Sub5.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>Summary Report Template.rdl</Name>
       <FullPath>Summary Report Template.rdl</FullPath>
     </ProjectItem>
@@ -243,8 +251,12 @@
       <FullPath>Template.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>RollTotal_Sub5.rdl</Name>
-      <FullPath>RollTotal_Sub5.rdl</FullPath>
+      <Name>RollTotal_Sub6.rdl</Name>
+      <FullPath>RollTotal_Sub6.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RollTotal_Sub7.rdl</Name>
+      <FullPath>RollTotal_Sub7.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>

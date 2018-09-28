@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <Description />
+  <DataSet Name="qryAM">
+    <Query>
+      <DataSourceReference>EDW</DataSourceReference>
+      <DataSetParameters>
+        <DataSetParameter Name="@p_RY">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>true</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+        </DataSetParameter>
+      </DataSetParameters>
+      <CommandText>SELECT DISTINCT 
+       [dimArea_SK], 
+       [dimJurisdictionType_SK], 
+       [Amalgamation], 
+       [Amalgamation Code], 
+       [Amalgamation Desc], 
+       [RowSortOrder]
+FROM [EDW].[edw].[dimJurisdiction]
+WHERE [Amalgamation Code] IS NOT NULL
+      AND [dimRollYear_SK] = @p_RY
+UNION 
+SELECT
+       -1, 
+       -3, 
+       'Not Applicable', 
+       'NA', 
+       'Not Applicable', 
+       -1
+ORDER BY [RowSortOrder]</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="dimArea_SK">
+        <DataField>dimArea_SK</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+      <Field Name="dimJurisdictionType_SK">
+        <DataField>dimJurisdictionType_SK</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+      <Field Name="Amalgamation">
+        <DataField>Amalgamation</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Amalgamation_Code">
+        <DataField>Amalgamation Code</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Amalgamation_Desc">
+        <DataField>Amalgamation Desc</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="RowSortOrder">
+        <DataField>RowSortOrder</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>

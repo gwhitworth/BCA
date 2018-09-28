@@ -372,10 +372,19 @@ SELECT NULL,
        NULL, 
        NULL, 
        @p_RY, 
+       'Regional District Provincial Totals' AS [Regional District], 
+       'RDPROV' AS [Regional District Code], 
+       'Regional District Provincial Totals' AS [Regional District Desc], 
+       -2 AS RowSortOrder
+UNION
+SELECT NULL, 
+       NULL, 
+       NULL, 
+       @p_RY, 
        'Not Applicable' AS [Regional District], 
        'NA' AS [Regional District Code], 
        'Not Applicable' AS [Regional District Desc], 
-       -2 AS RowSortOrder
+       -3 AS RowSortOrder
 ORDER BY RowSortOrder, 
          [Regional District Code];</CommandText>
       </Query>
@@ -406,6 +415,42 @@ ORDER BY RowSortOrder,
         </Field>
         <Field Name="Regional_District_Desc">
           <DataField>Regional District Desc</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="RowSortOrder">
+          <DataField>RowSortOrder</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="qryAM">
+      <SharedDataSet>
+        <SharedDataSetReference>qryAM</SharedDataSetReference>
+        <QueryParameters>
+          <QueryParameter Name="@p_RY">
+            <Value>=Parameters!p_RY.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+      </SharedDataSet>
+      <Fields>
+        <Field Name="dimArea_SK">
+          <DataField>dimArea_SK</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="dimJurisdictionType_SK">
+          <DataField>dimJurisdictionType_SK</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Amalgamation">
+          <DataField>Amalgamation</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Amalgamation_Code">
+          <DataField>Amalgamation_Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Amalgamation_Desc">
+          <DataField>Amalgamation_Desc</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="RowSortOrder">
@@ -696,7 +741,9 @@ AND Parameters!p_N.Value(0) &lt;&gt; "NA"
             <Visibility>
               <Hidden>=IIf(Parameters!p_BY.Value = "AR"
 , True
-, IIf(Parameters!p_RD.Count = 1 AND Parameters!p_RD.Value = "PROV",true,false)
+, IIf(Parameters!p_RD.Count = 1 AND 
+(Parameters!p_RD.Value = "PROV" OR Parameters!p_RD.Value = "RDPROV")
+,true,false)
 )</Hidden>
             </Visibility>
             <Style>
@@ -733,8 +780,64 @@ AND Parameters!p_N.Value(0) &lt;&gt; "NA"
               </Border>
             </Style>
           </Subreport>
+          <Subreport Name="SubreportRegionalDistrictProv2">
+            <ReportName>RollTotal_Sub6</ReportName>
+            <Parameters>
+              <Parameter Name="p_RY">
+                <Value>=Parameters!p_RY.Value</Value>
+              </Parameter>
+              <Parameter Name="p_CN">
+                <Value>=Parameters!p_CN.Value</Value>
+              </Parameter>
+            </Parameters>
+            <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
+            <Top>1.40938in</Top>
+            <Left>0.1in</Left>
+            <Height>0.21875in</Height>
+            <Width>12.55208in</Width>
+            <ZIndex>3</ZIndex>
+            <Visibility>
+              <Hidden>=IIf(Parameters!p_BY.Value = "AR"
+, True
+, IIf(Parameters!p_RD.Count = 1 AND Parameters!p_RD.Value = "RDPROV",false,true)
+)</Hidden>
+            </Visibility>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Subreport>
+          <Subreport Name="SubreportAmalgamatd">
+            <ReportName>RollTotal_Sub7</ReportName>
+            <Parameters>
+              <Parameter Name="p_RY">
+                <Value>=Parameters!p_RY.Value</Value>
+              </Parameter>
+              <Parameter Name="p_CN">
+                <Value>=Parameters!p_CN.Value</Value>
+              </Parameter>
+              <Parameter Name="p_AM">
+                <Value>=Parameters!p_AM.Value</Value>
+              </Parameter>
+            </Parameters>
+            <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
+            <Top>1.68021in</Top>
+            <Left>0.1in</Left>
+            <Height>0.21875in</Height>
+            <Width>12.55208in</Width>
+            <ZIndex>4</ZIndex>
+            <Visibility>
+              <Hidden>=IIf(Parameters!p_BY.Value = "AM", False, True)</Hidden>
+            </Visibility>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Subreport>
         </ReportItems>
-        <Height>1.36042in</Height>
+        <Height>1.95417in</Height>
         <Style>
           <Border>
             <Style>None</Style>
@@ -972,24 +1075,31 @@ AND Parameters!p_N.Value(0) &lt;&gt; "NA"
                   <TextRuns>
                     <TextRun>
                       <Label>Regional District Provincial Totals</Label>
-                      <Value>Regional District Provincial Totals</Value>
+                      <Value>=IIf(Parameters!p_RD.Value = "RDPROV"
+,"Regional District Provincial Totals"
+,"Provincial Totals")</Value>
                       <Style>
                         <FontSize>12pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox2</rd:DefaultName>
               <Top>0.44667in</Top>
-              <Left>5.0925in</Left>
+              <Left>4.9675in</Left>
               <Height>0.25in</Height>
               <Width>3.02083in</Width>
               <ZIndex>6</ZIndex>
               <Visibility>
-                <Hidden>=IIf(Parameters!p_RD.Value = "PROV",false,true)</Hidden>
+                <Hidden>=IIf(
+Parameters!p_RD.Value = "PROV" OR Parameters!p_RD.Value = "RDPROV"
+,false,true
+)</Hidden>
               </Visibility>
               <Style>
                 <Border>
@@ -1184,6 +1294,10 @@ AND Parameters!p_N.Value(0) &lt;&gt; "NA"
       <ValidValues>
         <ParameterValues>
           <ParameterValue>
+            <Value>AM</Value>
+            <Label>Amalgamated</Label>
+          </ParameterValue>
+          <ParameterValue>
             <Value>AR</Value>
             <Label>Area</Label>
           </ParameterValue>
@@ -1263,6 +1377,23 @@ AND Parameters!p_N.Value(0) &lt;&gt; "NA"
         </DataSetReference>
       </ValidValues>
     </ReportParameter>
+    <ReportParameter Name="p_AM">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>NA</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>Amalgamated Area</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>qryAM</DataSetName>
+          <ValueField>Amalgamation_Code</ValueField>
+          <LabelField>Amalgamation_Desc</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
   </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
@@ -1303,6 +1434,11 @@ AND Parameters!p_N.Value(0) &lt;&gt; "NA"
           <ColumnIndex>0</ColumnIndex>
           <RowIndex>2</RowIndex>
           <ParameterName>p_RD</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>2</RowIndex>
+          <ParameterName>p_AM</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>
