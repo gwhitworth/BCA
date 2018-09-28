@@ -258,6 +258,10 @@
       <Name>RollTotal_Sub7.rdl</Name>
       <FullPath>RollTotal_Sub7.rdl</FullPath>
     </ProjectItem>
+    <ProjectItem>
+      <Name>RollTotal_Sub8.rdl</Name>
+      <FullPath>RollTotal_Sub8.rdl</FullPath>
+    </ProjectItem>
   </Reports>
   <Configurations>
     <Configuration>

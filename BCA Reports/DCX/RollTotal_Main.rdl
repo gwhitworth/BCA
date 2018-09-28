@@ -459,6 +459,103 @@ ORDER BY RowSortOrder,
         </Field>
       </Fields>
     </DataSet>
+    <DataSet Name="qryData_SDJR">
+      <Query>
+        <DataSourceName>EDW</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@p_RY">
+            <Value>=Parameters!p_RY.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@p_SD">
+            <Value>=Parameters!p_SD.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>SELECT DISTINCT 
+       [AG].dimJurisdiction_BK, 
+       [AG].dimJurisdiction_SK, 
+       [AG].[Jurisdiction Code]
+FROM [EDW].[edw].[dimFolio] AS [FO]
+     INNER JOIN [edw].[dimSchoolDistrict] AS [SD] ON [SD].[School  District Code] = [FO].[School  District Code]
+                                                     AND [SD].[Roll Year] = [FO].[Roll Year]
+     INNER JOIN [edw].[dimAssessmentGeography] AS [AG] ON [FO].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
+                                                          AND [AG].[Roll Category Code] = '1'
+                                                          AND [AG].[Roll Year] = [FO].[Roll Year]
+WHERE [FO].[Roll Year] = @p_RY
+      AND [FO].[School  District Code] IN(@p_SD)
+ORDER BY [AG].[Jurisdiction Code];</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="dimJurisdiction_BK">
+          <DataField>dimJurisdiction_BK</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="dimJurisdiction_SK">
+          <DataField>dimJurisdiction_SK</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Jurisdiction_Code">
+          <DataField>Jurisdiction Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="qrySD">
+      <Query>
+        <DataSourceName>EDW</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@p_RY">
+            <Value>=Parameters!p_RY.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>SELECT [dimSchoolDistrict_SK], 
+       [dimSchoolDistrict_BK], 
+       [dimRollYear_SK], 
+       [Roll Year], 
+       IIF([School District] = 'Unknown','Not Applicable',[School District]) AS [School District],
+       [School  District Code], 
+       [School District Desc], 
+       [RowSortOrder]
+FROM [EDW].[edw].[dimSchoolDistrict]
+WHERE [dimRollYear_SK] = @p_RY
+      OR [dimSchoolDistrict_SK] = -3
+ORDER BY [RowSortOrder] DESC, 
+         [School  District Code];</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="dimSchoolDistrict_SK">
+          <DataField>dimSchoolDistrict_SK</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="dimSchoolDistrict_BK">
+          <DataField>dimSchoolDistrict_BK</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="dimRollYear_SK">
+          <DataField>dimRollYear_SK</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Roll_Year">
+          <DataField>Roll Year</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="School_District">
+          <DataField>School District</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="School__District_Code">
+          <DataField>School  District Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="School_District_Desc">
+          <DataField>School District Desc</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="RowSortOrder">
+          <DataField>RowSortOrder</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
   </DataSets>
   <ReportSections>
     <ReportSection>
@@ -739,7 +836,7 @@ AND Parameters!p_N.Value(0) &lt;&gt; "NA"
             <Width>12.55208in</Width>
             <ZIndex>1</ZIndex>
             <Visibility>
-              <Hidden>=IIf(Parameters!p_BY.Value = "AR" OR Parameters!p_BY.Value = "AM"
+              <Hidden>=IIf(Parameters!p_BY.Value = "AR" OR Parameters!p_BY.Value = "AM" OR Parameters!p_BY.Value = "SD"
 , True
 , IIf(Parameters!p_RD.Count = 1 AND 
 (Parameters!p_RD.Value = "PROV" OR Parameters!p_RD.Value = "RDPROV")
@@ -791,7 +888,7 @@ AND Parameters!p_N.Value(0) &lt;&gt; "NA"
               </Parameter>
             </Parameters>
             <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
-            <Top>1.40938in</Top>
+            <Top>1.28438in</Top>
             <Left>0.1in</Left>
             <Height>0.21875in</Height>
             <Width>12.55208in</Width>
@@ -808,7 +905,86 @@ AND Parameters!p_N.Value(0) &lt;&gt; "NA"
               </Border>
             </Style>
           </Subreport>
-          <Subreport Name="SubreportAmalgamatd">
+          <Tablix Name="TablixSDJR">
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>12.56354in</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>0.3125in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Rectangle Name="Rectangle2">
+                          <ReportItems>
+                            <Subreport Name="SubreportSchoolDistrictJuristiciton">
+                              <ReportName>RollTotal_Sub8</ReportName>
+                              <Parameters>
+                                <Parameter Name="p_RY">
+                                  <Value>=Parameters!p_RY.Value</Value>
+                                </Parameter>
+                                <Parameter Name="p_CN">
+                                  <Value>=Parameters!p_CN.Value</Value>
+                                </Parameter>
+                                <Parameter Name="p_JR">
+                                  <Value>=Fields!Jurisdiction_Code.Value</Value>
+                                </Parameter>
+                              </Parameters>
+                              <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
+                              <Left>0.01146in</Left>
+                              <Height>0.21875in</Height>
+                              <Width>12.55208in</Width>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                              </Style>
+                            </Subreport>
+                          </ReportItems>
+                          <KeepTogether>true</KeepTogether>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                        </Rectangle>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <Group Name="Details1" />
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <DataSetName>qryData_SDJR</DataSetName>
+            <Top>1.9125in</Top>
+            <Left>0.1in</Left>
+            <Height>0.3125in</Height>
+            <Width>12.56354in</Width>
+            <ZIndex>4</ZIndex>
+            <Visibility>
+              <Hidden>=IIf(Parameters!p_BY.Value = "SD", False, True)</Hidden>
+            </Visibility>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Tablix>
+          <Subreport Name="SubreportAmalgamatd2">
             <ReportName>RollTotal_Sub7</ReportName>
             <Parameters>
               <Parameter Name="p_RY">
@@ -822,11 +998,11 @@ AND Parameters!p_N.Value(0) &lt;&gt; "NA"
               </Parameter>
             </Parameters>
             <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
-            <Top>1.68021in</Top>
+            <Top>1.54479in</Top>
             <Left>0.1in</Left>
             <Height>0.21875in</Height>
             <Width>12.55208in</Width>
-            <ZIndex>4</ZIndex>
+            <ZIndex>5</ZIndex>
             <Visibility>
               <Hidden>=IIf(Parameters!p_BY.Value = "AM", False, True)</Hidden>
             </Visibility>
@@ -837,7 +1013,7 @@ AND Parameters!p_N.Value(0) &lt;&gt; "NA"
             </Style>
           </Subreport>
         </ReportItems>
-        <Height>1.95417in</Height>
+        <Height>2.32917in</Height>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1346,6 +1522,10 @@ AND Parameters!p_N.Value(0) &lt;&gt; "NA"
             <Value>RD</Value>
             <Label>Regional District</Label>
           </ParameterValue>
+          <ParameterValue>
+            <Value>SD</Value>
+            <Label>School District</Label>
+          </ParameterValue>
         </ParameterValues>
       </ValidValues>
     </ReportParameter>
@@ -1435,6 +1615,23 @@ AND Parameters!p_N.Value(0) &lt;&gt; "NA"
       </ValidValues>
       <MultiValue>true</MultiValue>
     </ReportParameter>
+    <ReportParameter Name="p_SD">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>NA</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>School District</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>qrySD</DataSetName>
+          <ValueField>School__District_Code</ValueField>
+          <LabelField>School_District</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
   </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
@@ -1480,6 +1677,11 @@ AND Parameters!p_N.Value(0) &lt;&gt; "NA"
           <ColumnIndex>1</ColumnIndex>
           <RowIndex>2</RowIndex>
           <ParameterName>p_AM</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>2</ColumnIndex>
+          <RowIndex>2</RowIndex>
+          <ParameterName>p_SD</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>
