@@ -4794,7 +4794,7 @@ CStr(Variables!vSection644.Value) ="","0"
             <PageBreak>
               <BreakLocation>End</BreakLocation>
             </PageBreak>
-            <Top>2.775in</Top>
+            <Top>2.7in</Top>
             <Height>2.90003in</Height>
             <Width>12.74521in</Width>
             <Style>
@@ -18116,9 +18116,6 @@ CStr(Variables!vSection644.Value) ="","0"
                       <GroupExpression>=Fields!Area.Value</GroupExpression>
                       <GroupExpression>=Fields!Jurisdiction_Code.Value</GroupExpression>
                     </GroupExpressions>
-                    <PageBreak>
-                      <BreakLocation>Between</BreakLocation>
-                    </PageBreak>
                   </Group>
                   <TablixMembers>
                     <TablixMember />
