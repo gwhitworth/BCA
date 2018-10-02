@@ -1500,7 +1500,10 @@ OR Parameters!p_BY.Value = "NA"
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Replace(Globals!ReportName,"_Main","")</Value>
+                      <Value>=IIf(Parameters!p_BY.Value = "AM"
+, "RG429"
+, Replace(Globals!ReportName,"_Main","")
+)</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>
@@ -1591,12 +1594,8 @@ OR Parameters!p_BY.Value = "NA"
       <ValidValues>
         <ParameterValues>
           <ParameterValue>
-            <Value>NA</Value>
-            <Label>Not Applicable</Label>
-          </ParameterValue>
-          <ParameterValue>
             <Value>AM</Value>
-            <Label>Amalgamated</Label>
+            <Label>Amalgamated Area</Label>
           </ParameterValue>
           <ParameterValue>
             <Value>AR</Value>

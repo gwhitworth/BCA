@@ -2580,6 +2580,7 @@ CStr(Variables!vSection644.Value) ="","0"
                           <TablixMembers>
                             <TablixMember />
                           </TablixMembers>
+                          <KeepTogether>true</KeepTogether>
                         </TablixMember>
                         <TablixMember>
                           <Visibility>
@@ -12388,7 +12389,7 @@ CStr(Variables!vSection644.Value) ="","0"
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.1655in</Height>
+                  <Height>0.18in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -15249,7 +15250,7 @@ CStr(Variables!vSection644.Value) ="","0"
             </TablixRowHierarchy>
             <DataSetName>qryData</DataSetName>
             <Top>2.25in</Top>
-            <Height>2.39737in</Height>
+            <Height>2.41187in</Height>
             <Width>12.74521in</Width>
             <ZIndex>4</ZIndex>
             <Style>
