@@ -9,6 +9,10 @@
   </DataSources>
   <DataSets>
     <ProjectItem>
+      <Name>qryAM.rsd</Name>
+      <FullPath>qryAM.rsd</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>qryAR.rsd</Name>
       <FullPath>qryAR.rsd</FullPath>
     </ProjectItem>
@@ -56,16 +60,8 @@
       <Name>qryRY.rsd</Name>
       <FullPath>qryRY.rsd</FullPath>
     </ProjectItem>
-    <ProjectItem>
-      <Name>qryAM.rsd</Name>
-      <FullPath>qryAM.rsd</FullPath>
-    </ProjectItem>
   </DataSets>
   <Reports>
-    <ProjectItem>
-      <Name>Copy of RollTotal_MainTest.rdl</Name>
-      <FullPath>Copy of RollTotal_MainTest.rdl</FullPath>
-    </ProjectItem>
     <ProjectItem>
       <Name>Detail Report (cascading prompts) Template.rdl</Name>
       <FullPath>Detail Report (cascading prompts) Template.rdl</FullPath>
@@ -215,14 +211,6 @@
       <FullPath>RollTotal_Main.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>RollTotal_Main_Tmp.rdl</Name>
-      <FullPath>RollTotal_Main_Tmp.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>RollTotal_MainTest.rdl</Name>
-      <FullPath>RollTotal_MainTest.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
       <Name>RollTotal_Sub1.rdl</Name>
       <FullPath>RollTotal_Sub1.rdl</FullPath>
     </ProjectItem>
@@ -243,14 +231,6 @@
       <FullPath>RollTotal_Sub5.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>Summary Report Template.rdl</Name>
-      <FullPath>Summary Report Template.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>Template.rdl</Name>
-      <FullPath>Template.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
       <Name>RollTotal_Sub6.rdl</Name>
       <FullPath>RollTotal_Sub6.rdl</FullPath>
     </ProjectItem>
@@ -261,6 +241,14 @@
     <ProjectItem>
       <Name>RollTotal_Sub8.rdl</Name>
       <FullPath>RollTotal_Sub8.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Summary Report Template.rdl</Name>
+      <FullPath>Summary Report Template.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Template.rdl</Name>
+      <FullPath>Template.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>
