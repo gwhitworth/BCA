@@ -356,7 +356,6 @@ ORDER BY [RowSortOrder],
     BEGIN
         SELECT dimRegionalDistrict_SK, 
                dimRegionalDistrict_BK, 
-               dimRollYear_SK, 
                [Roll Year], 
                [Regional District], 
                [Regional District Code], 
@@ -366,40 +365,18 @@ ORDER BY [RowSortOrder],
         WHERE([Roll Year] = @p_RY)
              AND (NOT([Regional District Code] IN('00', '88', '99', 'XX')))
         UNION
-        SELECT NULL, 
-               NULL, 
-               NULL, 
+        SELECT -1, 
+               'PROV', 
                @p_RY, 
                'Provincial Totals' AS [Regional District], 
                'PROV' AS [Regional District Code], 
                'Provincial Totals' AS [Regional District Desc], 
                -1 AS RowSortOrder
-        UNION
-        SELECT NULL, 
-               NULL, 
-               NULL, 
-               @p_RY, 
-               'Regional District Provincial Totals' AS [Regional District], 
-               'RDPROV' AS [Regional District Code], 
-               'Regional District Provincial Totals' AS [Regional District Desc], 
-               -2 AS RowSortOrder
-        UNION
-        SELECT NULL, 
-               NULL, 
-               NULL, 
-               @p_RY, 
-               'Not Applicable' AS [Regional District], 
-               'NA' AS [Regional District Code], 
-               'Not Applicable' AS [Regional District Desc], 
-               -3 AS RowSortOrder
-        ORDER BY RowSortOrder, 
-                 [Regional District Code];
     END;
     ELSE
     BEGIN
-        SELECT NULL AS dimRegionalDistrict_SK, 
-               NULL AS dimRegionalDistrict_BK, 
-               NULL AS dimRollYear_SK, 
+        SELECT -1 AS dimRegionalDistrict_SK, 
+               'NA' AS dimRegionalDistrict_BK, 
                @p_RY, 
                'Not Applicable' AS [Regional District], 
                'NA' AS [Regional District Code], 
@@ -415,10 +392,6 @@ ORDER BY [RowSortOrder],
         <Field Name="dimRegionalDistrict_BK">
           <DataField>dimRegionalDistrict_BK</DataField>
           <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="dimRollYear_SK">
-          <DataField>dimRollYear_SK</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="Roll_Year">
           <DataField>Roll Year</DataField>
@@ -457,7 +430,6 @@ ORDER BY [RowSortOrder],
     BEGIN
         SELECT DISTINCT 
                [dimArea_SK], 
-               [dimJurisdictionType_SK], 
                [Amalgamation], 
                [Amalgamation Code], 
                [Amalgamation Desc], 
@@ -465,13 +437,7 @@ ORDER BY [RowSortOrder],
         FROM [EDW].[edw].[dimJurisdiction]
         WHERE [Amalgamation Code] IS NOT NULL
               AND [dimRollYear_SK] = @p_RY
-        UNION
-        SELECT-1, 
-              -3, 
-              'Not Applicable', 
-              'NA', 
-              'Not Applicable', 
-              -1
+
         ORDER BY [RowSortOrder], 
                  [Amalgamation Desc];
     END;
@@ -479,7 +445,6 @@ ORDER BY [RowSortOrder],
     BEGIN
         SELECT DISTINCT
                -1 AS [dimArea_SK], 
-               -3 AS [dimJurisdictionType_SK], 
                'Not Applicable' AS [Amalgamation], 
                'NA' AS [Amalgamation Code], 
                'Not Applicable' AS [Amalgamation Desc], 
@@ -489,10 +454,6 @@ ORDER BY [RowSortOrder],
       <Fields>
         <Field Name="dimArea_SK">
           <DataField>dimArea_SK</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="dimJurisdictionType_SK">
-          <DataField>dimJurisdictionType_SK</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="Amalgamation">
@@ -568,7 +529,6 @@ ORDER BY [AG].[Jurisdiction Code];</CommandText>
     BEGIN
         SELECT [dimSchoolDistrict_SK], 
                [dimSchoolDistrict_BK], 
-               [dimRollYear_SK], 
                [Roll Year], 
                IIF([School District] = 'Unknown', 'Not Applicable', [School District]) AS [School District], 
                [School  District Code], 
@@ -576,7 +536,7 @@ ORDER BY [AG].[Jurisdiction Code];</CommandText>
                [RowSortOrder]
         FROM [EDW].[edw].[dimSchoolDistrict]
         WHERE [dimRollYear_SK] = @p_RY
-              OR [dimSchoolDistrict_SK] = -3
+
         ORDER BY [RowSortOrder] DESC, 
                  [School  District Code];
     END;
@@ -584,13 +544,12 @@ ORDER BY [AG].[Jurisdiction Code];</CommandText>
     BEGIN
         SELECT-3 AS [dimSchoolDistrict_SK], 
               'Not Applicable' AS [dimSchoolDistrict_BK], 
-              -3 AS [dimRollYear_SK], 
               @p_RY [Roll Year], 
               'Not Applicable' AS [School District], 
               'NA' AS [School  District Code], 
               'Not Applicable' AS [School District Desc], 
-              999 AS [RowSortOrder];
-    END;</CommandText>
+              -999 AS [RowSortOrder];
+    END</CommandText>
       </Query>
       <Fields>
         <Field Name="dimSchoolDistrict_SK">
@@ -600,10 +559,6 @@ ORDER BY [AG].[Jurisdiction Code];</CommandText>
         <Field Name="dimSchoolDistrict_BK">
           <DataField>dimSchoolDistrict_BK</DataField>
           <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="dimRollYear_SK">
-          <DataField>dimRollYear_SK</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="Roll_Year">
           <DataField>Roll Year</DataField>
@@ -1664,9 +1619,10 @@ OR Parameters!p_BY.Value = "NA"
     <ReportParameter Name="p_RD">
       <DataType>String</DataType>
       <DefaultValue>
-        <Values>
-          <Value>NA</Value>
-        </Values>
+        <DataSetReference>
+          <DataSetName>qryRD</DataSetName>
+          <ValueField>Regional_District_Code</ValueField>
+        </DataSetReference>
       </DefaultValue>
       <Prompt>Regional District</Prompt>
       <ValidValues>
@@ -1681,9 +1637,10 @@ OR Parameters!p_BY.Value = "NA"
     <ReportParameter Name="p_AM">
       <DataType>String</DataType>
       <DefaultValue>
-        <Values>
-          <Value>NA</Value>
-        </Values>
+        <DataSetReference>
+          <DataSetName>qryAM</DataSetName>
+          <ValueField>Amalgamation_Code</ValueField>
+        </DataSetReference>
       </DefaultValue>
       <Prompt>Amalgamated Area</Prompt>
       <ValidValues>
@@ -1698,9 +1655,10 @@ OR Parameters!p_BY.Value = "NA"
     <ReportParameter Name="p_SD">
       <DataType>String</DataType>
       <DefaultValue>
-        <Values>
-          <Value>NA</Value>
-        </Values>
+        <DataSetReference>
+          <DataSetName>qrySD</DataSetName>
+          <ValueField>School__District_Code</ValueField>
+        </DataSetReference>
       </DefaultValue>
       <Prompt>School District</Prompt>
       <ValidValues>
