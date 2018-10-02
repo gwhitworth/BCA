@@ -160,18 +160,10 @@ ORDER BY [Area Code],
         FROM [EDW].[edw].[dimAssessmentGeography]
         WHERE [Roll Year] = @p_RY
               AND [Area Code] BETWEEN 01 AND 27
-        UNION
-        SELECT NULL, 
-               'NA', 
-               'Not Applicable', 
-               'Not Applicable', 
-               999
-        ORDER BY [RowSortOrder] DESC, 
-                 [Area Code];
     END;
     ELSE
     BEGIN
-        SELECT NULL AS [dimArea_SK], 
+        SELECT -1 AS [dimArea_SK], 
                'NA' AS [Area Code], 
                'Not Applicable' AS [Area Desc], 
                'Not Applicable' AS [Area], 
