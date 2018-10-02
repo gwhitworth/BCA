@@ -208,36 +208,34 @@ ORDER BY [Area Code],
           <QueryParameter Name="@p_RY">
             <Value>=Parameters!p_RY.Value</Value>
           </QueryParameter>
+          <QueryParameter Name="@p_JR">
+            <Value>=Parameters!p_JR.Value</Value>
+          </QueryParameter>
         </QueryParameters>
         <CommandText>SELECT DISTINCT 
        [A1].[Jurisdiction Code], 
        [A2].[Neighbourhood Code], 
        [A2].[Neighbourhood Desc], 
-       [A2].[Neighbourhood]
+       [A2].[Neighbourhood], 
+       [A1].[RowSortOrder]
 FROM [EDW].[edw].[dimAssessmentGeography] AS [A1], 
      [EDW].[edw].[dimAssessmentGeography] AS [A2]
 WHERE [A1].[Jurisdiction Code] = [A2].[Jurisdiction Code]
       AND [A1].[Roll Year] = @p_RY
       AND [A2].[Roll Year] = @p_RY
-      AND [A1].[Jurisdiction Code] &gt; '199'
-      AND [A2].[Jurisdiction Code] &gt; '199'
+      AND [A1].[Jurisdiction Code] IN (@p_JR)
+      AND [A2].[Jurisdiction Code] IN (@p_JR)
       AND [A2].[Neighbourhood] NOT LIKE '%DO NOT USE%'
-UNION
-SELECT DISTINCT 
-       [Jurisdiction Code], 
-       'NA', 
-       'Not Applicable', 
-       'Not Applicable'
-FROM [EDW].[edw].[dimAssessmentGeography]
-WHERE [Roll Year] = @p_RY
-      AND ([Jurisdiction Code] &gt; '199')
+
 UNION
 SELECT DISTINCT 
        'NA', 
        'NA', 
        'Not Applicable', 
-       'Not Applicable'
-ORDER BY [Jurisdiction Code],[Neighbourhood Code] DESC;</CommandText>
+       'Not Applicable', 
+       -999
+ORDER BY [RowSortOrder], 
+         [Neighbourhood Code];</CommandText>
       </Query>
       <Fields>
         <Field Name="Jurisdiction_Code">
@@ -256,13 +254,17 @@ ORDER BY [Jurisdiction Code],[Neighbourhood Code] DESC;</CommandText>
           <DataField>Neighbourhood</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="RowSortOrder">
+          <DataField>RowSortOrder</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
       </Fields>
       <Filters>
         <Filter>
-          <FilterExpression>=Fields!Jurisdiction_Code.Value</FilterExpression>
-          <Operator>In</Operator>
+          <FilterExpression>=InStr(Fields!Jurisdiction_Code.Value,Join(Parameters!p_JR.Value,","))&gt;=0</FilterExpression>
+          <Operator>Equal</Operator>
           <FilterValues>
-            <FilterValue>=Parameters!p_JR.Value</FilterValue>
+            <FilterValue>=TRUE</FilterValue>
           </FilterValues>
         </Filter>
       </Filters>
@@ -337,10 +339,10 @@ ORDER BY RowSortOrder,
       </Fields>
       <Filters>
         <Filter>
-          <FilterExpression>=Fields!Area_Code.Value</FilterExpression>
-          <Operator>In</Operator>
+          <FilterExpression>=InStr(Fields!Area_Code.Value,Join(Parameters!p_AR.Value,","))&gt;=0</FilterExpression>
+          <Operator>Equal</Operator>
           <FilterValues>
-            <FilterValue>=Parameters!p_AR.Value</FilterValue>
+            <FilterValue DataType="Boolean">=TRUE</FilterValue>
           </FilterValues>
         </Filter>
       </Filters>
@@ -1645,6 +1647,7 @@ OR Parameters!p_BY.Value = "NA"
         </DataSetReference>
       </ValidValues>
       <MultiValue>true</MultiValue>
+      <UsedInQuery>True</UsedInQuery>
     </ReportParameter>
     <ReportParameter Name="p_N">
       <DataType>String</DataType>
@@ -1663,6 +1666,7 @@ OR Parameters!p_BY.Value = "NA"
         </DataSetReference>
       </ValidValues>
       <MultiValue>true</MultiValue>
+      <UsedInQuery>True</UsedInQuery>
     </ReportParameter>
     <ReportParameter Name="p_RD">
       <DataType>String</DataType>
