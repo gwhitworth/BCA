@@ -428,9 +428,7 @@ ORDER BY [FA].[Roll Year],
 + Fields!Regional_District.Value 
 + System.Environment.NewLine 
 + "    Electoral Area: "  + Fields!BCA_Code.Value</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -462,7 +460,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -504,7 +501,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -556,7 +552,6 @@ ORDER BY [FA].[Roll Year],
                             <Border>
                               <Style>None</Style>
                             </Border>
-                            <FontFamily>Tahoma</FontFamily>
                             <PaddingLeft>15pt</PaddingLeft>
                           </Style>
                         </Subreport>
@@ -587,9 +582,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Prop</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -623,9 +616,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Class</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -659,9 +650,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Occurrences</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -695,9 +684,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Land</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -731,9 +718,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Converted Land</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -767,9 +752,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Improvements</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -803,9 +786,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Converted </Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                                 <TextRun>
                                   <Value>Impr</Value>
@@ -843,9 +824,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Total</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -879,9 +858,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Converted Total</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -915,9 +892,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Conv %</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -956,9 +931,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!Property_Class_Code.Value</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -989,9 +962,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>=IIf(Fields!Property_Class_Desc.Value = "0201 - Utilities", "Utilities", Fields!Property_Class_Desc.Value)</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -1021,9 +992,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Folio.Value)</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -1056,7 +1025,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Land.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -1093,7 +1061,6 @@ ORDER BY [FA].[Roll Year],
 IIf(Fields!Hosp_Land.Value = 0
 , Nothing,Fields!Hosp_Land.Value * (Fields!Property_Conversion_Factor.Value / 100)))</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -1195,7 +1162,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Land.Value) + Sum(Fields!Hosp_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -1231,7 +1197,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                   <Value>=Sum(IIf(Fields!Hosp_Land.Value = 0, Nothing,Fields!Hosp_Land.Value * (Fields!Property_Conversion_Factor.Value / 100)))
 + Sum(IIf(Fields!Hosp_Improvements.Value = 0, Nothing,Fields!Hosp_Improvements.Value * (Fields!Property_Conversion_Factor.Value / 100)))</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -1266,7 +1231,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value>=Fields!Property_Conversion_Factor.Value / 100</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0.00</Format>
                                   </Style>
                                 </TextRun>
@@ -1305,9 +1269,7 @@ IIf(Fields!Hosp_Land.Value = 0
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -1339,9 +1301,7 @@ IIf(Fields!Hosp_Land.Value = 0
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -1371,9 +1331,7 @@ IIf(Fields!Hosp_Land.Value = 0
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -1405,9 +1363,7 @@ IIf(Fields!Hosp_Land.Value = 0
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -1439,9 +1395,7 @@ IIf(Fields!Hosp_Land.Value = 0
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -1473,9 +1427,7 @@ IIf(Fields!Hosp_Land.Value = 0
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -1507,9 +1459,7 @@ IIf(Fields!Hosp_Land.Value = 0
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -1541,9 +1491,7 @@ IIf(Fields!Hosp_Land.Value = 0
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -1575,9 +1523,7 @@ IIf(Fields!Hosp_Land.Value = 0
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -1609,9 +1555,7 @@ IIf(Fields!Hosp_Land.Value = 0
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -1649,7 +1593,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value>Total</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -1721,7 +1664,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Land.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1758,7 +1700,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Land.Value) * (Fields!Property_Conversion_Factor.Value / 100)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1795,7 +1736,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1832,7 +1772,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Improvements.Value) * (Fields!Property_Conversion_Factor.Value / 100)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1869,7 +1808,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Land.Value) + Sum(Fields!Hosp_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1906,7 +1844,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Land.Value) * (Fields!Property_Conversion_Factor.Value / 100) + Sum(Fields!Hosp_Improvements.Value) * (Fields!Property_Conversion_Factor.Value / 100)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1943,7 +1880,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -1984,7 +1920,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value>Total (Less S.644LGA/398VC)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -2055,7 +1990,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -2091,7 +2025,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Land.Value) * (Fields!Property_Conversion_Factor.Value / 100) - Sum(Fields!Hosp_Land.Value, "qryDataUtil")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -2128,7 +2061,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -2164,7 +2096,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Improvements.Value) * (Fields!Property_Conversion_Factor.Value / 100) - Sum(Fields!Hosp_Improvements.Value, "qryDataUtil")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -2201,7 +2132,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -2237,7 +2167,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Land.Value) * (Fields!Property_Conversion_Factor.Value / 100) + Sum(Fields!Hosp_Improvements.Value) * (Fields!Property_Conversion_Factor.Value / 100) - Sum(Fields!Hosp_Improvements.Value, "qryDataUtil")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -2274,7 +2203,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -2451,15 +2379,13 @@ IIf(Fields!Hosp_Land.Value = 0
                                   <Value>="Regional District: " 
 + Fields!Regional_District.Value 
 + System.Environment.NewLine
-+ Space(4)
++ Space(3)
 + "Electoral Area: " + Fields!BCA_Code.Value
 + System.Environment.NewLine
-+ Space(10)
-+ "Juristiction: " 
++ Space(7)
++ "Jurisdiction: " 
 + Fields!Jurisdiction.Value</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -2492,7 +2418,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -2534,7 +2459,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -2576,9 +2500,7 @@ IIf(Fields!Hosp_Land.Value = 0
                               <TextRuns>
                                 <TextRun>
                                   <Value>Prop</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -2612,9 +2534,7 @@ IIf(Fields!Hosp_Land.Value = 0
                               <TextRuns>
                                 <TextRun>
                                   <Value>Class</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -2648,9 +2568,7 @@ IIf(Fields!Hosp_Land.Value = 0
                               <TextRuns>
                                 <TextRun>
                                   <Value>Occurrences</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -2684,9 +2602,7 @@ IIf(Fields!Hosp_Land.Value = 0
                               <TextRuns>
                                 <TextRun>
                                   <Value>Land</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -2720,9 +2636,7 @@ IIf(Fields!Hosp_Land.Value = 0
                               <TextRuns>
                                 <TextRun>
                                   <Value>Converted Land</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -2756,9 +2670,7 @@ IIf(Fields!Hosp_Land.Value = 0
                               <TextRuns>
                                 <TextRun>
                                   <Value>Improvements</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -2792,9 +2704,7 @@ IIf(Fields!Hosp_Land.Value = 0
                               <TextRuns>
                                 <TextRun>
                                   <Value>Converted </Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                                 <TextRun>
                                   <Value>Impr</Value>
@@ -2832,9 +2742,7 @@ IIf(Fields!Hosp_Land.Value = 0
                               <TextRuns>
                                 <TextRun>
                                   <Value>Total</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -2868,9 +2776,7 @@ IIf(Fields!Hosp_Land.Value = 0
                               <TextRuns>
                                 <TextRun>
                                   <Value>Converted Total</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -2904,9 +2810,7 @@ IIf(Fields!Hosp_Land.Value = 0
                               <TextRuns>
                                 <TextRun>
                                   <Value>Conv %</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -2944,9 +2848,7 @@ IIf(Fields!Hosp_Land.Value = 0
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!Property_Class_Code.Value</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -2977,9 +2879,7 @@ IIf(Fields!Hosp_Land.Value = 0
                               <TextRuns>
                                 <TextRun>
                                   <Value>=IIf(Fields!Property_Class_Desc.Value = "0201 - Utilities", "Utilities", Fields!Property_Class_Desc.Value)</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -3010,7 +2910,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Folio.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -3045,7 +2944,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Land.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -3081,7 +2979,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                   <Value>=Sum(IIf(Sum(Fields!Hosp_Land.Value) = 0, Nothing
 , Fields!Hosp_Land.Value * (Fields!Property_Conversion_Factor.Value / 100)))</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -3185,7 +3082,6 @@ IIf(Fields!Hosp_Land.Value = 0
 , Nothing
 ,Sum(Fields!Hosp_Land.Value) + Sum(Fields!Hosp_Improvements.Value))</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -3223,7 +3119,6 @@ IIf(Fields!Hosp_Land.Value = 0
 ,Sum(Fields!Hosp_Land.Value) * Fields!Property_Conversion_Factor.Value / 100
 +Sum(Fields!Hosp_Improvements.Value) * Fields!Property_Conversion_Factor.Value / 100)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -3258,7 +3153,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value>=Fields!Property_Conversion_Factor.Value / 100</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0.00</Format>
                                   </Style>
                                 </TextRun>
@@ -3298,7 +3192,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value>Total</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -3370,7 +3263,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Land.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -3407,7 +3299,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Land.Value) * (Fields!Property_Conversion_Factor.Value / 100)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -3444,7 +3335,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -3481,7 +3371,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Improvements.Value) * (Fields!Property_Conversion_Factor.Value / 100)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -3518,7 +3407,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Land.Value) + Sum(Fields!Hosp_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -3555,7 +3443,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Land.Value) * (Fields!Property_Conversion_Factor.Value / 100) + Sum(Fields!Hosp_Improvements.Value) * (Fields!Property_Conversion_Factor.Value / 100)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -3592,7 +3479,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -3633,7 +3519,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value>Total (Less S.644LGA/398VC)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -3704,7 +3589,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -3740,7 +3624,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Land.Value) * (Fields!Property_Conversion_Factor.Value / 100) - Sum(Fields!Hosp_Land.Value, "qryDataUtil")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -3777,7 +3660,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -3813,7 +3695,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Improvements.Value) * (Fields!Property_Conversion_Factor.Value / 100) - Sum(Fields!Hosp_Improvements.Value, "qryDataUtil")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -3850,7 +3731,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -3886,7 +3766,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Land.Value) * (Fields!Property_Conversion_Factor.Value / 100) + Sum(Fields!Hosp_Improvements.Value) * (Fields!Property_Conversion_Factor.Value / 100) - Sum(Fields!Hosp_Improvements.Value, "qryDataUtil")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -3923,7 +3802,6 @@ IIf(Fields!Hosp_Land.Value = 0
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -4089,7 +3967,6 @@ IIf(Fields!Hosp_Land.Value = 0
 FOR REGIONAL DISTRICT ELECTORAL AREAS
 - Per Sec 383(1)(a) &amp; (b) Local Government Act</Value>
                       <Style>
-                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>14pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
@@ -4104,9 +3981,7 @@ FOR REGIONAL DISTRICT ELECTORAL AREAS
                     <TextRun>
                       <Label>CYCLE_DESC</Label>
                       <Value>= Mid(Parameters!p_CN.Label,1,InStr(Parameters!p_CN.Label," run on "))</Value>
-                      <Style>
-                        <FontFamily>Tahoma</FontFamily>
-                      </Style>
+                      <Style />
                     </TextRun>
                   </TextRuns>
                   <Style>
@@ -4145,7 +4020,6 @@ FOR REGIONAL DISTRICT ELECTORAL AREAS
                       <Value>www.bcassessment.ca</Value>
                       <Style>
                         <FontStyle>Italic</FontStyle>
-                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>8pt</FontSize>
                       </Style>
                     </TextRun>
@@ -4207,7 +4081,6 @@ FOR REGIONAL DISTRICT ELECTORAL AREAS
                         , InStr(Parameters!p_CN.Label, "on ") + 3),"-","/")
                       </Value>
                       <Style>
-                        <FontFamily>Tahoma</FontFamily>
                         <Format>MMM d, yyyy</Format>
                       </Style>
                     </TextRun>
@@ -4239,9 +4112,7 @@ FOR REGIONAL DISTRICT ELECTORAL AREAS
                   <TextRuns>
                     <TextRun>
                       <Value>="Printed Date: " + Format(Globals!ExecutionTime,"dd/MMM/yyyy")</Value>
-                      <Style>
-                        <FontFamily>Tahoma</FontFamily>
-                      </Style>
+                      <Style />
                     </TextRun>
                   </TextRuns>
                   <Style>
@@ -4300,7 +4171,6 @@ FOR REGIONAL DISTRICT ELECTORAL AREAS
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
-              <Top>0in</Top>
               <Left>0.01056in</Left>
               <Height>0.25in</Height>
               <Width>12.89388in</Width>
@@ -4333,7 +4203,6 @@ FOR REGIONAL DISTRICT ELECTORAL AREAS
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
-              <Top>0in</Top>
               <Left>11.49819in</Left>
               <Height>0.25in</Height>
               <Width>1.40625in</Width>
@@ -4366,7 +4235,6 @@ FOR REGIONAL DISTRICT ELECTORAL AREAS
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>ReportName</rd:DefaultName>
-              <Top>0in</Top>
               <Left>0.01056in</Left>
               <Height>0.25in</Height>
               <Width>1.88784in</Width>
