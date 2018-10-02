@@ -264,7 +264,7 @@ ORDER BY [RowSortOrder],
           <FilterExpression>=InStr(Fields!Jurisdiction_Code.Value,Join(Parameters!p_JR.Value,","))&gt;=0</FilterExpression>
           <Operator>Equal</Operator>
           <FilterValues>
-            <FilterValue>=TRUE</FilterValue>
+            <FilterValue DataType="Boolean">=TRUE</FilterValue>
           </FilterValues>
         </Filter>
       </Filters>
@@ -280,31 +280,33 @@ ORDER BY [RowSortOrder],
             <Value>=Parameters!p_RY.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>SELECT 'NA' AS [Area Code], 
-       -3 AS dimJurisdiction_SK, 
-       'NA' AS dimJurisdiction_BK, 
+        <CommandText>SELECT DISTINCT 
+       'NA' AS [Area Code], 
+       -3 AS [dimJurisdiction_SK], 
+       'NA' AS [dimJurisdiction_BK], 
        'NA' AS [Jurisdiction Code], 
        'Not Applicable' AS [Jurisdiction Desc], 
-       'Not Applicable' AS Jurisdiction, 
-       -999 AS RowSortOrder
+       'Not Applicable' AS [Jurisdiction], 
+       -999 AS [RowSortOrder]
 UNION
 SELECT DISTINCT 
-       A1.[Area Code], 
-       A2.dimJurisdiction_SK, 
-       A2.dimJurisdiction_BK, 
-       A2.[Jurisdiction Code], 
-       A2.[Jurisdiction Desc], 
-       A2.Jurisdiction, 
-       A1.RowSortOrder
-FROM edw.dimAssessmentGeography AS A1
-     INNER JOIN edw.dimAssessmentGeography AS A2 ON A1.[Area Code] = A2.[Area Code]
-WHERE(A1.[Roll Year] = @p_RY)
-     AND (A1.[Jurisdiction Code] &gt; '199')
-     AND (A2.[Roll Year] = @p_RY)
-     AND (A2.[Jurisdiction Code] &gt; '199')
-     AND (A1.[Area Code] IN(@p_AR))
-     AND (A2.[Area Code] IN(@p_AR))
-ORDER BY RowSortOrder, 
+       [A1].[Area Code], 
+       [A2].[dimJurisdiction_SK], 
+       [A2].[dimJurisdiction_BK], 
+       [A2].[Jurisdiction Code], 
+       [A2].[Jurisdiction Desc], 
+       [A2].[Jurisdiction], 
+       [A1].[RowSortOrder]
+FROM [EDW].[edw].[dimAssessmentGeography] AS [A1], 
+     [EDW].[edw].[dimAssessmentGeography] AS [A2]
+WHERE([A1].[Area Code] = [A2].[Area Code]
+      AND [A1].[Roll Year] = @p_RY
+      AND [A1].[Jurisdiction Code] &gt; '199'
+      AND [A2].[Roll Year] = @p_RY
+      AND [A2].[Jurisdiction Code] &gt; '199')
+     AND [A1].[Area Code] IN(@p_AR)
+AND [A2].[Area Code] IN(@p_AR)
+ORDER BY [RowSortOrder], 
          [Jurisdiction Code];</CommandText>
       </Query>
       <Fields>
@@ -850,7 +852,7 @@ ORDER BY [AG].[Jurisdiction Code];</CommandText>
                   <TablixMembers>
                     <TablixMember>
                       <Visibility>
-                        <Hidden>=IIf(Parameters!p_JR.Count &gt;= 1 
+                        <Hidden>=IIf((Parameters!p_JR.Count &gt;= 1 AND Parameters!p_JR.Value(0) &lt;&gt; "NA")
 AND 
 (Parameters!p_N.Count = 1 AND Parameters!p_N.Value(0) = "NA")
 ,false
@@ -1562,7 +1564,7 @@ OR Parameters!p_BY.Value = "NA"
           <Value>2017</Value>
         </Values>
       </DefaultValue>
-      <Prompt>Roll Year</Prompt>
+      <Prompt>* Roll Year</Prompt>
       <ValidValues>
         <DataSetReference>
           <DataSetName>qryRY</DataSetName>
@@ -1579,7 +1581,7 @@ OR Parameters!p_BY.Value = "NA"
           <Value>-1</Value>
         </Values>
       </DefaultValue>
-      <Prompt>Roll Version</Prompt>
+      <Prompt>* Roll Version</Prompt>
       <ValidValues>
         <DataSetReference>
           <DataSetName>qryRCN</DataSetName>
@@ -1590,7 +1592,7 @@ OR Parameters!p_BY.Value = "NA"
     </ReportParameter>
     <ReportParameter Name="p_BY">
       <DataType>String</DataType>
-      <Prompt>By</Prompt>
+      <Prompt>* Type</Prompt>
       <ValidValues>
         <ParameterValues>
           <ParameterValue>
