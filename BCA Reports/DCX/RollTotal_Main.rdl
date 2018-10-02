@@ -278,43 +278,32 @@ ORDER BY [Jurisdiction Code],[Neighbourhood Code] DESC;</CommandText>
             <Value>=Parameters!p_RY.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>IF @p_AR = 'NA'
-    BEGIN
-        SELECT 'NA' AS [Area Code], 
-               -3 AS [dimJurisdiction_SK], 
-               'NA' AS [dimJurisdiction_BK], 
-               'NA' AS [Jurisdiction Code], 
-               'Not Applicable' AS [Jurisdiction Desc], 
-               'Not Applicable' AS [Jurisdiction];
-    END
-    ELSE
-    BEGIN
-        SELECT DISTINCT 
-               [A1].[Area Code], 
-               [A2].[dimJurisdiction_SK], 
-               [A2].[dimJurisdiction_BK], 
-               [A2].[Jurisdiction Code], 
-               [A2].[Jurisdiction Desc], 
-               [A2].[Jurisdiction]
-        FROM [EDW].[edw].[dimAssessmentGeography] AS [A1], 
-             [EDW].[edw].[dimAssessmentGeography] AS [A2]
-        WHERE([A1].[Area Code] = [A2].[Area Code]
-              AND [A1].[Roll Year] = @p_RY
-              AND [A1].[Jurisdiction Code] &gt; '199'
-              AND [A2].[Roll Year] = @p_RY
-              AND [A2].[Jurisdiction Code] &gt; '199')
-        UNION
-        SELECT DISTINCT 
-               [Area Code], 
-               -3, 
-               'NA', 
-               'NA', 
-               'Not Applicable', 
-               'Not Applicable'
-        FROM [EDW].[edw].[dimAssessmentGeography]
-        WHERE [Roll Year] = @p_RY
-              AND [Jurisdiction Code] &gt; '199';
-    END;</CommandText>
+        <CommandText>SELECT 'NA' AS [Area Code], 
+       -3 AS dimJurisdiction_SK, 
+       'NA' AS dimJurisdiction_BK, 
+       'NA' AS [Jurisdiction Code], 
+       'Not Applicable' AS [Jurisdiction Desc], 
+       'Not Applicable' AS Jurisdiction, 
+       -999 AS RowSortOrder
+UNION
+SELECT DISTINCT 
+       A1.[Area Code], 
+       A2.dimJurisdiction_SK, 
+       A2.dimJurisdiction_BK, 
+       A2.[Jurisdiction Code], 
+       A2.[Jurisdiction Desc], 
+       A2.Jurisdiction, 
+       A1.RowSortOrder
+FROM edw.dimAssessmentGeography AS A1
+     INNER JOIN edw.dimAssessmentGeography AS A2 ON A1.[Area Code] = A2.[Area Code]
+WHERE(A1.[Roll Year] = @p_RY)
+     AND (A1.[Jurisdiction Code] &gt; '199')
+     AND (A2.[Roll Year] = @p_RY)
+     AND (A2.[Jurisdiction Code] &gt; '199')
+     AND (A1.[Area Code] IN(@p_AR))
+     AND (A2.[Area Code] IN(@p_AR))
+ORDER BY RowSortOrder, 
+         [Jurisdiction Code];</CommandText>
       </Query>
       <Fields>
         <Field Name="Area_Code">
@@ -341,13 +330,17 @@ ORDER BY [Jurisdiction Code],[Neighbourhood Code] DESC;</CommandText>
           <DataField>Jurisdiction</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="RowSortOrder">
+          <DataField>RowSortOrder</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
       </Fields>
       <Filters>
         <Filter>
           <FilterExpression>=Fields!Area_Code.Value</FilterExpression>
           <Operator>In</Operator>
           <FilterValues>
-            <FilterValue>=Join(Parameters!p_AR.Value,",")</FilterValue>
+            <FilterValue>=Parameters!p_AR.Value</FilterValue>
           </FilterValues>
         </Filter>
       </Filters>
