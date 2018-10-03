@@ -702,7 +702,9 @@ ORDER BY [FA].[Roll Year],
 , "7 - Managed Forest Land", Fields!Property_Class.Value = "Rec/Non Profit"
 , "8 - Rec/Non Profit"
 , Fields!Property_Class.Value = "Farm", "9 - Farm"))</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -739,6 +741,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Sum(IIF(IsNothing(Fields!Occurrences.Value), Fields!Folio_Count.Value
 , IIF(Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter", Fields!Occurrences.Value + Fields!Folio_Count.Value, Fields!Folio_Count.Value)))</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -775,7 +778,9 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Gross</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -786,7 +791,9 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -822,6 +829,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Actual_Land_Value.Value</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -859,6 +867,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Gross_Gen_Improvements.Value</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -896,6 +905,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Actual_Total.Value</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -921,7 +931,6 @@ ORDER BY [FA].[Roll Year],
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -940,6 +949,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=IIf(Fields!RESNONRES.Value = "RES", "1 - *Total Residential*", "other")</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -990,6 +1000,7 @@ ORDER BY [FA].[Roll Year],
 , IIF(Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter"
 , Fields!Occurrences.Value + Fields!Folio_Count.Value, Fields!Folio_Count.Value)))</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1038,6 +1049,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Gross</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -1051,6 +1063,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -1098,6 +1111,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Actual_Land_Value.Value)</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1147,6 +1161,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Gross_Gen_Improvements.Value)</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1196,6 +1211,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Actual_Total.Value)</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1231,7 +1247,6 @@ ORDER BY [FA].[Roll Year],
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -1252,6 +1267,7 @@ ORDER BY [FA].[Roll Year],
 + Space(1)
 +Fields!Area.Value</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -1300,6 +1316,7 @@ ORDER BY [FA].[Roll Year],
 , Fields!Occurrences.Value + Fields!Folio_Count.Value
 , Fields!Folio_Count.Value)), "Area")</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1348,6 +1365,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Gross</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -1361,6 +1379,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -1408,6 +1427,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Actual_Land_Value.Value, "Area")</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1458,6 +1478,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Actual_Building_Value.Value, "Area")</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1508,6 +1529,7 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Actual_Total.Value, "Area")</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1545,7 +1567,6 @@ ORDER BY [FA].[Roll Year],
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -10267,7 +10288,7 @@ CStr(Variables!vSection644.Value) ="","0"
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.21758in</Height>
+                  <Height>0.20716in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -10483,7 +10504,7 @@ CStr(Variables!vSection644.Value) ="","0"
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.25in</Height>
+                  <Height>0.19792in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -10495,7 +10516,9 @@ CStr(Variables!vSection644.Value) ="","0"
                               <TextRuns>
                                 <TextRun>
                                   <Value>General:</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -10531,7 +10554,9 @@ CStr(Variables!vSection644.Value) ="","0"
                               <TextRuns>
                                 <TextRun>
                                   <Value>=CStr(FORMAT(Sum(Fields!Folio_Count.Value), "N0"))</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -10567,7 +10592,9 @@ CStr(Variables!vSection644.Value) ="","0"
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -10603,7 +10630,9 @@ CStr(Variables!vSection644.Value) ="","0"
                               <TextRuns>
                                 <TextRun>
                                   <Value>General:</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -10637,6 +10666,7 @@ CStr(Variables!vSection644.Value) ="","0"
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Gen_Land.Value, "Area4")</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -10671,7 +10701,9 @@ CStr(Variables!vSection644.Value) ="","0"
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -10704,7 +10736,9 @@ CStr(Variables!vSection644.Value) ="","0"
                               <TextRuns>
                                 <TextRun>
                                   <Value>School Residential:</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -10738,6 +10772,7 @@ CStr(Variables!vSection644.Value) ="","0"
                                 <TextRun>
                                   <Value>=Sum(IIF(Fields!RESNONRES.Value = "RES", Fields!Net_School_Land.Value, 0), "Area4")</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -10765,7 +10800,7 @@ CStr(Variables!vSection644.Value) ="","0"
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.25in</Height>
+                  <Height>0.1875in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -10777,7 +10812,9 @@ CStr(Variables!vSection644.Value) ="","0"
                               <TextRuns>
                                 <TextRun>
                                   <Value>School:</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -10813,7 +10850,9 @@ CStr(Variables!vSection644.Value) ="","0"
                               <TextRuns>
                                 <TextRun>
                                   <Value>=CStr(FORMAT(Sum(Fields!Folio_Count.Value), "N0"))</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -10849,7 +10888,9 @@ CStr(Variables!vSection644.Value) ="","0"
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -10885,7 +10926,9 @@ CStr(Variables!vSection644.Value) ="","0"
                               <TextRuns>
                                 <TextRun>
                                   <Value>Less S.644LGA/398VC:</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -10925,6 +10968,7 @@ CStr(Variables!vSection644.Value) ="","0"
 CStr(Variables!vSection644.Value) ="","0"
 ,Format(Variables!vSection644.Value, "#,0"))</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -10963,7 +11007,9 @@ CStr(Variables!vSection644.Value) ="","0"
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -11000,7 +11046,9 @@ CStr(Variables!vSection644.Value) ="","0"
                               <TextRuns>
                                 <TextRun>
                                   <Value>School Non-Residential:</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -11038,6 +11086,7 @@ CStr(Variables!vSection644.Value) ="","0"
                                 <TextRun>
                                   <Value>=Sum(IIF(Fields!RESNONRES.Value = "NONRES", Fields!Net_School_Land.Value, 0), "Area4")</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -11065,7 +11114,7 @@ CStr(Variables!vSection644.Value) ="","0"
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.25in</Height>
+                  <Height>0.20833in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -11077,7 +11126,9 @@ CStr(Variables!vSection644.Value) ="","0"
                               <TextRuns>
                                 <TextRun>
                                   <Value>Hospital:</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -11114,7 +11165,9 @@ CStr(Variables!vSection644.Value) ="","0"
                               <TextRuns>
                                 <TextRun>
                                   <Value>=CStr(FORMAT(Sum(Fields!Folio_Count.Value), "N0"))</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -11151,7 +11204,9 @@ CStr(Variables!vSection644.Value) ="","0"
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -11188,7 +11243,9 @@ CStr(Variables!vSection644.Value) ="","0"
                               <TextRuns>
                                 <TextRun>
                                   <Value>Total:</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -11232,6 +11289,7 @@ CStr(Variables!vSection644.Value) ="","0"
 ,Fields!Net_Gen_Improvements.Value
 ,"qryData")</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -11271,7 +11329,9 @@ CStr(Variables!vSection644.Value) ="","0"
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -11309,7 +11369,9 @@ CStr(Variables!vSection644.Value) ="","0"
                               <TextRuns>
                                 <TextRun>
                                   <Value>Total:</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -11348,6 +11410,7 @@ CStr(Variables!vSection644.Value) ="","0"
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_School_Land.Value, "Area4")</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -11476,7 +11539,7 @@ CStr(Variables!vSection644.Value) ="","0"
             <KeepTogether>true</KeepTogether>
             <DataSetName>qryData</DataSetName>
             <Top>8.56655in</Top>
-            <Height>2.24953in</Height>
+            <Height>2.08286in</Height>
             <Width>12.74521in</Width>
             <ZIndex>3</ZIndex>
             <Style>

@@ -16247,7 +16247,9 @@ CStr(Variables!vSection644.Value) ="","0"
                               <TextRuns>
                                 <TextRun>
                                   <Value>=IIF(Fields!RESNONRES.Value = "RES", Fields!Property_Class.Value, SWITCH(Fields!Property_Class.Value = "Utilities", "2 - Utilities", Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter", "S.644LGA/398VC", Fields!Property_Class.Value = "Supportive Housing", "3 - Supportive Housing", Fields!Property_Class.Value = "Major Industry", "4 - Major Industry", Fields!Property_Class.Value = "Light Industry", "5 - Light Industry", Fields!Property_Class.Value = "Business And Other", "6 - Business And Other", Fields!Property_Class.Value = "Managed Forest Land", "7 - Managed Forest Land", Fields!Property_Class.Value = "Rec/Non Profit", "8 - Rec/Non Profit", Fields!Property_Class.Value = "Farm", "9 - Farm"))</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -16269,6 +16271,7 @@ CStr(Variables!vSection644.Value) ="","0"
                           </Style>
                         </Textbox>
                         <ColSpan>2</ColSpan>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
@@ -16283,6 +16286,7 @@ CStr(Variables!vSection644.Value) ="","0"
                                 <TextRun>
                                   <Value>=Sum(IIF(IsNothing(Fields!Occurrences.Value), Fields!Folio_Count.Value, IIF(Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter", Fields!Occurrences.Value + Fields!Folio_Count.Value, Fields!Folio_Count.Value)))</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -16307,6 +16311,7 @@ CStr(Variables!vSection644.Value) ="","0"
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -16319,7 +16324,9 @@ CStr(Variables!vSection644.Value) ="","0"
                               <TextRuns>
                                 <TextRun>
                                   <Value>Gross</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -16330,7 +16337,9 @@ CStr(Variables!vSection644.Value) ="","0"
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -16353,6 +16362,7 @@ CStr(Variables!vSection644.Value) ="","0"
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -16366,6 +16376,7 @@ CStr(Variables!vSection644.Value) ="","0"
                                 <TextRun>
                                   <Value>=Fields!Actual_Land_Value.Value</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -16390,6 +16401,7 @@ CStr(Variables!vSection644.Value) ="","0"
                             <PaddingBottom>1pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -16403,6 +16415,7 @@ CStr(Variables!vSection644.Value) ="","0"
                                 <TextRun>
                                   <Value>=Fields!Gross_Gen_Improvements.Value</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -16427,6 +16440,7 @@ CStr(Variables!vSection644.Value) ="","0"
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -16440,6 +16454,7 @@ CStr(Variables!vSection644.Value) ="","0"
                                 <TextRun>
                                   <Value>=Fields!Actual_Total.Value</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -16484,6 +16499,7 @@ CStr(Variables!vSection644.Value) ="","0"
                                 <TextRun>
                                   <Value>=IIf(Fields!RESNONRES.Value = "RES", "1 - *Total Residential*", "other")</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -16517,6 +16533,7 @@ CStr(Variables!vSection644.Value) ="","0"
                           </Style>
                         </Textbox>
                         <ColSpan>2</ColSpan>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
@@ -16531,6 +16548,7 @@ CStr(Variables!vSection644.Value) ="","0"
                                 <TextRun>
                                   <Value>=Sum(IIF(IsNothing(Fields!Occurrences.Value), Fields!Folio_Count.Value, IIF(Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter", Fields!Occurrences.Value + Fields!Folio_Count.Value, Fields!Folio_Count.Value)))</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -16566,6 +16584,7 @@ CStr(Variables!vSection644.Value) ="","0"
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -16579,6 +16598,7 @@ CStr(Variables!vSection644.Value) ="","0"
                                 <TextRun>
                                   <Value>Gross</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -16592,6 +16612,7 @@ CStr(Variables!vSection644.Value) ="","0"
                                 <TextRun>
                                   <Value />
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -16626,6 +16647,7 @@ CStr(Variables!vSection644.Value) ="","0"
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -16639,6 +16661,7 @@ CStr(Variables!vSection644.Value) ="","0"
                                 <TextRun>
                                   <Value>=Sum(Fields!Actual_Land_Value.Value)</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -16675,6 +16698,7 @@ CStr(Variables!vSection644.Value) ="","0"
                             <PaddingBottom>1pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -16688,6 +16712,7 @@ CStr(Variables!vSection644.Value) ="","0"
                                 <TextRun>
                                   <Value>=Sum(Fields!Gross_Gen_Improvements.Value)</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -16724,6 +16749,7 @@ CStr(Variables!vSection644.Value) ="","0"
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -16737,6 +16763,7 @@ CStr(Variables!vSection644.Value) ="","0"
                                 <TextRun>
                                   <Value>=Sum(Fields!Actual_Total.Value)</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -16791,6 +16818,7 @@ CStr(Variables!vSection644.Value) ="","0"
                                 <TextRun>
                                   <Value>="Totals for Neighbourhood"</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -16821,6 +16849,7 @@ CStr(Variables!vSection644.Value) ="","0"
                           </Style>
                         </Textbox>
                         <ColSpan>2</ColSpan>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
@@ -16835,6 +16864,7 @@ CStr(Variables!vSection644.Value) ="","0"
                                 <TextRun>
                                   <Value>=Sum(IIF(IsNothing(Fields!Occurrences.Value), Fields!Folio_Count.Value, IIF(Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter", Fields!Occurrences.Value + Fields!Folio_Count.Value, Fields!Folio_Count.Value)), "Area5")</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -16870,6 +16900,7 @@ CStr(Variables!vSection644.Value) ="","0"
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -16883,6 +16914,7 @@ CStr(Variables!vSection644.Value) ="","0"
                                 <TextRun>
                                   <Value>Gross</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -16896,6 +16928,7 @@ CStr(Variables!vSection644.Value) ="","0"
                                 <TextRun>
                                   <Value />
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -16930,6 +16963,7 @@ CStr(Variables!vSection644.Value) ="","0"
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -16943,6 +16977,7 @@ CStr(Variables!vSection644.Value) ="","0"
                                 <TextRun>
                                   <Value>=Sum(Fields!Actual_Land_Value.Value, "Area5")</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -16980,6 +17015,7 @@ CStr(Variables!vSection644.Value) ="","0"
                             <PaddingBottom>1pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -16993,6 +17029,7 @@ CStr(Variables!vSection644.Value) ="","0"
                                 <TextRun>
                                   <Value>=Sum(Fields!Actual_Building_Value.Value, "Area5")</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -17030,6 +17067,7 @@ CStr(Variables!vSection644.Value) ="","0"
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -17043,6 +17081,7 @@ CStr(Variables!vSection644.Value) ="","0"
                                 <TextRun>
                                   <Value>=Sum(Fields!Actual_Total.Value, "Area5")</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
