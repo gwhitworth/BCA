@@ -826,7 +826,7 @@ OR Parameters!p_BY.Value = "NA"
               </Parameter>
             </Parameters>
             <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
-            <Top>1.40938in</Top>
+            <Top>1.2in</Top>
             <Left>0.1in</Left>
             <Height>0.21875in</Height>
             <Width>7.42708in</Width>
@@ -904,7 +904,7 @@ OR Parameters!p_BY.Value = "NA"
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>qryData_SDJR</DataSetName>
-            <Top>1.9125in</Top>
+            <Top>1.7in</Top>
             <Left>0.11146in</Left>
             <Height>0.28125in</Height>
             <Width>7.42708in</Width>
@@ -932,7 +932,7 @@ OR Parameters!p_BY.Value = "NA"
               </Parameter>
             </Parameters>
             <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
-            <Top>1.66979in</Top>
+            <Top>1.45in</Top>
             <Left>0.1in</Left>
             <Height>0.21875in</Height>
             <Width>7.42708in</Width>
@@ -947,7 +947,7 @@ OR Parameters!p_BY.Value = "NA"
             </Style>
           </Subreport>
         </ReportItems>
-        <Height>2.19375in</Height>
+        <Height>1.98125in</Height>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1454,6 +1454,14 @@ OR Parameters!p_BY.Value = "NA"
           <ParameterValue>
             <Value>AR</Value>
             <Label>Assessment Area</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>JR</Value>
+            <Label>Juristicition</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>NH</Value>
+            <Label>Neightbourhood</Label>
           </ParameterValue>
           <ParameterValue>
             <Value>RD</Value>
