@@ -591,10 +591,7 @@ ORDER BY [AG].[Jurisdiction Code];</CommandText>
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>12.55208in</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>0.03125in</Width>
+                  <Width>7.375in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -620,7 +617,7 @@ ORDER BY [AG].[Jurisdiction Code];</CommandText>
                               </Parameters>
                               <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
                               <Height>0.26041in</Height>
-                              <Width>12.55208in</Width>
+                              <Width>7.375in</Width>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -635,35 +632,6 @@ ORDER BY [AG].[Jurisdiction Code];</CommandText>
                             </Border>
                           </Style>
                         </Rectangle>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox12">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value />
-                                  <Style />
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox12</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Style>None</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -695,35 +663,6 @@ ORDER BY [AG].[Jurisdiction Code];</CommandText>
                         </Subreport>
                       </CellContents>
                     </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox13">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value />
-                                  <Style />
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox13</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Style>None</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
@@ -753,42 +692,12 @@ ORDER BY [AG].[Jurisdiction Code];</CommandText>
                         </Subreport>
                       </CellContents>
                     </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox14">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value />
-                                  <Style />
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox14</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Style>None</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
                   </TablixCells>
                 </TablixRow>
               </TablixRows>
             </TablixBody>
             <TablixColumnHierarchy>
               <TablixMembers>
-                <TablixMember />
                 <TablixMember />
               </TablixMembers>
             </TablixColumnHierarchy>
@@ -832,7 +741,7 @@ AND Parameters!p_N.Value(0) &lt;&gt; "NA"
             <DataSetName>qryData</DataSetName>
             <Left>0.1in</Left>
             <Height>0.72222in</Height>
-            <Width>12.58333in</Width>
+            <Width>7.375in</Width>
             <Visibility>
               <Hidden>=IIf(Parameters!p_BY.Value = "RD",true,false)</Hidden>
             </Visibility>
@@ -859,7 +768,7 @@ AND Parameters!p_N.Value(0) &lt;&gt; "NA"
             <Top>0.76667in</Top>
             <Left>0.1in</Left>
             <Height>0.21875in</Height>
-            <Width>12.55208in</Width>
+            <Width>7.42708in</Width>
             <ZIndex>1</ZIndex>
             <Visibility>
               <Hidden>=IIf(Parameters!p_BY.Value = "AR" 
@@ -892,7 +801,7 @@ OR Parameters!p_BY.Value = "NA"
             <Top>1.07084in</Top>
             <Left>0.1in</Left>
             <Height>0.21875in</Height>
-            <Width>12.55208in</Width>
+            <Width>7.42708in</Width>
             <ZIndex>2</ZIndex>
             <Visibility>
               <Hidden>=IIf(Parameters!p_BY.Value = "AR"
@@ -920,7 +829,7 @@ OR Parameters!p_BY.Value = "NA"
             <Top>1.28438in</Top>
             <Left>0.1in</Left>
             <Height>0.21875in</Height>
-            <Width>12.55208in</Width>
+            <Width>7.42708in</Width>
             <ZIndex>3</ZIndex>
             <Visibility>
               <Hidden>=IIf(Parameters!p_BY.Value = "AR"
@@ -938,7 +847,7 @@ OR Parameters!p_BY.Value = "NA"
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>12.56354in</Width>
+                  <Width>7.42708in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -965,7 +874,7 @@ OR Parameters!p_BY.Value = "NA"
                               <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
                               <Left>0.01146in</Left>
                               <Height>0.21875in</Height>
-                              <Width>12.55208in</Width>
+                              <Width>7.36354in</Width>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -1002,7 +911,7 @@ OR Parameters!p_BY.Value = "NA"
             <Top>1.9125in</Top>
             <Left>0.1in</Left>
             <Height>0.3125in</Height>
-            <Width>12.56354in</Width>
+            <Width>7.42708in</Width>
             <ZIndex>4</ZIndex>
             <Visibility>
               <Hidden>=IIf(Parameters!p_BY.Value = "SD", False, True)</Hidden>
@@ -1030,7 +939,7 @@ OR Parameters!p_BY.Value = "NA"
             <Top>1.54479in</Top>
             <Left>0.1in</Left>
             <Height>0.21875in</Height>
-            <Width>12.55208in</Width>
+            <Width>7.42708in</Width>
             <ZIndex>5</ZIndex>
             <Visibility>
               <Hidden>=IIf(Parameters!p_BY.Value = "AM", False, True)</Hidden>
