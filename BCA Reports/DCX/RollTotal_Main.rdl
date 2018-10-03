@@ -149,7 +149,7 @@ ORDER BY [Area Code],
             <Value>=Parameters!p_RY.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>IF @p_BY = 'AR'
+        <CommandText>IF @p_BY = 'AR' OR @p_BY = 'JR' OR @p_BY = 'NH'
     BEGIN
         SELECT DISTINCT 
                [dimArea_SK], 
@@ -197,6 +197,9 @@ ORDER BY [Area Code],
       <Query>
         <DataSourceName>EDW</DataSourceName>
         <QueryParameters>
+          <QueryParameter Name="@p_BY">
+            <Value>=Parameters!p_BY.Value</Value>
+          </QueryParameter>
           <QueryParameter Name="@p_RY">
             <Value>=Parameters!p_RY.Value</Value>
           </QueryParameter>
@@ -204,30 +207,33 @@ ORDER BY [Area Code],
             <Value>=Parameters!p_JR.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>SELECT DISTINCT 
-       [A1].[Jurisdiction Code], 
-       [A2].[Neighbourhood Code], 
-       [A2].[Neighbourhood Desc], 
-       [A2].[Neighbourhood], 
-       [A1].[RowSortOrder]
-FROM [EDW].[edw].[dimAssessmentGeography] AS [A1], 
-     [EDW].[edw].[dimAssessmentGeography] AS [A2]
-WHERE [A1].[Jurisdiction Code] = [A2].[Jurisdiction Code]
-      AND [A1].[Roll Year] = @p_RY
-      AND [A2].[Roll Year] = @p_RY
-      AND [A1].[Jurisdiction Code] IN (@p_JR)
-      AND [A2].[Jurisdiction Code] IN (@p_JR)
-      AND [A2].[Neighbourhood] NOT LIKE '%DO NOT USE%'
-
-UNION
-SELECT DISTINCT 
-       'NA', 
-       'NA', 
-       'Not Applicable', 
-       'Not Applicable', 
-       -999
-ORDER BY [RowSortOrder], 
-         [Neighbourhood Code];</CommandText>
+        <CommandText>IF @p_BY = 'NH'
+    BEGIN
+        SELECT DISTINCT 
+               [A1].[Jurisdiction Code], 
+               [A2].[Neighbourhood Code], 
+               [A2].[Neighbourhood Desc], 
+               [A2].[Neighbourhood], 
+               [A1].[RowSortOrder]
+        FROM [EDW].[edw].[dimAssessmentGeography] AS [A1], 
+             [EDW].[edw].[dimAssessmentGeography] AS [A2]
+        WHERE [A1].[Jurisdiction Code] = [A2].[Jurisdiction Code]
+              AND [A1].[Roll Year] = @p_RY
+              AND [A2].[Roll Year] = @p_RY
+              AND [A1].[Jurisdiction Code] IN(@p_JR)
+        AND [A2].[Jurisdiction Code] IN(@p_JR)
+        AND [A2].[Neighbourhood] NOT LIKE '%DO NOT USE%'
+        ORDER BY [RowSortOrder], 
+                 [Neighbourhood Code];
+    END;
+    ELSE
+    BEGIN
+        SELECT 'NA' AS [Jurisdiction Code], 
+               'NA' AS [Neighbourhood Code], 
+               'Not Applicable' AS [Neighbourhood Desc], 
+               'Not Applicable' AS [Neighbourhood], 
+               -999 AS [RowSortOrder];
+    END;</CommandText>
       </Query>
       <Fields>
         <Field Name="Jurisdiction_Code">
@@ -265,6 +271,9 @@ ORDER BY [RowSortOrder],
       <Query>
         <DataSourceName>EDW</DataSourceName>
         <QueryParameters>
+          <QueryParameter Name="@p_BY">
+            <Value>=Parameters!p_BY.Value</Value>
+          </QueryParameter>
           <QueryParameter Name="@p_AR">
             <Value>=Parameters!p_AR.Value</Value>
           </QueryParameter>
@@ -272,34 +281,38 @@ ORDER BY [RowSortOrder],
             <Value>=Parameters!p_RY.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>SELECT DISTINCT 
-       'NA' AS [Area Code], 
-       -3 AS [dimJurisdiction_SK], 
-       'NA' AS [dimJurisdiction_BK], 
-       'NA' AS [Jurisdiction Code], 
-       'Not Applicable' AS [Jurisdiction Desc], 
-       'Not Applicable' AS [Jurisdiction], 
-       -999 AS [RowSortOrder]
-UNION
-SELECT DISTINCT 
-       [A1].[Area Code], 
-       [A2].[dimJurisdiction_SK], 
-       [A2].[dimJurisdiction_BK], 
-       [A2].[Jurisdiction Code], 
-       [A2].[Jurisdiction Desc], 
-       [A2].[Jurisdiction], 
-       [A1].[RowSortOrder]
-FROM [EDW].[edw].[dimAssessmentGeography] AS [A1], 
-     [EDW].[edw].[dimAssessmentGeography] AS [A2]
-WHERE([A1].[Area Code] = [A2].[Area Code]
-      AND [A1].[Roll Year] = @p_RY
-      AND [A1].[Jurisdiction Code] &gt; '199'
-      AND [A2].[Roll Year] = @p_RY
-      AND [A2].[Jurisdiction Code] &gt; '199')
-     AND [A1].[Area Code] IN(@p_AR)
-AND [A2].[Area Code] IN(@p_AR)
-ORDER BY [RowSortOrder], 
-         [Jurisdiction Code];</CommandText>
+        <CommandText>IF @p_BY = 'JR' OR @p_BY = 'NH'
+    BEGIN
+        SELECT DISTINCT 
+               [A1].[Area Code], 
+               [A2].[dimJurisdiction_SK], 
+               [A2].[dimJurisdiction_BK], 
+               [A2].[Jurisdiction Code], 
+               [A2].[Jurisdiction Desc], 
+               [A2].[Jurisdiction], 
+               [A1].[RowSortOrder]
+        FROM [EDW].[edw].[dimAssessmentGeography] AS [A1], 
+             [EDW].[edw].[dimAssessmentGeography] AS [A2]
+        WHERE([A1].[Area Code] = [A2].[Area Code]
+              AND [A1].[Roll Year] = @p_RY
+              AND [A1].[Jurisdiction Code] &gt; '199'
+              AND [A2].[Roll Year] = @p_RY
+              AND [A2].[Jurisdiction Code] &gt; '199')
+             AND [A1].[Area Code] IN(@p_AR)
+        AND [A2].[Area Code] IN(@p_AR)
+        ORDER BY [RowSortOrder], 
+                 [Jurisdiction Code];
+    END;
+    ELSE
+    BEGIN
+        SELECT 'NA' AS [Area Code], 
+               -3 AS [dimJurisdiction_SK], 
+               'NA' AS [dimJurisdiction_BK], 
+               'NA' AS [Jurisdiction Code], 
+               'Not Applicable' AS [Jurisdiction Desc], 
+               'Not Applicable' AS [Jurisdiction], 
+               -999 AS [RowSortOrder];
+    END;</CommandText>
       </Query>
       <Fields>
         <Field Name="Area_Code">
@@ -708,29 +721,17 @@ ORDER BY [AG].[Jurisdiction Code];</CommandText>
                   <TablixMembers>
                     <TablixMember>
                       <Visibility>
-                        <Hidden>=IIf((Parameters!p_JR.Count &gt;= 1 AND Parameters!p_JR.Value(0) &lt;&gt; "NA")
-AND 
-(Parameters!p_N.Count = 1 AND Parameters!p_N.Value(0) = "NA")
-,false
-,true)</Hidden>
+                        <Hidden>=IIf(Parameters!p_BY.Value = "JR",false,true)</Hidden>
                       </Visibility>
                     </TablixMember>
                     <TablixMember>
                       <Visibility>
-                        <Hidden>=IIf((Parameters!p_JR.Count = 1 
-AND Parameters!p_JR.Value(0) = "NA")
-AND (Parameters!p_N.Count = 1 
-AND Parameters!p_N.Value(0) = "NA")
-,false
-,true)</Hidden>
+                        <Hidden>=IIf(Parameters!p_BY.Value = "AR",false,true)</Hidden>
                       </Visibility>
                     </TablixMember>
                     <TablixMember>
                       <Visibility>
-                        <Hidden>=IIf(Parameters!p_N.Count &gt;= 1 
-AND Parameters!p_N.Value(0) &lt;&gt; "NA"
-,false
-,true)</Hidden>
+                        <Hidden>=IIf(Parameters!p_BY.Value = "NH",false,true)</Hidden>
                       </Visibility>
                     </TablixMember>
                   </TablixMembers>
@@ -1477,9 +1478,10 @@ OR Parameters!p_BY.Value = "NA"
     <ReportParameter Name="p_AR">
       <DataType>String</DataType>
       <DefaultValue>
-        <Values>
-          <Value>NA</Value>
-        </Values>
+        <DataSetReference>
+          <DataSetName>qryAR</DataSetName>
+          <ValueField>Area_Code</ValueField>
+        </DataSetReference>
       </DefaultValue>
       <Prompt>Assessment Area</Prompt>
       <ValidValues>
@@ -1494,11 +1496,11 @@ OR Parameters!p_BY.Value = "NA"
     <ReportParameter Name="p_JR">
       <DataType>String</DataType>
       <DefaultValue>
-        <Values>
-          <Value>NA</Value>
-        </Values>
+        <DataSetReference>
+          <DataSetName>qryJR</DataSetName>
+          <ValueField>Jurisdiction_Code</ValueField>
+        </DataSetReference>
       </DefaultValue>
-      <AllowBlank>true</AllowBlank>
       <Prompt>Jurisdiction</Prompt>
       <ValidValues>
         <DataSetReference>
@@ -1513,11 +1515,11 @@ OR Parameters!p_BY.Value = "NA"
     <ReportParameter Name="p_N">
       <DataType>String</DataType>
       <DefaultValue>
-        <Values>
-          <Value>NA</Value>
-        </Values>
+        <DataSetReference>
+          <DataSetName>qryNEIGH</DataSetName>
+          <ValueField>Neighbourhood_Code</ValueField>
+        </DataSetReference>
       </DefaultValue>
-      <AllowBlank>true</AllowBlank>
       <Prompt>Neighbourhood</Prompt>
       <ValidValues>
         <DataSetReference>
@@ -1528,24 +1530,6 @@ OR Parameters!p_BY.Value = "NA"
       </ValidValues>
       <MultiValue>true</MultiValue>
       <UsedInQuery>True</UsedInQuery>
-    </ReportParameter>
-    <ReportParameter Name="p_RD">
-      <DataType>String</DataType>
-      <DefaultValue>
-        <DataSetReference>
-          <DataSetName>qryRD</DataSetName>
-          <ValueField>Regional_District_Code</ValueField>
-        </DataSetReference>
-      </DefaultValue>
-      <Prompt>Regional District</Prompt>
-      <ValidValues>
-        <DataSetReference>
-          <DataSetName>qryRD</DataSetName>
-          <ValueField>Regional_District_Code</ValueField>
-          <LabelField>Regional_District</LabelField>
-        </DataSetReference>
-      </ValidValues>
-      <MultiValue>true</MultiValue>
     </ReportParameter>
     <ReportParameter Name="p_AM">
       <DataType>String</DataType>
@@ -1561,6 +1545,24 @@ OR Parameters!p_BY.Value = "NA"
           <DataSetName>qryAM</DataSetName>
           <ValueField>Amalgamation_Code</ValueField>
           <LabelField>Amalgamation_Desc</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
+    <ReportParameter Name="p_RD">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>qryRD</DataSetName>
+          <ValueField>Regional_District_Code</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <Prompt>Regional District</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>qryRD</DataSetName>
+          <ValueField>Regional_District_Code</ValueField>
+          <LabelField>Regional_District</LabelField>
         </DataSetReference>
       </ValidValues>
       <MultiValue>true</MultiValue>
@@ -1606,8 +1608,8 @@ OR Parameters!p_BY.Value = "NA"
         </CellDefinition>
         <CellDefinition>
           <ColumnIndex>1</ColumnIndex>
-          <RowIndex>1</RowIndex>
-          <ParameterName>p_JR</ParameterName>
+          <RowIndex>2</RowIndex>
+          <ParameterName>p_RD</ParameterName>
         </CellDefinition>
         <CellDefinition>
           <ColumnIndex>2</ColumnIndex>
@@ -1622,12 +1624,12 @@ OR Parameters!p_BY.Value = "NA"
         <CellDefinition>
           <ColumnIndex>0</ColumnIndex>
           <RowIndex>2</RowIndex>
-          <ParameterName>p_RD</ParameterName>
+          <ParameterName>p_AM</ParameterName>
         </CellDefinition>
         <CellDefinition>
           <ColumnIndex>1</ColumnIndex>
-          <RowIndex>2</RowIndex>
-          <ParameterName>p_AM</ParameterName>
+          <RowIndex>1</RowIndex>
+          <ParameterName>p_JR</ParameterName>
         </CellDefinition>
         <CellDefinition>
           <ColumnIndex>2</ColumnIndex>
