@@ -636,7 +636,6 @@ ORDER BY [FA].[Roll Year],
                           </Style>
                         </Textbox>
                         <ColSpan>2</ColSpan>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
@@ -677,7 +676,6 @@ ORDER BY [FA].[Roll Year],
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -728,7 +726,6 @@ ORDER BY [FA].[Roll Year],
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -767,7 +764,6 @@ ORDER BY [FA].[Roll Year],
                             <PaddingBottom>1pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -806,7 +802,6 @@ ORDER BY [FA].[Roll Year],
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -846,7 +841,6 @@ ORDER BY [FA].[Roll Year],
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -899,7 +893,6 @@ ORDER BY [FA].[Roll Year],
                           </Style>
                         </Textbox>
                         <ColSpan>2</ColSpan>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
@@ -953,7 +946,6 @@ ORDER BY [FA].[Roll Year],
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -1016,7 +1008,6 @@ ORDER BY [FA].[Roll Year],
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -1067,7 +1058,6 @@ ORDER BY [FA].[Roll Year],
                             <PaddingBottom>1pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -1118,7 +1108,6 @@ ORDER BY [FA].[Roll Year],
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -1168,7 +1157,6 @@ ORDER BY [FA].[Roll Year],
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -1218,7 +1206,6 @@ ORDER BY [FA].[Roll Year],
                           </Style>
                         </Textbox>
                         <ColSpan>2</ColSpan>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
@@ -1273,7 +1260,6 @@ ORDER BY [FA].[Roll Year],
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -1336,7 +1322,6 @@ ORDER BY [FA].[Roll Year],
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -1388,7 +1373,6 @@ ORDER BY [FA].[Roll Year],
                             <PaddingBottom>1pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -1440,7 +1424,6 @@ ORDER BY [FA].[Roll Year],
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -1492,7 +1475,6 @@ ORDER BY [FA].[Roll Year],
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -1775,7 +1757,9 @@ CStr(Variables!vSection644.Value) ="","0"
                               <TextRuns>
                                 <TextRun>
                                   <Value>Active:</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -1812,6 +1796,7 @@ CStr(Variables!vSection644.Value) ="","0"
                                 <TextRun>
                                   <Value>=Sum(Fields!Folio_Count.Value)</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -1849,7 +1834,9 @@ CStr(Variables!vSection644.Value) ="","0"
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -2022,7 +2009,9 @@ CStr(Variables!vSection644.Value) ="","0"
                               <TextRuns>
                                 <TextRun>
                                   <Value>Reference:</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -2059,6 +2048,7 @@ CStr(Variables!vSection644.Value) ="","0"
                                 <TextRun>
                                   <Value>0</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -2099,7 +2089,9 @@ CStr(Variables!vSection644.Value) ="","0"
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -2273,6 +2265,7 @@ CStr(Variables!vSection644.Value) ="","0"
                                 <TextRun>
                                   <Value>Total:</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -2311,6 +2304,7 @@ CStr(Variables!vSection644.Value) ="","0"
                                 <TextRun>
                                   <Value>=Sum(Fields!Folio_Count.Value)</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -2350,7 +2344,9 @@ CStr(Variables!vSection644.Value) ="","0"
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -11671,7 +11667,7 @@ CStr(Variables!vSection644.Value) ="","0"
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.17791in</Height>
+                  <Height>0.16in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -11707,6 +11703,7 @@ CStr(Variables!vSection644.Value) ="","0"
                           </Style>
                         </Textbox>
                         <ColSpan>2</ColSpan>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
@@ -12308,7 +12305,7 @@ CStr(Variables!vSection644.Value) ="","0"
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.17791in</Height>
+                  <Height>0.16in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -13099,7 +13096,7 @@ CStr(Variables!vSection644.Value) ="","0"
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.17791in</Height>
+                  <Height>0.16in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -13918,7 +13915,7 @@ CStr(Variables!vSection644.Value) ="","0"
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.165in</Height>
+                  <Height>0.16in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -14178,7 +14175,7 @@ CStr(Variables!vSection644.Value) ="","0"
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.165in</Height>
+                  <Height>0.16in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -14778,7 +14775,7 @@ CStr(Variables!vSection644.Value) ="","0"
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.165in</Height>
+                  <Height>0.16in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -15154,7 +15151,7 @@ CStr(Variables!vSection644.Value) ="","0"
             </TablixRowHierarchy>
             <DataSetName>qryData</DataSetName>
             <Top>2.25in</Top>
-            <Height>2.17244in</Height>
+            <Height>2.10371in</Height>
             <Width>12.74521in</Width>
             <ZIndex>4</ZIndex>
             <Style>
@@ -15230,7 +15227,7 @@ CStr(Variables!vSection644.Value) ="","0"
   </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
-      <NumberOfColumns>3</NumberOfColumns>
+      <NumberOfColumns>2</NumberOfColumns>
       <NumberOfRows>1</NumberOfRows>
       <CellDefinitions>
         <CellDefinition>

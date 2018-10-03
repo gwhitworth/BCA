@@ -787,7 +787,7 @@ OR Parameters!p_BY.Value = "NA"
               </Border>
             </Style>
           </Subreport>
-          <Subreport Name="SubreportRegionalDistrictProv">
+          <Subreport Name="SubreportProv">
             <ReportName>RollTotal_Sub5</ReportName>
             <Parameters>
               <Parameter Name="p_RY">
@@ -798,15 +798,15 @@ OR Parameters!p_BY.Value = "NA"
               </Parameter>
             </Parameters>
             <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
-            <Top>1.07084in</Top>
+            <Top>0.94584in</Top>
             <Left>0.1in</Left>
             <Height>0.21875in</Height>
             <Width>7.42708in</Width>
             <ZIndex>2</ZIndex>
             <Visibility>
-              <Hidden>=IIf(Parameters!p_BY.Value = "AR"
-, True
+              <Hidden>=IIf(Parameters!p_BY.Value = "RD"
 , IIf(Parameters!p_RD.Count = 1 AND Parameters!p_RD.Value(0) = "PROV",false,true)
+, True
 )</Hidden>
             </Visibility>
             <Style>
@@ -815,7 +815,7 @@ OR Parameters!p_BY.Value = "NA"
               </Border>
             </Style>
           </Subreport>
-          <Subreport Name="SubreportRegionalDistrictProv2">
+          <Subreport Name="SubreportRegionalDistrictProv">
             <ReportName>RollTotal_Sub6</ReportName>
             <Parameters>
               <Parameter Name="p_RY">
@@ -826,16 +826,13 @@ OR Parameters!p_BY.Value = "NA"
               </Parameter>
             </Parameters>
             <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
-            <Top>1.28438in</Top>
+            <Top>1.40938in</Top>
             <Left>0.1in</Left>
             <Height>0.21875in</Height>
             <Width>7.42708in</Width>
             <ZIndex>3</ZIndex>
             <Visibility>
-              <Hidden>=IIf(Parameters!p_BY.Value = "AR"
-, True
-, IIf(Parameters!p_RD.Count = 1 AND Parameters!p_RD.Value(0) = "RDPROV",false,true)
-)</Hidden>
+              <Hidden>true</Hidden>
             </Visibility>
             <Style>
               <Border>
@@ -852,7 +849,7 @@ OR Parameters!p_BY.Value = "NA"
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>0.3125in</Height>
+                  <Height>0.28125in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -872,7 +869,6 @@ OR Parameters!p_BY.Value = "NA"
                                 </Parameter>
                               </Parameters>
                               <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
-                              <Left>0.01146in</Left>
                               <Height>0.21875in</Height>
                               <Width>7.36354in</Width>
                               <Style>
@@ -909,8 +905,8 @@ OR Parameters!p_BY.Value = "NA"
             </TablixRowHierarchy>
             <DataSetName>qryData_SDJR</DataSetName>
             <Top>1.9125in</Top>
-            <Left>0.1in</Left>
-            <Height>0.3125in</Height>
+            <Left>0.11146in</Left>
+            <Height>0.28125in</Height>
             <Width>7.42708in</Width>
             <ZIndex>4</ZIndex>
             <Visibility>
@@ -936,7 +932,7 @@ OR Parameters!p_BY.Value = "NA"
               </Parameter>
             </Parameters>
             <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
-            <Top>1.54479in</Top>
+            <Top>1.66979in</Top>
             <Left>0.1in</Left>
             <Height>0.21875in</Height>
             <Width>7.42708in</Width>
@@ -951,7 +947,7 @@ OR Parameters!p_BY.Value = "NA"
             </Style>
           </Subreport>
         </ReportItems>
-        <Height>2.32917in</Height>
+        <Height>2.19375in</Height>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1396,8 +1392,8 @@ OR Parameters!p_BY.Value = "NA"
         <PageWidth>14in</PageWidth>
         <LeftMargin>0.1in</LeftMargin>
         <RightMargin>0.1in</RightMargin>
-        <TopMargin>0.1in</TopMargin>
-        <BottomMargin>0.1in</BottomMargin>
+        <TopMargin>0.01in</TopMargin>
+        <BottomMargin>0.01in</BottomMargin>
         <Style>
           <Border>
             <Style>None</Style>
