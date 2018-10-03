@@ -133,7 +133,7 @@ ORDER BY [Area Code],
           <FilterExpression>=Fields!Neighbourhood_Code.Value</FilterExpression>
           <Operator>In</Operator>
           <FilterValues>
-            <FilterValue>=Parameters!p_N.Value</FilterValue>
+            <FilterValue>=Parameters!p_NH.Value</FilterValue>
           </FilterValues>
         </Filter>
       </Filters>
@@ -193,7 +193,7 @@ ORDER BY [Area Code],
         </Field>
       </Fields>
     </DataSet>
-    <DataSet Name="qryNEIGH">
+    <DataSet Name="qryNH">
       <Query>
         <DataSourceName>EDW</DataSourceName>
         <QueryParameters>
@@ -692,7 +692,7 @@ ORDER BY [AG].[Jurisdiction Code];</CommandText>
                             <Parameter Name="p_CN">
                               <Value>=Parameters!p_CN.Value</Value>
                             </Parameter>
-                            <Parameter Name="p_N">
+                            <Parameter Name="p_NH">
                               <Value>=Fields!Neighbourhood_Code.Value</Value>
                             </Parameter>
                           </Parameters>
@@ -1512,18 +1512,18 @@ OR Parameters!p_BY.Value = "NA"
       <MultiValue>true</MultiValue>
       <UsedInQuery>True</UsedInQuery>
     </ReportParameter>
-    <ReportParameter Name="p_N">
+    <ReportParameter Name="p_NH">
       <DataType>String</DataType>
       <DefaultValue>
         <DataSetReference>
-          <DataSetName>qryNEIGH</DataSetName>
+          <DataSetName>qryNH</DataSetName>
           <ValueField>Neighbourhood_Code</ValueField>
         </DataSetReference>
       </DefaultValue>
       <Prompt>Neighbourhood</Prompt>
       <ValidValues>
         <DataSetReference>
-          <DataSetName>qryNEIGH</DataSetName>
+          <DataSetName>qryNH</DataSetName>
           <ValueField>Neighbourhood_Code</ValueField>
           <LabelField>Neighbourhood</LabelField>
         </DataSetReference>
@@ -1614,7 +1614,7 @@ OR Parameters!p_BY.Value = "NA"
         <CellDefinition>
           <ColumnIndex>2</ColumnIndex>
           <RowIndex>1</RowIndex>
-          <ParameterName>p_N</ParameterName>
+          <ParameterName>p_NH</ParameterName>
         </CellDefinition>
         <CellDefinition>
           <ColumnIndex>2</ColumnIndex>

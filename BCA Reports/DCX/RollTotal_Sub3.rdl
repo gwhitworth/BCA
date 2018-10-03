@@ -71,8 +71,8 @@
           <QueryParameter Name="@p_CN">
             <Value>=Parameters!p_CN.Value</Value>
           </QueryParameter>
-          <QueryParameter Name="@p_N">
-            <Value>=Parameters!p_N.Value</Value>
+          <QueryParameter Name="@p_NH">
+            <Value>=Parameters!p_NH.Value</Value>
           </QueryParameter>
         </QueryParameters>
         <CommandText>SELECT [FA].[Roll Year], 
@@ -139,14 +139,14 @@ FROM [edw].[FactAllAssessedAmounts] AS [FA]
     WHERE [FAV].[Roll Year] = @p_RY
           AND [FAV].[Cycle Number] &lt;= @p_CN
           AND [Assessment Code] = '02'
-          AND [AG].[Neighbourhood Code] = @p_N
+          AND [AG].[Neighbourhood Code] = @p_NH
     GROUP BY [FAV].dimFolio_SK, 
              [FAV].[Property Class Code]
     HAVING COUNT(*) &gt; 1
 ) AS [OCCUR] ON [OCCUR].dimFolio_SK = [FA].dimFolio_SK
 WHERE [FA].[Roll Year] = @p_RY
       AND [FA].[Cycle Number] = @p_CN
-      AND [AG].[Neighbourhood Code] = @p_N
+      AND [AG].[Neighbourhood Code] = @p_NH
 GROUP BY [FA].[Roll Year], 
          [AG].[Area], 
          [AG].[Jurisdiction Code], 
@@ -311,7 +311,7 @@ ORDER BY [FA].[Roll Year],
         </Field>
       </Fields>
     </DataSet>
-    <DataSet Name="qryNEIGH">
+    <DataSet Name="qryNH">
       <Query>
         <DataSourceName>EDW</DataSourceName>
         <QueryParameters>
@@ -18277,7 +18277,7 @@ CStr(Variables!vSection644.Value) ="","0"
         </DataSetReference>
       </ValidValues>
     </ReportParameter>
-    <ReportParameter Name="p_N">
+    <ReportParameter Name="p_NH">
       <DataType>String</DataType>
       <DefaultValue>
         <Values>
@@ -18287,7 +18287,7 @@ CStr(Variables!vSection644.Value) ="","0"
       <Prompt>Neighbourhood</Prompt>
       <ValidValues>
         <DataSetReference>
-          <DataSetName>qryNEIGH</DataSetName>
+          <DataSetName>qryNH</DataSetName>
           <ValueField>Neighbourhood_Code</ValueField>
           <LabelField>Neighbourhood</LabelField>
         </DataSetReference>
@@ -18312,7 +18312,7 @@ CStr(Variables!vSection644.Value) ="","0"
         <CellDefinition>
           <ColumnIndex>2</ColumnIndex>
           <RowIndex>0</RowIndex>
-          <ParameterName>p_N</ParameterName>
+          <ParameterName>p_NH</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>
