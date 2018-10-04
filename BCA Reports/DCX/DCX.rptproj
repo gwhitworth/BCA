@@ -250,6 +250,10 @@
       <Name>Template.rdl</Name>
       <FullPath>Template.rdl</FullPath>
     </ProjectItem>
+    <ProjectItem>
+      <Name>RS009.rdl</Name>
+      <FullPath>RS009.rdl</FullPath>
+    </ProjectItem>
   </Reports>
   <Configurations>
     <Configuration>

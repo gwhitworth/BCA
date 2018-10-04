@@ -799,9 +799,9 @@ OR Parameters!p_BY.Value = "NA"
               </Parameter>
             </Parameters>
             <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
-            <Top>0.94584in</Top>
+            <Top>1.02709in</Top>
             <Left>0.1in</Left>
-            <Height>0.21875in</Height>
+            <Height>0.1375in</Height>
             <Width>7.42708in</Width>
             <ZIndex>2</ZIndex>
             <Visibility>
@@ -1333,6 +1333,7 @@ OR Parameters!p_BY.Value = "NA"
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
+              <Top>0in</Top>
               <Left>11.47896in</Left>
               <Height>0.25in</Height>
               <Width>1.40625in</Width>
@@ -1368,6 +1369,7 @@ OR Parameters!p_BY.Value = "NA"
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>ReportName</rd:DefaultName>
+              <Top>0in</Top>
               <Height>0.25in</Height>
               <Width>1.88784in</Width>
               <ZIndex>2</ZIndex>
