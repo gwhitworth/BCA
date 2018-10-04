@@ -79,34 +79,62 @@ ORDER BY [Cycle Number Sort] DESC;</CommandText>
             <Value>=Parameters!p_CN.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>SELECT '50' AS [Decision], 
-                [AG].[Area Code], 
-                [AG].[Jurisdiction Code], 
-                [AG].[Region Code], 
-                [PC].[Property Class Code] AS [PropClass],
-				[FAA].[Folio Number]
-FROM [edw].[FactActualAmounts] AS [FAA]
-     INNER JOIN [edw].[dimPropertyClass] AS [PC]
-     ON [FAA].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
-     INNER JOIN [edw].[dimRollType] AS [RT]
-     ON [RT].[dimRollType_SK] = [FAA].[dimRollType_SK]
-     INNER JOIN [edw].[dimAssessmentGeography] AS [AG]
-     ON [FAA].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
-        AND [AG].[Roll Category Code] = '1'
-WHERE [FAA].[dimRollType_BK] = 'PAAB'
-      AND [FAA].[Roll Year] = @p_RY
-      AND [FAA].[Cycle Number] = @p_CN
-
-      AND [FAA].[Cycle Number] = @p_CN
-ORDER BY [AG].[Area Code], 
-         [AG].[Jurisdiction Code], 
-         [AG].[Region Code], 
-         [PC].[Property Class Code];</CommandText>
+        <CommandText>SELECT IIF([dimRollType_BK] = 'PAAB', '50', '01') AS [Decision], 
+       [dimRollType_BK], 
+       [Area Code], 
+       [Jurisdiction Code], 
+       [Region Code], 
+       [01], 
+       [02], 
+       [03], 
+       [04], 
+       [05], 
+       [06], 
+       [07], 
+       [08], 
+       [09], 
+       [UNK]
+FROM
+(
+    SELECT DISTINCT 
+           [FAA].[dimRollType_BK], 
+           [AG].[Area Code], 
+           [AG].[Jurisdiction Code], 
+           [AG].[Region Code], 
+           [PC].[Property Class Code], 
+           dimFolio_SK
+    FROM [edw].[FactActualAmounts] AS [FAA]
+         INNER JOIN [edw].[dimPropertyClass] AS [PC] ON [FAA].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
+         INNER JOIN [edw].[dimRollType] AS [RT] ON [RT].[dimRollType_SK] = [FAA].[dimRollType_SK]
+         INNER JOIN [edw].[dimAssessmentGeography] AS [AG] ON [FAA].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
+                                                              AND [AG].[Roll Category Code] = '1'
+    WHERE([FAA].[dimRollType_BK] = 'PAAB'
+          OR [FAA].[dimRollType_BK] = 'SUPP')
+         AND [FAA].[Roll Year] = @p_RY
+         AND [FAA].[Cycle Number] = @p_CN
+) p PIVOT(COUNT(dimFolio_SK) FOR [Property Class Code] IN([01], 
+                                                          [02], 
+                                                          [03], 
+                                                          [04], 
+                                                          [05], 
+                                                          [06], 
+                                                          [07], 
+                                                          [08], 
+                                                          [09], 
+                                                          [UNK])) AS pvt
+ORDER BY [dimRollType_BK], 
+         [Area Code], 
+         [Jurisdiction Code], 
+         [Region Code];</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>
         <Field Name="Decision">
           <DataField>Decision</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="dimRollType_BK">
+          <DataField>dimRollType_BK</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Area_Code">
@@ -121,13 +149,45 @@ ORDER BY [AG].[Area Code],
           <DataField>Region Code</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="PropClass">
-          <DataField>PropClass</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
+        <Field Name="ID01">
+          <DataField>01</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
-        <Field Name="Folio_Number">
-          <DataField>Folio Number</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
+        <Field Name="ID02">
+          <DataField>02</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="ID03">
+          <DataField>03</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="ID04">
+          <DataField>04</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="ID05">
+          <DataField>05</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="ID06">
+          <DataField>06</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="ID07">
+          <DataField>07</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="ID08">
+          <DataField>08</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="ID09">
+          <DataField>09</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="UNK">
+          <DataField>UNK</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
       </Fields>
     </DataSet>
@@ -807,21 +867,21 @@ Farm</Value>
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox9">
+                        <Textbox Name="ID01">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value />
+                                  <Value>=Fields!ID01.Value</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox9</rd:DefaultName>
+                          <rd:DefaultName>ID01</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -837,21 +897,21 @@ Farm</Value>
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox12">
+                        <Textbox Name="ID02">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value />
+                                  <Value>=Fields!ID02.Value</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox12</rd:DefaultName>
+                          <rd:DefaultName>ID02</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -867,14 +927,14 @@ Farm</Value>
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox14">
+                        <Textbox Name="ID03">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value />
+                                  <Value>=Fields!ID03.Value</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                   </Style>
@@ -883,7 +943,7 @@ Farm</Value>
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox14</rd:DefaultName>
+                          <rd:DefaultName>ID03</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -899,14 +959,14 @@ Farm</Value>
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox16">
+                        <Textbox Name="ID04">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value />
+                                  <Value>=Fields!ID04.Value</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                   </Style>
@@ -915,7 +975,7 @@ Farm</Value>
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox16</rd:DefaultName>
+                          <rd:DefaultName>ID04</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -931,14 +991,14 @@ Farm</Value>
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox18">
+                        <Textbox Name="ID05">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value />
+                                  <Value>=Fields!ID05.Value</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                   </Style>
@@ -947,7 +1007,7 @@ Farm</Value>
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox18</rd:DefaultName>
+                          <rd:DefaultName>ID05</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -963,14 +1023,14 @@ Farm</Value>
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox20">
+                        <Textbox Name="ID06">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value />
+                                  <Value>=Fields!ID06.Value</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                   </Style>
@@ -979,7 +1039,7 @@ Farm</Value>
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox20</rd:DefaultName>
+                          <rd:DefaultName>ID06</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -995,14 +1055,14 @@ Farm</Value>
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox22">
+                        <Textbox Name="ID07">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value />
+                                  <Value>=Fields!ID07.Value</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                   </Style>
@@ -1011,7 +1071,7 @@ Farm</Value>
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox22</rd:DefaultName>
+                          <rd:DefaultName>ID07</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -1027,14 +1087,14 @@ Farm</Value>
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox24">
+                        <Textbox Name="ID08">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value />
+                                  <Value>=Fields!ID08.Value</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                   </Style>
@@ -1043,7 +1103,7 @@ Farm</Value>
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox24</rd:DefaultName>
+                          <rd:DefaultName>ID08</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -1059,14 +1119,14 @@ Farm</Value>
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox26">
+                        <Textbox Name="ID09">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value />
+                                  <Value>=Fields!ID09.Value</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                   </Style>
@@ -1075,7 +1135,7 @@ Farm</Value>
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox26</rd:DefaultName>
+                          <rd:DefaultName>ID09</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -1123,14 +1183,14 @@ Farm</Value>
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox30">
+                        <Textbox Name="UNK">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value />
+                                  <Value>=Fields!UNK.Value</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                   </Style>
@@ -1139,7 +1199,7 @@ Farm</Value>
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox30</rd:DefaultName>
+                          <rd:DefaultName>UNK</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -1151,6 +1211,7 @@ Farm</Value>
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -1223,7 +1284,7 @@ Farm</Value>
             <Top>0.04792in</Top>
             <Left>0.05083in</Left>
             <Height>1.09375in</Height>
-            <Width>12.82458in</Width>
+            <Width>12.82457in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1533,7 +1594,6 @@ Farm</Value>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
-              <Top>0in</Top>
               <Left>11.47896in</Left>
               <Height>0.25in</Height>
               <Width>1.40625in</Width>
@@ -1569,7 +1629,6 @@ Farm</Value>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>ReportName</rd:DefaultName>
-              <Top>0in</Top>
               <Height>0.25in</Height>
               <Width>1.88784in</Width>
               <ZIndex>2</ZIndex>
