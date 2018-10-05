@@ -4077,8 +4077,8 @@ FOR REGIONAL DISTRICT ELECTORAL AREAS
                     <TextRun>
                       <Value>
                         ="Processed Date: "
-                        + Replace(Mid(Parameters!p_CN.Label
-                        , InStr(Parameters!p_CN.Label, "on ") + 3),"-","/")
+                        + Lookup(Parameters!p_CN.Value,Fields!Cycle_Number.Value,Fields!Roll_Entry_Run_Date.Value, "qryRCN")
+                        
                       </Value>
                       <Style>
                         <Format>MMM d, yyyy</Format>

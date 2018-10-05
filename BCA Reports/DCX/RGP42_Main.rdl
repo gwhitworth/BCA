@@ -397,7 +397,6 @@ AND Parameters!p_RD.Count = 1,true,false)</Hidden>
                     <TextRun>
                       <Value>=Parameters!p_RY.Value</Value>
                       <Style>
-                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>14pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
@@ -406,7 +405,6 @@ AND Parameters!p_RD.Count = 1,true,false)</Hidden>
                       <Value>  NET TAXABLE AND CONVERTED HOSPITAL VALUES
 PER SEC. 3 (1) POLICE ACT</Value>
                       <Style>
-                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>14pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
@@ -421,9 +419,7 @@ PER SEC. 3 (1) POLICE ACT</Value>
                     <TextRun>
                       <Label>CYCLE_DESC</Label>
                       <Value>= Mid(Parameters!p_CN.Label,1,InStr(Parameters!p_CN.Label," run on "))</Value>
-                      <Style>
-                        <FontFamily>Tahoma</FontFamily>
-                      </Style>
+                      <Style />
                     </TextRun>
                   </TextRuns>
                   <Style>
@@ -467,7 +463,6 @@ PER SEC. 3 (1) POLICE ACT</Value>
                       <Value>www.bcassessment.ca</Value>
                       <Style>
                         <FontStyle>Italic</FontStyle>
-                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>8pt</FontSize>
                       </Style>
                     </TextRun>
@@ -523,13 +518,9 @@ PER SEC. 3 (1) POLICE ACT</Value>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>
-                        ="Processed Date: "
-                        + Replace(Mid(Parameters!p_CN.Label
-                        , InStr(Parameters!p_CN.Label, "on ") + 3),"-","/")
-                      </Value>
+                      <Value>="Processed Date: "
++ Lookup(Parameters!p_CN.Value,Fields!Cycle_Number.Value,Fields!Roll_Entry_Run_Date.Value, "qryRCN")</Value>
                       <Style>
-                        <FontFamily>Tahoma</FontFamily>
                         <Format>MMM d, yyyy</Format>
                       </Style>
                     </TextRun>
@@ -561,9 +552,7 @@ PER SEC. 3 (1) POLICE ACT</Value>
                   <TextRuns>
                     <TextRun>
                       <Value>="Printed Date: " + Format(Globals!ExecutionTime,"dd/MMM/yyyy")</Value>
-                      <Style>
-                        <FontFamily>Tahoma</FontFamily>
-                      </Style>
+                      <Style />
                     </TextRun>
                   </TextRuns>
                   <Style>
@@ -622,7 +611,6 @@ PER SEC. 3 (1) POLICE ACT</Value>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
-              <Top>0in</Top>
               <Height>0.25in</Height>
               <Width>12.88521in</Width>
               <Style>
@@ -654,7 +642,6 @@ PER SEC. 3 (1) POLICE ACT</Value>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
-              <Top>0in</Top>
               <Left>11.47896in</Left>
               <Height>0.25in</Height>
               <Width>1.40625in</Width>
@@ -687,7 +674,6 @@ PER SEC. 3 (1) POLICE ACT</Value>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>ReportName</rd:DefaultName>
-              <Top>0in</Top>
               <Height>0.25in</Height>
               <Width>1.88784in</Width>
               <ZIndex>2</ZIndex>

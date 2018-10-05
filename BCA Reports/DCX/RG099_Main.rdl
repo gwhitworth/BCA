@@ -321,7 +321,6 @@ ORDER BY [AR].[Area Code],
                     <TextRun>
                       <Value>=Parameters!p_RY.Value</Value>
                       <Style>
-                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>14pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
@@ -329,7 +328,6 @@ ORDER BY [AR].[Area Code],
                     <TextRun>
                       <Value>   T A X A B L E    V A L U E S</Value>
                       <Style>
-                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>14pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
@@ -344,9 +342,7 @@ ORDER BY [AR].[Area Code],
                     <TextRun>
                       <Label>CYCLE_DESC</Label>
                       <Value>= Mid(Parameters!p_CN.Label,1,InStr(Parameters!p_CN.Label," run on "))</Value>
-                      <Style>
-                        <FontFamily>Tahoma</FontFamily>
-                      </Style>
+                      <Style />
                     </TextRun>
                   </TextRuns>
                   <Style>
@@ -390,7 +386,6 @@ ORDER BY [AR].[Area Code],
                       <Value>www.bcassessment.ca</Value>
                       <Style>
                         <FontStyle>Italic</FontStyle>
-                        <FontFamily>Tahoma</FontFamily>
                         <FontSize>8pt</FontSize>
                       </Style>
                     </TextRun>
@@ -448,13 +443,9 @@ ORDER BY [AR].[Area Code],
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>
-                        ="Processed Date: "
-                        + Replace(Mid(Parameters!p_CN.Label
-                        , InStr(Parameters!p_CN.Label, "on ") + 3),"-","/")
-                      </Value>
+                      <Value>="Processed Date: "
++ Lookup(Parameters!p_CN.Value,Fields!Cycle_Number.Value,Fields!Roll_Entry_Run_Date.Value, "qryRCN")</Value>
                       <Style>
-                        <FontFamily>Tahoma</FontFamily>
                         <Format>MMM d, yyyy</Format>
                       </Style>
                     </TextRun>
@@ -486,9 +477,7 @@ ORDER BY [AR].[Area Code],
                   <TextRuns>
                     <TextRun>
                       <Value>="Printed Date: " + Format(Globals!ExecutionTime,"dd/MMM/yyyy")</Value>
-                      <Style>
-                        <FontFamily>Tahoma</FontFamily>
-                      </Style>
+                      <Style />
                     </TextRun>
                   </TextRuns>
                   <Style>

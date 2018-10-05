@@ -402,8 +402,8 @@ UNDER SECTION 25 SOUTH COAST BRITISH COLUMBIA TRANSPORTION AUTHORITY ACT</Value>
                     <TextRun>
                       <Value>
                         ="Processed Date: "
-                        + Replace(Mid(Parameters!p_CN.Label
-                        , InStr(Parameters!p_CN.Label, "on ") + 3),"-","/")
+                        + Lookup(Parameters!p_CN.Value,Fields!Cycle_Number.Value,Fields!Roll_Entry_Run_Date.Value, "qryRCN")
+                        
                       </Value>
                       <Style>
                         <FontFamily>Tahoma</FontFamily>
