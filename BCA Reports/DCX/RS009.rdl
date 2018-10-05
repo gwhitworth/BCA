@@ -47,7 +47,7 @@
         </QueryParameters>
         <CommandText>SELECT [Cycle Number], 
        'Supplementary/PAAB Cycle '+[Cycle Number] AS [Cycle Display], 
-       [Roll Entry Run Date]
+       FORMAT([Roll Entry Run Date],'dd/MMM/yyyy') AS [Roll Entry Run Date]
 FROM [edw].[dimRollCycle]
 WHERE [Roll Year] = @p_RY
       AND [Cycle Number] &gt; 0
@@ -64,7 +64,7 @@ ORDER BY [Cycle Number Sort] DESC;</CommandText>
         </Field>
         <Field Name="Roll_Entry_Run_Date">
           <DataField>Roll Entry Run Date</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
     </DataSet>
@@ -82,8 +82,11 @@ ORDER BY [Cycle Number Sort] DESC;</CommandText>
         <CommandText>SELECT IIF([dimRollType_BK] = 'PAAB', '50', '01') AS [Decision], 
        [dimRollType_BK], 
        [Area Code], 
+       [Area], 
        [Jurisdiction Code], 
+       [Jurisdiction], 
        [Region Code], 
+       [Region], 
        [01], 
        [02], 
        [03], 
@@ -100,8 +103,11 @@ FROM
     SELECT DISTINCT 
            [FAA].[dimRollType_BK], 
            [AG].[Area Code], 
+           [AG].[Area], 
            [AG].[Jurisdiction Code], 
+           [AG].[Jurisdiction], 
            [AG].[Region Code], 
+           [AG].[Region], 
            [PC].[Property Class Code], 
            [dimFolio_SK]
     FROM [edw].[FactActualAmounts] AS [FAA]
@@ -146,6 +152,10 @@ ORDER BY [dimRollType_BK],
           <DataField>Area Code</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Area">
+          <DataField>Area</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="Jurisdiction_Code">
           <DataField>Jurisdiction Code</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -158,6 +168,10 @@ ORDER BY [dimRollType_BK],
           <DataField>01</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
+        <Field Name="Jurisdiction">
+          <DataField>Jurisdiction</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="ID02">
           <DataField>02</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
@@ -165,6 +179,10 @@ ORDER BY [dimRollType_BK],
         <Field Name="ID03">
           <DataField>03</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Region">
+          <DataField>Region</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="ID04">
           <DataField>04</DataField>
@@ -267,7 +285,7 @@ ORDER BY [dimRollType_BK],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>="Area: " + Fields!Area_Code.Value</Value>
+                                  <Value>="Area: " + Fields!Area.Value</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -297,45 +315,10 @@ ORDER BY [dimRollType_BK],
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <ColSpan>13</ColSpan>
                       </CellContents>
                     </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox435">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value />
-                                  <Style>
-                                    <FontSize>11pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox435</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>None</Style>
-                            </Border>
-                            <VerticalAlign>Bottom</VerticalAlign>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>5pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                        <ColSpan>12</ColSpan>
-                      </CellContents>
-                    </TablixCell>
+                    <TablixCell />
                     <TablixCell />
                     <TablixCell />
                     <TablixCell />
@@ -350,7 +333,7 @@ ORDER BY [dimRollType_BK],
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.25in</Height>
+                  <Height>0.36458in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -361,7 +344,10 @@ ORDER BY [dimRollType_BK],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>="Jurisdiction: " +Fields!Jurisdiction_Code.Value</Value>
+                                  <Value>="Area: " + Fields!Area.Value
++VbCrLf
++"Jurisdiction: " 
++ Replace(Fields!Jurisdiction.Value,"(" + Fields!Jurisdiction_Code.Value + ")","")</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -391,45 +377,10 @@ ORDER BY [dimRollType_BK],
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <ColSpan>13</ColSpan>
                       </CellContents>
                     </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox569">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value />
-                                  <Style>
-                                    <FontSize>11pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox569</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>None</Style>
-                            </Border>
-                            <VerticalAlign>Bottom</VerticalAlign>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>5pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                        <ColSpan>12</ColSpan>
-                      </CellContents>
-                    </TablixCell>
+                    <TablixCell />
                     <TablixCell />
                     <TablixCell />
                     <TablixCell />
@@ -455,7 +406,7 @@ ORDER BY [dimRollType_BK],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>="Region: " +Fields!Region_Code.Value</Value>
+                                  <Value>="Region: " +Fields!Region.Value</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -485,45 +436,10 @@ ORDER BY [dimRollType_BK],
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <ColSpan>13</ColSpan>
                       </CellContents>
                     </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox864">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value />
-                                  <Style>
-                                    <FontSize>11pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox864</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>None</Style>
-                            </Border>
-                            <VerticalAlign>Bottom</VerticalAlign>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>5pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                        <ColSpan>12</ColSpan>
-                      </CellContents>
-                    </TablixCell>
+                    <TablixCell />
                     <TablixCell />
                     <TablixCell />
                     <TablixCell />
@@ -4509,7 +4425,7 @@ Farm</Value>
                   <TablixMembers>
                     <TablixMember>
                       <Visibility>
-                        <Hidden>=IIf(Parameters!p_BY.Value = "AR" OR Parameters!p_BY.Value = "JR",false,true)</Hidden>
+                        <Hidden>=IIf(Parameters!p_BY.Value = "AR",false,true)</Hidden>
                       </Visibility>
                     </TablixMember>
                     <TablixMember>
@@ -4522,6 +4438,9 @@ Farm</Value>
                         </PageBreak>
                       </Group>
                       <SortExpressions>
+                        <SortExpression>
+                          <Value>=Fields!Area_Code.Value</Value>
+                        </SortExpression>
                         <SortExpression>
                           <Value>=Fields!Jurisdiction_Code.Value</Value>
                         </SortExpression>
@@ -4620,7 +4539,7 @@ Farm</Value>
             </TablixRowHierarchy>
             <DataSetName>qryData</DataSetName>
             <Left>0.1in</Left>
-            <Height>3.51042in</Height>
+            <Height>3.625in</Height>
             <Width>12.92063in</Width>
             <Style>
               <Border>
@@ -4629,7 +4548,7 @@ Farm</Value>
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>3.51042in</Height>
+        <Height>3.76042in</Height>
         <Style>
           <Border>
             <Style>None</Style>

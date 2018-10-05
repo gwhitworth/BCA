@@ -62,7 +62,7 @@ ORDER BY [Roll Year] DESC</CommandText>
 		ELSE
 			'Cycle ' + [Cycle Number] + ' run on ' + FORMAT( [Roll Entry Run Date], 'dd-MMM-yyyy', 'en-CA' )
 	 END AS [Cycle Display]
-	 ,[Roll Entry Run Date]
+	 ,FORMAT([Roll Entry Run Date],'dd/MMM/yyyy') AS [Roll Entry Run Date]
 FROM  [edw].[dimRollCycle]
 
 WHERE [Roll Year] = @p_RY
