@@ -439,7 +439,7 @@ ORDER BY [Region Hospital District Code];</CommandText>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>="Processed Date: " + Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3)</Value>
+                      <Value>="Processed Date:" + Space(2) + Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3)</Value>
                       <Style>
                         <Format>MMM d, yyyy</Format>
                       </Style>

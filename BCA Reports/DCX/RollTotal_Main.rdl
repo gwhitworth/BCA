@@ -1205,11 +1205,8 @@ OR Parameters!p_BY.Value = "NA"
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>
-                        ="Processed Date: "
-                        + Lookup(Parameters!p_CN.Value,Fields!Cycle_Number.Value,Fields!Roll_Entry_Run_Date.Value, "qryRCN")
-                        
-                      </Value>
+                      <Value>="Processed Date:" + Space(2)
++ Lookup(Parameters!p_CN.Value,Fields!Cycle_Number.Value,Fields!Roll_Entry_Run_Date.Value, "qryRCN")</Value>
                       <Style>
                         <Format>MMM d, yyyy</Format>
                       </Style>
@@ -1333,7 +1330,6 @@ OR Parameters!p_BY.Value = "NA"
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
-              <Top>0in</Top>
               <Left>11.47896in</Left>
               <Height>0.25in</Height>
               <Width>1.40625in</Width>
@@ -1369,7 +1365,6 @@ OR Parameters!p_BY.Value = "NA"
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>ReportName</rd:DefaultName>
-              <Top>0in</Top>
               <Height>0.25in</Height>
               <Width>1.88784in</Width>
               <ZIndex>2</ZIndex>

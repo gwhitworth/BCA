@@ -518,7 +518,7 @@ PER SEC. 3 (1) POLICE ACT</Value>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>="Processed Date: "
+                      <Value>="Processed Date:" + Space(2)
 + Lookup(Parameters!p_CN.Value,Fields!Cycle_Number.Value,Fields!Roll_Entry_Run_Date.Value, "qryRCN")</Value>
                       <Style>
                         <Format>MMM d, yyyy</Format>

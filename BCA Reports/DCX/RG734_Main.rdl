@@ -504,7 +504,7 @@ ORDER BY [JR].[Jurisdiction Code];</CommandText>
                   <TextRuns>
                     <TextRun>
                       <Value>
-                        ="Processed Date: "
+                        ="Processed Date:" + Space(2)
                         + Lookup(Parameters!p_CN.Value,Fields!Cycle_Number.Value,Fields!Roll_Entry_Run_Date.Value, "qryRCN")
                         
                       </Value>
