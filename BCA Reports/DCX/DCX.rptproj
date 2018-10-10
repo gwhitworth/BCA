@@ -75,6 +75,18 @@
       <FullPath>ElectoralJuristiction.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>Info Page 1_Main.rdl</Name>
+      <FullPath>Info Page 1_Main.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Info Page 1_Sub1.rdl</Name>
+      <FullPath>Info Page 1_Sub1.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Info Page 1_Sub2.rdl</Name>
+      <FullPath>Info Page 1_Sub2.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>MHVSAF - Municipal Hospital Value Summarized Assessment File.rdl</Name>
       <FullPath>MHVSAF - Municipal Hospital Value Summarized Assessment File.rdl</FullPath>
     </ProjectItem>
@@ -85,6 +97,10 @@
     <ProjectItem>
       <Name>ProvTotal_Sub.rdl</Name>
       <FullPath>ProvTotal_Sub.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>PSCTOTS.rdl</Name>
+      <FullPath>PSCTOTS.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>RG099_Main.rdl</Name>
@@ -255,20 +271,12 @@
       <FullPath>Template.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>PSCTOTS.rdl</Name>
-      <FullPath>PSCTOTS.rdl</FullPath>
+      <Name>Info Page 2_Main.rdl</Name>
+      <FullPath>Info Page 2_Main.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>Info Page 1.rdl</Name>
-      <FullPath>Info Page 1.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>Info Page 1_Sub1.rdl</Name>
-      <FullPath>Info Page 1_Sub1.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>Info Page 1_Sub2.rdl</Name>
-      <FullPath>Info Page 1_Sub2.rdl</FullPath>
+      <Name>Info Page 2_Sub1.rdl</Name>
+      <FullPath>Info Page 2_Sub1.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>
