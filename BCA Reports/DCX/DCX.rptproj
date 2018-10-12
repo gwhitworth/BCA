@@ -75,6 +75,10 @@
       <FullPath>ElectoralJuristiction.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>FolioDetails_Main.rdl</Name>
+      <FullPath>FolioDetails_Main.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>Info Page 1_Main.rdl</Name>
       <FullPath>Info Page 1_Main.rdl</FullPath>
     </ProjectItem>
@@ -279,8 +283,12 @@
       <FullPath>Template.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>FolioDetails_Main.rdl</Name>
-      <FullPath>FolioDetails_Main.rdl</FullPath>
+      <Name>FolioDetails_Sub1.rdl</Name>
+      <FullPath>FolioDetails_Sub1.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>FolioDetails_Sub2.rdl</Name>
+      <FullPath>FolioDetails_Sub2.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>
