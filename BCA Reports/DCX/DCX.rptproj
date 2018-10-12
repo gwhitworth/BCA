@@ -87,6 +87,14 @@
       <FullPath>Info Page 1_Sub2.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>Info Page 2_Main.rdl</Name>
+      <FullPath>Info Page 2_Main.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Info Page 2_Sub1.rdl</Name>
+      <FullPath>Info Page 2_Sub1.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>MHVSAF - Municipal Hospital Value Summarized Assessment File.rdl</Name>
       <FullPath>MHVSAF - Municipal Hospital Value Summarized Assessment File.rdl</FullPath>
     </ProjectItem>
@@ -271,12 +279,8 @@
       <FullPath>Template.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>Info Page 2_Main.rdl</Name>
-      <FullPath>Info Page 2_Main.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>Info Page 2_Sub1.rdl</Name>
-      <FullPath>Info Page 2_Sub1.rdl</FullPath>
+      <Name>FolioDetails_Main.rdl</Name>
+      <FullPath>FolioDetails_Main.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>

@@ -560,7 +560,8 @@ ORDER BY [dimRollType_BK],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!dimRollType_BK.Value + " Decision"</Value>
+                                  <Value>=Fields!dimRollType_BK.Value + 
+IIf(Fields!dimRollType_BK.Value = "PAAB", " Decision", " Reason")</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
