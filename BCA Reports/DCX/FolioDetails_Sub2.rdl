@@ -48,7 +48,8 @@
             <Value>=Parameters!p_NH.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>SELECT DISTINCT [FACT].[Roll Year], 
+        <CommandText>SELECT DISTINCT 
+       [FACT].[Roll Year], 
        [AG].[Area Code], 
        [AG].[Area] AS [Area Name], 
        [AG].[Jurisdiction Code] AS [Jur Code], 
@@ -56,15 +57,15 @@
        [AG].[Neighbourhood Code] AS [Neigh Code], 
        [AG].[Neighbourhood Desc] AS [Neigh Name], 
        [FO].[Roll Number], 
-       [PL].[PID], 
-       [Lot], 
-       [Section], 
-       [Block Number], 
-       [Range], 
-       [Plan Number], 
-       [Township Code], 
-       [Subdivision], 
-       [PL].[Legal Text] AS [Legal Description], 
+       ISNULL([PL].[PID], '') AS [PID], 
+       ISNULL([Lot], '') AS [Lot], 
+       ISNULL([Section], '') AS [Section], 
+       ISNULL([Block Number], '') AS [Block Number], 
+       ISNULL([Range], '') AS [Range], 
+       ISNULL([Plan Number], '') AS [Plan Number], 
+       ISNULL([Township Code], '') AS [Township Code], 
+       ISNULL([Subdivision], '') AS [Subdivision], 
+       ISNULL([PL].[Legal Text], '') AS [Legal Description], 
        [FO].[dimFolio_SK], 
        [FO].[SITUS Building/Unit Number] AS [Situs Unit No], 
        [FO].[SITUS Address Number Prefix], 
@@ -97,37 +98,28 @@
        [OAD].[Address Line 5] AS [Owner Address 5], 
        '???' AS [Extended-Legal]
 FROM [edw].[FactRollSummary] AS [FACT]
-     INNER JOIN [edw].[dimAssessmentGeography] AS [AG]
-     ON [FACT].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
-     AND AG.[Roll Category Code] = '1'
-     INNER JOIN [edw].[dimFolio] AS [FO]
-     ON [FO].[dimFolio_SK] = [FACT].[dimFolio_SK]
-     AND FO.[Folio Status Code] = '01'
-     INNER JOIN [edw].[dimManualClass] AS [MC]
-     ON [MC].[dimManualClass_SK] = [FACT].[dimManualClass_SK]
-     INNER JOIN [edw].[dimRegionalDistrict] AS [RD]
-     ON [RD].[dimRegionalDistrict_SK] = [FO].[dimRegionalDistrict_SK]
-     INNER JOIN [edw].[bridgeParcelFolio] AS [BR_PF]
-     ON [BR_PF].[dimFolio_SK] = [FO].[dimFolio_SK]
-     INNER JOIN [edw].[dimParcel] AS [PL]
-     ON [PL].[dimParcel_SK] = [BR_PF].[dimParcel_SK]
-     INNER JOIN [edw].[bridgeOwnerFolioAddress] AS [BR_FA]
-     ON [BR_FA].[dimFolio_SK] = [FO].[dimFolio_SK]
-     INNER JOIN [edw].[dimName] AS [ONA]
-     ON [ONA].[dimName_SK] = [BR_FA].[dimName_SK]
-     INNER JOIN [edw].[dimAddress] AS [OAD]
-     ON [OAD].[dimAddress_SK] = [BR_FA].[dimAddress_SK]
-     LEFT OUTER JOIN [edw].[dimFolioCharacteristicTbl] AS [FC]
-     ON [FC].[dimFolioCharacteristic_BK] = [FO].[Characteristic1_dimFolioCharacteristic_BK]
+     INNER JOIN [edw].[dimAssessmentGeography] AS [AG] ON [FACT].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
+                                                          AND AG.[Roll Category Code] = '1'
+     INNER JOIN [edw].[dimFolio] AS [FO] ON [FO].[dimFolio_SK] = [FACT].[dimFolio_SK]
+                                            AND FO.[Folio Status Code] = '01'
+     INNER JOIN [edw].[dimManualClass] AS [MC] ON [MC].[dimManualClass_SK] = [FACT].[dimManualClass_SK]
+     INNER JOIN [edw].[dimRegionalDistrict] AS [RD] ON [RD].[dimRegionalDistrict_SK] = [FO].[dimRegionalDistrict_SK]
+     INNER JOIN [edw].[bridgeParcelFolio] AS [BR_PF] ON [BR_PF].[dimFolio_SK] = [FO].[dimFolio_SK]
+     INNER JOIN [edw].[dimParcel] AS [PL] ON [PL].[dimParcel_SK] = [BR_PF].[dimParcel_SK]
+     INNER JOIN [edw].[bridgeOwnerFolioAddress] AS [BR_FA] ON [BR_FA].[dimFolio_SK] = [FO].[dimFolio_SK]
+     INNER JOIN [edw].[dimName] AS [ONA] ON [ONA].[dimName_SK] = [BR_FA].[dimName_SK]
+     INNER JOIN [edw].[dimAddress] AS [OAD] ON [OAD].[dimAddress_SK] = [BR_FA].[dimAddress_SK]
+     LEFT OUTER JOIN [edw].[dimFolioCharacteristicTbl] AS [FC] ON [FC].[dimFolioCharacteristic_BK] = [FO].[Characteristic1_dimFolioCharacteristic_BK]
 WHERE [FACT].[Roll Year] = @p_RY
       AND [AG].[Neighbourhood Code] IN (@p_NH)
+      AND [Roll Number] = '02101006'
 ORDER BY [FACT].[Roll Year], 
          [AG].[Area Code], 
          [AG].[Area], 
          [AG].[Jurisdiction Code], 
          [AG].[Jurisdiction], 
          [AG].[Neighbourhood Code], 
-         [AG].[Neighbourhood Desc]</CommandText>
+         [AG].[Neighbourhood Desc];</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>
@@ -321,6 +313,67 @@ ORDER BY [FACT].[Roll Year],
         </Field>
         <Field Name="Roll_Number_Formatted">
           <Value>=Format(CInt(Fields!Roll_Number.Value),"00-000-000")</Value>
+        </Field>
+        <Field Name="PID_Formatted">
+          <Value>=Format(CInt(Fields!PID.Value),"000-000-000")</Value>
+        </Field>
+        <Field Name="Lot_Formatted">
+          <Value>=IIf(IsNothing(Fields!Lot.Value),Space(0),"Lot" + Space(1) + Fields!Lot.Value + ", ")</Value>
+        </Field>
+        <Field Name="Plan_Formatted">
+          <Value>=IIf(
+IsNothing(Fields!Plan_Number.Value)
+,Space(0)
+,"Plan" + Space(1) + Fields!Plan_Number.Value + ", ")</Value>
+        </Field>
+        <Field Name="Section_Formatted">
+          <Value>=IIf(
+IsNothing(Fields!Section.Value)
+,Space(0)
+,"Section" + Space(1) + Fields!Section.Value + ", ")</Value>
+        </Field>
+        <Field Name="Block_Formatted">
+          <Value>=IIf(
+IsNothing(Fields!Block_Number.Value)
+,Space(0)
+,"Block" + Space(1) + Fields!Block_Number.Value + ", ")</Value>
+        </Field>
+        <Field Name="Range_Formatted">
+          <Value>=IIf(
+IsNothing(Fields!Range.Value)
+,Space(0)
+,"Range" + Space(1) + Fields!Range.Value + ", ")</Value>
+        </Field>
+        <Field Name="TownShip_Formatted">
+          <Value>=IIf(
+IsNothing(Fields!Township_Code.Value)
+,Space(0)
+,"Township Code" + Space(1) + Fields!Township_Code.Value + ", ")</Value>
+        </Field>
+        <Field Name="SubDiv_Formatted">
+          <Value>=IIf(
+IsNothing(Fields!Subdivision.Value)
+,Space(0)
+,"Subdivision" + Space(1) + Fields!Subdivision.Value + ", ")</Value>
+        </Field>
+        <Field Name="Land_Distr_Formatted">
+          <Value>=IIf(
+IsNothing(Fields!Jur_Name.Value)
+,Space(0)
+,Fields!Jur_Name.Value + Space(1) + " Land District, ")</Value>
+        </Field>
+        <Field Name="Legal_Desc_Formatted">
+          <Value>=IIf(
+IsNothing(Fields!Legal_Description.Value)
+,Space(0)
+,Space(1) + Fields!Legal_Description.Value + ", ")</Value>
+        </Field>
+        <Field Name="Legal_Description_Formatted">
+          <Value>=Fields!Lot_Formatted.Value
++ Fields!Plan_Formatted.Value
++ Fields!Section_Formatted.Value
++ Fields!Land_Distr_Formatted.Value
++ Fields!Legal_Desc_Formatted.Value</Value>
         </Field>
       </Fields>
     </DataSet>
@@ -534,6 +587,12 @@ ORDER BY [FACT].[Roll Year],
                 </TablixColumn>
                 <TablixColumn>
                   <Width>1.13542in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>2.96875in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -836,7 +895,76 @@ ORDER BY [FACT].[Roll Year],
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox3">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>PID</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox3</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <VerticalAlign>Bottom</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox8">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Legal Description</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox8</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <VerticalAlign>Bottom</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -1122,7 +1250,70 @@ ORDER BY [FACT].[Roll Year],
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="PID_FORMATTED">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!PID_Formatted.Value</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>PID_FORMATTED</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Legal_Description_Formatted">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Legal_Description_Formatted.Value</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Legal_Description_Formatted</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -1131,6 +1322,8 @@ ORDER BY [FACT].[Roll Year],
             </TablixBody>
             <TablixColumnHierarchy>
               <TablixMembers>
+                <TablixMember />
+                <TablixMember />
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
@@ -1159,7 +1352,7 @@ ORDER BY [FACT].[Roll Year],
             <FixedRowHeaders>true</FixedRowHeaders>
             <DataSetName>qryData</DataSetName>
             <Height>0.77083in</Height>
-            <Width>8.35583in</Width>
+            <Width>12.32459in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1253,7 +1446,7 @@ ORDER BY [FACT].[Roll Year],
       <DataType>String</DataType>
       <DefaultValue>
         <Values>
-          <Value>213101</Value>
+          <Value>234022</Value>
         </Values>
       </DefaultValue>
       <Prompt>Neighbourhood</Prompt>
