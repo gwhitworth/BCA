@@ -119,7 +119,7 @@ FROM [edw].[FactRollSummary] AS [FACT]
 WHERE [FACT].[Roll Year] = @p_RY
       AND [AG].[Neighbourhood Code] IN(@p_NH)
 --AND [ONA].[Company Name] like '%CROWN FEDERAL%'
-AND [Roll Number] = '02101041'
+--AND [Roll Number] = '02101041'
 --AND [OAD].[Address Type Code] &lt;&gt; 'C'
 ORDER BY [FACT].[Roll Year], 
          [AG].[Area Code], 
@@ -487,7 +487,7 @@ IIF(Trim(Fields!Owner_Street_Address_Formatted.Value) = ""
 
 ,Fields!Owner_CityProvPostal_Formatted.Value
 
-,Fields!Owner_Street_Address_Formatted.Value)
+,IIF(ISNothing(Fields!Owner_Address_1.Value),Fields!Owner_Street_Address_Formatted.Value,Fields!Owner_Address_1.Value))
 
 ,Fields!Owner_CityProvPostal_Formatted.Value)
 )</Value>
