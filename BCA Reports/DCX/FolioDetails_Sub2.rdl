@@ -49,6 +49,7 @@
           </QueryParameter>
         </QueryParameters>
         <CommandText>SELECT DISTINCT 
+TOP 500
        [FACT].[Roll Year], 
        [AG].[Area Code], 
        [AG].[Area] AS [Area Name], 
@@ -82,8 +83,8 @@
        [ONA].[Company Name] AS [Owner CompName], 
        [ONA].[First Name] AS [Owner FName], 
        [ONA].[Last Name] AS [Owner LName], 
-       [BR_FA].[Care Of], 
-       [OAD].[Attention], 
+       IIF([BR_FA].[Care Of] IS NOT NULL, 'C/O '+[BR_FA].[Care Of], NULL) AS [Care Of], 
+       IIF([OAD].[Attention] IS NOT NULL, 'ATTN '+[OAD].[Attention], NULL) AS [Attention], 
        [OAD].[dimAddress_SK], 
        [OAD].[Address Type Code], 
        ISNULL([OAD].[Address Unit], '') AS [Address Unit], 
@@ -92,6 +93,8 @@
        [OAD].[City Desc], 
        [OAD].[Province Desc], 
        [OAD].[Postal/Zip Code], 
+       [OAD].[Country], 
+	   [OAD].[Country Code],
        [OAD].[Address Line 1] AS [Owner Address 1], 
        [OAD].[Address Line 2] AS [Owner Address 2], 
        [OAD].[Address Line 3] AS [Owner Address 3], 
@@ -113,7 +116,8 @@ FROM [edw].[FactRollSummary] AS [FACT]
      LEFT OUTER JOIN [edw].[dimFolioCharacteristicTbl] AS [FC] ON [FC].[dimFolioCharacteristic_BK] = [FO].[Characteristic1_dimFolioCharacteristic_BK]
 WHERE [FACT].[Roll Year] = @p_RY
       AND [AG].[Neighbourhood Code] IN(@p_NH)
-     --AND [Roll Number] = '02101006'
+--AND [ONA].[Company Name] like '%CROWN FEDERAL%'
+--AND [Roll Number] = '02159047'
 ORDER BY [FACT].[Roll Year], 
          [AG].[Area Code], 
          [AG].[Area], 
@@ -292,6 +296,14 @@ ORDER BY [FACT].[Roll Year],
           <DataField>Postal/Zip Code</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Country">
+          <DataField>Country</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Country_Code">
+          <DataField>Country Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="Owner_Address_1">
           <DataField>Owner Address 1</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -417,30 +429,62 @@ IsNothing(Fields!SITUS_Street_Suffix__2.Value)
 +IIf(IsNothing(Fields!Province_Desc.Value),Space(0),Fields!Province_Desc.Value + Space(1))
 +IIf(IsNothing(Fields!Postal_Zip_Code.Value),Space(0),Fields!Postal_Zip_Code.Value)</Value>
         </Field>
+        <Field Name="IsCommonAddr">
+          <Value>=IIf(
+(Fields!IsCareOf.Value 
+or Fields!IsAttention.Value 
+or Fields!HasOwnerAddr1Value.Value)
+,false
+,true
+)</Value>
+        </Field>
+        <Field Name="IsCareOf">
+          <Value>=IIf(IsNothing(Fields!Care_Of.Value),false,true)</Value>
+        </Field>
+        <Field Name="IsAttention">
+          <Value>=IIf(IsNothing(Fields!Attention.Value),false,true)</Value>
+        </Field>
+        <Field Name="HasOwnerAddr1Value">
+          <Value>=IIf(IsNothing(Fields!Owner_Address_1.Value),false,true)</Value>
+        </Field>
+        <Field Name="IsOwnerCanadian">
+          <Value>=IIf(Fields!Country_Code.Value = "37",true,false)</Value>
+        </Field>
         <Field Name="Owner_Address_1_Formatted">
-          <Value>=IIf(IsNothing(Fields!Care_Of.Value)
+          <Value>=IIf(Fields!IsCommonAddr.Value
 ,Fields!Owner_Street_Address_Formatted.Value
-,"C/O" + Space(1) + Fields!Care_Of.Value)</Value>
+,IIf(Fields!IsCareOf.Value
+,Fields!Care_Of.Value
+,IIf(Fields!IsAttention.Value,
+Fields!Attention.Value,
+Space(0)))
+)</Value>
         </Field>
         <Field Name="Owner_Address_2_Formatted">
-          <Value>=IIf(IsNothing(Fields!Attention.Value)
+          <Value>=IIf(Fields!IsCommonAddr.Value
 ,Fields!Owner_CityProvPostal_Formatted.Value
-,"ATTN" + Space(1) + Fields!Attention.Value)</Value>
+,IIf(Fields!IsAttention.Value And (Fields!Owner_Address_1_Formatted.Value &lt;&gt; Fields!Attention.Value),
+Fields!Attention.Value,
+Fields!Owner_Street_Address_Formatted.Value
+))</Value>
         </Field>
         <Field Name="Owner_Address_3_Formatted">
-          <Value>=IIf(IsNothing(Fields!Owner_Address_1.Value)
-,Fields!Owner_Street_Address_Formatted.Value
-,Fields!Owner_Address_1.Value)</Value>
+          <Value>=IIf(Fields!IsCommonAddr.Value
+,Space(0)
+,Space(0)
+)</Value>
         </Field>
         <Field Name="Owner_Address_4_Formatted">
-          <Value>=IIf(IsNothing(Fields!Owner_Address_1.Value)
-,Fields!Owner_CityProvPostal_Formatted.Value
-,Fields!Owner_Street_Address_Formatted.Value)</Value>
+          <Value>=IIf(Fields!IsCommonAddr.Value
+,Space(0)
+,Space(0)
+)</Value>
         </Field>
         <Field Name="Owner_Address_5_Formatted">
-          <Value>=IIf(IsNothing(Fields!Owner_Address_1.Value)
+          <Value>=IIf(Fields!IsCommonAddr.Value
 ,Space(0)
-,Fields!Owner_CityProvPostal_Formatted.Value)</Value>
+,Space(0)
+)</Value>
         </Field>
       </Fields>
     </DataSet>
@@ -2423,7 +2467,7 @@ IsNothing(Fields!SITUS_Street_Suffix__2.Value)
             <FixedRowHeaders>true</FixedRowHeaders>
             <DataSetName>qryData</DataSetName>
             <Height>0.77083in</Height>
-            <Width>25.14751in</Width>
+            <Width>25.14752in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -2438,9 +2482,9 @@ IsNothing(Fields!SITUS_Street_Suffix__2.Value)
           </Border>
         </Style>
       </Body>
-      <Width>25.90792in</Width>
+      <Width>25.14752in</Width>
       <Page>
-        <PageWidth>17in</PageWidth>
+        <PageWidth>26in</PageWidth>
         <LeftMargin>0.1in</LeftMargin>
         <RightMargin>0.1in</RightMargin>
         <TopMargin>0.01in</TopMargin>
