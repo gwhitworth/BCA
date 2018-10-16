@@ -81,7 +81,8 @@ TOP 500
        --[BR_FA].[Party Type],
        '??Owner??' AS [Party Type], 
        [ONA].[Company Name] AS [Owner CompName], 
-       [ONA].[First Name] AS [Owner FName], 
+       [ONA].[First Name] AS [Owner FName],
+       [ONA].[Middle Name] AS [Owner MName], 
        [ONA].[Last Name] AS [Owner LName], 
        IIF([BR_FA].[Care Of] IS NOT NULL, 'C/O '+[BR_FA].[Care Of], NULL) AS [Care Of], 
        IIF([OAD].[Attention] IS NOT NULL, 'ATTN '+[OAD].[Attention], NULL) AS [Attention], 
@@ -93,7 +94,7 @@ TOP 500
        [OAD].[City Desc], 
        [OAD].[Province Desc], 
        [OAD].[Postal/Zip Code], 
-       [OAD].[Country], 
+       [CN].[Country Desc] AS [Country], 
 	   [OAD].[Country Code],
        [OAD].[Address Line 1] AS [Owner Address 1], 
        [OAD].[Address Line 2] AS [Owner Address 2], 
@@ -113,11 +114,13 @@ FROM [edw].[FactRollSummary] AS [FACT]
      INNER JOIN [edw].[bridgeOwnerFolioAddress] AS [BR_FA] ON [BR_FA].[dimFolio_SK] = [FO].[dimFolio_SK]
      INNER JOIN [edw].[dimName] AS [ONA] ON [ONA].[dimName_SK] = [BR_FA].[dimName_SK]
      INNER JOIN [edw].[dimAddress] AS [OAD] ON [OAD].[dimAddress_SK] = [BR_FA].[dimAddress_SK]
+	 INNER JOIN [edw].[dimCountry] AS [CN] ON [CN].[dimCountry_SK] =[OAD].[dimCountry_SK]  
      LEFT OUTER JOIN [edw].[dimFolioCharacteristicTbl] AS [FC] ON [FC].[dimFolioCharacteristic_BK] = [FO].[Characteristic1_dimFolioCharacteristic_BK]
 WHERE [FACT].[Roll Year] = @p_RY
       AND [AG].[Neighbourhood Code] IN(@p_NH)
 --AND [ONA].[Company Name] like '%CROWN FEDERAL%'
---AND [Roll Number] = '02159047'
+AND [Roll Number] = '02101041'
+--AND [OAD].[Address Type Code] &lt;&gt; 'C'
 ORDER BY [FACT].[Roll Year], 
          [AG].[Area Code], 
          [AG].[Area], 
@@ -250,6 +253,10 @@ ORDER BY [FACT].[Roll Year],
         </Field>
         <Field Name="Owner_FName">
           <DataField>Owner FName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Owner_MName">
+          <DataField>Owner MName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Owner_LName">
@@ -416,7 +423,10 @@ IsNothing(Fields!SITUS_Street_Suffix__2.Value)
         </Field>
         <Field Name="Owner_Name">
           <Value>=IIf(IsNothing(Fields!Owner_CompName.Value)
-,Fields!Owner_FName.Value + Space(1) + Fields!Owner_LName.Value
+,Fields!Owner_FName.Value 
++ Space(1)
++ IIf(IsNothing(Fields!Owner_MName.Value),Space(0),Fields!Owner_MName.Value + Space(1))
++ Fields!Owner_LName.Value
 ,Fields!Owner_CompName.Value)</Value>
         </Field>
         <Field Name="Owner_Street_Address_Formatted">
@@ -470,14 +480,30 @@ Fields!Owner_Street_Address_Formatted.Value
         </Field>
         <Field Name="Owner_Address_3_Formatted">
           <Value>=IIf(Fields!IsCommonAddr.Value
-,Space(0)
-,Space(0)
+,IIf(Fields!IsOwnerCanadian.Value,Fields!Owner_Address_1.Value,Fields!Country.Value)
+,IIf(Fields!IsCareOf.Value And Fields!IsAttention.Value,
+
+IIF(Trim(Fields!Owner_Street_Address_Formatted.Value) = ""
+
+,Fields!Owner_CityProvPostal_Formatted.Value
+
+,Fields!Owner_Street_Address_Formatted.Value)
+
+,Fields!Owner_CityProvPostal_Formatted.Value)
 )</Value>
         </Field>
         <Field Name="Owner_Address_4_Formatted">
           <Value>=IIf(Fields!IsCommonAddr.Value
 ,Space(0)
-,Space(0)
+,IIf(Fields!IsCareOf.Value And Fields!IsAttention.Value,
+
+IIF(Trim(Fields!Owner_Street_Address_Formatted.Value) &lt;&gt; ""
+
+,Fields!Owner_CityProvPostal_Formatted.Value
+
+,Space(0))
+
+,Space(0))
 )</Value>
         </Field>
         <Field Name="Owner_Address_5_Formatted">
