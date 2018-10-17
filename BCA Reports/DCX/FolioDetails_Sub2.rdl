@@ -44,9 +44,12 @@
           <QueryParameter Name="@p_RY">
             <Value>=Parameters!p_RY.Value</Value>
           </QueryParameter>
+          <QueryParameter Name="@p_NH">
+            <Value>=Parameters!p_NH.Value</Value>
+          </QueryParameter>
         </QueryParameters>
         <CommandText>SELECT
-TOP 50
+TOP 500
        [FACT].[Roll Year], 
        [AG].[Area Code], 
        [AG].[Area] AS [Area Name], 
@@ -114,13 +117,13 @@ FROM [edw].[FactRollSummary] AS [FACT]
 	 INNER JOIN [edw].[dimCountry] AS [CN] ON [CN].[dimCountry_BK] =[OAD].[dimCountry_BK]  
      LEFT OUTER JOIN [edw].[dimFolioCharacteristicTbl] AS [FC] ON [FC].[dimFolioCharacteristic_BK] = [FO].[Characteristic1_dimFolioCharacteristic_BK]
 WHERE [FACT].[Roll Year] = @p_RY
---      AND [AG].[Neighbourhood Code] IN(@p_NH)
+      AND [AG].[Neighbourhood Code] IN(@p_NH)
 --AND [ONA].[Company Name] like '%CROWN FEDERAL%'
 --AND [Roll Number] = '02101041'
 --AND [OAD].[Address Type Code] &lt;&gt; 'C'
 --AND [OAD].[Address Line 1] is not null
-AND [OAD].[Address Line 1] like '% DIV STR%'
-and [AG].[Jurisdiction Code] = '234'
+--AND [OAD].[Address Line 1] like '% DIV STR%'
+--and [AG].[Jurisdiction Code] = '234'
 ORDER BY [FACT].[Roll Year], 
          [AG].[Area Code], 
          [AG].[Area], 
