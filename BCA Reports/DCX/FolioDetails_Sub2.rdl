@@ -44,12 +44,9 @@
           <QueryParameter Name="@p_RY">
             <Value>=Parameters!p_RY.Value</Value>
           </QueryParameter>
-          <QueryParameter Name="@p_NH">
-            <Value>=Parameters!p_NH.Value</Value>
-          </QueryParameter>
         </QueryParameters>
-        <CommandText>SELECT DISTINCT 
-TOP 500
+        <CommandText>SELECT
+TOP 50
        [FACT].[Roll Year], 
        [AG].[Area Code], 
        [AG].[Area] AS [Area Name], 
@@ -67,7 +64,7 @@ TOP 500
        ISNULL([Township Code], '') AS [Township Code], 
        ISNULL([Subdivision], '') AS [Subdivision], 
        ISNULL([PL].[Legal Text], '') AS [Legal Description], 
-       [FO].[dimFolio_SK], 
+       [FO].[dimFolio_BK], 
        [FO].[SITUS Building/Unit Number] AS [Situs Unit No], 
        [FO].[SITUS Address Number Prefix], 
        [FO].[SITUS Street Number], 
@@ -81,12 +78,12 @@ TOP 500
        --[BR_FA].[Party Type],
        '??Owner??' AS [Party Type], 
        [ONA].[Company Name] AS [Owner CompName], 
-       [ONA].[First Name] AS [Owner FName],
-       [ONA].[Middle Name] AS [Owner MName], 
+       [ONA].[First Name] AS [Owner FName], 
+	   [ONA].[Middle Name] AS [Owner MName], 
        [ONA].[Last Name] AS [Owner LName], 
        IIF([BR_FA].[Care Of] IS NOT NULL, 'C/O '+[BR_FA].[Care Of], NULL) AS [Care Of], 
        IIF([OAD].[Attention] IS NOT NULL, 'ATTN '+[OAD].[Attention], NULL) AS [Attention], 
-       [OAD].[dimAddress_SK], 
+       [OAD].[dimAddress_BK], 
        [OAD].[Address Type Code], 
        ISNULL([OAD].[Address Unit], '') AS [Address Unit], 
        ISNULL([OAD].[Street Number], '') AS [Street Number], 
@@ -105,29 +102,33 @@ TOP 500
 FROM [edw].[FactRollSummary] AS [FACT]
      INNER JOIN [edw].[dimAssessmentGeography] AS [AG] ON [FACT].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
                                                           AND AG.[Roll Category Code] = '1'
-     INNER JOIN [edw].[dimFolio] AS [FO] ON [FO].[dimFolio_SK] = [FACT].[dimFolio_SK]
+     INNER JOIN [edw].[dimFolio] AS [FO] ON [FO].[dimFolio_BK] = [FACT].[dimFolio_BK]
                                             AND FO.[Folio Status Code] = '01'
-     INNER JOIN [edw].[dimManualClass] AS [MC] ON [MC].[dimManualClass_SK] = [FACT].[dimManualClass_SK]
-     INNER JOIN [edw].[dimRegionalDistrict] AS [RD] ON [RD].[dimRegionalDistrict_SK] = [FO].[dimRegionalDistrict_SK]
-     INNER JOIN [edw].[bridgeParcelFolio] AS [BR_PF] ON [BR_PF].[dimFolio_SK] = [FO].[dimFolio_SK]
-     INNER JOIN [edw].[dimParcel] AS [PL] ON [PL].[dimParcel_SK] = [BR_PF].[dimParcel_SK]
-     INNER JOIN [edw].[bridgeOwnerFolioAddress] AS [BR_FA] ON [BR_FA].[dimFolio_SK] = [FO].[dimFolio_SK]
-     INNER JOIN [edw].[dimName] AS [ONA] ON [ONA].[dimName_SK] = [BR_FA].[dimName_SK]
-     INNER JOIN [edw].[dimAddress] AS [OAD] ON [OAD].[dimAddress_SK] = [BR_FA].[dimAddress_SK]
-	 INNER JOIN [edw].[dimCountry] AS [CN] ON [CN].[dimCountry_SK] =[OAD].[dimCountry_SK]  
+     INNER JOIN [edw].[dimManualClass] AS [MC] ON [MC].[dimManualClass_BK] = [FACT].[dimManualClass_BK]
+     INNER JOIN [edw].[dimRegionalDistrict] AS [RD] ON [RD].[dimRegionalDistrict_BK] = [FO].[dimRegionalDistrict_BK]
+     INNER JOIN [edw].[bridgeParcelFolio] AS [BR_PF] ON [BR_PF].[dimFolio_BK] = [FO].[dimFolio_BK]
+     INNER JOIN [edw].[dimParcel] AS [PL] ON [PL].[dimParcel_BK] = [BR_PF].[dimParcel_BK]
+     INNER JOIN [edw].[bridgeOwnerFolioAddress] AS [BR_FA] ON [BR_FA].[dimFolio_BK] = [FO].[dimFolio_BK]
+     INNER JOIN [edw].[dimName] AS [ONA] ON [ONA].[dimName_BK] = [BR_FA].[dimName_BK]
+     INNER JOIN [edw].[dimAddress] AS [OAD] ON [OAD].[dimAddress_BK] = [BR_FA].[dimAddress_BK]
+	 INNER JOIN [edw].[dimCountry] AS [CN] ON [CN].[dimCountry_BK] =[OAD].[dimCountry_BK]  
      LEFT OUTER JOIN [edw].[dimFolioCharacteristicTbl] AS [FC] ON [FC].[dimFolioCharacteristic_BK] = [FO].[Characteristic1_dimFolioCharacteristic_BK]
 WHERE [FACT].[Roll Year] = @p_RY
-      AND [AG].[Neighbourhood Code] IN(@p_NH)
+--      AND [AG].[Neighbourhood Code] IN(@p_NH)
 --AND [ONA].[Company Name] like '%CROWN FEDERAL%'
 --AND [Roll Number] = '02101041'
 --AND [OAD].[Address Type Code] &lt;&gt; 'C'
+--AND [OAD].[Address Line 1] is not null
+AND [OAD].[Address Line 1] like '% DIV STR%'
+and [AG].[Jurisdiction Code] = '234'
 ORDER BY [FACT].[Roll Year], 
          [AG].[Area Code], 
          [AG].[Area], 
          [AG].[Jurisdiction Code], 
          [AG].[Jurisdiction], 
          [AG].[Neighbourhood Code], 
-         [AG].[Neighbourhood Desc];</CommandText>
+         [AG].[Neighbourhood Desc], 
+       [FO].[Roll Number];</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>
@@ -199,9 +200,9 @@ ORDER BY [FACT].[Roll Year],
           <DataField>Legal Description</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="dimFolio_SK">
-          <DataField>dimFolio_SK</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
+        <Field Name="dimFolio_BK">
+          <DataField>dimFolio_BK</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Situs_Unit_No">
           <DataField>Situs Unit No</DataField>
@@ -267,13 +268,13 @@ ORDER BY [FACT].[Roll Year],
           <DataField>Care Of</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="dimAddress_SK">
-          <DataField>dimAddress_SK</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
         <Field Name="Attention">
           <DataField>Attention</DataField>
           <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="dimAddress_BK">
+          <DataField>dimAddress_BK</DataField>
+          <rd:TypeName>System.Byte[]</rd:TypeName>
         </Field>
         <Field Name="Address_Type_Code">
           <DataField>Address Type Code</DataField>
@@ -339,7 +340,9 @@ ORDER BY [FACT].[Roll Year],
           <Value>=Format(CInt(Fields!Roll_Number.Value),"00-000-000")</Value>
         </Field>
         <Field Name="PID_Formatted">
-          <Value>=Format(CInt(Fields!PID.Value),"000-000-000")</Value>
+          <Value>=IIf(IsNothing(Fields!PID.Value)
+,Space(0)
+,Format(CInt(Fields!PID.Value),"000-000-000"))</Value>
         </Field>
         <Field Name="Lot_Formatted">
           <Value>=IIf(IsNothing(Fields!Lot.Value),Space(0),"Lot" + Space(1) + Fields!Lot.Value + ", ")</Value>
@@ -499,7 +502,9 @@ IIF(Trim(Fields!Owner_Street_Address_Formatted.Value) = ""
 
 IIF(Trim(Fields!Owner_Street_Address_Formatted.Value) &lt;&gt; ""
 
+,IIF(IsNothing(Fields!Owner_Address_1.Value)
 ,Fields!Owner_CityProvPostal_Formatted.Value
+,Fields!Owner_Street_Address_Formatted.Value)
 
 ,Space(0))
 
@@ -509,7 +514,9 @@ IIF(Trim(Fields!Owner_Street_Address_Formatted.Value) &lt;&gt; ""
         <Field Name="Owner_Address_5_Formatted">
           <Value>=IIf(Fields!IsCommonAddr.Value
 ,Space(0)
+,IIF(IsNothing(Fields!Owner_Address_1.Value)
 ,Space(0)
+,Fields!Owner_CityProvPostal_Formatted.Value)
 )</Value>
         </Field>
       </Fields>
@@ -2508,7 +2515,7 @@ IIF(Trim(Fields!Owner_Street_Address_Formatted.Value) &lt;&gt; ""
           </Border>
         </Style>
       </Body>
-      <Width>25.14752in</Width>
+      <Width>26.14752in</Width>
       <Page>
         <PageWidth>26in</PageWidth>
         <LeftMargin>0.1in</LeftMargin>
