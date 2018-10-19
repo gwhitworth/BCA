@@ -736,7 +736,7 @@ IIF(Trim(Fields!Owner_Street_Address_Formatted.Value) &lt;&gt; ""
                   <Width>0.98959in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.8125in</Width>
+                  <Width>0.89583in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>2.96875in</Width>
@@ -2503,7 +2503,7 @@ IIF(Trim(Fields!Owner_Street_Address_Formatted.Value) &lt;&gt; ""
             <FixedRowHeaders>true</FixedRowHeaders>
             <DataSetName>qryData</DataSetName>
             <Height>0.77083in</Height>
-            <Width>25.14752in</Width>
+            <Width>25.23085in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
