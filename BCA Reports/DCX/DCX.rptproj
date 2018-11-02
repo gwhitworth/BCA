@@ -60,8 +60,16 @@
       <Name>qryRY.rsd</Name>
       <FullPath>qryRY.rsd</FullPath>
     </ProjectItem>
+    <ProjectItem>
+      <Name>qryMTC.rsd</Name>
+      <FullPath>qryMTC.rsd</FullPath>
+    </ProjectItem>
   </DataSets>
   <Reports>
+    <ProjectItem>
+      <Name>Assessment_Roll_Main.rdl</Name>
+      <FullPath>Assessment_Roll_Main.rdl</FullPath>
+    </ProjectItem>
     <ProjectItem>
       <Name>Detail Report (cascading prompts) Template.rdl</Name>
       <FullPath>Detail Report (cascading prompts) Template.rdl</FullPath>
@@ -85,6 +93,10 @@
     <ProjectItem>
       <Name>FolioDetails_Sub2.rdl</Name>
       <FullPath>FolioDetails_Sub2.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>FolioDetails_Sub3.rdl</Name>
+      <FullPath>FolioDetails_Sub3.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>Info Page 1_Main.rdl</Name>
@@ -291,8 +303,12 @@
       <FullPath>Template.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>FolioDetails_Sub3.rdl</Name>
-      <FullPath>FolioDetails_Sub3.rdl</FullPath>
+      <Name>RollTotalMinorTax_Main.rdl</Name>
+      <FullPath>RollTotalMinorTax_Main.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RollTotalMinorTax_Sub1.rdl</Name>
+      <FullPath>RollTotalMinorTax_Sub1.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>

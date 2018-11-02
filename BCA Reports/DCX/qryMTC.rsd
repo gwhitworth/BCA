@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <Description />
+  <DataSet Name="qryMTC">
+    <Query>
+      <DataSourceReference>EDW</DataSourceReference>
+      <CommandText>SELECT[dimMinorTaxCategory_SK]
+      ,[dimMinorTaxCategory_BK]
+      ,[Project Number Prefix]
+      ,[Minor Tax Category Code]
+      ,[Minor Tax Category Desc]
+      ,[Minor Tax Category]
+      ,[dimDataSource_SK]
+      ,[RowEffectiveDtm]
+      ,[RowCurrentYN]
+      ,[RowCreatedDtm]
+      ,[RowExpiryDtm]
+      ,[SSISExecutionId]
+      ,[RowUpdatedDtm]
+      ,[CDC_Operation]
+      ,[RowSortOrder]
+  FROM [EDW].[dbo].[dimMinorTaxCategoryTbl]
+  WHERE [dimMinorTaxCategory_SK] &gt; 0
+  ORDER BY [Minor Tax Category Code]</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="dimMinorTaxCategory_SK">
+        <DataField>dimMinorTaxCategory_SK</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+      <Field Name="dimMinorTaxCategory_BK">
+        <DataField>dimMinorTaxCategory_BK</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Project_Number_Prefix">
+        <DataField>Project Number Prefix</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Minor_Tax_Category_Code">
+        <DataField>Minor Tax Category Code</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Minor_Tax_Category_Desc">
+        <DataField>Minor Tax Category Desc</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Minor_Tax_Category">
+        <DataField>Minor Tax Category</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="dimDataSource_SK">
+        <DataField>dimDataSource_SK</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+      <Field Name="RowEffectiveDtm">
+        <DataField>RowEffectiveDtm</DataField>
+        <rd:TypeName>System.DateTime</rd:TypeName>
+      </Field>
+      <Field Name="RowCurrentYN">
+        <DataField>RowCurrentYN</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="RowCreatedDtm">
+        <DataField>RowCreatedDtm</DataField>
+        <rd:TypeName>System.DateTime</rd:TypeName>
+      </Field>
+      <Field Name="RowExpiryDtm">
+        <DataField>RowExpiryDtm</DataField>
+        <rd:TypeName>System.DateTime</rd:TypeName>
+      </Field>
+      <Field Name="SSISExecutionId">
+        <DataField>SSISExecutionId</DataField>
+        <rd:TypeName>System.Int64</rd:TypeName>
+      </Field>
+      <Field Name="RowUpdatedDtm">
+        <DataField>RowUpdatedDtm</DataField>
+        <rd:TypeName>System.DateTime</rd:TypeName>
+      </Field>
+      <Field Name="CDC_Operation">
+        <DataField>CDC_Operation</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+      <Field Name="RowSortOrder">
+        <DataField>RowSortOrder</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>
