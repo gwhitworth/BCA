@@ -57,69 +57,52 @@
        [TC].[Jurisdiction Code] AS [Jur Code], 
        REPLACE(REPLACE([TC].[Jurisdiction], [TC].[Jurisdiction Code]+' - ', ''), '('+[TC].[Jurisdiction Code]+')', '') AS [Jurisdiction], 
        [TC].[BCA Code] AS [Defined Area Code], 
-       [TC].[Minor Tax Code] AS [Defined Area], 
+       [TC].[Minor Tax Desc] AS [Defined Area], 
        [TC].[Tax Base Code] AS [Tax Base], 
        [PC].[Property Class Code] AS [PC Code], 
        REPLACE([PC].[Property Class], [PC].[Property Class Code]+' - ', '') AS [Property Class], 
        IIF([PC].[Property Sub Class Code] = '0202', '0201', ISNULL([PC].[Property Sub Class Code], [PC].[Property Class Code])) AS [PSC Code], 
        IIF([PC].[Property Sub Class Code] = '0202', 'Utilities', ISNULL([PC].[Property Sub Class Desc], [PC].[Property Class Desc])) AS [Property Subclass], 
-       --ISNULL(SUM([Occur Count]), 0) AS [Occurrence], 
-	   0 AS [Occurrence], 
-       SUM([FA].[Actual Land Value]) AS [Actual - Land], 
+	   COUNT([OC].[Property Class Occurrence]) AS [Folio Count], 
+	   
+	   SUM([OC].[Property Class Occurrence]) AS [Occurrence Count], 
+	   SUM([FA].[Actual Land Value]) AS [Actual - Land], 
        SUM([FA].[Actual Building Value]) AS [Actual - Impr], 
+	   SUM([OC].[Property Class Occurrence]) AS [General Occurrences], 
        SUM([FA].[Net General Land Value]) AS [General Net - Land], 
        SUM([FA].[Net General Building Value]) AS [General Net - Impr], 
+	   SUM([OC].[Property Class Occurrence]) AS [School Occurrences], 
        SUM([FA].[Net School Land Value]) AS [School Net - Land], 
        SUM([FA].[Net School Building Value]) AS [School Net - Impr], 
+	   SUM([OC].[Property Class Occurrence]) AS [Hospital Occurrences], 
        SUM([FA].[Net Other Land Value]) AS [Hospital Net - Land], 
        SUM([FA].[Net Other Building Value]) AS [Hospital Net - Impr]
 FROM [edw].[FactAllAssessedAmounts] AS [FA]
      INNER JOIN [edw].[dimPropertyClass] AS [PC] ON [FA].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
      INNER JOIN [edw].[dimAssessmentGeography] AS [AG] ON [FA].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
-                                                          AND [AG].[Roll Category Code] = '1'
+                                                          --AND [AG].[Roll Category Code] = '1'
      INNER JOIN [edw].[bridgeFolioMinorTax] AS [BTC] ON [FA].[dimFolio_SK] = [BTC].[dimFolio_SK]
-                                                           AND [FA].[Roll Year] = [BTC].[Roll Year]
+                 --                                          AND [FA].[Roll Year] = [BTC].[Roll Year]
 														   AND [AG].dimJurisdiction_SK = [BTC].dimJurisdiction_SK
      INNER JOIN [edw].[dimMinorTaxCode] AS [TC] ON [BTC].[dimMinorTaxCode_SK] = [TC].[dimMinorTaxCode_SK]
-                                                   AND [BTC].[Roll Year] = [TC].[Roll Year]
---     LEFT OUTER JOIN
---(
---    SELECT [FAV].[dimFolio_SK], 
---           [FAV].[Property Class Code], 
---           COUNT(*) - 1 AS [Occur Count]
---    FROM [EDW].[edw].[FactAllAssessedAmounts] AS [FAV]
---         INNER JOIN [edw].[dimPropertyClass] AS [PC] ON [FAV].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
---         INNER JOIN [edw].[dimAssessmentGeography] AS [AG] ON [FAV].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
---                                                              AND [AG].[Roll Category Code] = '1'
---         INNER JOIN [edw].[bridgeFolioMinorTax] AS [BTC] ON [FAV].[dimFolio_SK] = [BTC].[dimFolio_SK]
---                                                               AND [FAV].[Roll Year] = [BTC].[Roll Year]
---															   AND [AG].dimJurisdiction_SK = [BTC].dimJurisdiction_SK
---         INNER JOIN [edw].[dimMinorTaxCode] AS [TC] ON [BTC].[dimMinorTaxCategory_SK] = [TC].[dimMinorTaxCategory_SK]
---                                                       AND [BTC].[Roll Year] = [TC].[Roll Year]
---    WHERE [FAV].[Roll Year] = @p_RY
---          AND [Assessment Code] = '02'
---          AND [TC].[Minor Tax Code] IN
---    (
---        SELECT [Minor Tax Code]
---        FROM [EDW].[dbo].[dimMinorTaxCodeTbl]
---        WHERE [Roll Year] = @p_RY
---              AND [Minor Tax Desc] = @p_MT
---    )
---          AND REPLACE([AG].[Area], [AG].[Area Code], '') LIKE '%'+REPLACE([TC].[Regional District], [TC].[Regional District Code], '')+'%'
---    GROUP BY [FAV].[dimFolio_SK], 
---             [FAV].[Property Class Code]
---    HAVING COUNT(*) &gt; 1
---) AS [OCCUR] ON [OCCUR].[dimFolio_SK] = [BTC].[dimFolio_SK]
+                	                                   --AND [BTC].[Roll Year] = [TC].[Roll Year]
+
+	INNER JOIN [edw].[FactPropertyClassOccurrenceCount] AS [OC] ON [FA].[dimFolio_SK] = [OC].[dimFolio_SK]
+																   --AND [OC].[Assessment Code] ='02'
+	INNER JOIN [edw].[dimFolio] AS [FO] ON [FO].[dimFolio_SK] = [OC].[dimFolio_SK] AND [FO].[Folio Status Code] = '01'
+	
+	
+	--INNER JOIN [edw].[bridgeJurisdictionRegionalHospitalDistrict] AS [BRH] ON [BTC].dimJurisdiction_SK = [BRH].dimJurisdiction_SK
+
 WHERE [FA].[Roll Year] = @p_RY
-	  AND [FA].[Assessment Code] ='01'
+	  AND [FA].[Cycle Number] &lt;= (SELECT Max([Cycle Number]) FROM edw.dimRollCycle WHERE [Roll Year] = @p_RY )
       AND [TC].[Minor Tax Code] IN
 (
     SELECT [Minor Tax Code]
     FROM [EDW].[dbo].[dimMinorTaxCodeTbl]
     WHERE [Roll Year] = @p_RY
-          AND [Minor Tax Desc] = @p_MT
+          AND [Minor Tax Desc] IN (@p_MT)
 )
-      AND REPLACE([AG].[Area], [AG].[Area Code], '') LIKE '%'+REPLACE([TC].[Regional District], [TC].[Regional District Code], '')+'%'
 GROUP BY [FA].[Roll Year], 
          [TC].[Regional District Code], 
          REPLACE([TC].[Regional District], [TC].[Regional District Code]+' - ', ''), 
@@ -129,7 +112,7 @@ GROUP BY [FA].[Roll Year],
          [TC].[Jurisdiction Code], 
          REPLACE(REPLACE([TC].[Jurisdiction], [TC].[Jurisdiction Code]+' - ', ''), '('+[TC].[Jurisdiction Code]+')', ''), 
          [TC].[BCA Code], 
-         [TC].[Minor Tax Code], 
+         [TC].[Minor Tax Desc], 
          [TC].[Tax Base Code], 
          [PC].[Property Class Code], 
          REPLACE([PC].[Property Class], [PC].[Property Class Code]+' - ', ''), 
@@ -140,7 +123,7 @@ ORDER BY [FA].[Roll Year],
          [AG].[Area Code], 
          [TC].[Jurisdiction Code], 
          [TC].[BCA Code], 
-         [TC].[Minor Tax Code], 
+         [TC].[Minor Tax Desc], 
          [TC].[Tax Base Code], 
          [PC].[Property Class Code], 
          [PSC Code];</CommandText>
@@ -207,8 +190,12 @@ ORDER BY [FA].[Roll Year],
           <DataField>Property Subclass</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Occurrence">
-          <DataField>Occurrence</DataField>
+        <Field Name="Folio_Count">
+          <DataField>Folio Count</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Occurrence_Count">
+          <DataField>Occurrence Count</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="Actual___Land">
@@ -218,6 +205,10 @@ ORDER BY [FA].[Roll Year],
         <Field Name="Actual___Impr">
           <DataField>Actual - Impr</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="General_Occurrences">
+          <DataField>General Occurrences</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="General_Net___Land">
           <DataField>General Net - Land</DataField>
@@ -231,6 +222,10 @@ ORDER BY [FA].[Roll Year],
           <DataField>School Net - Land</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
+        <Field Name="School_Occurrences">
+          <DataField>School Occurrences</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
         <Field Name="School_Net___Impr">
           <DataField>School Net - Impr</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
@@ -243,17 +238,49 @@ ORDER BY [FA].[Roll Year],
           <DataField>Hospital Net - Impr</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
+        <Field Name="Hospital_Occurrences">
+          <DataField>Hospital Occurrences</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Actual_Total">
+          <Value>=Fields!Actual___Land.Value+Fields!Actual___Impr.Value</Value>
+        </Field>
+        <Field Name="General_Net_Total">
+          <Value>=Fields!General_Net___Land.Value+Fields!General_Net___Impr.Value</Value>
+        </Field>
+        <Field Name="School_Net_Total">
+          <Value>=Fields!School_Net___Land.Value+Fields!School_Net___Impr.Value</Value>
+        </Field>
+        <Field Name="Hospital_Net_Total">
+          <Value>=Fields!Hospital_Net___Land.Value+Fields!Hospital_Net___Impr.Value</Value>
+        </Field>
       </Fields>
     </DataSet>
     <DataSet Name="qryRD">
-      <SharedDataSet>
-        <SharedDataSetReference>qryRD</SharedDataSetReference>
+      <Query>
+        <DataSourceName>EDW</DataSourceName>
         <QueryParameters>
           <QueryParameter Name="@p_RY">
             <Value>=Parameters!p_RY.Value</Value>
           </QueryParameter>
+          <QueryParameter Name="@p_MTC">
+            <Value>=Parameters!p_MTC.Value</Value>
+          </QueryParameter>
         </QueryParameters>
-      </SharedDataSet>
+        <CommandText>SELECT DISTINCT [RD].[dimRegionalDistrict_SK], 
+       [RD].[dimRegionalDistrict_BK], 
+       [RD].[dimRollYear_SK], 
+       [RD].[Roll Year], 
+       [RD].[Regional District], 
+       [RD].[Regional District Code], 
+       [RD].[Regional District Desc], 
+       IIF([RD].[Regional District Code] = 'XX', 999, [RD].[RowSortOrder]) AS [RowSortOrder]
+FROM [edw].[dimRegionalDistrict] AS [RD]
+     INNER JOIN [edw].[dimMinorTaxCode] AS [MT]
+     ON [RD].[dimRegionalDistrict_SK] = [MT].[dimRegionalDistrict_SK]
+WHERE([RD].[Roll Year] = @p_RY)
+     AND [MT].[Minor Tax Category Code] = @p_MTC;</CommandText>
+      </Query>
       <Fields>
         <Field Name="dimRegionalDistrict_SK">
           <DataField>dimRegionalDistrict_SK</DataField>
@@ -268,19 +295,19 @@ ORDER BY [FA].[Roll Year],
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="Roll_Year">
-          <DataField>Roll_Year</DataField>
+          <DataField>Roll Year</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="Regional_District">
-          <DataField>Regional_District</DataField>
+          <DataField>Regional District</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Regional_District_Code">
-          <DataField>Regional_District_Code</DataField>
+          <DataField>Regional District Code</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Regional_District_Desc">
-          <DataField>Regional_District_Desc</DataField>
+          <DataField>Regional District Desc</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="RowSortOrder">
@@ -376,7 +403,7 @@ ORDER BY [FA].[Roll Year],
        [BCA Code]+' - '+[Minor Tax Desc] AS [Minor Tax Label], 
        [Minor Tax Desc], 
        [RowSortOrder]
-FROM [EDW].[dbo].[dimMinorTaxCodeTbl]
+FROM [EDW].[edw].[dimMinorTaxCode]
 WHERE [Roll Year] = @p_RY
       AND [Minor Tax Category Code] = @p_MTC
       AND [Regional District Code] = @p_RD
@@ -447,7 +474,10 @@ ORDER BY [Minor Tax Label];</CommandText>
                   <Width>0.65625in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.20834in</Width>
+                  <Width>2.01042in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.22917in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>1in</Width>
@@ -456,19 +486,40 @@ ORDER BY [Minor Tax Label];</CommandText>
                   <Width>1in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.15625in</Width>
+                  <Width>1in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.125in</Width>
+                  <Width>1.375in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.10417in</Width>
+                  <Width>1.41667in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.19792in</Width>
+                  <Width>1.27083in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.16667in</Width>
+                  <Width>1.29167in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.38542in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.22917in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.20833in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.38542in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.32292in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.34375in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.34375in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -711,7 +762,16 @@ ORDER BY [Minor Tax Label];</CommandText>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Defined Area Code</Value>
+                                  <Value>=Switch
+(Parameters!p_MTC.Value = "DE", "Defined Area Code"
+,Parameters!p_MTC.Value = "GS", "General Service Code"
+,Parameters!p_MTC.Value = "ID", "Improvement District Code"
+,Parameters!p_MTC.Value = "IT", "Islands Trust Code"
+,Parameters!p_MTC.Value = "LA", "Local Area Code"
+,Parameters!p_MTC.Value = "SA", "Service Area Code"
+,Parameters!p_MTC.Value = "SM", "Specified Municipal Code"
+,Parameters!p_MTC.Value = "SR", "Specified Regional Code"
+)</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                   </Style>
@@ -744,7 +804,16 @@ ORDER BY [Minor Tax Label];</CommandText>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Defined Area</Value>
+                                  <Value>=Switch
+(Parameters!p_MTC.Value = "DE", "Defined Area"
+,Parameters!p_MTC.Value = "GS", "General Service"
+,Parameters!p_MTC.Value = "ID", "Improvement District"
+,Parameters!p_MTC.Value = "IT", "Islands Trust"
+,Parameters!p_MTC.Value = "LA", "Local Area"
+,Parameters!p_MTC.Value = "SA", "Service Area"
+,Parameters!p_MTC.Value = "SM", "Specified Municipal"
+,Parameters!p_MTC.Value = "SR", "Specified Regional"
+)</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                   </Style>
@@ -869,6 +938,41 @@ ORDER BY [Minor Tax Label];</CommandText>
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
+                        <Textbox Name="Textbox9">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Occurrence Count</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox9</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
                         <Textbox Name="Textbox45">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
@@ -882,7 +986,9 @@ ORDER BY [Minor Tax Label];</CommandText>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox45</rd:DefaultName>
@@ -915,10 +1021,82 @@ ORDER BY [Minor Tax Label];</CommandText>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox47</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox11">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Actual - Total</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox11</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox3">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>General Occurrences</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox3</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -942,13 +1120,15 @@ ORDER BY [Minor Tax Label];</CommandText>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>General Net Land</Value>
+                                  <Value>General Net -  Land</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox49</rd:DefaultName>
@@ -975,16 +1155,88 @@ ORDER BY [Minor Tax Label];</CommandText>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>General Net Impr</Value>
+                                  <Value>General Net -  Impr</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox51</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox13">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>General Net  - Total</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox13</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox5">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>School Occurrences</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox5</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -1008,16 +1260,88 @@ ORDER BY [Minor Tax Label];</CommandText>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>School Net Land</Value>
+                                  <Value>School Net -  Land</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox53</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox15">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>School Net - Total</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox15</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox7">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Hospital Occurrences</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox7</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -1041,13 +1365,15 @@ ORDER BY [Minor Tax Label];</CommandText>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Hospital Net Land</Value>
+                                  <Value>Hospital Net -  Land</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox55</rd:DefaultName>
@@ -1074,16 +1400,53 @@ ORDER BY [Minor Tax Label];</CommandText>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Hospital Net Impr</Value>
+                                  <Value>Hospital Net - Impr</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox57</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox17">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Hospital Net -  Total</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox17</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -1485,6 +1848,41 @@ ORDER BY [Minor Tax Label];</CommandText>
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
+                        <Textbox Name="Occurrence_Count">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Occurrence_Count.Value</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <Format>#,0</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Occurrence_Count</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
                         <Textbox Name="Actual___Land">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
@@ -1499,7 +1897,9 @@ ORDER BY [Minor Tax Label];</CommandText>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Actual___Land</rd:DefaultName>
@@ -1532,10 +1932,82 @@ ORDER BY [Minor Tax Label];</CommandText>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Actual___Impr</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Actual_Total">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Actual_Total.Value</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <Format>#,0</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Actual_Total</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="General_Occurrences">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!General_Occurrences.Value</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <Format>#,0</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>General_Occurrences</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -1565,7 +2037,9 @@ ORDER BY [Minor Tax Label];</CommandText>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>General_Net___Land</rd:DefaultName>
@@ -1598,10 +2072,82 @@ ORDER BY [Minor Tax Label];</CommandText>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>General_Net___Impr</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="General_Net_Total">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!General_Net_Total.Value</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <Format>#,0</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>General_Net_Total</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="School_Occurrences">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!School_Occurrences.Value</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <Format>#,0</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>School_Occurrences</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -1631,10 +2177,82 @@ ORDER BY [Minor Tax Label];</CommandText>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>School_Net___Land</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="School_Net_Total">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!School_Net_Total.Value</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <Format>#,0</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>School_Net_Total</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Hospital_Occurrences">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Hospital_Occurrences.Value</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <Format>#,0</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Hospital_Occurrences</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -1664,7 +2282,9 @@ ORDER BY [Minor Tax Label];</CommandText>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Hospital_Net___Land</rd:DefaultName>
@@ -1697,10 +2317,47 @@ ORDER BY [Minor Tax Label];</CommandText>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Hospital_Net___Impr</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Hospital_Net_Total">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Hospital_Net_Total.Value</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <Format>#,0</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Hospital_Net_Total</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -1739,6 +2396,14 @@ ORDER BY [Minor Tax Label];</CommandText>
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
               </TablixMembers>
             </TablixColumnHierarchy>
             <TablixRowHierarchy>
@@ -1753,7 +2418,7 @@ ORDER BY [Minor Tax Label];</CommandText>
             </TablixRowHierarchy>
             <DataSetName>qryData</DataSetName>
             <Height>0.5in</Height>
-            <Width>21.18752in</Width>
+            <Width>33.04169in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1768,9 +2433,9 @@ ORDER BY [Minor Tax Label];</CommandText>
           </Border>
         </Style>
       </Body>
-      <Width>21.33209in</Width>
+      <Width>33.04169in</Width>
       <Page>
-        <PageWidth>25in</PageWidth>
+        <PageWidth>30in</PageWidth>
         <LeftMargin>0.1in</LeftMargin>
         <RightMargin>0.1in</RightMargin>
         <TopMargin>0.01in</TopMargin>
@@ -1839,6 +2504,7 @@ ORDER BY [Minor Tax Label];</CommandText>
           <LabelField>Minor_Tax_Label</LabelField>
         </DataSetReference>
       </ValidValues>
+      <MultiValue>true</MultiValue>
     </ReportParameter>
   </ReportParameters>
   <ReportParametersLayout>

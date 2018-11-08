@@ -503,13 +503,13 @@ ORDER BY [Area Code],
        [AG].dimJurisdiction_SK, 
        [AG].[Jurisdiction Code]
 FROM [EDW].[edw].[dimFolio] AS [FO]
-     INNER JOIN [edw].[dimSchoolDistrict] AS [SD] ON [SD].[School  District Code] = [FO].[School  District Code]
+     INNER JOIN [edw].[dimSchoolDistrict] AS [SD] ON [SD].[School District Code] = [FO].[School District Code]
                                                      AND [SD].[Roll Year] = [FO].[Roll Year]
      INNER JOIN [edw].[dimAssessmentGeography] AS [AG] ON [FO].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
                                                           AND [AG].[Roll Category Code] = '1'
                                                           AND [AG].[Roll Year] = [FO].[Roll Year]
 WHERE [FO].[Roll Year] = @p_RY
-      AND [FO].[School  District Code] IN(@p_SD)
+      AND [FO].[School District Code] IN(@p_SD)
 ORDER BY [AG].[Jurisdiction Code];</CommandText>
       </Query>
       <Fields>
@@ -544,14 +544,14 @@ ORDER BY [AG].[Jurisdiction Code];</CommandText>
                [dimSchoolDistrict_BK], 
                [Roll Year], 
                IIF([School District] = 'Unknown', 'Not Applicable', [School District]) AS [School District], 
-               [School  District Code], 
+               [School District Code], 
                [School District Desc], 
                [RowSortOrder]
         FROM [EDW].[edw].[dimSchoolDistrict]
         WHERE [dimRollYear_SK] = @p_RY
 
         ORDER BY [RowSortOrder] DESC, 
-                 [School  District Code];
+                 [School District Code];
     END;
     ELSE
     BEGIN
@@ -559,7 +559,7 @@ ORDER BY [AG].[Jurisdiction Code];</CommandText>
               'Not Applicable' AS [dimSchoolDistrict_BK], 
               @p_RY [Roll Year], 
               'Not Applicable' AS [School District], 
-              'NA' AS [School  District Code], 
+              'NA' AS [School District Code], 
               'Not Applicable' AS [School District Desc], 
               -999 AS [RowSortOrder];
     END</CommandText>
@@ -581,12 +581,196 @@ ORDER BY [AG].[Jurisdiction Code];</CommandText>
           <DataField>School District</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="School__District_Code">
-          <DataField>School  District Code</DataField>
+        <Field Name="School_District_Code">
+          <DataField>School District Code</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="School_District_Desc">
           <DataField>School District Desc</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="RowSortOrder">
+          <DataField>RowSortOrder</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="qryMTC">
+      <Query>
+        <DataSourceName>EDW</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@p_BY">
+            <Value>=Parameters!p_BY.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>IF @p_BY = 'MT'
+    BEGIN
+        SELECT [dimMinorTaxCategory_SK], 
+               [dimMinorTaxCategory_BK], 
+               [Minor Tax Category Code], 
+               [Minor Tax Category Desc], 
+               [Minor Tax Category], 
+               [RowSortOrder]
+        FROM [EDW].[edw].[dimMinorTaxCategory]
+        WHERE [dimMinorTaxCategory_SK] &gt; 0
+        ORDER BY [RowSortOrder], 
+                 [Minor Tax Category Code];
+    END;
+    ELSE
+    BEGIN
+        SELECT
+               -1 AS [dimMinorTaxCategory_SK], 
+               '-1' AS [dimMinorTaxCategory_BK], 
+               'Not Applicable' AS [Minor Tax Category], 
+               'NA' AS [Minor Tax Category Code], 
+               'Not Applicable' AS [Minor Tax Category Desc], 
+               -1 AS [RowSortOrder];
+    END;</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="dimMinorTaxCategory_SK">
+          <DataField>dimMinorTaxCategory_SK</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="dimMinorTaxCategory_BK">
+          <DataField>dimMinorTaxCategory_BK</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Minor_Tax_Category_Code">
+          <DataField>Minor Tax Category Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Minor_Tax_Category_Desc">
+          <DataField>Minor Tax Category Desc</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Minor_Tax_Category">
+          <DataField>Minor Tax Category</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="RowSortOrder">
+          <DataField>RowSortOrder</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="qryMTRD">
+      <Query>
+        <DataSourceName>EDW</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@p_BY">
+            <Value>=Parameters!p_BY.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@p_RY">
+            <Value>=Parameters!p_RY.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@p_MTC">
+            <Value>=Parameters!p_MTC.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>IF @p_BY = 'MT'
+    BEGIN
+        SELECT DISTINCT 
+               [RD].[dimRegionalDistrict_SK], 
+               [RD].[dimRegionalDistrict_BK], 
+               [RD].[Regional District], 
+               [RD].[Regional District Code], 
+               [RD].[Regional District Desc], 
+               [RD].[RowSortOrder]
+        FROM [edw].[dimRegionalDistrict] AS [RD]
+             INNER JOIN [edw].[dimMinorTaxCode] AS [MT]
+             ON [RD].[dimRegionalDistrict_SK] = [MT].[dimRegionalDistrict_SK]
+        WHERE([RD].[Roll Year] = @p_RY)
+             AND [MT].[Minor Tax Category Code] = @p_MTC
+AND [RD].[Regional District Code] &lt; '80'
+	ORDER BY [RD].[Regional District Code]
+    END;
+    ELSE
+    BEGIN
+        SELECT-1 AS [dimRegionalDistrict_SK], 
+              'Not Applicable' AS [dimRegionalDistrict_BK], 
+              'Not Applicable' AS [Regional District], 
+              'NA' AS [Regional District Code], 
+              'Not Applicable' AS [Regional District Desc], 
+              -1 AS [RowSortOrder];
+    END;</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="dimRegionalDistrict_SK">
+          <DataField>dimRegionalDistrict_SK</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="dimRegionalDistrict_BK">
+          <DataField>dimRegionalDistrict_BK</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Regional_District">
+          <DataField>Regional District</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Regional_District_Code">
+          <DataField>Regional District Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Regional_District_Desc">
+          <DataField>Regional District Desc</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="RowSortOrder">
+          <DataField>RowSortOrder</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="qryMT">
+      <Query>
+        <DataSourceName>EDW</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@p_BY">
+            <Value>=Parameters!p_BY.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@p_RY">
+            <Value>=Parameters!p_RY.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@p_MTC">
+            <Value>=Parameters!p_MTC.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@p_MTRD">
+            <Value>=Parameters!p_MTRD.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>IF @p_BY = 'MT'
+    BEGIN
+        SELECT DISTINCT 
+               [Regional District Code], 
+               [BCA Code]+' - '+[Minor Tax Desc] AS [Minor Tax Label], 
+               [Minor Tax Desc], 
+               [RowSortOrder]
+        FROM [EDW].[edw].[dimMinorTaxCode]
+        WHERE [Roll Year] = @p_RY
+              AND [Minor Tax Category Code] = @p_MTC
+              AND [Regional District Code] = @p_MTRD
+        ORDER BY [Minor Tax Label];
+    END;
+    ELSE
+    BEGIN
+        SELECT 'NA' AS [Regional District Code], 
+               'Not Applicable' AS [Minor Tax Label], 
+               'Not Applicable' AS [Minor Tax Desc], 
+               -1 AS [RowSortOrder];
+    END;</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="Regional_District_Code">
+          <DataField>Regional District Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Minor_Tax_Label">
+          <DataField>Minor Tax Label</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Minor_Tax_Desc">
+          <DataField>Minor Tax Desc</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="RowSortOrder">
@@ -776,6 +960,7 @@ ORDER BY [AG].[Jurisdiction Code];</CommandText>
 OR Parameters!p_BY.Value = "AM" 
 OR Parameters!p_BY.Value = "SD"
 OR Parameters!p_BY.Value = "NA"
+OR Parameters!p_BY.Value = "MT"
 , True
 , IIf(Parameters!p_RD.Count = 1 AND 
 (StrComp(Join(Parameters!p_RD.Value,","), "PROV") = 1)
@@ -947,8 +1132,39 @@ OR Parameters!p_BY.Value = "NA"
               </Border>
             </Style>
           </Subreport>
+          <Subreport Name="SubreportMinorTax">
+            <ReportName>RollTotalMinorTax_Sub1</ReportName>
+            <Parameters>
+              <Parameter Name="p_RY">
+                <Value>=Parameters!p_RY.Value</Value>
+              </Parameter>
+              <Parameter Name="p_MTC">
+                <Value>=Parameters!p_MTC.Value</Value>
+              </Parameter>
+              <Parameter Name="p_RD">
+                <Value>=Parameters!p_MTRD.Value</Value>
+              </Parameter>
+              <Parameter Name="p_MT">
+                <Value>=Parameters!p_MT.Value</Value>
+              </Parameter>
+            </Parameters>
+            <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
+            <Top>2.04792in</Top>
+            <Left>0.1in</Left>
+            <Height>0.27083in</Height>
+            <Width>7.37208in</Width>
+            <ZIndex>6</ZIndex>
+            <Visibility>
+              <Hidden>=IIf(Parameters!p_BY.Value = "MT",false,false)</Hidden>
+            </Visibility>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Subreport>
         </ReportItems>
-        <Height>1.98125in</Height>
+        <Height>5.04792in</Height>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1458,6 +1674,10 @@ OR Parameters!p_BY.Value = "NA"
             <Label>Juristicition</Label>
           </ParameterValue>
           <ParameterValue>
+            <Value>MT</Value>
+            <Label>Minor Tax</Label>
+          </ParameterValue>
+          <ParameterValue>
             <Value>NH</Value>
             <Label>Neightbourhood</Label>
           </ParameterValue>
@@ -1569,15 +1789,67 @@ OR Parameters!p_BY.Value = "NA"
       <DefaultValue>
         <DataSetReference>
           <DataSetName>qrySD</DataSetName>
-          <ValueField>School__District_Code</ValueField>
+          <ValueField>School_District_Code</ValueField>
         </DataSetReference>
       </DefaultValue>
       <Prompt>School District</Prompt>
       <ValidValues>
         <DataSetReference>
           <DataSetName>qrySD</DataSetName>
-          <ValueField>School__District_Code</ValueField>
+          <ValueField>School_District_Code</ValueField>
           <LabelField>School_District</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
+    <ReportParameter Name="p_MTC">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>qryMTC</DataSetName>
+          <ValueField>Minor_Tax_Category_Code</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <Prompt>Minor Tax Category</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>qryMTC</DataSetName>
+          <ValueField>Minor_Tax_Category_Code</ValueField>
+          <LabelField>Minor_Tax_Category</LabelField>
+        </DataSetReference>
+      </ValidValues>
+    </ReportParameter>
+    <ReportParameter Name="p_MTRD">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>qryMTRD</DataSetName>
+          <ValueField>Regional_District_Code</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <Prompt>Regional District</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>qryMTRD</DataSetName>
+          <ValueField>Regional_District_Code</ValueField>
+          <LabelField>Regional_District</LabelField>
+        </DataSetReference>
+      </ValidValues>
+    </ReportParameter>
+    <ReportParameter Name="p_MT">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>qryMT</DataSetName>
+          <ValueField>Minor_Tax_Desc</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <Prompt>Minor Tax</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>qryMT</DataSetName>
+          <ValueField>Minor_Tax_Desc</ValueField>
+          <LabelField>Minor_Tax_Label</LabelField>
         </DataSetReference>
       </ValidValues>
       <MultiValue>true</MultiValue>
@@ -1586,7 +1858,7 @@ OR Parameters!p_BY.Value = "NA"
   <ReportParametersLayout>
     <GridLayoutDefinition>
       <NumberOfColumns>3</NumberOfColumns>
-      <NumberOfRows>3</NumberOfRows>
+      <NumberOfRows>4</NumberOfRows>
       <CellDefinitions>
         <CellDefinition>
           <ColumnIndex>0</ColumnIndex>
@@ -1632,6 +1904,21 @@ OR Parameters!p_BY.Value = "NA"
           <ColumnIndex>2</ColumnIndex>
           <RowIndex>2</RowIndex>
           <ParameterName>p_SD</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>3</RowIndex>
+          <ParameterName>p_MTC</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>3</RowIndex>
+          <ParameterName>p_MTRD</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>2</ColumnIndex>
+          <RowIndex>3</RowIndex>
+          <ParameterName>p_MT</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>
