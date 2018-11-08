@@ -145,21 +145,51 @@ ORDER BY [Area Code],
           <QueryParameter Name="@p_BY">
             <Value>=Parameters!p_BY.Value</Value>
           </QueryParameter>
+          <QueryParameter Name="@p_RC">
+            <Value>=Parameters!p_RC.Value</Value>
+          </QueryParameter>
           <QueryParameter Name="@p_RY">
             <Value>=Parameters!p_RY.Value</Value>
           </QueryParameter>
         </QueryParameters>
         <CommandText>IF @p_BY = 'AR' OR @p_BY = 'JR' OR @p_BY = 'NH'
     BEGIN
-        SELECT DISTINCT 
-               [dimArea_SK], 
-               [Area Code], 
-               [Area Desc], 
-               [Area], 
-               [RowSortOrder]
-        FROM [EDW].[edw].[dimAssessmentGeography]
-        WHERE [Roll Year] = @p_RY
-              AND [Area Code] BETWEEN 01 AND 57
+		IF @p_RC = 'PR'
+		BEGIN
+			SELECT DISTINCT 
+				   [dimArea_SK], 
+				   [Area Code], 
+				   [Area Desc], 
+				   [Area], 
+				   [RowSortOrder]
+			FROM [EDW].[edw].[dimAssessmentGeography]
+			WHERE [Roll Year] = @p_RY
+				  AND [Area Code] BETWEEN 01 AND 27
+		END
+		ELSE IF @p_RC = 'FR'
+		BEGIN
+			SELECT DISTINCT 
+				   [dimArea_SK], 
+				   [Area Code], 
+				   [Area Desc], 
+				   [Area], 
+				   [RowSortOrder]
+			FROM [EDW].[edw].[dimAssessmentGeography]
+			WHERE [Roll Year] = @p_RY
+				  AND [Area Code] BETWEEN 31 AND 57
+		END
+		ELSE
+		BEGIN
+			SELECT DISTINCT 
+				   [dimArea_SK], 
+				   [Area Code], 
+				   [Area Desc], 
+				   [Area], 
+				   [RowSortOrder]
+			FROM [EDW].[edw].[dimAssessmentGeography]
+			WHERE [Roll Year] = @p_RY
+				  AND [Area Code] BETWEEN 01 AND 57
+		END
     END;
     ELSE
     BEGIN
@@ -274,11 +304,11 @@ ORDER BY [Area Code],
           <QueryParameter Name="@p_BY">
             <Value>=Parameters!p_BY.Value</Value>
           </QueryParameter>
-          <QueryParameter Name="@p_AR">
-            <Value>=Parameters!p_AR.Value</Value>
-          </QueryParameter>
           <QueryParameter Name="@p_RY">
             <Value>=Parameters!p_RY.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@p_AR">
+            <Value>=Parameters!p_AR.Value</Value>
           </QueryParameter>
         </QueryParameters>
         <CommandText>IF @p_BY = 'JR' OR @p_BY = 'NH'
@@ -295,9 +325,10 @@ ORDER BY [Area Code],
              [EDW].[edw].[dimAssessmentGeography] AS [A2]
         WHERE([A1].[Area Code] = [A2].[Area Code]
               AND [A1].[Roll Year] = @p_RY
-              AND [A1].[Jurisdiction Code] &gt; '199'
+              --AND [A1].[Jurisdiction Code] &gt; '199'
               AND [A2].[Roll Year] = @p_RY
-              AND [A2].[Jurisdiction Code] &gt; '199')
+              --AND [A2].[Jurisdiction Code] &gt; '199')
+			  )
              AND [A1].[Area Code] IN(@p_AR)
         AND [A2].[Area Code] IN(@p_AR)
         ORDER BY [RowSortOrder], 
@@ -1540,7 +1571,6 @@ AND [RD].[Regional District Code] &lt; '80'
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
-              <Top>0in</Top>
               <Left>11.47896in</Left>
               <Height>0.25in</Height>
               <Width>1.40625in</Width>
@@ -1576,7 +1606,6 @@ AND [RD].[Regional District Code] &lt; '80'
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>ReportName</rd:DefaultName>
-              <Top>0in</Top>
               <Height>0.25in</Height>
               <Width>1.88784in</Width>
               <ZIndex>2</ZIndex>
@@ -1650,6 +1679,31 @@ AND [RD].[Regional District Code] &lt; '80'
           <ValueField>Cycle_Number</ValueField>
           <LabelField>Cycle_Display</LabelField>
         </DataSetReference>
+      </ValidValues>
+    </ReportParameter>
+    <ReportParameter Name="p_RC">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>PR</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>* Roll Category</Prompt>
+      <ValidValues>
+        <ParameterValues>
+          <ParameterValue>
+            <Value>PR</Value>
+            <Label>Provincial Roll</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>FR</Value>
+            <Label>First Nations Roll</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>BR</Value>
+            <Label>Both (Provincial and First Nations Rolls)</Label>
+          </ParameterValue>
+        </ParameterValues>
       </ValidValues>
     </ReportParameter>
     <ReportParameter Name="p_BY">
@@ -1853,7 +1907,7 @@ AND [RD].[Regional District Code] &lt; '80'
   </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
-      <NumberOfColumns>3</NumberOfColumns>
+      <NumberOfColumns>4</NumberOfColumns>
       <NumberOfRows>4</NumberOfRows>
       <CellDefinitions>
         <CellDefinition>
@@ -1882,7 +1936,7 @@ AND [RD].[Regional District Code] &lt; '80'
           <ParameterName>p_NH</ParameterName>
         </CellDefinition>
         <CellDefinition>
-          <ColumnIndex>2</ColumnIndex>
+          <ColumnIndex>3</ColumnIndex>
           <RowIndex>0</RowIndex>
           <ParameterName>p_BY</ParameterName>
         </CellDefinition>
@@ -1915,6 +1969,11 @@ AND [RD].[Regional District Code] &lt; '80'
           <ColumnIndex>2</ColumnIndex>
           <RowIndex>3</RowIndex>
           <ParameterName>p_MT</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>2</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>p_RC</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>
