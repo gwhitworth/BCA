@@ -76,7 +76,7 @@
        [AG].[Area], 
        [AG].[Jurisdiction Code], 
        [AG].[Jurisdiction Desc], 
-       [FO].[School  District Code], 
+       [FO].[School District Code], 
        IIF([PC].[Property Sub Class Code] = '0202',999,[PC].[RowSortOrder]) AS [RowSortOrder], 
        [PC].[Property Class Code],
        CASE
@@ -136,7 +136,7 @@ GROUP BY [FA].[Roll Year],
          [AG].[Area], 
          [AG].[Jurisdiction Code], 
          [AG].[Jurisdiction Desc], 
-         [FO].[School  District Code], 
+         [FO].[School District Code], 
          IIF([PC].[Property Sub Class Code] = '0202',999,[PC].[RowSortOrder]), 
          [PC].[Property Class Code],
          CASE
@@ -150,7 +150,7 @@ ORDER BY [FA].[Roll Year],
          [AG].[Area], 
          [AG].[Jurisdiction Code], 
          [AG].[Jurisdiction Desc], 
-         [FO].[School  District Code], 
+         [FO].[School District Code], 
          [RESNONRES] DESC, 
          [RowSortOrder];</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
@@ -173,7 +173,7 @@ ORDER BY [FA].[Roll Year],
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="School__District_Code">
-          <DataField>School  District Code</DataField>
+          <DataField>School District Code</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="RowSortOrder">

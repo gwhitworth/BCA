@@ -99,14 +99,14 @@ ORDER BY [Cycle Number Sort] DESC</CommandText>
         </QueryParameters>
         <CommandText>IF @p_RT = 'SD'
 BEGIN
-	SELECT  DISTINCT [School  District Code], [School District],[RowSortOrder]
+	SELECT  DISTINCT [School District Code], [School District],[RowSortOrder]
 		FROM  [edw].[dimSchoolDistrict]
-		WHERE [School  District Code] NOT IN ('NA', 'NS', 'UNK')
+		WHERE [School District Code] NOT IN ('NA', 'NS', 'UNK')
 	ORDER BY [RowSortOrder]
 END
 ELSE
 BEGIN
-       SELECT '-99' AS [School  District Code]
+       SELECT '-99' AS [School District Code]
 	    ,'N/A' AS [School District]
 END</CommandText>
       </Query>
@@ -116,7 +116,7 @@ END</CommandText>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="School__District_Code">
-          <DataField>School  District Code</DataField>
+          <DataField>School District Code</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="RowSortOrder">

@@ -503,13 +503,13 @@ ORDER BY [Area Code],
        [AG].dimJurisdiction_SK, 
        [AG].[Jurisdiction Code]
 FROM [EDW].[edw].[dimFolio] AS [FO]
-     INNER JOIN [edw].[dimSchoolDistrict] AS [SD] ON [SD].[School  District Code] = [FO].[School  District Code]
+     INNER JOIN [edw].[dimSchoolDistrict] AS [SD] ON [SD].[School District Code] = [FO].[School District Code]
                                                      AND [SD].[Roll Year] = [FO].[Roll Year]
      INNER JOIN [edw].[dimAssessmentGeography] AS [AG] ON [FO].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
                                                           AND [AG].[Roll Category Code] = '1'
                                                           AND [AG].[Roll Year] = [FO].[Roll Year]
 WHERE [FO].[Roll Year] = @p_RY
-      AND [FO].[School  District Code] IN(@p_SD)
+      AND [FO].[School District Code] IN(@p_SD)
 ORDER BY [AG].[Jurisdiction Code];</CommandText>
       </Query>
       <Fields>
@@ -544,14 +544,14 @@ ORDER BY [AG].[Jurisdiction Code];</CommandText>
                [dimSchoolDistrict_BK], 
                [Roll Year], 
                IIF([School District] = 'Unknown', 'Not Applicable', [School District]) AS [School District], 
-               [School  District Code], 
+               [School District Code], 
                [School District Desc], 
                [RowSortOrder]
         FROM [EDW].[edw].[dimSchoolDistrict]
         WHERE [dimRollYear_SK] = @p_RY
 
         ORDER BY [RowSortOrder] DESC, 
-                 [School  District Code];
+                 [School District Code];
     END;
     ELSE
     BEGIN
@@ -559,7 +559,7 @@ ORDER BY [AG].[Jurisdiction Code];</CommandText>
               'Not Applicable' AS [dimSchoolDistrict_BK], 
               @p_RY [Roll Year], 
               'Not Applicable' AS [School District], 
-              'NA' AS [School  District Code], 
+              'NA' AS [School District Code], 
               'Not Applicable' AS [School District Desc], 
               -999 AS [RowSortOrder];
     END</CommandText>
@@ -582,7 +582,7 @@ ORDER BY [AG].[Jurisdiction Code];</CommandText>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="School__District_Code">
-          <DataField>School  District Code</DataField>
+          <DataField>School District Code</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="School_District_Desc">

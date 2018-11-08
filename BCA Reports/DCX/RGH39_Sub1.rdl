@@ -80,7 +80,7 @@
        IIF([AG].[Jurisdiction Type Code] = 'R', 'R', 'U') AS [Jurisdiction Type Code], 
        [AG].[Jurisdiction Code], 
        REPLACE([AG].[Jurisdiction Type Desc]+' of '+[AG].[Jurisdiction Desc], 'Rural of ', '') AS [Jurisdiction Desc], 
-       [FO].[School  District Code], 
+       [FO].[School District Code], 
        [AG].[Area Code], 
        [PC].[RowSortOrder], 
        [PC].[Property Class Code],
@@ -136,7 +136,7 @@ GROUP BY [FA].[Roll Year],
          IIF([AG].[Jurisdiction Type Code] = 'R', 'R', 'U'), 
          [AG].[Jurisdiction Code], 
          REPLACE([AG].[Jurisdiction Type Desc]+' of '+[AG].[Jurisdiction Desc], 'Rural of ', ''), 
-         [FO].[School  District Code], 
+         [FO].[School District Code], 
          [AG].[Area Code], 
          [PC].[RowSortOrder], 
          [PC].[Property Class Code],
@@ -151,7 +151,7 @@ ORDER BY [FA].[Roll Year],
          [RHD].[Region Hospital District], 
          [Jurisdiction Type Code] DESC, 
          [AG].[Jurisdiction Code], 
-         [FO].[School  District Code], 
+         [FO].[School District Code], 
          [RESNONRES] DESC, 
          [PC].[RowSortOrder];</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
@@ -182,7 +182,7 @@ ORDER BY [FA].[Roll Year],
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="School__District_Code">
-          <DataField>School  District Code</DataField>
+          <DataField>School District Code</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="RowSortOrder">
