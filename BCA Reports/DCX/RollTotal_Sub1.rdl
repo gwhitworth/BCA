@@ -13297,7 +13297,7 @@ CStr(Variables!vSection644.Value) ="","0"
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(IIF(Fields!RESNONRES.Value = "RES", Fields!Net_School_Land.Value, 0), "Area4")</Value>
+                                  <Value>=Sum(IIF(Fields!RESNONRES.Value = "RES", CDbl(Fields!Net_School_Land.Value), CDbl(0)), "Area4")</Value>
                                   <Style>
                                     <Format>#,0</Format>
                                   </Style>
@@ -13633,7 +13633,7 @@ CStr(Variables!vSection644.Value) ="","0"
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(IIF(Fields!RESNONRES.Value = "NONRES", Fields!Net_School_Land.Value, 0), "Area4")</Value>
+                                  <Value>=Sum(IIF(Fields!RESNONRES.Value = "NONRES", CDbl(Fields!Net_School_Land.Value), CDbl(0)), "Area4")</Value>
                                   <Style>
                                     <Format>#,0</Format>
                                   </Style>
@@ -15763,7 +15763,6 @@ CStr(Variables!vSection644.Value) ="","0"
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -15803,7 +15802,6 @@ CStr(Variables!vSection644.Value) ="","0"
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -16015,7 +16013,6 @@ CStr(Variables!vSection644.Value) ="","0"
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -16058,7 +16055,6 @@ CStr(Variables!vSection644.Value) ="","0"
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -16271,7 +16267,6 @@ CStr(Variables!vSection644.Value) ="","0"
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -16313,7 +16308,6 @@ CStr(Variables!vSection644.Value) ="","0"
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>

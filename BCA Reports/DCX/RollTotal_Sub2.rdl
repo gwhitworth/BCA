@@ -830,7 +830,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Fields!Actual_Land_Value.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
-                                    <Format>#,0</Format>
+                                    <Format>n0</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1228,15 +1228,6 @@ ORDER BY [FA].[Roll Year],
                               <Color>LightGrey</Color>
                               <Style>None</Style>
                             </Border>
-                            <TopBorder>
-                              <Style>None</Style>
-                            </TopBorder>
-                            <BottomBorder>
-                              <Style>None</Style>
-                            </BottomBorder>
-                            <LeftBorder>
-                              <Style>None</Style>
-                            </LeftBorder>
                             <RightBorder>
                               <Style>Solid</Style>
                             </RightBorder>

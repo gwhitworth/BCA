@@ -956,15 +956,9 @@ AND [RD].[Regional District Code] &lt; '80'
             <Width>7.42708in</Width>
             <ZIndex>1</ZIndex>
             <Visibility>
-              <Hidden>=IIf(Parameters!p_BY.Value = "AR" 
-OR Parameters!p_BY.Value = "AM" 
-OR Parameters!p_BY.Value = "SD"
-OR Parameters!p_BY.Value = "NA"
-OR Parameters!p_BY.Value = "MT"
+              <Hidden>=IIf(Parameters!p_BY.Value = "RD"
+, IIf(Parameters!p_RD.Count = 1 AND Parameters!p_RD.Value(0) = "PROV",true,false)
 , True
-, IIf(Parameters!p_RD.Count = 1 AND 
-(StrComp(Join(Parameters!p_RD.Value,","), "PROV") = 1)
-,true,false)
 )</Hidden>
             </Visibility>
             <Style>
@@ -1155,7 +1149,7 @@ OR Parameters!p_BY.Value = "MT"
             <Width>7.37208in</Width>
             <ZIndex>6</ZIndex>
             <Visibility>
-              <Hidden>=IIf(Parameters!p_BY.Value = "MT",false,false)</Hidden>
+              <Hidden>=IIf(Parameters!p_BY.Value = "MT",false,true)</Hidden>
             </Visibility>
             <Style>
               <Border>
@@ -1546,6 +1540,7 @@ OR Parameters!p_BY.Value = "MT"
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
+              <Top>0in</Top>
               <Left>11.47896in</Left>
               <Height>0.25in</Height>
               <Width>1.40625in</Width>
@@ -1581,6 +1576,7 @@ OR Parameters!p_BY.Value = "MT"
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>ReportName</rd:DefaultName>
+              <Top>0in</Top>
               <Height>0.25in</Height>
               <Width>1.88784in</Width>
               <ZIndex>2</ZIndex>
