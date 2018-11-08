@@ -1435,7 +1435,7 @@ ORDER BY [FA].[Roll Year],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!Actual_Total.Value)</Value>
+                                  <Value>=Sum(CDbl(Fields!Actual_Total.Value))</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -1475,6 +1475,7 @@ ORDER BY [FA].[Roll Year],
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -11703,7 +11704,6 @@ CStr(Variables!vSection644.Value) ="","0"
                           </Style>
                         </Textbox>
                         <ColSpan>2</ColSpan>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
