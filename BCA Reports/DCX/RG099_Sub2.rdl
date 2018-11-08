@@ -12703,7 +12703,7 @@ ORDER BY [FA].[Roll Year],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(IIF(Fields!RESNONRES.Value = "RES", Fields!Net_School_Land.Value, 0), "Area4")</Value>
+                                  <Value>=Sum(IIF(Fields!RESNONRES.Value = "RES", CDbl(Fields!Net_School_Land.Value), CDbl(0)), "Area4")</Value>
                                   <Style>
                                     <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
@@ -13018,7 +13018,7 @@ ORDER BY [FA].[Roll Year],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(IIF(Fields!RESNONRES.Value = "NONRES", Fields!Net_School_Land.Value, 0), "Area4")</Value>
+                                  <Value>=Sum(IIF(Fields!RESNONRES.Value = "NONRES", CDbl(Fields!Net_School_Land.Value), CDbl(0)), "Area4")</Value>
                                   <Style>
                                     <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
