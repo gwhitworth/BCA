@@ -135,8 +135,33 @@ ORDER BY [Cycle Number Sort] DESC;</CommandText>
               </Border>
             </Style>
           </Subreport>
+          <Subreport Name="Subreport3">
+            <ReportName>Info Page 1_Sub3</ReportName>
+            <Parameters>
+              <Parameter Name="p_RY">
+                <Value>=Parameters!p_RY.Value</Value>
+              </Parameter>
+              <Parameter Name="p_CN">
+                <Value>=Parameters!p_CN.Value</Value>
+              </Parameter>
+            </Parameters>
+            <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
+            <Top>1.31042in</Top>
+            <Left>0.05in</Left>
+            <Height>0.55208in</Height>
+            <Width>9.83499in</Width>
+            <ZIndex>2</ZIndex>
+            <Visibility>
+              <Hidden>=IIf(Parameters!p_TYPE.Value = "FM", False, True)</Hidden>
+            </Visibility>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Subreport>
         </ReportItems>
-        <Height>1.2875in</Height>
+        <Height>1.93333in</Height>
         <Style>
           <Border>
             <Style>None</Style>
@@ -536,7 +561,11 @@ ORDER BY [Cycle Number Sort] DESC;</CommandText>
           </ParameterValue>
           <ParameterValue>
             <Value>IA</Value>
-            <Label>Indian Act Info Page </Label>
+            <Label>Indian Act Info Page  1</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>FM</Value>
+            <Label>FMA Info Page 1</Label>
           </ParameterValue>
         </ParameterValues>
       </ValidValues>

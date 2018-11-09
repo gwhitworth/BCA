@@ -33,6 +33,10 @@
       <FullPath>qryJR.rsd</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>qryMTC.rsd</Name>
+      <FullPath>qryMTC.rsd</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>qryNEIGH.rsd</Name>
       <FullPath>qryNEIGH.rsd</FullPath>
     </ProjectItem>
@@ -59,10 +63,6 @@
     <ProjectItem>
       <Name>qryRY.rsd</Name>
       <FullPath>qryRY.rsd</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>qryMTC.rsd</Name>
-      <FullPath>qryMTC.rsd</FullPath>
     </ProjectItem>
   </DataSets>
   <Reports>
@@ -291,6 +291,14 @@
       <FullPath>RollTotal_Sub8.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>RollTotalMinorTax_Main.rdl</Name>
+      <FullPath>RollTotalMinorTax_Main.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RollTotalMinorTax_Sub1.rdl</Name>
+      <FullPath>RollTotalMinorTax_Sub1.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>RS009.rdl</Name>
       <FullPath>RS009.rdl</FullPath>
     </ProjectItem>
@@ -303,12 +311,12 @@
       <FullPath>Template.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>RollTotalMinorTax_Main.rdl</Name>
-      <FullPath>RollTotalMinorTax_Main.rdl</FullPath>
+      <Name>Info Page 1_Sub3.rdl</Name>
+      <FullPath>Info Page 1_Sub3.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>RollTotalMinorTax_Sub1.rdl</Name>
-      <FullPath>RollTotalMinorTax_Sub1.rdl</FullPath>
+      <Name>RollTotal_Sub9.rdl</Name>
+      <FullPath>RollTotal_Sub9.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>

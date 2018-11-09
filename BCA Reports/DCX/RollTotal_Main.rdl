@@ -152,7 +152,7 @@ ORDER BY [Area Code],
             <Value>=Parameters!p_RY.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>IF @p_BY = 'AR' OR @p_BY = 'JR' OR @p_BY = 'NH'
+        <CommandText>IF @p_BY = 'AR' OR @p_BY = 'JR' OR @p_BY = 'NH' OR @p_BY = 'AV'
     BEGIN
 		IF @p_RC = 'PR'
 		BEGIN
@@ -311,7 +311,7 @@ ORDER BY [Area Code],
             <Value>=Parameters!p_AR.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>IF @p_BY = 'JR' OR @p_BY = 'NH'
+        <CommandText>IF @p_BY = 'JR' OR @p_BY = 'NH' OR @p_BY = 'AV'
     BEGIN
         SELECT DISTINCT 
                [A1].[Area Code], 
@@ -922,6 +922,35 @@ AND [RD].[Regional District Code] &lt; '80'
                     </TablixCell>
                   </TablixCells>
                 </TablixRow>
+                <TablixRow>
+                  <Height>0.25in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Subreport Name="Subreport4">
+                          <ReportName>RollTotal_Sub9</ReportName>
+                          <Parameters>
+                            <Parameter Name="p_RY">
+                              <Value>=Parameters!p_RY.Value</Value>
+                            </Parameter>
+                            <Parameter Name="p_CN">
+                              <Value>=Parameters!p_CN.Value</Value>
+                            </Parameter>
+                            <Parameter Name="p_JR">
+                              <Value>=Fields!Jurisdiction_Code.Value</Value>
+                            </Parameter>
+                          </Parameters>
+                          <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                        </Subreport>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
               </TablixRows>
             </TablixBody>
             <TablixColumnHierarchy>
@@ -949,6 +978,11 @@ AND [RD].[Regional District Code] &lt; '80'
                         <Hidden>=IIf(Parameters!p_BY.Value = "NH",false,true)</Hidden>
                       </Visibility>
                     </TablixMember>
+                    <TablixMember>
+                      <Visibility>
+                        <Hidden>=IIf(Parameters!p_BY.Value = "AV",false,true)</Hidden>
+                      </Visibility>
+                    </TablixMember>
                   </TablixMembers>
                 </TablixMember>
               </TablixMembers>
@@ -956,7 +990,7 @@ AND [RD].[Regional District Code] &lt; '80'
             <KeepTogether>true</KeepTogether>
             <DataSetName>qryData</DataSetName>
             <Left>0.1in</Left>
-            <Height>0.72222in</Height>
+            <Height>0.97222in</Height>
             <Width>7.375in</Width>
             <Visibility>
               <Hidden>=IIf(Parameters!p_BY.Value = "RD",true,false)</Hidden>
@@ -981,7 +1015,7 @@ AND [RD].[Regional District Code] &lt; '80'
               </Parameter>
             </Parameters>
             <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
-            <Top>0.76667in</Top>
+            <Top>1.01667in</Top>
             <Left>0.1in</Left>
             <Height>0.21875in</Height>
             <Width>7.42708in</Width>
@@ -1009,7 +1043,7 @@ AND [RD].[Regional District Code] &lt; '80'
               </Parameter>
             </Parameters>
             <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
-            <Top>1.02709in</Top>
+            <Top>1.27709in</Top>
             <Left>0.1in</Left>
             <Height>0.1375in</Height>
             <Width>7.42708in</Width>
@@ -1037,7 +1071,7 @@ AND [RD].[Regional District Code] &lt; '80'
               </Parameter>
             </Parameters>
             <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
-            <Top>1.2in</Top>
+            <Top>1.45in</Top>
             <Left>0.1in</Left>
             <Height>0.21875in</Height>
             <Width>7.42708in</Width>
@@ -1060,7 +1094,7 @@ AND [RD].[Regional District Code] &lt; '80'
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>0.28125in</Height>
+                  <Height>0.46875in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -1080,6 +1114,7 @@ AND [RD].[Regional District Code] &lt; '80'
                                 </Parameter>
                               </Parameters>
                               <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
+                              <Top>0.125in</Top>
                               <Height>0.21875in</Height>
                               <Width>7.36354in</Width>
                               <Style>
@@ -1117,7 +1152,7 @@ AND [RD].[Regional District Code] &lt; '80'
             <DataSetName>qryData_SDJR</DataSetName>
             <Top>1.7in</Top>
             <Left>0.11146in</Left>
-            <Height>0.28125in</Height>
+            <Height>0.46875in</Height>
             <Width>7.42708in</Width>
             <ZIndex>4</ZIndex>
             <Visibility>
@@ -1143,7 +1178,7 @@ AND [RD].[Regional District Code] &lt; '80'
               </Parameter>
             </Parameters>
             <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
-            <Top>1.45in</Top>
+            <Top>2.2in</Top>
             <Left>0.1in</Left>
             <Height>0.21875in</Height>
             <Width>7.42708in</Width>
@@ -1174,7 +1209,7 @@ AND [RD].[Regional District Code] &lt; '80'
               </Parameter>
             </Parameters>
             <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
-            <Top>2.04792in</Top>
+            <Top>2.54792in</Top>
             <Left>0.1in</Left>
             <Height>0.27083in</Height>
             <Width>7.37208in</Width>
@@ -1211,77 +1246,10 @@ AND [RD].[Regional District Code] &lt; '80'
       <Width>12.88521in</Width>
       <Page>
         <PageHeader>
-          <Height>0.73208in</Height>
+          <Height>0.73959in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
-            <Textbox Name="tbHeader1">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>=Parameters!p_RY.Value</Value>
-                      <Style>
-                        <FontSize>14pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                      </Style>
-                    </TextRun>
-                    <TextRun>
-                      <Value>   ROLL TOTALS</Value>
-                      <Style>
-                        <FontSize>14pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Center</TextAlign>
-                  </Style>
-                </Paragraph>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Label>CYCLE_DESC</Label>
-                      <Value>= Mid(Parameters!p_CN.Label,1,InStr(Parameters!p_CN.Label," run on "))</Value>
-                      <Style />
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Center</TextAlign>
-                  </Style>
-                </Paragraph>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Label>Regional District Provincial Totals</Label>
-                      <Value />
-                      <Style>
-                        <FontSize>12pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Center</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <Top>0.00001in</Top>
-              <Height>0.70833in</Height>
-              <Width>12.88521in</Width>
-              <Visibility>
-                <Hidden>=IIf(Parameters!p_BY.Value = "AM", True, False)</Hidden>
-              </Visibility>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <VerticalAlign>Top</VerticalAlign>
-                <PaddingTop>5pt</PaddingTop>
-              </Style>
-            </Textbox>
             <Textbox Name="tbHeader2">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
@@ -1349,12 +1317,145 @@ AND [RD].[Regional District Code] &lt; '80'
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>0.01187in</Top>
+              <Height>0.70833in</Height>
+              <Width>12.88521in</Width>
+              <Visibility>
+                <Hidden>=IIf(Parameters!p_BY.Value = "AM", False, True)</Hidden>
+              </Visibility>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <VerticalAlign>Top</VerticalAlign>
+                <PaddingTop>5pt</PaddingTop>
+              </Style>
+            </Textbox>
+            <Textbox Name="tbHeader3">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Parameters!p_RY.Value</Value>
+                      <Style>
+                        <FontSize>14pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value>   AVERAGE ROLL TOTALS</Value>
+                      <Style>
+                        <FontSize>14pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Label>CYCLE_DESC</Label>
+                      <Value />
+                      <Style />
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Label>Regional District Provincial Totals</Label>
+                      <Value />
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
               <Height>0.70833in</Height>
               <Width>12.88521in</Width>
               <ZIndex>1</ZIndex>
               <Visibility>
-                <Hidden>=IIf(Parameters!p_BY.Value = "AM", False, True)</Hidden>
+                <Hidden>=IIf(Parameters!p_BY.Value = "AV", False, True)</Hidden>
+              </Visibility>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <VerticalAlign>Top</VerticalAlign>
+                <PaddingTop>5pt</PaddingTop>
+              </Style>
+            </Textbox>
+            <Textbox Name="tbHeader1">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Parameters!p_RY.Value</Value>
+                      <Style>
+                        <FontSize>14pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value>   ROLL TOTALS</Value>
+                      <Style>
+                        <FontSize>14pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Label>CYCLE_DESC</Label>
+                      <Value>= Mid(Parameters!p_CN.Label,1,InStr(Parameters!p_CN.Label," run on "))</Value>
+                      <Style />
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Label>Regional District Provincial Totals</Label>
+                      <Value />
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <Top>0.00001in</Top>
+              <Height>0.70833in</Height>
+              <Width>12.88521in</Width>
+              <ZIndex>2</ZIndex>
+              <Visibility>
+                <Hidden>=IIf(Parameters!p_BY.Value = "AM" OR Parameters!p_BY.Value = "AV", True, False)</Hidden>
               </Visibility>
               <Style>
                 <Border>
@@ -1370,7 +1471,7 @@ AND [RD].[Regional District Code] &lt; '80'
               <Left>0.1in</Left>
               <Height>0.37153in</Height>
               <Width>2.35069in</Width>
-              <ZIndex>2</ZIndex>
+              <ZIndex>3</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1403,7 +1504,7 @@ AND [RD].[Regional District Code] &lt; '80'
               <Left>0.1in</Left>
               <Height>0.1875in</Height>
               <Width>2.35069in</Width>
-              <ZIndex>3</ZIndex>
+              <ZIndex>4</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1429,7 +1530,7 @@ AND [RD].[Regional District Code] &lt; '80'
               <Left>12.56291in</Left>
               <Height>0.35834in</Height>
               <Width>0.3125in</Width>
-              <ZIndex>4</ZIndex>
+              <ZIndex>5</ZIndex>
               <ToolTip>="The risk rating"</ToolTip>
               <Style>
                 <Border>
@@ -1463,7 +1564,7 @@ AND [RD].[Regional District Code] &lt; '80'
               <Left>10.84313in</Left>
               <Height>0.15972in</Height>
               <Width>2.03228in</Width>
-              <ZIndex>5</ZIndex>
+              <ZIndex>6</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1493,7 +1594,7 @@ AND [RD].[Regional District Code] &lt; '80'
               <Left>10.84313in</Left>
               <Height>0.15972in</Height>
               <Width>2.03228in</Width>
-              <ZIndex>6</ZIndex>
+              <ZIndex>7</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1648,6 +1749,46 @@ AND [RD].[Regional District Code] &lt; '80'
     </ReportSection>
   </ReportSections>
   <ReportParameters>
+    <ReportParameter Name="p_BY">
+      <DataType>String</DataType>
+      <Prompt>* Type</Prompt>
+      <ValidValues>
+        <ParameterValues>
+          <ParameterValue>
+            <Value>AM</Value>
+            <Label>Amalgamated Area</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>AR</Value>
+            <Label>Assessment Area</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>AV</Value>
+            <Label>Average Roll</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>JR</Value>
+            <Label>Juristicition</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>MT</Value>
+            <Label>Minor Tax</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>NH</Value>
+            <Label>Neightbourhood</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>RD</Value>
+            <Label>Regional District</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>SD</Value>
+            <Label>School District</Label>
+          </ParameterValue>
+        </ParameterValues>
+      </ValidValues>
+    </ReportParameter>
     <ReportParameter Name="p_RY">
       <DataType>Integer</DataType>
       <DefaultValue>
@@ -1702,42 +1843,6 @@ AND [RD].[Regional District Code] &lt; '80'
           <ParameterValue>
             <Value>BR</Value>
             <Label>Both (Provincial and First Nations Rolls)</Label>
-          </ParameterValue>
-        </ParameterValues>
-      </ValidValues>
-    </ReportParameter>
-    <ReportParameter Name="p_BY">
-      <DataType>String</DataType>
-      <Prompt>* Type</Prompt>
-      <ValidValues>
-        <ParameterValues>
-          <ParameterValue>
-            <Value>AM</Value>
-            <Label>Amalgamated Area</Label>
-          </ParameterValue>
-          <ParameterValue>
-            <Value>AR</Value>
-            <Label>Assessment Area</Label>
-          </ParameterValue>
-          <ParameterValue>
-            <Value>JR</Value>
-            <Label>Juristicition</Label>
-          </ParameterValue>
-          <ParameterValue>
-            <Value>MT</Value>
-            <Label>Minor Tax</Label>
-          </ParameterValue>
-          <ParameterValue>
-            <Value>NH</Value>
-            <Label>Neightbourhood</Label>
-          </ParameterValue>
-          <ParameterValue>
-            <Value>RD</Value>
-            <Label>Regional District</Label>
-          </ParameterValue>
-          <ParameterValue>
-            <Value>SD</Value>
-            <Label>School District</Label>
           </ParameterValue>
         </ParameterValues>
       </ValidValues>
@@ -1911,12 +2016,12 @@ AND [RD].[Regional District Code] &lt; '80'
       <NumberOfRows>4</NumberOfRows>
       <CellDefinitions>
         <CellDefinition>
-          <ColumnIndex>0</ColumnIndex>
+          <ColumnIndex>1</ColumnIndex>
           <RowIndex>0</RowIndex>
           <ParameterName>p_RY</ParameterName>
         </CellDefinition>
         <CellDefinition>
-          <ColumnIndex>1</ColumnIndex>
+          <ColumnIndex>2</ColumnIndex>
           <RowIndex>0</RowIndex>
           <ParameterName>p_CN</ParameterName>
         </CellDefinition>
@@ -1936,7 +2041,7 @@ AND [RD].[Regional District Code] &lt; '80'
           <ParameterName>p_NH</ParameterName>
         </CellDefinition>
         <CellDefinition>
-          <ColumnIndex>3</ColumnIndex>
+          <ColumnIndex>0</ColumnIndex>
           <RowIndex>0</RowIndex>
           <ParameterName>p_BY</ParameterName>
         </CellDefinition>
@@ -1971,7 +2076,7 @@ AND [RD].[Regional District Code] &lt; '80'
           <ParameterName>p_MT</ParameterName>
         </CellDefinition>
         <CellDefinition>
-          <ColumnIndex>2</ColumnIndex>
+          <ColumnIndex>3</ColumnIndex>
           <RowIndex>0</RowIndex>
           <ParameterName>p_RC</ParameterName>
         </CellDefinition>
