@@ -753,7 +753,7 @@ AND [RD].[Regional District Code] &lt; '80'
         </Field>
       </Fields>
     </DataSet>
-    <DataSet Name="qryMT">
+    <DataSet Name="qryRDMT">
       <Query>
         <DataSourceName>EDW</DataSourceName>
         <QueryParameters>
@@ -1995,14 +1995,14 @@ AND [RD].[Regional District Code] &lt; '80'
       <DataType>String</DataType>
       <DefaultValue>
         <DataSetReference>
-          <DataSetName>qryMT</DataSetName>
+          <DataSetName>qryRDMT</DataSetName>
           <ValueField>Minor_Tax_Desc</ValueField>
         </DataSetReference>
       </DefaultValue>
       <Prompt>Minor Tax</Prompt>
       <ValidValues>
         <DataSetReference>
-          <DataSetName>qryMT</DataSetName>
+          <DataSetName>qryRDMT</DataSetName>
           <ValueField>Minor_Tax_Desc</ValueField>
           <LabelField>Minor_Tax_Label</LabelField>
         </DataSetReference>
@@ -2013,7 +2013,7 @@ AND [RD].[Regional District Code] &lt; '80'
   <ReportParametersLayout>
     <GridLayoutDefinition>
       <NumberOfColumns>4</NumberOfColumns>
-      <NumberOfRows>4</NumberOfRows>
+      <NumberOfRows>6</NumberOfRows>
       <CellDefinitions>
         <CellDefinition>
           <ColumnIndex>1</ColumnIndex>
@@ -2066,13 +2066,13 @@ AND [RD].[Regional District Code] &lt; '80'
           <ParameterName>p_MTC</ParameterName>
         </CellDefinition>
         <CellDefinition>
-          <ColumnIndex>1</ColumnIndex>
-          <RowIndex>3</RowIndex>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>4</RowIndex>
           <ParameterName>p_MTRD</ParameterName>
         </CellDefinition>
         <CellDefinition>
-          <ColumnIndex>2</ColumnIndex>
-          <RowIndex>3</RowIndex>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>4</RowIndex>
           <ParameterName>p_MT</ParameterName>
         </CellDefinition>
         <CellDefinition>

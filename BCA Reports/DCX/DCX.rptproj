@@ -111,6 +111,10 @@
       <FullPath>Info Page 1_Sub2.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>Info Page 1_Sub3.rdl</Name>
+      <FullPath>Info Page 1_Sub3.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>Info Page 2_Main.rdl</Name>
       <FullPath>Info Page 2_Main.rdl</FullPath>
     </ProjectItem>
@@ -291,6 +295,10 @@
       <FullPath>RollTotal_Sub8.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>RollTotal_Sub9.rdl</Name>
+      <FullPath>RollTotal_Sub9.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>RollTotalMinorTax_Main.rdl</Name>
       <FullPath>RollTotalMinorTax_Main.rdl</FullPath>
     </ProjectItem>
@@ -311,12 +319,12 @@
       <FullPath>Template.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>Info Page 1_Sub3.rdl</Name>
-      <FullPath>Info Page 1_Sub3.rdl</FullPath>
+      <Name>MJSAF Municipal Jurisdictions Summarized Assessment File.rdl</Name>
+      <FullPath>MJSAF Municipal Jurisdictions Summarized Assessment File.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>RollTotal_Sub9.rdl</Name>
-      <FullPath>RollTotal_Sub9.rdl</FullPath>
+      <Name>RollTotalMinorTax_Sub2.rdl</Name>
+      <FullPath>RollTotalMinorTax_Sub2.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>

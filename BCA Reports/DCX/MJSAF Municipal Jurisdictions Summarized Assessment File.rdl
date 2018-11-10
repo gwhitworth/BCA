@@ -21,54 +21,33 @@
             <Value>=Parameters!p_CN.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>SELECT [AG].[Jurisdiction Code] AS [JUR_CODE], 
+        <CommandText>SELECT [FO].[Jurisdiction Code] AS [JUR_CODE], 
        [PC].[Property Class Code] AS [PC_CODE], 
-       [FA].[Roll Year] AS [ROLLYEAR], 
-       [FA].[Roll Effective Date] AS [ROLL_DATE], 
+       [FA].[Roll Year] AS [ROLL_YEAR], 
+       REPLACE(CAST([FA].[Roll Effective Date] AS VARCHAR(10)),'-','') AS [ROLL_DATE], 
        [FA].[Cycle Number] AS [CYCLE_NUM], 
-       SUM(CASE
-               WHEN [FA].[Assessment Code] = '01'
-               THEN [FA].[Net Other Land Value]
-           END) AS [HSP_NT_LAND], 
-       SUM(CASE
-               WHEN [FA].[Assessment Code] = '02'
-               THEN [FA].[Net Other Building Value]
-           END) AS [HSP_NT_IMPR], 
-       COUNT(DISTINCT CASE
-                          WHEN [FA].[Assessment Code] = '01'
-                          THEN [FA].dimFolio_SK
-                      END) AS [Folio], 
-       COUNT([OCCUR].[Occur Count]) AS [Occurence]
+       SUM([FA].[Net School Land Value]) AS [SCH_NT_LAND], 
+       SUM([FA].[Net School Building Value]) AS [SCH_NT_IMPR], 
+       SUM([FA].[Net School Building Value]) + SUM([FA].[Net School Building Value]) AS [SCH_NT_TOTAL], 
+       ISNULL(SUM([OC].[Property Class Occurrence]), 0) AS [OCCURRENCES]
 FROM [edw].[FactAllAssessedAmounts] AS [FA]
-     INNER JOIN [edw].[dimPropertyClass] AS [PC] ON [FA].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
-     INNER JOIN [edw].[dimAssessmentGeography] AS [AG] ON [FA].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
-                                                          AND AG.[Roll Category Code] = '1'
-     INNER JOIN [edw].[dimFolio] AS [FO] ON [FO].[dimFolio_SK] = [FA].[dimFolio_SK]
-                                            AND FO.[Folio Status Code] = '01'
-     LEFT OUTER JOIN
-(
-    SELECT [FA].dimFolio_SK, 
-           [FA].[Property Class Code], 
-           COUNT(*) - 1 AS [Occur Count]
-    FROM [edw].[FactAllAssessedAmounts] AS [FA]
-         INNER JOIN [edw].[dimPropertyClass] AS [PC] ON [FA].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
-         INNER JOIN [edw].[dimAssessmentGeography] AS [AG] ON [FA].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
-                                                              AND [AG].[Roll Category Code] = '1'
-    WHERE [FA].[Roll Year] = @p_RY
-          AND [FA].[Cycle Number] = @p_CN
-          AND [FA].[Assessment Code] = '02'
-    GROUP BY [FA].dimFolio_SK, 
-             [FA].[Property Class Code]
-    HAVING COUNT(*) &gt; 1
-) AS [OCCUR] ON [OCCUR].dimFolio_SK = [FA].dimFolio_SK
+     INNER JOIN [edw].[dimPropertyClass] AS [PC]
+     ON [FA].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
+     INNER JOIN [edw].[dimFolio] AS [FO]
+     ON [FO].[dimFolio_SK] = [FA].[dimFolio_SK]
+        AND [FO].[Folio Status Code] = '01'
+     INNER JOIN [edw].[FactPropertyClassOccurrenceCount] AS [OC]
+     ON [FO].[dimFolio_SK] = [OC].[dimFolio_SK]
 WHERE [FA].[Roll Year] = @p_RY
       AND [FA].[Cycle Number] = @p_CN
-GROUP BY [AG].[Jurisdiction Code], 
+	  AND [FO].[Jurisdiction Code] &gt; '199'
+AND [FO].[BC Hydro Flag] IS NULL
+GROUP BY [FO].[Jurisdiction Code], 
          [PC].[Property Class Code], 
          [FA].[Roll Year], 
          [FA].[Roll Effective Date], 
          [FA].[Cycle Number]
-ORDER BY [AG].[Jurisdiction Code], 
+ORDER BY [FO].[Jurisdiction Code], 
          [PC].[Property Class Code], 
          [FA].[Roll Year], 
          [FA].[Roll Effective Date], 
@@ -83,51 +62,38 @@ ORDER BY [AG].[Jurisdiction Code],
           <DataField>PC_CODE</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="ROLLYEAR">
-          <DataField>ROLLYEAR</DataField>
+        <Field Name="ROLL_YEAR">
+          <DataField>ROLL_YEAR</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="ROLL_DATE">
           <DataField>ROLL_DATE</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="CYCLE_NUM">
           <DataField>CYCLE_NUM</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
-        <Field Name="HSP_NT_LAND">
-          <DataField>HSP_NT_LAND</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+        <Field Name="SCH_NT_LAND">
+          <DataField>SCH_NT_LAND</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="HSP_NT_IMPR">
-          <DataField>HSP_NT_IMPR</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+        <Field Name="SCH_NT_IMPR">
+          <DataField>SCH_NT_IMPR</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="Folio">
-          <DataField>Folio</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
+        <Field Name="SCH_NT_TOTAL">
+          <DataField>SCH_NT_TOTAL</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="Occurence">
-          <DataField>Occurence</DataField>
+        <Field Name="OCCURRENCES">
+          <DataField>OCCURRENCES</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="REC_NUM">
           <Value>1</Value>
         </Field>
-        <Field Name="OCCURRENCES">
-          <Value>=Fields!Folio.Value+Fields!Occurence.Value</Value>
-        </Field>
       </Fields>
-      <Filters>
-        <Filter>
-          <FilterExpression>=Fields!JUR_CODE.Value</FilterExpression>
-          <Operator>Between</Operator>
-          <FilterValues>
-            <FilterValue>207</FilterValue>
-            <FilterValue>592</FilterValue>
-          </FilterValues>
-        </Filter>
-      </Filters>
     </DataSet>
     <DataSet Name="qryRY">
       <SharedDataSet>
@@ -189,7 +155,7 @@ ORDER BY [AG].[Jurisdiction Code],
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>1in</Width>
+                  <Width>0.76042in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>0.79167in</Width>
@@ -207,13 +173,16 @@ ORDER BY [AG].[Jurisdiction Code],
                   <Width>1in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.1875in</Width>
+                  <Width>1.4in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.375in</Width>
+                  <Width>1.4in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.29167in</Width>
+                  <Width>1.4in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.22708in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -252,6 +221,7 @@ ORDER BY [AG].[Jurisdiction Code],
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -331,7 +301,7 @@ ORDER BY [AG].[Jurisdiction Code],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>ROLLYEAR</Value>
+                                  <Value>ROLL_YEAR</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -426,14 +396,14 @@ ORDER BY [AG].[Jurisdiction Code],
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox13">
+                        <Textbox Name="Textbox2">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>HSP_NT_LAND</Value>
+                                  <Value>SCH NT LAND</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -442,7 +412,7 @@ ORDER BY [AG].[Jurisdiction Code],
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox13</rd:DefaultName>
+                          <rd:DefaultName>Textbox2</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -460,14 +430,14 @@ ORDER BY [AG].[Jurisdiction Code],
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox15">
+                        <Textbox Name="Textbox10">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>HSP_NT_IMPR</Value>
+                                  <Value>SCH NT IMPR</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -476,7 +446,7 @@ ORDER BY [AG].[Jurisdiction Code],
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox15</rd:DefaultName>
+                          <rd:DefaultName>Textbox10</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -501,7 +471,7 @@ ORDER BY [AG].[Jurisdiction Code],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>OCCURRENCES</Value>
+                                  <Value>SCH NT TOTAL</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -526,293 +496,32 @@ ORDER BY [AG].[Jurisdiction Code],
                         </Textbox>
                       </CellContents>
                     </TablixCell>
-                  </TablixCells>
-                </TablixRow>
-                <TablixRow>
-                  <Height>0.25in</Height>
-                  <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="REC_NUM1">
+                        <Textbox Name="Textbox14">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!REC_NUM.Value</Value>
+                                  <Value>OCCURRENCES</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Left</TextAlign>
+                                <TextAlign>Center</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>REC_NUM1</rd:DefaultName>
+                          <rd:DefaultName>Textbox14</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="JUR_CODE2">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!JUR_CODE.Value</Value>
-                                  <Style />
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Left</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>JUR_CODE2</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="PC_CODE1">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!PC_CODE.Value</Value>
-                                  <Style />
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Left</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>PC_CODE1</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="ROLLYEAR1">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!ROLLYEAR.Value</Value>
-                                  <Style />
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Left</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>ROLLYEAR1</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="ROLL_DATE">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Format(
-DateValue(Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3))
-,"yyyyMMdd")</Value>
-                                  <Style />
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Left</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>ROLL_DATE</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="CYCLE_NUM">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!CYCLE_NUM.Value</Value>
-                                  <Style />
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Left</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>CYCLE_NUM</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="HSP_NT_LAND1">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=IIf(IsNothing(Fields!HSP_NT_LAND.Value),0,Sum(Fields!HSP_NT_LAND.Value))</Value>
-                                  <Style>
-                                    <Format>#,0</Format>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>HSP_NT_LAND1</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="HSP_NT_IMPR1">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=IIf(IsNothing(Fields!HSP_NT_IMPR.Value),0,Sum(Fields!HSP_NT_IMPR.Value))</Value>
-                                  <Style>
-                                    <Format>#,0</Format>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>HSP_NT_IMPR1</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Occurence">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Sum(Fields!Occurence.Value)</Value>
-                                  <Style>
-                                    <Format>#,0</Format>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Occurence</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -931,7 +640,7 @@ DateValue(Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3))
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!ROLLYEAR.Value</Value>
+                                  <Value>=Fields!ROLL_YEAR.Value</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -956,16 +665,14 @@ DateValue(Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3))
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox32">
+                        <Textbox Name="ROLL_DATE">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Format(
-DateValue(Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3))
-,"yyyyMMdd")</Value>
+                                  <Value>=Fields!ROLL_DATE.Value</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -974,7 +681,7 @@ DateValue(Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3))
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox32</rd:DefaultName>
+                          <rd:DefaultName>ROLL_DATE</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -1022,23 +729,25 @@ DateValue(Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3))
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="HSP_NT_LAND">
+                        <Textbox Name="SCH_NT_LAND">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!HSP_NT_LAND.Value</Value>
+                                  <Value>=Fields!SCH_NT_LAND.Value</Value>
                                   <Style>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>HSP_NT_LAND</rd:DefaultName>
+                          <rd:DefaultName>SCH_NT_LAND</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -1054,23 +763,59 @@ DateValue(Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3))
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="HSP_NT_IMPR">
+                        <Textbox Name="SCH_NT_IMPR">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!HSP_NT_IMPR.Value</Value>
+                                  <Value>=Fields!SCH_NT_IMPR.Value</Value>
                                   <Style>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>HSP_NT_IMPR</rd:DefaultName>
+                          <rd:DefaultName>SCH_NT_IMPR</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="SCH_NT_TOTAL">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!SCH_NT_TOTAL.Value</Value>
+                                  <Style>
+                                    <Format>#,0</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>SCH_NT_TOTAL</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -1099,7 +844,9 @@ DateValue(Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3))
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>OCCURRENCES</rd:DefaultName>
@@ -1130,8 +877,10 @@ DateValue(Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3))
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>3</Value>
-                                  <Style />
+                                  <Value>2</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -1163,7 +912,9 @@ DateValue(Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3))
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style />
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -1195,7 +946,9 @@ DateValue(Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3))
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style />
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -1227,7 +980,9 @@ DateValue(Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3))
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style />
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -1259,7 +1014,9 @@ DateValue(Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3))
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style />
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -1291,7 +1048,9 @@ DateValue(Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3))
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style />
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -1315,23 +1074,26 @@ DateValue(Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3))
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox25">
+                        <Textbox Name="SCH_NT_LAND1">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!HSP_NT_LAND.Value)</Value>
+                                  <Value>=Sum(Fields!SCH_NT_LAND.Value)</Value>
                                   <Style>
+                                    <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox25</rd:DefaultName>
+                          <rd:DefaultName>SCH_NT_LAND1</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -1347,23 +1109,26 @@ DateValue(Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3))
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox26">
+                        <Textbox Name="SCH_NT_IMPR1">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!HSP_NT_IMPR.Value)</Value>
+                                  <Value>=Sum(Fields!SCH_NT_IMPR.Value)</Value>
                                   <Style>
+                                    <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox26</rd:DefaultName>
+                          <rd:DefaultName>SCH_NT_IMPR1</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -1379,7 +1144,42 @@ DateValue(Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3))
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox27">
+                        <Textbox Name="SCH_NT_TOTAL1">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Sum(Fields!SCH_NT_TOTAL.Value)</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Format>#,0</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>SCH_NT_TOTAL1</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="OCCURRENCES1">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -1388,14 +1188,17 @@ DateValue(Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3))
                                 <TextRun>
                                   <Value>=Sum(Fields!OCCURRENCES.Value)</Value>
                                   <Style>
+                                    <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox27</rd:DefaultName>
+                          <rd:DefaultName>OCCURRENCES1</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -1424,46 +1227,34 @@ DateValue(Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3))
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
+                <TablixMember />
               </TablixMembers>
             </TablixColumnHierarchy>
             <TablixRowHierarchy>
               <TablixMembers>
-                <TablixMember />
                 <TablixMember>
-                  <Group Name="JUR_CODE">
-                    <GroupExpressions>
-                      <GroupExpression>=Fields!JUR_CODE.Value</GroupExpression>
-                      <GroupExpression>=Fields!PC_CODE.Value</GroupExpression>
-                    </GroupExpressions>
-                  </Group>
-                  <SortExpressions>
-                    <SortExpression>
-                      <Value>=Fields!JUR_CODE.Value</Value>
-                    </SortExpression>
-                    <SortExpression>
-                      <Value>=Fields!PC_CODE.Value</Value>
-                    </SortExpression>
-                  </SortExpressions>
-                  <TablixMembers>
-                    <TablixMember>
-                      <KeepWithGroup>After</KeepWithGroup>
-                    </TablixMember>
-                    <TablixMember>
-                      <Group Name="Details" />
-                      <Visibility>
-                        <Hidden>true</Hidden>
-                      </Visibility>
-                    </TablixMember>
-                  </TablixMembers>
+                  <FixedData>true</FixedData>
+                  <KeepWithGroup>After</KeepWithGroup>
+                  <RepeatOnNewPage>true</RepeatOnNewPage>
+                  <KeepTogether>true</KeepTogether>
                 </TablixMember>
-                <TablixMember />
+                <TablixMember>
+                  <Group Name="Details" />
+                </TablixMember>
+                <TablixMember>
+                  <RepeatOnNewPage>true</RepeatOnNewPage>
+                </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
+            <RepeatColumnHeaders>true</RepeatColumnHeaders>
+            <RepeatRowHeaders>true</RepeatRowHeaders>
+            <FixedColumnHeaders>true</FixedColumnHeaders>
+            <FixedRowHeaders>true</FixedRowHeaders>
             <DataSetName>qryData</DataSetName>
             <Top>0.05083in</Top>
             <Left>0.08208in</Left>
-            <Height>1in</Height>
-            <Width>9.29168in</Width>
+            <Height>0.75in</Height>
+            <Width>10.62501in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1471,15 +1262,15 @@ DateValue(Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3))
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>1.05083in</Height>
+        <Height>0.89458in</Height>
         <Style />
       </Body>
-      <Width>10.37376in</Width>
+      <Width>10.70709in</Width>
       <Page>
         <PageHeight>8.5in</PageHeight>
         <PageWidth>11in</PageWidth>
-        <LeftMargin>0.25in</LeftMargin>
-        <RightMargin>0.25in</RightMargin>
+        <LeftMargin>0.05in</LeftMargin>
+        <RightMargin>0.05in</RightMargin>
         <TopMargin>1in</TopMargin>
         <BottomMargin>1in</BottomMargin>
         <Style />
