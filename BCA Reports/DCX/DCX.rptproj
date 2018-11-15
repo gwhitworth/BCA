@@ -127,6 +127,10 @@
       <FullPath>MHVSAF - Municipal Hospital Value Summarized Assessment File.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>MJSAF Municipal Jurisdictions Summarized Assessment File.rdl</Name>
+      <FullPath>MJSAF Municipal Jurisdictions Summarized Assessment File.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>PropClass_ProvTotal_Sub.rdl</Name>
       <FullPath>PropClass_ProvTotal_Sub.rdl</FullPath>
     </ProjectItem>
@@ -307,6 +311,10 @@
       <FullPath>RollTotalMinorTax_Sub1.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>RollTotalMinorTax_Sub2.rdl</Name>
+      <FullPath>RollTotalMinorTax_Sub2.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>RS009.rdl</Name>
       <FullPath>RS009.rdl</FullPath>
     </ProjectItem>
@@ -318,14 +326,6 @@
       <Name>Template.rdl</Name>
       <FullPath>Template.rdl</FullPath>
     </ProjectItem>
-    <ProjectItem>
-      <Name>MJSAF Municipal Jurisdictions Summarized Assessment File.rdl</Name>
-      <FullPath>MJSAF Municipal Jurisdictions Summarized Assessment File.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>RollTotalMinorTax_Sub2.rdl</Name>
-      <FullPath>RollTotalMinorTax_Sub2.rdl</FullPath>
-    </ProjectItem>
   </Reports>
   <Configurations>
     <Configuration>
@@ -334,7 +334,7 @@
       <Options>
         <OutputPath>bin\Debug</OutputPath>
         <TargetServerVersion>SSRS2016</TargetServerVersion>
-        <TargetServerURL>http://localhost/reportserver</TargetServerURL>
+        <TargetServerURL>https://insite.bcassessment.ca/04/0404/Lists/Enterprise%20Report%20Links/AllItems.aspx</TargetServerURL>
         <TargetFolder>DCX</TargetFolder>
         <TargetMobileReportFolder>Mobile Reports</TargetMobileReportFolder>
         <TargetDataSourceFolder>Data Sources</TargetDataSourceFolder>
