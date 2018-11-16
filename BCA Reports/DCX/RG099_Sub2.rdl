@@ -86,7 +86,7 @@
            THEN 'NONRES'
        END AS [RESNONRES], 
        ISNULL([PC].[Property Sub Class Desc], [PC].[Property Class Desc]) AS [Property Class], 
-       ISNULL(SUM([Occur Count]), 0) AS [Occurrences], 
+       ISNULL(SUM([OC].[Property Class Occurrence]), 0) AS [Occurrences], 
        IIF(COUNT(CASE
                      WHEN [FA].[Assessment Code] = '01'
                           AND [PC].[Property Class Code] = '01'
@@ -118,23 +118,8 @@ FROM [edw].[FactAllAssessedAmounts] AS [FA]
      INNER JOIN [edw].[dimPropertyClass] AS [PC] ON [FA].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
      INNER JOIN [edw].[dimAssessmentGeography] AS [AG] ON [FA].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
                                                           AND AG.[Roll Category Code] = '1'
-     LEFT OUTER JOIN
-(
-    SELECT [FAV].dimFolio_SK, 
-           [FAV].[Property Class Code], 
-           COUNT(*) - 1 AS [Occur Count]
-    FROM [EDW].[edw].[FactAllAssessedAmounts] AS [FAV]
-         INNER JOIN [edw].[dimPropertyClass] AS [PC] ON [FAV].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
-         INNER JOIN [edw].[dimAssessmentGeography] AS [AG] ON [FAV].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
-                                                              AND AG.[Roll Category Code] = '1'
-    WHERE [FAV].[Roll Year] = @p_RY
-          AND [FAV].[Cycle Number] &lt;= @p_CN
-          AND [Assessment Code] = '02'
-          AND [AG].[Area Code] = @p_AR
-    GROUP BY [FAV].dimFolio_SK, 
-             [FAV].[Property Class Code]
-    HAVING COUNT(*) &gt; 1
-) AS [OCCUR] ON [OCCUR].dimFolio_SK = [FA].dimFolio_SK
+     INNER JOIN [edw].[FactPropertyClassOccurrenceCount] AS [OC]
+     ON [FA].[dimFolio_SK] = [OC].[dimFolio_SK]
 WHERE [FA].[Roll Year] = @p_RY
       AND [FA].[Cycle Number] = @p_CN
       AND [AG].[Area Code] = @p_AR
@@ -166,7 +151,7 @@ ORDER BY [FA].[Roll Year],
         </Field>
         <Field Name="RowSortOrder">
           <DataField>RowSortOrder</DataField>
-          <rd:TypeName>System.Int64</rd:TypeName>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="Property_Class_Code">
           <DataField>Property Class Code</DataField>
@@ -190,75 +175,75 @@ ORDER BY [FA].[Roll Year],
         </Field>
         <Field Name="Gross_Gen_Land">
           <DataField>Gross_Gen_Land</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Gross_Gen_Improvements">
           <DataField>Gross_Gen_Improvements</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Exempt_Gen_Land">
           <DataField>Exempt_Gen_Land</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Exempt_Gen_Improvements">
           <DataField>Exempt_Gen_Improvements</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Net_Gen_Land">
           <DataField>Net_Gen_Land</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Net_Gen_Improvements">
           <DataField>Net_Gen_Improvements</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Gross_Hosp_Land">
           <DataField>Gross_Hosp_Land</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Gross_Hosp_Improvements">
           <DataField>Gross_Hosp_Improvements</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Exempt_Hosp_Land">
           <DataField>Exempt_Hosp_Land</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Exempt_Hosp_Improvements">
           <DataField>Exempt_Hosp_Improvements</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Net_Hosp_Land">
           <DataField>Net_Hosp_Land</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Net_Hosp_Improvements">
           <DataField>Net_Hosp_Improvements</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Gross_School_Land">
           <DataField>Gross_School_Land</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Gross_School_Improvements">
           <DataField>Gross_School_Improvements</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Exempt_School_Land">
           <DataField>Exempt_School_Land</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Exempt_School_Improvements">
           <DataField>Exempt_School_Improvements</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Net_School_Land">
           <DataField>Net_School_Land</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Net_School_Improvements">
           <DataField>Net_School_Improvements</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
       </Fields>
     </DataSet>
@@ -361,7 +346,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Assessment Area:</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>11pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -396,7 +380,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Area.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>11pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -431,7 +414,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>TA X A B L E    V A L U E    T O T A L S  -  G E N E R A L</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>11pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -482,9 +464,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Property Class</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -519,9 +499,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Occurrences</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -554,9 +532,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -589,9 +565,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Land</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -624,9 +598,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Improvements</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -659,9 +631,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -694,9 +664,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Land</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -729,9 +697,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Improvements</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -783,7 +749,6 @@ ORDER BY [FA].[Roll Year],
 , "8 - Rec/Non Profit"
 , Fields!Property_Class.Value = "Farm", "9 - Farm"))</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -822,7 +787,6 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Sum(IIF(IsNothing(Fields!Occurrences.Value), Fields!Folio_Count.Value
 , IIF(Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter", Fields!Occurrences.Value + Fields!Folio_Count.Value, Fields!Folio_Count.Value)))</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -861,7 +825,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Gross</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -876,7 +839,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -915,7 +877,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Gross_Gen_Land.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -954,7 +915,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Gross_Gen_Improvements.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -993,7 +953,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Net</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -1032,7 +991,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Net_Gen_Land.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1071,7 +1029,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Net_Gen_Improvements.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1115,7 +1072,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -1159,7 +1115,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -1197,7 +1152,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Exempt</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -1236,7 +1190,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Exempt_Gen_Land.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1278,7 +1231,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Exempt_Gen_Improvements.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1317,7 +1269,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -1355,7 +1306,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1394,7 +1344,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1438,7 +1387,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=IIf(Fields!RESNONRES.Value = "RES", "1 - *Total Residential*", "other")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -1487,7 +1435,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -1536,7 +1483,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Gross</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -1551,7 +1497,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -1600,7 +1545,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Gross_Gen_Land.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -1651,7 +1595,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Gross_Gen_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -1702,7 +1645,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -1751,7 +1693,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Gen_Land.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -1802,7 +1743,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Gen_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -1858,7 +1798,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -1903,7 +1842,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -1952,7 +1890,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Exempt</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -2001,7 +1938,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Exempt_Gen_Land.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -2051,7 +1987,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Exempt_Gen_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -2101,7 +2036,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -2150,7 +2084,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -2200,7 +2133,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -2248,7 +2180,6 @@ ORDER BY [FA].[Roll Year],
 + Space(1)
 +Fields!Area.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -2294,7 +2225,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -2343,7 +2273,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Gross</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -2358,7 +2287,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -2407,7 +2335,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Gross_Gen_Land.Value, "Area")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -2459,7 +2386,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Gross_Gen_Improvements.Value, "Area")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -2511,7 +2437,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Net</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -2560,7 +2485,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Gen_Land.Value ,"Area")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -2612,7 +2536,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Gen_Improvements.Value,"Area")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -2669,7 +2592,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -2711,7 +2633,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -2760,7 +2681,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Exempt</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -2800,7 +2720,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Exempt_Gen_Land.Value,"Area")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -2844,7 +2763,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Exempt_Gen_Improvements.Value,"Area")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -2888,7 +2806,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Totals</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -2932,7 +2849,6 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Sum(Fields!Net_Gen_Land.Value ,"Area")
 +Sum(Fields!Net_Gen_Improvements.Value,"Area")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -3029,9 +2945,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -3085,7 +2999,6 @@ ORDER BY [FA].[Roll Year],
                                   <Value>="Folio Count: " 
 + CStr(FORMAT(Sum(Fields!Folio_Count.Value), "N0"))</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -3126,7 +3039,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -3165,7 +3077,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -3201,7 +3112,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -3237,7 +3147,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -3273,7 +3182,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Net Taxable Assessment:</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -3311,7 +3219,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -3352,7 +3259,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -3391,7 +3297,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -3430,7 +3335,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -3469,7 +3373,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -3505,7 +3408,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -3541,7 +3443,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -3577,7 +3478,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>General:</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -3616,7 +3516,6 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Sum(Fields!Net_Gen_Land.Value ,"Area")
 +Sum(Fields!Net_Gen_Improvements.Value,"Area")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -3658,7 +3557,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -3697,7 +3595,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -3736,7 +3633,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -3775,7 +3671,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -3811,7 +3706,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -3847,7 +3741,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -3883,7 +3776,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Less S.644LGA/398VC:</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -3924,7 +3816,6 @@ ORDER BY [FA].[Roll Year],
 ,Fields!Net_Gen_Improvements.Value
 ,"qryData")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -3970,7 +3861,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -4009,7 +3899,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -4048,7 +3937,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -4087,7 +3975,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -4123,7 +4010,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -4159,7 +4045,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -4195,7 +4080,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Total:</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -4238,7 +4122,6 @@ ORDER BY [FA].[Roll Year],
 ,Fields!Net_Gen_Improvements.Value
 ,"qryData")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -4368,14 +4251,13 @@ ORDER BY [FA].[Roll Year],
             <PageBreak>
               <BreakLocation>Start</BreakLocation>
             </PageBreak>
-            <Height>2.2462in</Height>
+            <Height>2.24619in</Height>
             <Width>12.74521in</Width>
             <Style>
               <Border>
                 <Color>White</Color>
                 <Style>None</Style>
               </Border>
-              <FontFamily>Tahoma</FontFamily>
             </Style>
           </Tablix>
           <Tablix Name="Tablix_Sch">
@@ -4424,7 +4306,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Assessment Area:</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>11pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -4459,7 +4340,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Area.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>11pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -4494,7 +4374,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>T A X A B L E    V A L U E    T O T A L S   -   S C H O O L</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>11pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -4545,9 +4424,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Property Class</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -4582,9 +4459,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Occurrences</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -4617,9 +4492,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -4652,9 +4525,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Land</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -4687,9 +4558,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Improvements</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -4722,9 +4591,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -4757,9 +4624,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Land</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -4792,9 +4657,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Improvements</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -4833,7 +4696,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=IIF(Fields!RESNONRES.Value = "RES", Fields!Property_Class.Value, SWITCH(Fields!Property_Class.Value = "Utilities", "2 - Utilities", Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter", "S.644LGA/398VC", Fields!Property_Class.Value = "Supportive Housing", "3 - Supportive Housing", Fields!Property_Class.Value = "Major Industry", "4 - Major Industry", Fields!Property_Class.Value = "Light Industry", "5 - Light Industry", Fields!Property_Class.Value = "Business And Other", "6 - Business And Other", Fields!Property_Class.Value = "Managed Forest Land", "7 - Managed Forest Land", Fields!Property_Class.Value = "Rec/Non Profit", "8 - Rec/Non Profit", Fields!Property_Class.Value = "Farm", "9 - Farm"))</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -4871,7 +4733,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(IIF(IsNothing(Fields!Occurrences.Value), Fields!Folio_Count.Value, IIF(Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter", Fields!Occurrences.Value + Fields!Folio_Count.Value, Fields!Folio_Count.Value)))</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -4910,7 +4771,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Gross</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -4925,7 +4785,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -4964,7 +4823,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Gross_School_Land.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -5003,7 +4861,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Gross_School_Improvements.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -5042,7 +4899,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Net</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -5081,7 +4937,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Net_School_Land.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -5120,7 +4975,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Net_School_Improvements.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -5164,7 +5018,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -5208,7 +5061,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -5246,7 +5098,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Exempt</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -5285,7 +5136,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Exempt_School_Land.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -5327,7 +5177,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Exempt_School_Improvements.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -5366,7 +5215,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -5404,7 +5252,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -5443,7 +5290,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -5487,7 +5333,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=IIf(Fields!RESNONRES.Value = "RES", "1 - *Total Residential*", "other")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -5536,7 +5381,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -5585,7 +5429,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Gross</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -5600,7 +5443,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -5649,7 +5491,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Gross_School_Land.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -5700,7 +5541,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Gross_School_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -5751,7 +5591,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -5800,7 +5639,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_School_Land.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -5851,7 +5689,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_School_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -5907,7 +5744,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -5952,7 +5788,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -6001,7 +5836,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Exempt</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -6050,7 +5884,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Exempt_School_Land.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -6100,7 +5933,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Exempt_School_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -6150,7 +5982,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -6199,7 +6030,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -6249,7 +6079,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -6297,7 +6126,6 @@ ORDER BY [FA].[Roll Year],
 + Space(1)
 +Fields!Area.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -6343,7 +6171,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -6392,7 +6219,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Gross</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -6407,7 +6233,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -6456,7 +6281,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Gross_School_Land.Value, "Area2")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -6508,7 +6332,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Gross_School_Improvements.Value, "Area2")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -6560,7 +6383,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Net</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -6609,7 +6431,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_School_Land.Value, "Area2")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -6661,7 +6482,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_School_Improvements.Value, "Area2")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -6718,7 +6538,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -6760,7 +6579,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -6809,7 +6627,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Exempt</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -6849,7 +6666,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Exempt_School_Land.Value, "Area2")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -6893,7 +6709,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Exempt_School_Improvements.Value, "Area2")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -6937,7 +6752,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Totals</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -6980,7 +6794,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_School_Land.Value, "Area2") + Sum(Fields!Net_School_Improvements.Value, "Area2")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -7077,9 +6890,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -7133,7 +6944,6 @@ ORDER BY [FA].[Roll Year],
                                   <Value>="Folio Count: " 
 + CStr(FORMAT(Sum(Fields!Folio_Count.Value), "N0"))</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -7174,7 +6984,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -7213,7 +7022,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -7249,7 +7057,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -7285,7 +7092,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -7321,7 +7127,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -7359,7 +7164,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -7491,7 +7295,7 @@ ORDER BY [FA].[Roll Year],
               <BreakLocation>Start</BreakLocation>
             </PageBreak>
             <Top>2.24074in</Top>
-            <Height>1.89245in</Height>
+            <Height>1.89246in</Height>
             <Width>12.74521in</Width>
             <ZIndex>1</ZIndex>
             <Style>
@@ -7499,7 +7303,6 @@ ORDER BY [FA].[Roll Year],
                 <Color>White</Color>
                 <Style>None</Style>
               </Border>
-              <FontFamily>Tahoma</FontFamily>
             </Style>
           </Tablix>
           <Tablix Name="Tablix_Hosp">
@@ -7548,7 +7351,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Assessment Area:</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>11pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -7583,7 +7385,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Area.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>11pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -7618,7 +7419,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>T A X A B L E    V A L U E    T O T A L S    -    H O S P I T A L</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>11pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -7669,9 +7469,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Property Class</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -7706,9 +7504,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Occurrences</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -7741,9 +7537,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -7776,9 +7570,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Land</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -7811,9 +7603,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Improvements</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -7846,9 +7636,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -7881,9 +7669,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Land</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -7916,9 +7702,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Improvements</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -7957,7 +7741,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=IIF(Fields!RESNONRES.Value = "RES", Fields!Property_Class.Value, SWITCH(Fields!Property_Class.Value = "Utilities", "2 - Utilities", Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter", "S.644LGA/398VC", Fields!Property_Class.Value = "Supportive Housing", "3 - Supportive Housing", Fields!Property_Class.Value = "Major Industry", "4 - Major Industry", Fields!Property_Class.Value = "Light Industry", "5 - Light Industry", Fields!Property_Class.Value = "Business And Other", "6 - Business And Other", Fields!Property_Class.Value = "Managed Forest Land", "7 - Managed Forest Land", Fields!Property_Class.Value = "Rec/Non Profit", "8 - Rec/Non Profit", Fields!Property_Class.Value = "Farm", "9 - Farm"))</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -7996,7 +7779,6 @@ ORDER BY [FA].[Roll Year],
                                   <Value>=Sum(IIF(IsNothing(Fields!Occurrences.Value)
 , Fields!Folio_Count.Value, IIF(Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter", Fields!Occurrences.Value + Fields!Folio_Count.Value, Fields!Folio_Count.Value)))</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -8035,7 +7817,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Gross</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -8050,7 +7831,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -8089,7 +7869,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Gross_Hosp_Land.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -8128,7 +7907,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Gross_Hosp_Improvements.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -8167,7 +7945,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Net</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -8206,7 +7983,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Net_Hosp_Land.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -8245,7 +8021,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Net_Hosp_Improvements.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -8289,7 +8064,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -8333,7 +8107,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -8371,7 +8144,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Exempt</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -8410,7 +8182,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Exempt_Hosp_Land.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -8452,7 +8223,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Exempt_Hosp_Improvements.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -8491,7 +8261,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -8529,7 +8298,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -8568,7 +8336,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -8612,7 +8379,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=IIf(Fields!RESNONRES.Value = "RES", "1 - *Total Residential*", "other")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -8661,7 +8427,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -8710,7 +8475,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Gross</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -8725,7 +8489,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -8774,7 +8537,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Gross_Hosp_Land.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -8825,7 +8587,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Gross_Hosp_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -8876,7 +8637,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -8925,7 +8685,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Hosp_Land.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -8976,7 +8735,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Hosp_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -9032,7 +8790,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -9077,7 +8834,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -9126,7 +8882,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Exempt</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -9175,7 +8930,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Exempt_Hosp_Land.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -9225,7 +8979,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Exempt_Hosp_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -9275,7 +9028,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -9324,7 +9076,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -9374,7 +9125,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -9422,7 +9172,6 @@ ORDER BY [FA].[Roll Year],
 + Space(1)
 +Fields!Area.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -9468,7 +9217,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -9517,7 +9265,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Gross</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -9532,7 +9279,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -9581,7 +9327,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Gross_Hosp_Land.Value, "Area3")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -9632,7 +9377,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Gross_Hosp_Improvements.Value, "Area3")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -9683,7 +9427,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Net</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -9732,7 +9475,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Hosp_Land.Value, "Area3")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -9783,7 +9525,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Hosp_Improvements.Value, "Area3")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -9839,7 +9580,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -9881,7 +9621,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -9930,7 +9669,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Exempt</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -9970,7 +9708,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Exempt_Hosp_Land.Value, "Area3")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -10014,7 +9751,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Exempt_Hosp_Improvements.Value, "Area3")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -10058,7 +9794,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Totals</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -10101,7 +9836,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Hosp_Land.Value, "Area3") + Sum(Fields!Net_Hosp_Improvements.Value, "Area3")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -10198,9 +9932,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -10252,9 +9984,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>="Folio Count: " + CStr(FORMAT(Sum(Fields!Folio_Count.Value), "N0"))</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -10292,9 +10022,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -10330,9 +10058,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -10365,9 +10091,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -10400,9 +10124,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -10435,9 +10157,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -10472,9 +10192,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -10604,7 +10322,7 @@ ORDER BY [FA].[Roll Year],
               <BreakLocation>Start</BreakLocation>
             </PageBreak>
             <Top>4.12269in</Top>
-            <Height>1.91328in</Height>
+            <Height>1.91327in</Height>
             <Width>12.74521in</Width>
             <ZIndex>2</ZIndex>
             <Style>
@@ -10612,7 +10330,6 @@ ORDER BY [FA].[Roll Year],
                 <Color>White</Color>
                 <Style>None</Style>
               </Border>
-              <FontFamily>Tahoma</FontFamily>
             </Style>
           </Tablix>
           <Tablix Name="Tablix_Totals">
@@ -10658,7 +10375,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>Assessment Area:</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>11pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -10693,7 +10409,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Area.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>11pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -10728,7 +10443,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>N E T    T A X A B L E    V A L U E    T O T A L S</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>11pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -10778,9 +10492,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Property Class</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -10815,9 +10527,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Occurrences</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -10850,9 +10560,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>General</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -10885,9 +10593,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Occurrences</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -10920,9 +10626,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Hospital</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -10955,9 +10659,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Occurrences</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -10990,9 +10692,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>School</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -11030,9 +10730,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>=IIF(Fields!RESNONRES.Value = "RES", Fields!Property_Class.Value, SWITCH(Fields!Property_Class.Value = "Utilities", "2 - Utilities", Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter", "S.644LGA/398VC", Fields!Property_Class.Value = "Supportive Housing", "3 - Supportive Housing", Fields!Property_Class.Value = "Major Industry", "4 - Major Industry", Fields!Property_Class.Value = "Light Industry", "5 - Light Industry", Fields!Property_Class.Value = "Business And Other", "6 - Business And Other", Fields!Property_Class.Value = "Managed Forest Land", "7 - Managed Forest Land", Fields!Property_Class.Value = "Rec/Non Profit", "8 - Rec/Non Profit", Fields!Property_Class.Value = "Farm", "9 - Farm"))</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -11072,7 +10770,6 @@ ORDER BY [FA].[Roll Year],
 ,Fields!Occurrences.Value + Fields!Folio_Count.Value
 ,Fields!Folio_Count.Value)))</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -11110,7 +10807,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Net_Gen_Land.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -11152,7 +10848,6 @@ ORDER BY [FA].[Roll Year],
 ,Fields!Occurrences.Value + Fields!Folio_Count.Value
 ,Fields!Folio_Count.Value)))</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -11190,7 +10885,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Net_Hosp_Land.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -11232,7 +10926,6 @@ ORDER BY [FA].[Roll Year],
 ,Fields!Occurrences.Value + Fields!Folio_Count.Value
 ,Fields!Folio_Count.Value)))</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -11270,7 +10963,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Net_School_Land.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -11313,7 +11005,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=IIf(Fields!RESNONRES.Value = "RES", "1 - *Total Residential*", "other")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -11361,7 +11052,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -11409,7 +11099,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Gen_Land.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -11459,7 +11148,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -11507,7 +11195,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Hosp_Land.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -11557,7 +11244,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -11605,7 +11291,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_School_Land.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -11662,7 +11347,6 @@ ORDER BY [FA].[Roll Year],
 + Space(1)
 +Fields!Area.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -11707,7 +11391,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -11755,7 +11438,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Gen_Land.Value, "Area4")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -11806,7 +11488,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -11856,7 +11537,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Hosp_Land.Value, "Area4")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -11907,7 +11587,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -11957,7 +11636,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_School_Land.Value, "Area4")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -12012,9 +11690,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -12056,9 +11732,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -12096,9 +11770,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -12136,9 +11808,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -12176,9 +11846,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -12221,9 +11889,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value EvaluationMode="Constant">Folio Count:</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -12259,9 +11925,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -12297,9 +11961,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -12335,9 +11997,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Net Taxable Assessment:</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -12372,9 +12032,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -12407,9 +12065,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Net Taxable Assessment:</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -12449,9 +12105,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>General:</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -12487,9 +12141,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>=CStr(FORMAT(Sum(Fields!Folio_Count.Value), "N0"))</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -12525,9 +12177,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -12563,9 +12213,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>General:</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -12599,7 +12247,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_Gen_Land.Value, "Area4")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -12634,9 +12281,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -12669,9 +12314,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>School Residential:</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -12705,7 +12348,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(IIF(Fields!RESNONRES.Value = "RES", CDbl(Fields!Net_School_Land.Value), CDbl(0)), "Area4")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -12745,9 +12387,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>School:</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -12783,9 +12423,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>=CStr(FORMAT(Sum(Fields!Folio_Count.Value), "N0"))</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -12821,9 +12459,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -12859,9 +12495,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Less S.644LGA/398VC:</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -12902,7 +12536,6 @@ ORDER BY [FA].[Roll Year],
 ,Fields!Net_Gen_Improvements.Value
 ,"qryData")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -12941,9 +12574,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -12980,9 +12611,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>School Non-Residential:</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -13020,7 +12649,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(IIF(Fields!RESNONRES.Value = "NONRES", CDbl(Fields!Net_School_Land.Value), CDbl(0)), "Area4")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -13060,9 +12688,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Hospital:</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -13099,9 +12725,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>=CStr(FORMAT(Sum(Fields!Folio_Count.Value), "N0"))</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -13138,9 +12762,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -13177,9 +12799,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Total:</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -13223,7 +12843,6 @@ ORDER BY [FA].[Roll Year],
 ,Fields!Net_Gen_Improvements.Value
 ,"qryData")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -13263,9 +12882,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -13342,7 +12959,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Net_School_Land.Value, "Area4")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -13482,7 +13098,6 @@ ORDER BY [FA].[Roll Year],
                 <Color>White</Color>
                 <Style>None</Style>
               </Border>
-              <FontFamily>Tahoma</FontFamily>
             </Style>
           </Tablix>
         </ReportItems>
