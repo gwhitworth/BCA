@@ -1428,7 +1428,12 @@ DateValue(Mid(Parameters!p_CN.Label,InStr(Parameters!p_CN.Label,"on ")+3))
             </TablixColumnHierarchy>
             <TablixRowHierarchy>
               <TablixMembers>
-                <TablixMember />
+                <TablixMember>
+                  <FixedData>true</FixedData>
+                  <KeepWithGroup>After</KeepWithGroup>
+                  <RepeatOnNewPage>true</RepeatOnNewPage>
+                  <KeepTogether>true</KeepTogether>
+                </TablixMember>
                 <TablixMember>
                   <Group Name="JUR_CODE">
                     <GroupExpressions>

@@ -147,15 +147,15 @@ ORDER BY [Cycle Number Sort] DESC</CommandText>
             <Value>=Parameters!p_RD.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>SELECT FA.[Roll Year], 
-       RD.[Regional District Code], 
-       RD.[Regional District], 
-       ED.[BCA Code], 
-       AG.[Jurisdiction Code]+' '+AG.[Jurisdiction Type Desc]+' of '+AG.[Jurisdiction Desc] AS Jurisdiction, 
-       PC.[Property Class Code], 
-       PC.[Property Class Desc], 
-       PC.[Property Conversion Factor], 
-       IIF(COUNT(OCCUR.[Occur Count]) = 0, NULL, COUNT(OCCUR.[Occur Count])) AS [Hosp Folio], 
+        <CommandText>SELECT [FA].[Roll Year], 
+       [RD].[Regional District Code], 
+       [RD].[Regional District], 
+       [ED].[BCA Code], 
+       [AG].[Jurisdiction Code]+' '+[AG].[Jurisdiction Type Desc]+' of '+[AG].[Jurisdiction Desc] AS [Jurisdiction], 
+       [PC].[Property Class Code], 
+       [PC].[Property Class Desc], 
+       [PC].[Property Conversion Factor], 
+       ISNULL(SUM([OC].[Property Class Occurrence]), 0) AS [Hosp Folio], 
        SUM(CASE
                WHEN [FA].[Assessment Code] = '01'
                THEN IIF([FA].[Net Other Land Value] = 0, NULL, [FA].[Net Other Land Value])
@@ -164,48 +164,39 @@ ORDER BY [Cycle Number Sort] DESC</CommandText>
                WHEN [FA].[Assessment Code] = '02'
                THEN IIF([FA].[Net Other Building Value] = 0, NULL, [FA].[Net Other Building Value])
            END) AS [Hosp Improvements]
-FROM edw.FactAllAssessedAmounts AS FA
-     INNER JOIN edw.dimPropertyClass AS PC ON FA.dimPropertyClass_SK = PC.dimPropertyClass_SK
-     INNER JOIN edw.dimAssessmentGeography AS AG ON FA.dimAssessmentGeography_SK = AG.dimAssessmentGeography_SK
-     INNER JOIN edw.dimFolio AS FO ON FO.dimFolio_SK = FA.dimFolio_SK
-                                      AND FO.[Folio Status Code] = '01'
-     INNER JOIN edw.dimRegionalDistrict AS RD ON RD.dimRegionalDistrict_SK = FO.dimRegionalDistrict_SK
-     INNER JOIN edw.dimElectoralDistrict AS ED ON ED.dimJurisdiction_SK = AG.dimJurisdiction_SK
-     LEFT OUTER JOIN
-(
-    SELECT FAV.dimFolio_SK, 
-           FAV.[Property Class Code], 
-           COUNT(*) - 1 AS [Occur Count]
-    FROM edw.FactAllAssessedAmounts AS FAV
-         INNER JOIN edw.dimPropertyClass AS PC ON FAV.dimPropertyClass_SK = PC.dimPropertyClass_SK
-         INNER JOIN edw.dimAssessmentGeography AS AG ON FAV.dimAssessmentGeography_SK = AG.dimAssessmentGeography_SK
-    WHERE(FAV.[Roll Year] = @p_RY)
-         AND (AG.[Roll Category Code] = '1')
-         AND (FAV.[Cycle Number] &lt;= @p_CN)
-         AND (FAV.[Assessment Code] = '02')
-    GROUP BY FAV.dimFolio_SK, 
-             FAV.[Property Class Code]
-    HAVING(COUNT(*) &gt; 1)
-) AS OCCUR ON OCCUR.dimFolio_SK = FA.dimFolio_SK
-WHERE(FA.[Roll Year] = @p_RY)
-     AND (FA.[Cycle Number] = @p_CN)
-     AND (FA.[Current Cycle Flag] = 'Current Cycle Only')
-     AND (RD.[Regional District Code] IN(@p_RD))
-     AND (AG.[Jurisdiction Type Code] = 'R')
-     AND (ED.[BCA Code] &lt;&gt; 'Z')
-GROUP BY FA.[Roll Year], 
-         RD.[Regional District Code], 
-         RD.[Regional District], 
-         ED.[BCA Code], 
-         AG.[Jurisdiction Code]+' '+AG.[Jurisdiction Type Desc]+' of '+AG.[Jurisdiction Desc], 
-         PC.[Property Class Code], 
-         PC.[Property Class Desc], 
-         PC.[Property Conversion Factor]
-ORDER BY FA.[Roll Year], 
-         RD.[Regional District Code], 
-         ED.[BCA Code], 
-         Jurisdiction, 
-         PC.[Property Class Code];</CommandText>
+FROM [edw].[FactAllAssessedAmounts] AS [FA]
+     INNER JOIN [edw].[dimPropertyClass] AS [PC]
+     ON [FA].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
+     INNER JOIN [edw].[dimAssessmentGeography] AS [AG]
+     ON [FA].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
+     INNER JOIN [edw].[dimFolio] AS [FO]
+     ON [FO].[dimFolio_SK] = [FA].[dimFolio_SK]
+        AND [FO].[Folio Status Code] = '01'
+     INNER JOIN [edw].[dimRegionalDistrict] AS [RD]
+     ON [RD].[dimRegionalDistrict_SK] = [FO].[dimRegionalDistrict_SK]
+     INNER JOIN [edw].[bridgeJurisdictionRegionalDistrictElectoralDistrict] AS [ED]
+     ON [ED].[dimJurisdiction_SK] = [AG].[dimJurisdiction_SK]
+     INNER JOIN [edw].[FactPropertyClassOccurrenceCount] AS [OC]
+     ON [FA].[dimFolio_SK] = [OC].[dimFolio_SK]
+WHERE([FA].[Roll Year] = @p_RY)
+     AND ([FA].[Cycle Number] = @p_CN)
+     AND ([FA].[Current Cycle Flag] = 'Yes')
+     AND ([RD].[Regional District Code] IN(@p_RD))
+     AND ([AG].[Jurisdiction Type Code] = 'R')
+     AND ([ED].[BCA Code] &lt;&gt; 'Z')
+GROUP BY [FA].[Roll Year], 
+         [RD].[Regional District Code], 
+         [RD].[Regional District], 
+         [ED].[BCA Code], 
+         [AG].[Jurisdiction Code]+' '+[AG].[Jurisdiction Type Desc]+' of '+[AG].[Jurisdiction Desc], 
+         [PC].[Property Class Code], 
+         [PC].[Property Class Desc], 
+         [PC].[Property Conversion Factor]
+ORDER BY [FA].[Roll Year], 
+         [RD].[Regional District Code], 
+         [ED].[BCA Code], 
+         [Jurisdiction], 
+         [PC].[Property Class Code];</CommandText>
       </Query>
       <Fields>
         <Field Name="Roll_Year">
@@ -246,11 +237,11 @@ ORDER BY FA.[Roll Year],
         </Field>
         <Field Name="Hosp_Land">
           <DataField>Hosp Land</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Hosp_Improvements">
           <DataField>Hosp Improvements</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
       </Fields>
     </DataSet>
@@ -269,70 +260,64 @@ ORDER BY FA.[Roll Year],
           </QueryParameter>
         </QueryParameters>
         <CommandText>SELECT [FA].[Roll Year], 
+       [RD].[Regional District Code], 
        [RD].[Regional District], 
        [ED].[BCA Code], 
-       AG.[Jurisdiction Code]+' '+AG.[Jurisdiction Type Desc]+' of '+AG.[Jurisdiction Desc] AS [Jurisdiction], 
+       [AG].[Jurisdiction Code]+' '+[AG].[Jurisdiction Type Desc]+' of '+[AG].[Jurisdiction Desc] AS [Jurisdiction], 
        [PC].[Property Class Code], 
-       [PC].[Property Sub Class Desc], 
+       [PC].[Property Class Desc], 
        [PC].[Property Conversion Factor], 
-       COUNT([OCCUR].[Occur Count]) AS [Hosp Folio], 
+       ISNULL(SUM([OC].[Property Class Occurrence]), 0) AS [Hosp Folio], 
        SUM(CASE
                WHEN [FA].[Assessment Code] = '01'
-               THEN [FA].[Net Other Land Value]
+               THEN IIF([FA].[Net Other Land Value] = 0, NULL, [FA].[Net Other Land Value])
            END) AS [Hosp Land], 
        SUM(CASE
                WHEN [FA].[Assessment Code] = '02'
-               THEN [FA].[Net Other Building Value]
+               THEN IIF([FA].[Net Other Building Value] = 0, NULL, [FA].[Net Other Building Value])
            END) AS [Hosp Improvements]
 FROM [edw].[FactAllAssessedAmounts] AS [FA]
-     INNER JOIN [edw].[dimPropertyClass] AS [PC] ON [FA].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
-     INNER JOIN [edw].[dimAssessmentGeography] AS [AG] ON [FA].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
-     INNER JOIN [edw].[dimFolio] AS [FO] ON [FO].[dimFolio_SK] = [FA].[dimFolio_SK]
-                                            AND FO.[Folio Status Code] = '01'
-     INNER JOIN [edw].[dimRegionalDistrict] AS [RD] ON [RD].dimRegionalDistrict_SK = [FO].dimRegionalDistrict_SK
-     INNER JOIN [edw].[dimElectoralDistrict] AS [ED] ON [ED].dimJurisdiction_SK = [AG].dimJurisdiction_SK
-     LEFT OUTER JOIN
-(
-    SELECT [FAV].dimFolio_SK, 
-           [FAV].[Property Class Code], 
-           COUNT(*) - 1 AS [Occur Count]
-    FROM [EDW].[edw].[FactAllAssessedAmounts] AS [FAV]
-         INNER JOIN [edw].[dimPropertyClass] AS [PC] ON [FAV].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
-         INNER JOIN [edw].[dimAssessmentGeography] AS [AG] ON [FAV].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
-    WHERE [FAV].[Roll Year] = @p_RY
-          AND [AG].[Roll Category Code] = '1'
-          AND [FAV].[Cycle Number] &lt;= @p_CN
-          AND [Assessment Code] = '02'
-    GROUP BY [FAV].dimFolio_SK, 
-             [FAV].[Property Class Code]
-    HAVING COUNT(*) &gt; 1
-) AS [OCCUR] ON [OCCUR].dimFolio_SK = [FA].dimFolio_SK
-WHERE [FA].[Roll Year] = @p_RY
-      AND [FA].[Cycle Number] = @p_CN
-      AND ([FA].[Current Cycle Flag] = 'Current Cycle Only')
-      AND [PC].[Property Sub Class Code] = '0202'
-      AND [RD].[Regional District Code] in (@p_RD)
-      AND [AG].[Jurisdiction Type Code] = 'R'
-      AND [ED].[BCA Code] &lt;&gt; 'Z'
+     INNER JOIN [edw].[dimPropertyClass] AS [PC]
+     ON [FA].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
+     INNER JOIN [edw].[dimAssessmentGeography] AS [AG]
+     ON [FA].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
+     INNER JOIN [edw].[dimFolio] AS [FO]
+     ON [FO].[dimFolio_SK] = [FA].[dimFolio_SK]
+        AND [FO].[Folio Status Code] = '01'
+     INNER JOIN [edw].[dimRegionalDistrict] AS [RD]
+     ON [RD].[dimRegionalDistrict_SK] = [FO].[dimRegionalDistrict_SK]
+     INNER JOIN [edw].[bridgeJurisdictionRegionalDistrictElectoralDistrict] AS [ED]
+     ON [ED].[dimJurisdiction_SK] = [AG].[dimJurisdiction_SK]
+     INNER JOIN [edw].[FactPropertyClassOccurrenceCount] AS [OC]
+     ON [FA].[dimFolio_SK] = [OC].[dimFolio_SK]
+WHERE([FA].[Roll Year] = @p_RY)
+     AND ([FA].[Cycle Number] = @p_CN)
+     AND ([FA].[Current Cycle Flag] = 'Yes')
+     AND ([RD].[Regional District Code] IN(@p_RD))
+     AND ([AG].[Jurisdiction Type Code] = 'R')
+     AND ([ED].[BCA Code] &lt;&gt; 'Z')
 GROUP BY [FA].[Roll Year], 
+         [RD].[Regional District Code], 
          [RD].[Regional District], 
          [ED].[BCA Code], 
-         AG.[Jurisdiction Code]+' '+AG.[Jurisdiction Type Desc]+' of '+AG.[Jurisdiction Desc], 
+         [AG].[Jurisdiction Code]+' '+[AG].[Jurisdiction Type Desc]+' of '+[AG].[Jurisdiction Desc], 
          [PC].[Property Class Code], 
-         [PC].[Property Sub Class Desc], 
+         [PC].[Property Class Desc], 
          [PC].[Property Conversion Factor]
 ORDER BY [FA].[Roll Year], 
-         [RD].[Regional District], 
+         [RD].[Regional District Code], 
          [ED].[BCA Code], 
          [Jurisdiction], 
-         [PC].[Property Class Code], 
-         [PC].[Property Sub Class Desc], 
-         [PC].[Property Conversion Factor];</CommandText>
+         [PC].[Property Class Code];</CommandText>
       </Query>
       <Fields>
         <Field Name="Roll_Year">
           <DataField>Roll Year</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Regional_District_Code">
+          <DataField>Regional District Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Regional_District">
           <DataField>Regional District</DataField>
@@ -350,8 +335,8 @@ ORDER BY [FA].[Roll Year],
           <DataField>Property Class Code</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Property_Sub_Class_Desc">
-          <DataField>Property Sub Class Desc</DataField>
+        <Field Name="Property_Class_Desc">
+          <DataField>Property Class Desc</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Property_Conversion_Factor">
@@ -364,11 +349,11 @@ ORDER BY [FA].[Roll Year],
         </Field>
         <Field Name="Hosp_Land">
           <DataField>Hosp Land</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Hosp_Improvements">
           <DataField>Hosp Improvements</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
       </Fields>
     </DataSet>
@@ -992,7 +977,9 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Folio.Value)</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>#,0</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -1012,6 +999,7 @@ ORDER BY [FA].[Roll Year],
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -3183,14 +3171,14 @@ IIf(Fields!Hosp_Land.Value = 0
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox20">
+                        <Textbox Name="Textbox5">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Total</Value>
+                                  <Value />
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>

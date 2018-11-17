@@ -361,8 +361,8 @@ ORDER BY [Cycle Number Sort] DESC;</CommandText>
     BEGIN
         SELECT DISTINCT 
                [AG].[Area Code], 
-               [dimJurisdiction_SK], 
-               [dimJurisdiction_BK], 
+               [AG].[dimJurisdiction_SK], 
+               [AG].[dimJurisdiction_BK], 
                [AG].[Jurisdiction Code], 
                [Jurisdiction Desc], 
                [Jurisdiction], 

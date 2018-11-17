@@ -78,66 +78,53 @@
         <CommandText>SELECT [FA].[Roll Year], 
        [RD].[Regional District], 
        '(AA'+[AG].[Area Code]+')' AS [Area Code], 
-       AG.[Jurisdiction Code]+'   '+AG.[Jurisdiction Type Desc]+' of '+AG.[Jurisdiction Desc] AS [Jurisdiction], 
+       [AG].[Jurisdiction Code]+'   '+[AG].[Jurisdiction Type Desc]+' of '+[AG].[Jurisdiction Desc] AS [Jurisdiction], 
        [ED].[BCA Code], 
        COUNT(DISTINCT CASE
                           WHEN [FA].[Assessment Code] = '01'
                       -- AND [FA].[Net General Land Value] &gt; 1
-                          THEN [FA].dimFolio_SK
+                          THEN [FA].[dimFolio_SK]
                       END) AS [Gen Folio], 
        SUM(CASE
                WHEN [FA].[Assessment Code] = '01'
-               THEN IIF([FA].[Net General Land Value]=0,NULL,[FA].[Net General Land Value])
+               THEN IIF([FA].[Net General Land Value] = 0, NULL, [FA].[Net General Land Value])
            END) AS [Gen Land], 
        SUM(CASE
                WHEN [FA].[Assessment Code] = '02'
-               THEN IIF([FA].[Net General Building Value]=0,NULL,[FA].[Net General Building Value])
+               THEN IIF([FA].[Net General Building Value] = 0, NULL, [FA].[Net General Building Value])
            END) AS [Gen Improvements], 
-       COUNT([OCCUR].[Occur Count]) AS [Hosp Folio], 
+       ISNULL(SUM([OC].[Property Class Occurrence]), 0) AS [Hosp Folio], 
        SUM(CASE
                WHEN [FA].[Assessment Code] = '01'
-               THEN IIF([FA].[Net Other Land Value]=0,NULL,[FA].[Net Other Land Value])
+               THEN IIF([FA].[Net Other Land Value] = 0, NULL, [FA].[Net Other Land Value])
            END) AS [Hosp Land], 
        SUM(CASE
                WHEN [FA].[Assessment Code] = '02'
-               THEN IIF([FA].[Net Other Building Value]=0,NULL,[FA].[Net Other Building Value])
+               THEN IIF([FA].[Net Other Building Value] = 0, NULL, [FA].[Net Other Building Value])
            END) AS [Hosp Improvements]
 FROM [edw].[FactAllAssessedAmounts] AS [FA]
-     INNER JOIN [edw].[dimPropertyClass] AS [PC] ON [FA].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
-     INNER JOIN [edw].[dimAssessmentGeography] AS [AG] ON [FA].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
-     INNER JOIN [edw].[dimFolio] AS [FO] ON [FO].[dimFolio_SK] = [FA].[dimFolio_SK]
-                                            AND FO.[Folio Status Code] = '01'
-     INNER JOIN [edw].[dimRegionalDistrict] AS [RD] ON [RD].dimRegionalDistrict_SK = [FO].dimRegionalDistrict_SK
-     LEFT OUTER JOIN [edw].[dimElectoralDistrict] AS [ED] ON [ED].dimJurisdiction_SK = [AG].dimJurisdiction_SK
-     LEFT OUTER JOIN
-(
-    SELECT [FAV].dimFolio_SK, 
-           [FAV].[Property Class Code], 
-           COUNT(*) - 1 AS [Occur Count]
-    FROM [EDW].[edw].[FactAllAssessedAmounts] AS [FAV]
-         INNER JOIN [edw].[dimPropertyClass] AS [PC] ON [FAV].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
-         INNER JOIN [edw].[dimAssessmentGeography] AS [AG] ON [FAV].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
-INNER JOIN [edw].[dimFolio] AS [FO] ON [FO].[dimFolio_SK] = [FAV].[dimFolio_SK]
-                                            AND FO.[Folio Status Code] = '01'
-     INNER JOIN [edw].[dimRegionalDistrict] AS [RD] ON [RD].dimRegionalDistrict_SK = [FO].dimRegionalDistrict_SK
-    WHERE [FAV].[Roll Year] = @p_RY
-          AND AG.[Roll Category Code] = '1'
-          AND [FAV].[Cycle Number] &lt;= @p_CN
-          AND [Assessment Code] = '02'
-		  AND [RD].[Regional District Code] IN (@p_RD)
-    GROUP BY [FAV].dimFolio_SK, 
-             [FAV].[Property Class Code]
-    HAVING COUNT(*) &gt; 1
-) AS [OCCUR] ON [OCCUR].dimFolio_SK = [FA].dimFolio_SK
+     INNER JOIN [edw].[dimPropertyClass] AS [PC]
+     ON [FA].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
+     INNER JOIN [edw].[dimAssessmentGeography] AS [AG]
+     ON [FA].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
+        AND [AG].[Roll Category Code] = '1'
+     INNER JOIN [edw].[dimFolio] AS [FO]
+     ON [FO].[dimFolio_SK] = [FA].[dimFolio_SK]
+        AND [FO].[Folio Status Code] = '01'
+     INNER JOIN [edw].[dimRegionalDistrict] AS [RD]
+     ON [RD].[dimRegionalDistrict_SK] = [FO].[dimRegionalDistrict_SK]
+     INNER JOIN [edw].[bridgeJurisdictionRegionalDistrictElectoralDistrict] AS [ED]
+     ON [ED].[dimJurisdiction_SK] = [AG].[dimJurisdiction_SK]
+     INNER JOIN [edw].[FactPropertyClassOccurrenceCount] AS [OC]
+     ON [FA].[dimFolio_SK] = [OC].[dimFolio_SK]
 WHERE [FA].[Roll Year] = @p_RY
-      AND AG.[Roll Category Code] = '1'
       AND [FA].[Cycle Number] = @p_CN
-      AND ([FA].[Current Cycle Flag] = 'Current Cycle Only')
-      AND [RD].[Regional District Code] IN (@p_RD)
+      AND ([FA].[Current Cycle Flag] = 'Yes')
+      AND [RD].[Regional District Code] IN(@p_RD)
 GROUP BY [FA].[Roll Year], 
          [RD].[Regional District], 
          '(AA'+[AG].[Area Code]+')', 
-         AG.[Jurisdiction Code]+'   '+AG.[Jurisdiction Type Desc]+' of '+AG.[Jurisdiction Desc], 
+         [AG].[Jurisdiction Code]+'   '+[AG].[Jurisdiction Type Desc]+' of '+[AG].[Jurisdiction Desc], 
          [ED].[BCA Code]
 ORDER BY [FA].[Roll Year], 
          [RD].[Regional District], 
@@ -172,11 +159,11 @@ ORDER BY [FA].[Roll Year],
         </Field>
         <Field Name="Gen_Land">
           <DataField>Gen Land</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Hosp_Land">
           <DataField>Hosp Land</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="BCA_Code">
           <DataField>BCA Code</DataField>
@@ -184,11 +171,11 @@ ORDER BY [FA].[Roll Year],
         </Field>
         <Field Name="Gen_Improvements">
           <DataField>Gen Improvements</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Hosp_Improvements">
           <DataField>Hosp Improvements</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
       </Fields>
     </DataSet>
@@ -278,9 +265,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>="Regional District " + Fields!Regional_District.Value</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -311,7 +296,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>HOSPITAL VALUES</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -388,9 +372,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -422,9 +404,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -456,9 +436,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -490,9 +468,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -524,9 +500,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -596,9 +570,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Area</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -631,9 +603,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Folios</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -666,9 +636,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Land</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -701,9 +669,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Improvement</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -736,9 +702,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Total</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -779,7 +743,6 @@ Fields!BCA_Code.Value
 +Space(4)
 + Mid(Fields!Jurisdiction.Value, InStr(Fields!Jurisdiction.Value, " (")))</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -812,7 +775,6 @@ Fields!BCA_Code.Value
                                 <TextRun>
                                   <Value>=Fields!Area_Code.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -847,7 +809,6 @@ Fields!BCA_Code.Value
                                 <TextRun>
                                   <Value>=Fields!Hosp_Folio.Value +Fields!Gen_Folio.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -883,7 +844,6 @@ Fields!BCA_Code.Value
                                 <TextRun>
                                   <Value>=Fields!Hosp_Land.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -919,7 +879,6 @@ Fields!BCA_Code.Value
                                 <TextRun>
                                   <Value>=Fields!Hosp_Improvements.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -955,7 +914,6 @@ Fields!BCA_Code.Value
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Land.Value) + Sum(Fields!Hosp_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -999,7 +957,6 @@ Fields!BCA_Code.Value
                                 <TextRun>
                                   <Value>=IIf(IsNothing(Fields!BCA_Code.Value), "Municipal Sub Total", "Rural Sub Total")</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -1104,7 +1061,6 @@ Fields!BCA_Code.Value
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Land.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1141,7 +1097,6 @@ Fields!BCA_Code.Value
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1178,7 +1133,6 @@ Fields!BCA_Code.Value
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Land.Value) + Sum(Fields!Hosp_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1220,7 +1174,6 @@ Fields!BCA_Code.Value
                                 <TextRun>
                                   <Value>Total</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -1325,7 +1278,6 @@ Fields!BCA_Code.Value
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Land.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1362,7 +1314,6 @@ Fields!BCA_Code.Value
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1399,7 +1350,6 @@ Fields!BCA_Code.Value
                                 <TextRun>
                                   <Value>=Sum(Fields!Hosp_Land.Value) + Sum(Fields!Hosp_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>

@@ -75,20 +75,19 @@
             <Value>=Parameters!p_RD.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>SELECT
-       [FA].[Roll Year], 
+        <CommandText>SELECT [FA].[Roll Year], 
        [RD].[Regional District], 
        '(AA'+[AG].[Area Code]+')' AS [Area Code], 
-       AG.[Jurisdiction Code]+'   '+AG.[Jurisdiction Type Desc]+' of '+AG.[Jurisdiction Desc] AS [Jurisdiction], 
+       [AG].[Jurisdiction Code]+'   '+[AG].[Jurisdiction Type Desc]+' of '+[AG].[Jurisdiction Desc] AS [Jurisdiction], 
        [ED].[BCA Code], 
        [Converted Land], 
        [Converted Improvements], 
        COUNT(DISTINCT CASE
                           WHEN [FA].[Assessment Code] = '01'
                       -- AND [FA].[Net General Land Value] &gt; 1
-                          THEN [FA].dimFolio_SK
+                          THEN [FA].[dimFolio_SK]
                       END) AS [Gen Folio], 
-       IIF(COUNT([OCCUR].[Occur Count]) = 0, NULL, COUNT([OCCUR].[Occur Count])) AS [Hosp Folio], 
+       ISNULL(SUM([OC].[Property Class Occurrence]), 0) AS [Hosp Folio], 
        SUM(CASE
                WHEN [FA].[Assessment Code] = '01'
                THEN IIF([FA].[Net Other Land Value] = 0, NULL, [FA].[Net Other Land Value])
@@ -98,60 +97,53 @@
                THEN IIF([FA].[Net Other Building Value] = 0, NULL, [FA].[Net Other Building Value])
            END) AS [Improvements]
 FROM [edw].[FactAllAssessedAmounts] AS [FA]
-     INNER JOIN [edw].[dimPropertyClass] AS [PC] ON [FA].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
-     INNER JOIN [edw].[dimAssessmentGeography] AS [AG] ON [FA].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
-     INNER JOIN [edw].[dimFolio] AS [FO] ON [FO].[dimFolio_SK] = [FA].[dimFolio_SK]
-                                            AND FO.[Folio Status Code] = '01'
-     INNER JOIN [edw].[dimRegionalDistrict] AS [RD] ON [RD].dimRegionalDistrict_SK = [FO].dimRegionalDistrict_SK
-     LEFT OUTER JOIN [edw].[dimElectoralDistrict] AS [ED] ON [ED].dimJurisdiction_SK = [AG].dimJurisdiction_SK
-     LEFT OUTER JOIN
-(
-    SELECT [FAV].dimFolio_SK, 
-           [FAV].[Property Class Code], 
-           COUNT(*) - 1 AS [Occur Count]
-    FROM [EDW].[edw].[FactAllAssessedAmounts] AS [FAV]
-         INNER JOIN [edw].[dimPropertyClass] AS [PC] ON [FAV].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
-         INNER JOIN [edw].[dimAssessmentGeography] AS [AG] ON [FAV].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
-         INNER JOIN [edw].[dimFolio] AS [FO] ON [FO].[dimFolio_SK] = [FAV].[dimFolio_SK]
-                                                AND FO.[Folio Status Code] = '01'
-         INNER JOIN [edw].[dimRegionalDistrict] AS [RD] ON [RD].dimRegionalDistrict_SK = [FO].dimRegionalDistrict_SK
-    WHERE [FAV].[Roll Year] = @p_RY
-          AND AG.[Roll Category Code] = '1'
-          AND [FAV].[Cycle Number] &lt;= @p_CN
-          AND [Assessment Code] = '02'
-          AND [RD].[Regional District Code] IN(@p_RD)
-    GROUP BY [FAV].dimFolio_SK, 
-             [FAV].[Property Class Code]
-    HAVING COUNT(*) &gt; 1
-) AS [OCCUR] ON [OCCUR].dimFolio_SK = [FA].dimFolio_SK
+     INNER JOIN [edw].[dimPropertyClass] AS [PC]
+     ON [FA].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
+     INNER JOIN [edw].[dimAssessmentGeography] AS [AG]
+     ON [FA].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
+     INNER JOIN [edw].[dimFolio] AS [FO]
+     ON [FO].[dimFolio_SK] = [FA].[dimFolio_SK]
+        AND [FO].[Folio Status Code] = '01'
+     INNER JOIN [edw].[dimRegionalDistrict] AS [RD]
+     ON [RD].[dimRegionalDistrict_SK] = [FO].[dimRegionalDistrict_SK]
+     INNER JOIN [edw].[bridgeJurisdictionRegionalDistrictElectoralDistrict] AS [ED]
+     ON [ED].[dimJurisdiction_SK] = [AG].[dimJurisdiction_SK]
+     INNER JOIN [edw].[FactPropertyClassOccurrenceCount] AS [OC]
+     ON [FA].[dimFolio_SK] = [OC].[dimFolio_SK]
      INNER JOIN
 (
-    SELECT [AG].dimJurisdiction_SK, 
+    SELECT [AG].[dimJurisdiction_SK], 
            SUM([FA].[Net Other Land Value] * ([PC].[Property Conversion Factor] / 100 / 100)) AS [Converted Land], 
            SUM([FA].[Net Other Building Value] * ([PC].[Property Conversion Factor] / 100 / 100)) AS [Converted Improvements]
     FROM [edw].[FactAllAssessedAmounts] AS [FA]
-         INNER JOIN [edw].[dimPropertyClass] AS [PC] ON [FA].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
-         INNER JOIN [edw].[dimAssessmentGeography] AS [AG] ON [FA].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
-                                                              AND AG.[Roll Category Code] = '1'
-         INNER JOIN [edw].[dimFolio] AS [FO] ON [FO].[dimFolio_SK] = [FA].[dimFolio_SK]
-                                                AND FO.[Folio Status Code] = '01'
-         INNER JOIN [edw].[dimRegionalDistrict] AS [RD] ON [RD].dimRegionalDistrict_SK = [FO].dimRegionalDistrict_SK
-         LEFT OUTER JOIN [edw].[dimElectoralDistrict] AS [ED] ON [ED].dimJurisdiction_SK = [AG].dimJurisdiction_SK
+         INNER JOIN [edw].[dimPropertyClass] AS [PC]
+         ON [FA].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
+         INNER JOIN [edw].[dimAssessmentGeography] AS [AG]
+         ON [FA].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
+            AND [AG].[Roll Category Code] = '1'
+         INNER JOIN [edw].[dimFolio] AS [FO]
+         ON [FO].[dimFolio_SK] = [FA].[dimFolio_SK]
+            AND [FO].[Folio Status Code] = '01'
+         INNER JOIN [edw].[dimRegionalDistrict] AS [RD]
+         ON [RD].[dimRegionalDistrict_SK] = [FO].[dimRegionalDistrict_SK]
+         INNER JOIN [edw].[bridgeJurisdictionRegionalDistrictElectoralDistrict] AS [ED]
+         ON [ED].[dimJurisdiction_SK] = [AG].[dimJurisdiction_SK]
     WHERE [FA].[Roll Year] = @p_RY
           AND [FA].[Cycle Number] = @p_CN
-          AND ([FA].[Current Cycle Flag] = 'Current Cycle Only')
+          AND ([FA].[Current Cycle Flag] = 'Yes')
           AND [RD].[Regional District Code] = @p_RD
           AND [ED].[BCA Code] IS NOT NULL
-    GROUP BY [AG].dimJurisdiction_SK
-) AS [CONV] ON [AG].dimJurisdiction_SK = [CONV].dimJurisdiction_SK
+    GROUP BY [AG].[dimJurisdiction_SK]
+) AS [CONV]
+     ON [AG].[dimJurisdiction_SK] = [CONV].[dimJurisdiction_SK]
 WHERE [FA].[Roll Year] = @p_RY
       AND [FA].[Cycle Number] = @p_CN
-      AND [FA].[Current Cycle Flag] = 'Current Cycle Only'
+      AND [FA].[Current Cycle Flag] = 'Yes'
       AND [RD].[Regional District Code] = @p_RD
 GROUP BY [FA].[Roll Year], 
          [RD].[Regional District], 
          '(AA'+[AG].[Area Code]+')', 
-         AG.[Jurisdiction Code]+'   '+AG.[Jurisdiction Type Desc]+' of '+AG.[Jurisdiction Desc], 
+         [AG].[Jurisdiction Code]+'   '+[AG].[Jurisdiction Type Desc]+' of '+[AG].[Jurisdiction Desc], 
          [ED].[BCA Code], 
          [Converted Land], 
          [Converted Improvements]
@@ -159,7 +151,7 @@ ORDER BY [FA].[Roll Year],
          [RD].[Regional District], 
          [Area Code], 
          [Jurisdiction], 
-         [ED].[BCA Code]</CommandText>
+         [ED].[BCA Code];</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>
@@ -185,7 +177,7 @@ ORDER BY [FA].[Roll Year],
         </Field>
         <Field Name="Converted_Land">
           <DataField>Converted Land</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Gen_Folio">
           <DataField>Gen Folio</DataField>
@@ -193,7 +185,7 @@ ORDER BY [FA].[Roll Year],
         </Field>
         <Field Name="Converted_Improvements">
           <DataField>Converted Improvements</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Hosp_Folio">
           <DataField>Hosp Folio</DataField>
@@ -201,11 +193,11 @@ ORDER BY [FA].[Roll Year],
         </Field>
         <Field Name="Land">
           <DataField>Land</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Improvements">
           <DataField>Improvements</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Land_Improv_Total">
           <Value>=Fields!Land.Value + Fields!Improvements.Value</Value>
@@ -310,9 +302,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>="Regional District: " + Fields!Regional_District.Value</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -350,9 +340,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -424,9 +412,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -463,9 +449,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Occurrences</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -499,9 +483,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Land</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -537,9 +519,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>="Converted"
 + System.Environment.NewLine 
 + "Land"</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -573,9 +553,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Improvements</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -611,9 +589,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>="Converted"
 + System.Environment.NewLine 
 + "Improvements"</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -647,9 +623,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>Total</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -685,9 +659,7 @@ ORDER BY [FA].[Roll Year],
                                   <Value>="Converted"
 + System.Environment.NewLine 
 + "Total"</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -728,9 +700,7 @@ ORDER BY [FA].[Roll Year],
 ,Fields!BCA_Code.Value 
 +Space(4)
 + Mid(Fields!Jurisdiction.Value,InStr(Fields!Jurisdiction.Value," (")))</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -763,9 +733,7 @@ ORDER BY [FA].[Roll Year],
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!Area_Code.Value</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -801,7 +769,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Gen_Folio.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -836,7 +803,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Land.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -871,7 +837,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Converted_Land.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -906,7 +871,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Improvements.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -941,7 +905,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Converted_Improvements.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -976,7 +939,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Land_Improv_Total.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -1011,7 +973,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Fields!Conv_Totla.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <Format>#,0</Format>
                                   </Style>
                                 </TextRun>
@@ -1051,7 +1012,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value EvaluationMode="Constant">*** Rural Sub Total ***</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -1162,7 +1122,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Land.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1199,7 +1158,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Converted_Land.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1236,7 +1194,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1273,7 +1230,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Converted_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1310,7 +1266,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Land_Improv_Total.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1347,7 +1302,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Conv_Totla.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1390,7 +1344,6 @@ ORDER BY [FA].[Roll Year],
                                   <Value>="Totals for Regional District " 
 +Left( Fields!Regional_District.Value,3)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -1495,7 +1448,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Land.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1532,7 +1484,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Converted_Land.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1569,7 +1520,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1606,7 +1556,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Converted_Improvements.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1643,7 +1592,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Land_Improv_Total.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1680,7 +1628,6 @@ ORDER BY [FA].[Roll Year],
                                 <TextRun>
                                   <Value>=Sum(Fields!Conv_Totla.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
