@@ -9,7 +9,9 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Default = Debug|Default
 		DebugLocal|Default = DebugLocal|Default
+		Prod|Default = Prod|Default
 		Release|Default = Release|Default
+		Test|Default = Test|Default
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{D0268A5F-1B97-403E-BD99-970401D1AE19}.Debug|Default.ActiveCfg = Debug
@@ -17,9 +19,15 @@ Global
 		{D0268A5F-1B97-403E-BD99-970401D1AE19}.Debug|Default.Deploy.0 = Debug
 		{D0268A5F-1B97-403E-BD99-970401D1AE19}.DebugLocal|Default.ActiveCfg = DebugLocal
 		{D0268A5F-1B97-403E-BD99-970401D1AE19}.DebugLocal|Default.Build.0 = DebugLocal
+		{D0268A5F-1B97-403E-BD99-970401D1AE19}.Prod|Default.ActiveCfg = Prod
+		{D0268A5F-1B97-403E-BD99-970401D1AE19}.Prod|Default.Build.0 = Prod
+		{D0268A5F-1B97-403E-BD99-970401D1AE19}.Prod|Default.Deploy.0 = Prod
 		{D0268A5F-1B97-403E-BD99-970401D1AE19}.Release|Default.ActiveCfg = Release
 		{D0268A5F-1B97-403E-BD99-970401D1AE19}.Release|Default.Build.0 = Release
 		{D0268A5F-1B97-403E-BD99-970401D1AE19}.Release|Default.Deploy.0 = Release
+		{D0268A5F-1B97-403E-BD99-970401D1AE19}.Test|Default.ActiveCfg = Test
+		{D0268A5F-1B97-403E-BD99-970401D1AE19}.Test|Default.Build.0 = Test
+		{D0268A5F-1B97-403E-BD99-970401D1AE19}.Test|Default.Deploy.0 = Test
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

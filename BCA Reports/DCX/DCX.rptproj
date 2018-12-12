@@ -334,8 +334,8 @@
       <Options>
         <OutputPath>bin\Debug</OutputPath>
         <TargetServerVersion>SSRS2016</TargetServerVersion>
-        <TargetServerURL>https://insite.bcassessment.ca/04/0404/Lists/Enterprise%20Report%20Links/AllItems.aspx</TargetServerURL>
-        <TargetFolder>DCX</TargetFolder>
+        <TargetServerURL>https://businessanalyticssystem.bcassessment.ca/ReportServer</TargetServerURL>
+        <TargetFolder>Enterprise/Assessment (Internal)/Rolls and Notices</TargetFolder>
         <TargetMobileReportFolder>Mobile Reports</TargetMobileReportFolder>
         <TargetDataSourceFolder>Data Sources</TargetDataSourceFolder>
         <TargetDatasetFolder>Datasets</TargetDatasetFolder>
@@ -364,6 +364,32 @@
         <TargetServerVersion>SSRS2016</TargetServerVersion>
         <TargetServerURL>http://localhost/reportserver</TargetServerURL>
         <TargetFolder>DCX</TargetFolder>
+        <TargetMobileReportFolder>Mobile Reports</TargetMobileReportFolder>
+        <TargetDataSourceFolder>Data Sources</TargetDataSourceFolder>
+        <TargetDatasetFolder>Datasets</TargetDatasetFolder>
+        <TargetReportPartFolder>Report Parts</TargetReportPartFolder>
+      </Options>
+    </Configuration>
+    <Configuration>
+      <Name>Test</Name>
+      <Options>
+        <OutputPath>bin\Debug</OutputPath>
+        <TargetServerVersion>SSRS2016</TargetServerVersion>
+        <TargetServerURL>https://businessanalyticssystem-test.bcassessment.ca/ReportServer</TargetServerURL>
+        <TargetFolder>Enterprise/Assessment (Internal)/Rolls and Notices</TargetFolder>
+        <TargetMobileReportFolder>Mobile Reports</TargetMobileReportFolder>
+        <TargetDataSourceFolder>Data Sources</TargetDataSourceFolder>
+        <TargetDatasetFolder>Datasets</TargetDatasetFolder>
+        <TargetReportPartFolder>Report Parts</TargetReportPartFolder>
+      </Options>
+    </Configuration>
+    <Configuration>
+      <Name>Prod</Name>
+      <Options>
+        <OutputPath>bin\Debug</OutputPath>
+        <TargetServerVersion>SSRS2016</TargetServerVersion>
+        <TargetServerURL>https://businessanalyticssystem.bcassessment.ca/ReportServer</TargetServerURL>
+        <TargetFolder>Enterprise/Assessment (Internal)/Rolls and Notices</TargetFolder>
         <TargetMobileReportFolder>Mobile Reports</TargetMobileReportFolder>
         <TargetDataSourceFolder>Data Sources</TargetDataSourceFolder>
         <TargetDatasetFolder>Datasets</TargetDatasetFolder>
