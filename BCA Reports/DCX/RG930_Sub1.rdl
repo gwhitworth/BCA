@@ -1110,9 +1110,6 @@ ORDER BY [FA].[Roll Year],
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>qryData</DataSetName>
-            <PageBreak>
-              <BreakLocation>Start</BreakLocation>
-            </PageBreak>
             <Filters>
               <Filter>
                 <FilterExpression>=Fields!BCA_Code.Value</FilterExpression>

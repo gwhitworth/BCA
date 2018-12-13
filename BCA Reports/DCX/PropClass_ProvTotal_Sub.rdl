@@ -91,7 +91,7 @@ FROM [edw].[FactAllAssessedAmounts] AS [FA]
                                             AND [FO].[Folio Status Code] = '01'
      --AND [BC Transit Flag] = 'Y'
      INNER JOIN [edw].[dimRegionalDistrict] AS [RD] ON [RD].[dimRegionalDistrict_SK] = [FO].[dimRegionalDistrict_SK]
-     LEFT OUTER JOIN [edw].[dimElectoralDistrict] AS [ED] ON [ED].dimJurisdiction_SK = [AG].dimJurisdiction_SK
+     LEFT OUTER JOIN [edw].[bridgeJurisdictionRegionalDistrictElectoralDistrict] AS [ED] ON [ED].dimJurisdiction_SK = [AG].dimJurisdiction_SK
      LEFT OUTER JOIN
 (
     SELECT [FAV].dimFolio_SK, 
@@ -137,11 +137,11 @@ ORDER BY [PC].[Property Class Code];</CommandText>
         </Field>
         <Field Name="Land">
           <DataField>Land</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Improvements">
           <DataField>Improvements</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Total">
           <Value>=Fields!Land.Value+Fields!Improvements.Value</Value>
@@ -195,9 +195,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -239,9 +237,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                               <TextRuns>
                                 <TextRun>
                                   <Value EvaluationMode="Constant">PROVINCIAL TOTALS</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -276,7 +272,6 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>BC TRANSIT</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -386,9 +381,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                               <TextRuns>
                                 <TextRun>
                                   <Value>Folios</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -421,9 +414,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                               <TextRuns>
                                 <TextRun>
                                   <Value>Occurrences</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -456,9 +447,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                               <TextRuns>
                                 <TextRun>
                                   <Value>Land</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -491,9 +480,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                               <TextRuns>
                                 <TextRun>
                                   <Value>Improvements</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -526,9 +513,7 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                               <TextRuns>
                                 <TextRun>
                                   <Value>Total</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                  </Style>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -567,7 +552,6 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>=Fields!Property_Class_Code.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -589,7 +573,6 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -602,7 +585,6 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>=Fields!Property_Class_Desc.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -635,7 +617,6 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>=Fields!Folio.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -671,7 +652,6 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>=Fields!Occurrences.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -707,7 +687,6 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>=Fields!Land.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -743,7 +722,6 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>=Fields!Improvements.Value</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -779,7 +757,6 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>=IIf(Fields!Total.Value=0,Nothing,Fields!Total.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
                                   </Style>
@@ -820,7 +797,6 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>Total</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -928,7 +904,6 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Land.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -965,7 +940,6 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Land.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1002,7 +976,6 @@ ORDER BY [PC].[Property Class Code];</CommandText>
                                 <TextRun>
                                   <Value>=Sum(Fields!Total.Value)</Value>
                                   <Style>
-                                    <FontFamily>Tahoma</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
                                   </Style>
