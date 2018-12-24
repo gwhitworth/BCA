@@ -1830,7 +1830,6 @@ OR Parameters!p_MTC.Value = "LA")
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
-              <Top>0in</Top>
               <Left>11.47896in</Left>
               <Height>0.25in</Height>
               <Width>1.40625in</Width>
@@ -1866,7 +1865,6 @@ OR Parameters!p_MTC.Value = "LA")
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>ReportName</rd:DefaultName>
-              <Top>0in</Top>
               <Height>0.25in</Height>
               <Width>1.88784in</Width>
               <ZIndex>2</ZIndex>
@@ -2159,7 +2157,7 @@ OR Parameters!p_MTC.Value = "LA")
           <ValueField>Minor_Tax_Desc</ValueField>
         </DataSetReference>
       </DefaultValue>
-      <Prompt>Minor Tax</Prompt>
+      <Prompt>Minor Tax (Area)</Prompt>
       <ValidValues>
         <DataSetReference>
           <DataSetName>qryRDMT</DataSetName>
@@ -2177,7 +2175,7 @@ OR Parameters!p_MTC.Value = "LA")
           <ValueField>Minor_Tax_Desc</ValueField>
         </DataSetReference>
       </DefaultValue>
-      <Prompt>Minor Tax</Prompt>
+      <Prompt>Minor Tax (Community)</Prompt>
       <ValidValues>
         <DataSetReference>
           <DataSetName>qryMT</DataSetName>
