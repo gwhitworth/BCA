@@ -44,9 +44,6 @@
           <QueryParameter Name="@p_RY">
             <Value>=Parameters!p_RY.Value</Value>
           </QueryParameter>
-          <QueryParameter Name="@p_JR">
-            <Value>=Parameters!p_JR.Value</Value>
-          </QueryParameter>
           <QueryParameter Name="@p_MT">
             <Value>=Parameters!p_MT.Value</Value>
           </QueryParameter>
@@ -58,40 +55,55 @@
        REPLACE([PC].[Property Class], [PC].[Property Class Code]+' - ', '') AS [Property Class], 
        IIF([PC].[Property Sub Class Code] = '0202', '0201', ISNULL([PC].[Property Sub Class Code], [PC].[Property Class Code])) AS [PSC Code], 
        IIF([PC].[Property Sub Class Code] = '0202', 'Utilities', ISNULL([PC].[Property Sub Class Desc], [PC].[Property Class Desc])) AS [Property Subclass], 
-       COUNT([OC].[Property Class Occurrence]) AS [Folio Count], 
+       COUNT([OCRCNT]) AS [Folio Count], 
        SUM(CASE
                WHEN [FA].[Actual Land Value] &gt; 0
                     OR [FA].[Actual Building Value] &gt; 0
-               THEN [OC].[Property Class Occurrence]
+               THEN [OCRCNT]
                ELSE 0
            END) AS [Occurrence Count], 
        SUM([FA].[Actual Land Value]) AS [Actual - Land], 
        SUM([FA].[Actual Building Value]) AS [Actual - Impr], 
+       SUM([FA].[Actual Land Value]) + SUM([FA].[Actual Building Value]) AS [Total], 
        SUM(CASE
-               WHEN [FA].[Net General Land Value] &gt; 0
-                    OR [FA].[Net General Building Value] &gt; 0
-               THEN [OC].[Property Class Occurrence]
+               WHEN [General Net - Land] &gt; 0
+                    OR [General Net - Impr] &gt; 0
+               THEN [OCRCNT]
                ELSE 0
            END) AS [General Occurrences], 
-       SUM([FA].[Net General Land Value]) AS [General Net - Land], 
-       SUM([FA].[Net General Building Value]) AS [General Net - Impr], 
+       SUM([General Net - Land]) AS [General Net - Land], 
+       SUM([General Net - Impr]) AS [General Net - Impr], 
        SUM(CASE
-               WHEN [FA].[Net School Land Value] &gt; 0
-                    OR [FA].[Net School Building Value] &gt; 0
-               THEN [OC].[Property Class Occurrence]
+               WHEN [School Net - Land] &gt; 0
+                    OR [School Net - Impr] &gt; 0
+               THEN [OCRCNT]
                ELSE 0
            END) AS [School Occurrences], 
-       SUM([FA].[Net School Land Value]) AS [School Net - Land], 
-       SUM([FA].[Net School Building Value]) AS [School Net - Impr], 
+       SUM([School Net - Land]) AS [School Net - Land], 
+       SUM([School Net - Impr]) AS [School Net - Impr], 
        SUM(CASE
-               WHEN [FA].[Net Other Land Value] &gt; 0
-                    OR [FA].[Net Other Building Value] &gt; 0
-               THEN [OC].[Property Class Occurrence]
+               WHEN [Hospital Net - Land] &gt; 0
+                    OR [Hospital Net - Impr] &gt; 0
+               THEN [OCRCNT]
                ELSE 0
            END) AS [Hospital Occurrences], 
-       SUM([FA].[Net Other Land Value]) AS [Hospital Net - Land], 
-       SUM([FA].[Net Other Building Value]) AS [Hospital Net - Impr]
-FROM [edw].[FactAllAssessedAmounts] AS [FA]
+       SUM([Hospital Net - Land]) AS [Hospital Net - Land], 
+       SUM([Hospital Net - Impr]) AS [Hospital Net - Impr]
+FROM [edw].[FactActualAmounts] AS [FA]
+     INNER JOIN
+(
+    SELECT DISTINCT 
+           [dimFolio_SK], 
+           SUM([Net General Land Value]) AS [General Net - Land], 
+           SUM([Net General Building Value]) AS [General Net - Impr], 
+           SUM([Net School Land Value]) AS [School Net - Land], 
+           SUM([Net School Building Value]) AS [School Net - Impr], 
+           SUM([Net Other Land Value]) AS [Hospital Net - Land], 
+           SUM([Net Other Building Value]) AS [Hospital Net - Impr]
+    FROM [edw].[FactAllAssessedAmounts]
+    GROUP BY [dimFolio_SK]
+) AS [FA2]
+     ON [FA].[dimFolio_SK] = [FA2].[dimFolio_SK]
      INNER JOIN [edw].[dimPropertyClass] AS [PC]
      ON [FA].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
      INNER JOIN [edw].[dimAssessmentGeography] AS [AG]
@@ -101,19 +113,20 @@ FROM [edw].[FactAllAssessedAmounts] AS [FA]
         AND [AG].[dimJurisdiction_SK] = [BTC].[dimJurisdiction_SK]
      INNER JOIN [edw].[dimMinorTaxCode] AS [TC]
      ON [BTC].[dimMinorTaxCode_SK] = [TC].[dimMinorTaxCode_SK]
-     INNER JOIN [edw].[FactPropertyClassOccurrenceCount] AS [OC]
-     ON [FA].[dimFolio_SK] = [OC].[dimFolio_SK]
      INNER JOIN [edw].[dimFolio] AS [FO]
-     ON [FO].[dimFolio_SK] = [OC].[dimFolio_SK]
+     ON [FO].[dimFolio_SK] = [FA].[dimFolio_SK]
         AND [FO].[Folio Status Code] = '01'
-WHERE [FA].[Roll Year] = @p_RY
-      AND [TC].[Jurisdiction Code] IN(@p_JR)
-     AND [FA].[Cycle Number] &lt;=
+     INNER JOIN
 (
-    SELECT MAX([Cycle Number])
-    FROM [edw].[dimRollCycle]
-    WHERE [Roll Year] = @p_RY
-)
+    SELECT DISTINCT 
+           [dimFolio_SK], 
+           SUM([Property Class Occurrence]) AS [OCRCNT]
+    FROM [edw].[FactPropertyClassOccurrenceCount]
+    GROUP BY [dimFolio_SK]
+) AS [OC]
+     ON [FA2].[dimFolio_SK] = [OC].[dimFolio_SK]
+WHERE [FA].[Roll Year] = @p_RY
+      AND [FA].[Cycle Number] = -1
      AND [TC].[Minor Tax Code] IN
 (
     SELECT [Minor Tax Code]
@@ -187,6 +200,10 @@ ORDER BY [FA].[Roll Year],
         </Field>
         <Field Name="Actual___Impr">
           <DataField>Actual - Impr</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Total">
+          <DataField>Total</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="General_Occurrences">
