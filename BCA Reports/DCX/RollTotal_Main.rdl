@@ -1382,7 +1382,7 @@ OR Parameters!p_MTC.Value = "LA")
             </Style>
           </Subreport>
         </ReportItems>
-        <Height>5.04792in</Height>
+        <Height>3.19375in</Height>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1401,13 +1401,80 @@ OR Parameters!p_MTC.Value = "LA")
           </RightBorder>
         </Style>
       </Body>
-      <Width>12.88521in</Width>
+      <Width>13.62541in</Width>
       <Page>
         <PageHeader>
           <Height>0.73959in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
+            <Textbox Name="tbHeader1">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Parameters!p_RY.Value</Value>
+                      <Style>
+                        <FontSize>14pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value> ROLL TOTALS</Value>
+                      <Style>
+                        <FontSize>14pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Label>CYCLE_DESC</Label>
+                      <Value>= Mid(Parameters!p_CN.Label,1,InStr(Parameters!p_CN.Label," run on "))</Value>
+                      <Style />
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Label>Regional District Provincial Totals</Label>
+                      <Value />
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <Top>0.00001in</Top>
+              <Height>0.70833in</Height>
+              <Width>13.62541in</Width>
+              <Visibility>
+                <Hidden>=IIf(Parameters!p_BY.Value = "AM" OR Parameters!p_BY.Value = "AV", True, False)</Hidden>
+              </Visibility>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <VerticalAlign>Top</VerticalAlign>
+                <PaddingTop>5pt</PaddingTop>
+              </Style>
+            </Textbox>
             <Textbox Name="tbHeader2">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
@@ -1476,144 +1543,10 @@ OR Parameters!p_MTC.Value = "LA")
                 </Paragraph>
               </Paragraphs>
               <Height>0.70833in</Height>
-              <Width>12.88521in</Width>
-              <Visibility>
-                <Hidden>=IIf(Parameters!p_BY.Value = "AM", False, True)</Hidden>
-              </Visibility>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <VerticalAlign>Top</VerticalAlign>
-                <PaddingTop>5pt</PaddingTop>
-              </Style>
-            </Textbox>
-            <Textbox Name="tbHeader3">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>=Parameters!p_RY.Value</Value>
-                      <Style>
-                        <FontSize>14pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                      </Style>
-                    </TextRun>
-                    <TextRun>
-                      <Value>   AVERAGE ROLL TOTALS</Value>
-                      <Style>
-                        <FontSize>14pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Center</TextAlign>
-                  </Style>
-                </Paragraph>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Label>CYCLE_DESC</Label>
-                      <Value />
-                      <Style />
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Center</TextAlign>
-                  </Style>
-                </Paragraph>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Label>Regional District Provincial Totals</Label>
-                      <Value />
-                      <Style>
-                        <FontSize>12pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Center</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <Height>0.70833in</Height>
-              <Width>12.88521in</Width>
+              <Width>13.03104in</Width>
               <ZIndex>1</ZIndex>
               <Visibility>
-                <Hidden>=IIf(Parameters!p_BY.Value = "AV", False, True)</Hidden>
-              </Visibility>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <VerticalAlign>Top</VerticalAlign>
-                <PaddingTop>5pt</PaddingTop>
-              </Style>
-            </Textbox>
-            <Textbox Name="tbHeader1">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>=Parameters!p_RY.Value</Value>
-                      <Style>
-                        <FontSize>14pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                      </Style>
-                    </TextRun>
-                    <TextRun>
-                      <Value>   ROLL TOTALS</Value>
-                      <Style>
-                        <FontSize>14pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Center</TextAlign>
-                  </Style>
-                </Paragraph>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Label>CYCLE_DESC</Label>
-                      <Value>= Mid(Parameters!p_CN.Label,1,InStr(Parameters!p_CN.Label," run on "))</Value>
-                      <Style />
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Center</TextAlign>
-                  </Style>
-                </Paragraph>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Label>Regional District Provincial Totals</Label>
-                      <Value />
-                      <Style>
-                        <FontSize>12pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Center</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <Top>0.00001in</Top>
-              <Height>0.70833in</Height>
-              <Width>12.88521in</Width>
-              <ZIndex>2</ZIndex>
-              <Visibility>
-                <Hidden>=IIf(Parameters!p_BY.Value = "AM" OR Parameters!p_BY.Value = "AV", True, False)</Hidden>
+                <Hidden>=IIf(Parameters!p_BY.Value = "AM", False, True)</Hidden>
               </Visibility>
               <Style>
                 <Border>
@@ -1629,7 +1562,7 @@ OR Parameters!p_MTC.Value = "LA")
               <Left>0.1in</Left>
               <Height>0.37153in</Height>
               <Width>2.35069in</Width>
-              <ZIndex>3</ZIndex>
+              <ZIndex>2</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1662,7 +1595,7 @@ OR Parameters!p_MTC.Value = "LA")
               <Left>0.1in</Left>
               <Height>0.1875in</Height>
               <Width>2.35069in</Width>
-              <ZIndex>4</ZIndex>
+              <ZIndex>3</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1685,10 +1618,10 @@ OR Parameters!p_MTC.Value = "LA")
                 </Actions>
               </ActionInfo>
               <Top>0.35in</Top>
-              <Left>12.56291in</Left>
+              <Left>13.31291in</Left>
               <Height>0.35834in</Height>
               <Width>0.3125in</Width>
-              <ZIndex>5</ZIndex>
+              <ZIndex>4</ZIndex>
               <ToolTip>="The risk rating"</ToolTip>
               <Style>
                 <Border>
@@ -1706,7 +1639,7 @@ OR Parameters!p_MTC.Value = "LA")
                   <TextRuns>
                     <TextRun>
                       <Value>="Processed Date:" + Space(2)
-+ Lookup(Parameters!p_CN.Value,Fields!Cycle_Number.Value,Fields!Roll_Entry_Run_Date.Value, "qryRCN")</Value>
+                        + Lookup(Parameters!p_CN.Value,Fields!Cycle_Number.Value,Fields!Roll_Entry_Run_Date.Value, "qryRCN")</Value>
                       <Style>
                         <Format>MMM d, yyyy</Format>
                       </Style>
@@ -1719,10 +1652,10 @@ OR Parameters!p_MTC.Value = "LA")
               </Paragraphs>
               <rd:DefaultName>Textbox2</rd:DefaultName>
               <Top>0.05in</Top>
-              <Left>10.84313in</Left>
+              <Left>11.59313in</Left>
               <Height>0.15972in</Height>
               <Width>2.03228in</Width>
-              <ZIndex>6</ZIndex>
+              <ZIndex>5</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1749,15 +1682,83 @@ OR Parameters!p_MTC.Value = "LA")
               </Paragraphs>
               <rd:DefaultName>Textbox2</rd:DefaultName>
               <Top>0.23in</Top>
-              <Left>10.84313in</Left>
+              <Left>11.59313in</Left>
               <Height>0.15972in</Height>
               <Width>2.03228in</Width>
-              <ZIndex>7</ZIndex>
+              <ZIndex>6</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
                 </Border>
                 <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+            </Textbox>
+            <Textbox Name="tbHeader3">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Parameters!p_RY.Value</Value>
+                      <Style>
+                        <FontSize>14pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value> AVERAGE ROLL TOTALS</Value>
+                      <Style>
+                        <FontSize>14pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Label>CYCLE_DESC</Label>
+                      <Value />
+                      <Style />
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Label>Regional District Provincial Totals</Label>
+                      <Value />
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <Top>0.03126in</Top>
+              <Height>0.70833in</Height>
+              <Width>13.62541in</Width>
+              <ZIndex>7</ZIndex>
+              <Visibility>
+                <Hidden>=IIf(Parameters!p_BY.Value = "AV", False, True)</Hidden>
+              </Visibility>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <VerticalAlign>Top</VerticalAlign>
+                <PaddingTop>5pt</PaddingTop>
               </Style>
             </Textbox>
           </ReportItems>
@@ -1830,6 +1831,7 @@ OR Parameters!p_MTC.Value = "LA")
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
+              <Top>0in</Top>
               <Left>11.47896in</Left>
               <Height>0.25in</Height>
               <Width>1.40625in</Width>
@@ -1865,6 +1867,7 @@ OR Parameters!p_MTC.Value = "LA")
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>ReportName</rd:DefaultName>
+              <Top>0in</Top>
               <Height>0.25in</Height>
               <Width>1.88784in</Width>
               <ZIndex>2</ZIndex>

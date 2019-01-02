@@ -19,7 +19,7 @@
            THEN 'Revised Roll run on '+FORMAT([Roll Entry Run Date], 'dd-MMM-yyyy', 'en-CA')
            ELSE 'Cycle '+[Cycle Number]+' run on '+FORMAT([Roll Entry Run Date], 'dd-MMM-yyyy', 'en-CA')
        END AS [Cycle Display], 
-      FORMAT([Roll Entry Run Date], 'dd-MMM-yyyy', 'en-CA')
+       FORMAT([Roll Entry Run Date], 'dd/MMM/yyyy') AS [Roll Entry Run Date]
 FROM [edw].[dimRollCycle]
 WHERE [Roll Year] = @p_RY
       AND [Cycle Number] =
@@ -43,8 +43,8 @@ ORDER BY [Cycle Number Sort] DESC;</CommandText>
         <DataField>Cycle Display</DataField>
         <rd:TypeName>System.String</rd:TypeName>
       </Field>
-      <Field Name="ID">
-        <DataField />
+      <Field Name="Roll_Entry_Run_Date">
+        <DataField>Roll Entry Run Date</DataField>
         <rd:TypeName>System.String</rd:TypeName>
       </Field>
     </Fields>
