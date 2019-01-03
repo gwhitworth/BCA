@@ -3355,9 +3355,6 @@ ORDER BY [Minor Tax Label];</CommandText>
                   <Group Name="Details" />
                 </TablixMember>
                 <TablixMember>
-                  <Visibility>
-                    <Hidden>true</Hidden>
-                  </Visibility>
                   <KeepWithGroup>Before</KeepWithGroup>
                 </TablixMember>
               </TablixMembers>
