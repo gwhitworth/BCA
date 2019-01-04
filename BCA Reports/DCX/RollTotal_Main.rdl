@@ -924,6 +924,47 @@ AND [RD].[Regional District Code] &lt; '80'
         </Field>
       </Fields>
     </DataSet>
+    <DataSet Name="qryRC">
+      <Query>
+        <DataSourceName>EDW</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@p_RY">
+            <Value>=Parameters!p_RY.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>SELECT 
+	[Cycle Number]   
+	,CASE 
+		WHEN [Cycle Number] = -1 THEN
+			'Completed Roll run on ' + FORMAT( [Roll Entry Run Date], 'dd-MMM-yyyy', 'en-CA' )
+		WHEN [Cycle Number] = 0 THEN
+			'Revised Roll run on ' + FORMAT( [Roll Entry Run Date], 'dd-MMM-yyyy', 'en-CA' )
+		ELSE
+			'Cycle ' + [Cycle Number] + ' run on ' + FORMAT( [Roll Entry Run Date], 'dd-MMM-yyyy', 'en-CA' )
+	 END AS [Cycle Display]
+	 ,[Roll Entry Run Date]
+FROM  [edw].[dimRollCycle]
+
+WHERE [Roll Year] = @p_RY
+
+	  OR ([Cycle Number] IN (0,-1) AND [Roll Year] = @p_RY)
+ORDER BY [Roll Entry Run Date] DESC</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="Cycle_Number">
+          <DataField>Cycle Number</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Cycle_Display">
+          <DataField>Cycle Display</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Roll_Entry_Run_Date">
+          <DataField>Roll Entry Run Date</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
   </DataSets>
   <ReportSections>
     <ReportSection>
@@ -1976,7 +2017,7 @@ OR Parameters!p_MTC.Value = "LA")
       <Prompt>* Roll Version</Prompt>
       <ValidValues>
         <DataSetReference>
-          <DataSetName>qryRCN</DataSetName>
+          <DataSetName>qryRC</DataSetName>
           <ValueField>Cycle_Number</ValueField>
           <LabelField>Cycle_Display</LabelField>
         </DataSetReference>
