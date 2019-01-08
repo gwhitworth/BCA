@@ -92,7 +92,7 @@
        END AS [RESNONRES], 
        ISNULL([PC].[Property Sub Class Desc], [PC].[Property Class Desc]) AS [Property Class], 
        COUNT([FA].[dimFolio_SK]) AS [Folio_Count], 
-       SUM([OCRCNT]) AS [Occurrences], 
+       COUNT([OCRCNT]) AS [Occurrences], 
        SUM([FA].[Actual Land Value]) AS [Actual Land Value], 
        SUM([FA].[Actual Building Value]) AS [Actual Building Value], 
        SUM([Actual - Total]) AS [Actual - Total], 
@@ -162,6 +162,7 @@ INNER JOIN
            [dimFolio_SK], 
            [Property Class Occurrence] AS [OCRCNT]
     FROM [edw].[FactPropertyClassOccurrenceCount]
+	WHERE [Assessment Code] = '01'
 ) AS [OC]
 ON [FA].[dimFolio_SK] = [OC].[dimFolio_SK]
 INNER JOIN [edw].[dimPropertyClass] AS [PC]
@@ -4805,7 +4806,7 @@ CStr(Variables!vSection644.Value) ="","0"
               <BreakLocation>End</BreakLocation>
             </PageBreak>
             <Top>2.775in</Top>
-            <Height>2.9417in</Height>
+            <Height>2.94169in</Height>
             <Width>12.74521in</Width>
             <Style>
               <Border>
@@ -8732,7 +8733,6 @@ CDbl(Fields!Net_School_Land.Value), CDbl(0)), "Area2")</Value>
                           </Style>
                         </Textbox>
                         <ColSpan>2</ColSpan>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
@@ -18418,7 +18418,9 @@ CStr(Variables!vSection644.Value) ="","0"
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(IIF(IsNothing(Fields!Occurrences.Value), Fields!Folio_Count.Value, IIF(Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter", Fields!Occurrences.Value + Fields!Folio_Count.Value, Fields!Folio_Count.Value)))</Value>
+                                  <Value>=Sum(IIF(IsNothing(Fields!Occurrences.Value), Fields!Folio_Count.Value, 
+IIF(Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter"
+, Fields!Occurrences.Value + Fields!Folio_Count.Value, Fields!Folio_Count.Value)))</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -18758,6 +18760,7 @@ Sum(IIF(IsNothing(Fields!Occurrences.Value), Fields!Folio_Count.Value, IIF(Field
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
