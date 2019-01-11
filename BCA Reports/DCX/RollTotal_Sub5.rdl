@@ -83,7 +83,8 @@
        ISNULL([PC].[Property Sub Class Desc], [PC].[Property Class Desc]) AS [Property Class], 
        COUNT(DISTINCT [FA].[dimFolio_SK]) AS [Folio_Count], 
        COUNT([OCRCNT]) AS [Occurrences], 
-       SUM([FA].[Actual Land Value]) AS [Actual Land Value], 
+       SUM([FolioCnt]) AS [Actual Folio Count], 
+	   SUM([FA].[Actual Land Value]) AS [Actual Land Value], 
        SUM([FA].[Actual Building Value]) AS [Actual Building Value], 
        SUM([Actual - Total]) AS [Actual - Total], 
        SUM([Gross General Land Value]) AS [Gross_Gen_Land], 
@@ -108,7 +109,7 @@ FROM
 (
     SELECT [FA].[dimFolio_SK], 
            [dimPropertyClass_SK], 
-           COUNT([FA].[dimFolio_SK]) AS [FolioCnt], 
+           SUM([FA].[Actual Folio Count]) AS [FolioCnt], 
            SUM([Actual Land Value]) AS [Actual Land Value], 
            SUM([Actual Building Value]) AS [Actual Building Value], 
            SUM([Actual Land Value]) + SUM([Actual Building Value]) AS [Actual - Total], 
@@ -131,14 +132,15 @@ FROM
            SUM([Net School Land Value]) AS [Net School Land Value], 
            SUM([Net School Building Value]) AS [Net School Building Value]
     FROM [edw].[FactTotalAllAmounts] AS [FA]
-         INNER JOIN [edw].[dimFolio] AS [FO]
-         ON [FO].[dimFolio_SK] = [FA].[dimFolio_SK]
-            AND [FO].[Folio Status Code] = '01'
          INNER JOIN [edw].[dimAssessmentGeography] AS [AG]
          ON [AG].[dimAssessmentGeography_SK] = [FA].[dimAssessmentGeography_SK]
+         INNER JOIN [edw].[dimJurisdiction] AS [JR]
+         ON [AG].[dimJurisdiction_SK] = [JR].[dimJurisdiction_SK]
+         INNER JOIN [edw].[dimJurisdictionType] AS [JT]
+         ON [JR].[dimJurisdictionType_SK] = [JT].[dimJurisdictionType_SK]
     WHERE [FA].[Roll Year] = @p_RY
           AND [Cycle Number] = @p_CN
-          AND [AG].[Jurisdiction Code] &gt; '199'
+          AND [JT].[Jurisdiction Type Code] IN('C', 'D', 'T', 'V', 'R')
     GROUP BY [FA].[dimFolio_SK], 
              [dimPropertyClass_SK]
 ) AS [FA]
@@ -197,6 +199,10 @@ ORDER BY [RESNONRES] DESC,
         <Field Name="Gross_Gen_Land">
           <DataField>Gross_Gen_Land</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Actual_Folio_Count">
+          <DataField>Actual Folio Count</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="Gross_Gen_Improvements">
           <DataField>Gross_Gen_Improvements</DataField>
@@ -669,7 +675,7 @@ ORDER BY [RESNONRES] DESC,
                                   <Value>=Sum(IIF(IsNothing(Fields!Occurrences.Value), Fields!Folio_Count.Value
 , IIF(Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter"
 , Fields!Occurrences.Value + Fields!Folio_Count.Value
-, Fields!Folio_Count.Value)))</Value>
+, Fields!Occurrences.Value)))</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0</Format>
@@ -928,7 +934,7 @@ ORDER BY [RESNONRES] DESC,
                                   <Value>=Sum(IIF(IsNothing(Fields!Occurrences.Value)
 , Fields!Folio_Count.Value
 , IIF(Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter"
-, Fields!Occurrences.Value + Fields!Folio_Count.Value, Fields!Folio_Count.Value)))</Value>
+, Fields!Occurrences.Value + Fields!Folio_Count.Value, Fields!Occurrences.Value)))</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -3039,7 +3045,11 @@ CStr(Variables!vSection644.Value) ="","0"
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(IIF(IsNothing(Fields!Occurrences.Value), Fields!Folio_Count.Value, IIF(Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter", Fields!Occurrences.Value + Fields!Folio_Count.Value, Fields!Folio_Count.Value)))</Value>
+                                  <Value>=Sum(IIF(IsNothing(Fields!Occurrences.Value)
+, Fields!Folio_Count.Value
+, IIF(Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter"
+, Fields!Occurrences.Value + Fields!Folio_Count.Value
+, Fields!Occurrences.Value)))</Value>
                                   <Style>
                                     <FontSize>7.5pt</FontSize>
                                     <Format>#,0</Format>
@@ -7036,7 +7046,10 @@ CStr(Variables!vSection644.Value) ="","0"
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Sum(IIF(IsNothing(Fields!Occurrences.Value)
-, Fields!Folio_Count.Value, IIF(Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter", Fields!Occurrences.Value + Fields!Folio_Count.Value, Fields!Folio_Count.Value)))</Value>
+, Fields!Folio_Count.Value
+, IIF(Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter"
+, Fields!Occurrences.Value + Fields!Folio_Count.Value
+, Fields!Occurrences.Value)))</Value>
                                   <Style>
                                     <FontSize>7.5pt</FontSize>
                                     <Format>#,0</Format>
@@ -10939,7 +10952,7 @@ CStr(Variables!vSection644.Value) ="","0"
 , Fields!Folio_Count.Value
 , IIF(Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter"
 ,Fields!Occurrences.Value + Fields!Folio_Count.Value
-,Fields!Folio_Count.Value)))</Value>
+,Fields!Occurrences.Value)))</Value>
                                   <Style>
                                     <Format>#,0</Format>
                                   </Style>
@@ -11013,7 +11026,11 @@ CStr(Variables!vSection644.Value) ="","0"
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(IIF(IsNothing(Fields!Occurrences.Value), Fields!Folio_Count.Value, IIF(Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter", Fields!Occurrences.Value + Fields!Folio_Count.Value, Fields!Folio_Count.Value)))</Value>
+                                  <Value>=Sum(IIF(IsNothing(Fields!Occurrences.Value)
+, Fields!Folio_Count.Value
+, IIF(Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter"
+, Fields!Occurrences.Value + Fields!Folio_Count.Value
+, Fields!Occurrences.Value)))</Value>
                                   <Style>
                                     <Format>#,0</Format>
                                   </Style>
@@ -11087,7 +11104,11 @@ CStr(Variables!vSection644.Value) ="","0"
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(IIF(IsNothing(Fields!Occurrences.Value), Fields!Folio_Count.Value, IIF(Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter", Fields!Occurrences.Value + Fields!Folio_Count.Value, Fields!Folio_Count.Value)))</Value>
+                                  <Value>=Sum(IIF(IsNothing(Fields!Occurrences.Value)
+, Fields!Folio_Count.Value
+, IIF(Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter"
+, Fields!Occurrences.Value + Fields!Folio_Count.Value
+, Fields!Occurrences.Value)))</Value>
                                   <Style>
                                     <Format>#,0</Format>
                                   </Style>
@@ -13679,7 +13700,10 @@ CStr(Variables!vSection644.Value) ="","0"
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(IIF(IsNothing(Fields!Occurrences.Value), Fields!Folio_Count.Value, IIF(Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter", Fields!Occurrences.Value + Fields!Folio_Count.Value, Fields!Folio_Count.Value)))</Value>
+                                  <Value>=Sum(IIF(IsNothing(Fields!Occurrences.Value)
+, Fields!Folio_Count.Value
+, IIF(Fields!Property_Class.Value = "Section 644 LGA/Section 398 Vancouver Charter"
+, Fields!Occurrences.Value + Fields!Folio_Count.Value, Fields!Occurrences.Value)))</Value>
                                   <Style>
                                     <FontSize>7.5pt</FontSize>
                                     <Format>#,0</Format>
@@ -17123,7 +17147,7 @@ CStr(Variables!vSection644.Value) ="","0"
             </TablixRowHierarchy>
             <DataSetName>qryData</DataSetName>
             <Top>2.25in</Top>
-            <Height>2.23913in</Height>
+            <Height>2.23912in</Height>
             <Width>12.74521in</Width>
             <ZIndex>4</ZIndex>
             <Style>
