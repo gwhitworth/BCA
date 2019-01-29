@@ -315,6 +315,14 @@
       <FullPath>RollTotalMinorTax_Sub2.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>RollTotalMinorTaxJR.rdl</Name>
+      <FullPath>RollTotalMinorTaxJR.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RollTotalMinorTaxRD.rdl</Name>
+      <FullPath>RollTotalMinorTaxRD.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>RS009.rdl</Name>
       <FullPath>RS009.rdl</FullPath>
     </ProjectItem>
@@ -327,12 +335,8 @@
       <FullPath>Template.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>RollTotalMinorTaxRD.rdl</Name>
-      <FullPath>RollTotalMinorTaxRD.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>RollTotalMinorTaxJR.rdl</Name>
-      <FullPath>RollTotalMinorTaxJR.rdl</FullPath>
+      <Name>Assessment Roll Residental Sub.rdl</Name>
+      <FullPath>Assessment Roll Residental Sub.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>
