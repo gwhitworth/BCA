@@ -2624,7 +2624,6 @@ ORDER BY [FACT].[dimRollYear_SK],
               </Style>
             </Image>
             <Textbox Name="Textbox8">
-              <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
               <Paragraphs>
                 <Paragraph>
@@ -2655,7 +2654,6 @@ ORDER BY [FACT].[dimRollYear_SK],
               </Style>
             </Textbox>
             <Textbox Name="Textbox10">
-              <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
               <Paragraphs>
                 <Paragraph>
@@ -2699,10 +2697,49 @@ ORDER BY [FACT].[dimRollYear_SK],
                   </Style>
                 </Paragraph>
               </Paragraphs>
+              <ActionInfo>
+                <Actions>
+                  <Action>
+                    <Drillthrough>
+                      <ReportName>Assessment Roll Main</ReportName>
+                      <Parameters>
+                        <Parameter Name="p_RY">
+                          <Value>=Parameters!p_RY.Value</Value>
+                        </Parameter>
+                        <Parameter Name="p_CN">
+                          <Value>=Parameters!p_CN.Value</Value>
+                        </Parameter>
+                        <Parameter Name="p_RC">
+                          <Value>=Parameters!p_RC.Value</Value>
+                        </Parameter>
+                        <Parameter Name="p_BY">
+                          <Value>=Parameters!p_BY.Value</Value>
+                        </Parameter>
+                        <Parameter Name="p_RD">
+                          <Value>=Parameters!p_RD.Value</Value>
+                        </Parameter>
+                        <Parameter Name="p_SubRpt">
+                          <Value>RS</Value>
+                        </Parameter>
+                        <Parameter Name="p_AR">
+                          <Value>=Parameters!p_AR.Value</Value>
+                        </Parameter>
+                        <Parameter Name="p_JR">
+                          <Value>=Parameters!p_JR.Value</Value>
+                        </Parameter>
+                        <Parameter Name="p_NH">
+                          <Value>=Parameters!p_NH.Value</Value>
+                        </Parameter>
+                      </Parameters>
+                    </Drillthrough>
+                  </Action>
+                </Actions>
+              </ActionInfo>
               <Top>0.79861in</Top>
               <Height>0.25in</Height>
               <Width>1in</Width>
               <ZIndex>6</ZIndex>
+              <ToolTip>Load Residential Data by Clicking this Tab</ToolTip>
               <Style>
                 <Border>
                   <Color>=IIF(Parameters!p_SubRpt.Value = "RS","White","Black")</Color>
@@ -2731,11 +2768,50 @@ ORDER BY [FACT].[dimRollYear_SK],
                   </Style>
                 </Paragraph>
               </Paragraphs>
+              <ActionInfo>
+                <Actions>
+                  <Action>
+                    <Drillthrough>
+                      <ReportName>Assessment Roll Main</ReportName>
+                      <Parameters>
+                        <Parameter Name="p_RY">
+                          <Value>=Parameters!p_RY.Value</Value>
+                        </Parameter>
+                        <Parameter Name="p_CN">
+                          <Value>=Parameters!p_CN.Value</Value>
+                        </Parameter>
+                        <Parameter Name="p_RC">
+                          <Value>=Parameters!p_RC.Value</Value>
+                        </Parameter>
+                        <Parameter Name="p_BY">
+                          <Value>=Parameters!p_BY.Value</Value>
+                        </Parameter>
+                        <Parameter Name="p_RD">
+                          <Value>=Parameters!p_RD.Value</Value>
+                        </Parameter>
+                        <Parameter Name="p_SubRpt">
+                          <Value>UT</Value>
+                        </Parameter>
+                        <Parameter Name="p_AR">
+                          <Value>=Parameters!p_AR.Value</Value>
+                        </Parameter>
+                        <Parameter Name="p_JR">
+                          <Value>=Parameters!p_JR.Value</Value>
+                        </Parameter>
+                        <Parameter Name="p_NH">
+                          <Value>=Parameters!p_NH.Value</Value>
+                        </Parameter>
+                      </Parameters>
+                    </Drillthrough>
+                  </Action>
+                </Actions>
+              </ActionInfo>
               <Top>0.79861in</Top>
               <Left>1.03583in</Left>
               <Height>0.25in</Height>
               <Width>1in</Width>
               <ZIndex>7</ZIndex>
+              <ToolTip>Load Utility Data by Clicking this Tab</ToolTip>
               <Style>
                 <Border>
                   <Color>=IIF(Parameters!p_SubRpt.Value = "UT","White","Black")</Color>
@@ -2764,11 +2840,50 @@ ORDER BY [FACT].[dimRollYear_SK],
                   </Style>
                 </Paragraph>
               </Paragraphs>
+              <ActionInfo>
+                <Actions>
+                  <Action>
+                    <Drillthrough>
+                      <ReportName>Assessment Roll Non-Residental Sub</ReportName>
+                      <Parameters>
+                        <Parameter Name="p_RY">
+                          <Value>=Parameters!p_RY.Value</Value>
+                        </Parameter>
+                        <Parameter Name="p_CN">
+                          <Value>=Parameters!p_CN.Value</Value>
+                        </Parameter>
+                        <Parameter Name="p_RC">
+                          <Value>=Parameters!p_RC.Value</Value>
+                        </Parameter>
+                        <Parameter Name="p_BY">
+                          <Value>=Parameters!p_BY.Value</Value>
+                        </Parameter>
+                        <Parameter Name="p_RD">
+                          <Value>=Parameters!p_RD.Value</Value>
+                        </Parameter>
+                        <Parameter Name="p_SubRpt">
+                          <Value>NR</Value>
+                        </Parameter>
+                        <Parameter Name="p_AR">
+                          <Value>=Parameters!p_AR.Value</Value>
+                        </Parameter>
+                        <Parameter Name="p_JR">
+                          <Value>=Parameters!p_JR.Value</Value>
+                        </Parameter>
+                        <Parameter Name="p_NH">
+                          <Value>=Parameters!p_NH.Value</Value>
+                        </Parameter>
+                      </Parameters>
+                    </Drillthrough>
+                  </Action>
+                </Actions>
+              </ActionInfo>
               <Top>0.79861in</Top>
               <Left>2.0775in</Left>
               <Height>0.25in</Height>
               <Width>1.07292in</Width>
               <ZIndex>8</ZIndex>
+              <ToolTip>Load Non-Residential Data by Clicking this Tab</ToolTip>
               <Style>
                 <Border>
                   <Color>=IIF(Parameters!p_SubRpt.Value = "NR","White","Black")</Color>

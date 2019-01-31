@@ -67,12 +67,24 @@
   </DataSets>
   <Reports>
     <ProjectItem>
+      <Name>Assessment Roll Main.rdl</Name>
+      <FullPath>Assessment Roll Main.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Assessment Roll Non-Residental Sub.rdl</Name>
+      <FullPath>Assessment Roll Non-Residental Sub.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>Assessment Roll Residental Sub.rdl</Name>
       <FullPath>Assessment Roll Residental Sub.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>Assessment_Roll_Main_Old.rdl</Name>
       <FullPath>Assessment_Roll_Main_Old.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Copy of Assessment_Roll_Main.rdl</Name>
+      <FullPath>Copy of Assessment_Roll_Main.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>Detail Report (cascading prompts) Template.rdl</Name>
@@ -339,16 +351,12 @@
       <FullPath>Template.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>Copy of Assessment_Roll_Main.rdl</Name>
-      <FullPath>Copy of Assessment_Roll_Main.rdl</FullPath>
+      <Name>Assess Roll Util Delete Later.rdl</Name>
+      <FullPath>Assess Roll Util Delete Later.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>Assessment Roll Main.rdl</Name>
-      <FullPath>Assessment Roll Main.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>Assessment Roll Non-Residental Sub.rdl</Name>
-      <FullPath>Assessment Roll Non-Residental Sub.rdl</FullPath>
+      <Name>Assess Roll NonRes Delete Later.rdl</Name>
+      <FullPath>Assess Roll NonRes Delete Later.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>Assessment Roll Utility Sub.rdl</Name>
