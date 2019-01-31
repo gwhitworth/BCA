@@ -67,8 +67,12 @@
   </DataSets>
   <Reports>
     <ProjectItem>
-      <Name>Assessment_Roll_Main.rdl</Name>
-      <FullPath>Assessment_Roll_Main.rdl</FullPath>
+      <Name>Assessment Roll Residental Sub.rdl</Name>
+      <FullPath>Assessment Roll Residental Sub.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Assessment_Roll_Main_Old.rdl</Name>
+      <FullPath>Assessment_Roll_Main_Old.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>Detail Report (cascading prompts) Template.rdl</Name>
@@ -335,8 +339,20 @@
       <FullPath>Template.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>Assessment Roll Residental Sub.rdl</Name>
-      <FullPath>Assessment Roll Residental Sub.rdl</FullPath>
+      <Name>Copy of Assessment_Roll_Main.rdl</Name>
+      <FullPath>Copy of Assessment_Roll_Main.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Assessment Roll Main.rdl</Name>
+      <FullPath>Assessment Roll Main.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Assessment Roll Non-Residental Sub.rdl</Name>
+      <FullPath>Assessment Roll Non-Residental Sub.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Assessment Roll Utility Sub.rdl</Name>
+      <FullPath>Assessment Roll Utility Sub.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>

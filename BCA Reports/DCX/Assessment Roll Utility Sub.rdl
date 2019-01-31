@@ -643,7 +643,7 @@ FROM
          ON [FACT].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
 		 INNER JOIN [edw].[dimRollCycle] AS [RC] 
 		 ON [RC].dimRollCycle_SK = [FACT].dimRollCycle_SK
-    WHERE @p_SubRpt =  'RS'
+    WHERE @p_SubRpt =  'UT'
 		  AND [Current Cycle Flag] = 'Yes'
           AND [FACT].[dimRollYear_SK] = @p_RY
 		  AND [RC].[Cycle Number] = @p_CN
@@ -786,7 +786,7 @@ INNER JOIN
                                                   [Impr PC 09])) AS [PIVOT_TMP]
 ) AS [PIVOTPC]
 ON [PIVOTPC].[dimFolio_SK] = [FACT].[dimFolio_SK]
-WHERE @p_SubRpt =  'RS'
+WHERE @p_SubRpt =  'UT'
       AND [FACT].[dimRollYear_SK] = @p_RY
 	  AND [RC].[Cycle Number] = @p_CN
       AND ((@p_BY = 'AR' AND [AG].[Neighbourhood Code] IN (@p_NH))
@@ -27479,7 +27479,7 @@ ORDER BY [FACT].[dimRollYear_SK],
       <DataType>String</DataType>
       <DefaultValue>
         <Values>
-          <Value>RS</Value>
+          <Value>UT</Value>
         </Values>
       </DefaultValue>
       <Prompt>Sub Report</Prompt>
