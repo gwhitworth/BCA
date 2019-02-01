@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <Description />
+  <DataSet Name="qryDataUtil">
+    <Query>
+      <DataSourceReference>EDW</DataSourceReference>
+      <DataSetParameters>
+        <DataSetParameter Name="@p_RY">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>true</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+        </DataSetParameter>
+        <DataSetParameter Name="@p_CN">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>true</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+        </DataSetParameter>
+        <DataSetParameter Name="@p_RD">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>true</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+        </DataSetParameter>
+      </DataSetParameters>
+      <CommandText>SELECT [FA].[Roll Year], 
+       [RD].[Regional District],
+       [PC].[Property Class Code], 
+       [PC].[Property Sub Class Desc], 
+       [PC].[Property Conversion Factor], 
+       COUNT(DISTINCT CASE
+                          WHEN [FA].[Assessment Code] = '01'
+                          THEN [FA].dimFolio_SK
+                      END) AS [Gen Folio], 
+       SUM(CASE
+               WHEN [FA].[Assessment Code] = '01'
+               THEN [FA].[Net General Land Value]
+           END) AS [Gen Land], 
+       SUM(CASE
+               WHEN [FA].[Assessment Code] = '02'
+               THEN [FA].[Net General Building Value]
+           END) AS [Gen Improvements], 
+       COUNT([OCCUR].[Occur Count]) AS [Hosp Folio], 
+       SUM(CASE
+               WHEN [FA].[Assessment Code] = '01'
+               THEN [FA].[Net Other Land Value]
+           END) AS [Hosp Land], 
+       SUM(CASE
+               WHEN [FA].[Assessment Code] = '02'
+               THEN [FA].[Net Other Building Value]
+           END) AS [Hosp Improvements]
+FROM [edw].[FactAllAssessedAmounts] AS [FA]
+     INNER JOIN [edw].[dimPropertyClass] AS [PC] ON [FA].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
+     INNER JOIN [edw].[dimAssessmentGeography] AS [AG] ON [FA].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
+     INNER JOIN [edw].[dimFolio] AS [FO] ON [FO].[dimFolio_SK] = [FA].[dimFolio_SK]
+                                            AND FO.[Folio Status Code] = '01'
+     INNER JOIN [edw].[dimRegionalDistrict] AS [RD] ON [RD].dimRegionalDistrict_SK = [FO].dimRegionalDistrict_SK
+     LEFT OUTER JOIN
+(
+    SELECT [FAV].dimFolio_SK, 
+           [FAV].[Property Class Code], 
+           COUNT(*) - 1 AS [Occur Count]
+    FROM [EDW].[edw].[FactAllAssessedAmounts] AS [FAV]
+         INNER JOIN [edw].[dimPropertyClass] AS [PC] ON [FAV].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
+         INNER JOIN [edw].[dimAssessmentGeography] AS [AG] ON [FAV].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
+    WHERE [FAV].[Roll Year] = @p_RY
+          AND [AG].[Roll Category Code] = '1'
+          AND [FAV].[Cycle Number] &lt;= @p_CN
+          AND [Assessment Code] = '02'
+    GROUP BY [FAV].dimFolio_SK, 
+             [FAV].[Property Class Code]
+    HAVING COUNT(*) &gt; 1
+) AS [OCCUR] ON [OCCUR].dimFolio_SK = [FA].dimFolio_SK
+WHERE [FA].[Roll Year] = @p_RY
+      AND [FA].[Cycle Number] = @p_CN
+      AND ([FA].[Current Cycle Flag] = 'Current Cycle Only')
+      AND [RD].[Regional District Code] = @p_RD
+	  AND [PC].[Property Sub Class Code] = '0202'
+GROUP BY [FA].[Roll Year], 
+         [RD].[Regional District],
+         [PC].[Property Class Code], 
+         [PC].[Property Sub Class Desc],
+         [PC].[Property Conversion Factor]
+ORDER BY [FA].[Roll Year], 
+         [RD].[Regional District],
+         [PC].[Property Class Code], 
+         [PC].[Property Sub Class Desc], 
+         [PC].[Property Conversion Factor];</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="Roll_Year">
+        <DataField>Roll Year</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+      <Field Name="Regional_District">
+        <DataField>Regional District</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Property_Class_Code">
+        <DataField>Property Class Code</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Property_Sub_Class_Desc">
+        <DataField>Property Sub Class Desc</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Property_Conversion_Factor">
+        <DataField>Property Conversion Factor</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+      <Field Name="Gen_Folio">
+        <DataField>Gen Folio</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+      <Field Name="Gen_Land">
+        <DataField>Gen Land</DataField>
+        <rd:TypeName>System.Double</rd:TypeName>
+      </Field>
+      <Field Name="Gen_Improvements">
+        <DataField>Gen Improvements</DataField>
+        <rd:TypeName>System.Double</rd:TypeName>
+      </Field>
+      <Field Name="Hosp_Folio">
+        <DataField>Hosp Folio</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+      <Field Name="Hosp_Land">
+        <DataField>Hosp Land</DataField>
+        <rd:TypeName>System.Double</rd:TypeName>
+      </Field>
+      <Field Name="Hosp_Improvements">
+        <DataField>Hosp Improvements</DataField>
+        <rd:TypeName>System.Double</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>
