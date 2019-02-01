@@ -2998,7 +2998,7 @@ ORDER BY [FACT].[dimRollYear_SK],
             </Border>
           </Style>
         </PageFooter>
-        <PageWidth>362in</PageWidth>
+        <PageWidth>394in</PageWidth>
         <LeftMargin>1in</LeftMargin>
         <RightMargin>1in</RightMargin>
         <TopMargin>1in</TopMargin>

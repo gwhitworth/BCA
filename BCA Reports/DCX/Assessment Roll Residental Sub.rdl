@@ -2673,13 +2673,13 @@ ORDER BY [FACT].[dimRollYear_SK],
                   <Width>1.48958in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.98958in</Width>
+                  <Width>3in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.5625in</Width>
+                  <Width>3in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.47917in</Width>
+                  <Width>3in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>1.875in</Width>
@@ -7188,7 +7188,7 @@ ORDER BY [FACT].[dimRollYear_SK],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>ALR Code</Value>
+                                  <Value>ALR</Value>
                                   <Style>
                                     <FontFamily />
                                     <FontWeight>Bold</FontWeight>
@@ -7228,7 +7228,7 @@ ORDER BY [FACT].[dimRollYear_SK],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Manual Class Code</Value>
+                                  <Value>Manual Class</Value>
                                   <Style>
                                     <FontFamily />
                                     <FontWeight>Bold</FontWeight>
@@ -7237,7 +7237,7 @@ ORDER BY [FACT].[dimRollYear_SK],
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Right</TextAlign>
+                                <TextAlign>Center</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -7268,7 +7268,7 @@ ORDER BY [FACT].[dimRollYear_SK],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Actual Use Code</Value>
+                                  <Value>Actual Use</Value>
                                   <Style>
                                     <FontFamily />
                                     <FontWeight>Bold</FontWeight>
@@ -19171,7 +19171,7 @@ ORDER BY [FACT].[dimRollYear_SK],
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Left</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -19210,7 +19210,7 @@ ORDER BY [FACT].[dimRollYear_SK],
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Right</TextAlign>
+                                <TextAlign>Left</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -19249,7 +19249,7 @@ ORDER BY [FACT].[dimRollYear_SK],
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Left</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -27363,18 +27363,16 @@ ORDER BY [FACT].[dimRollYear_SK],
             <RepeatColumnHeaders>true</RepeatColumnHeaders>
             <DataSetName>qryData</DataSetName>
             <Height>0.43in</Height>
-            <Width>359.51042in</Width>
+            <Width>364.47917in</Width>
             <Style />
           </Tablix>
         </ReportItems>
         <Height>0.45375in</Height>
-        <Style>
-          <BackgroundColor>=IIF(Parameters!p_SubRpt.Value = "RES", "White","Grey")</BackgroundColor>
-        </Style>
+        <Style />
       </Body>
-      <Width>359.51042in</Width>
+      <Width>364.47917in</Width>
       <Page>
-        <PageWidth>362in</PageWidth>
+        <PageWidth>366in</PageWidth>
         <LeftMargin>1in</LeftMargin>
         <RightMargin>1in</RightMargin>
         <TopMargin>1in</TopMargin>
