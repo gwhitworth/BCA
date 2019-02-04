@@ -157,7 +157,7 @@ ORDER BY [Cycle Number Sort] DESC</CommandText>
        [PC].[Property Class Code], 
        [PC].[Property Class Desc], 
        [PC].[Property Conversion Factor], 
-       --COUNT([FA].[dimFolio_SK]) AS [Hosp Folio], 
+       COUNT([FA].[dimFolio_SK]) AS [Hosp Folio], 
        COUNT(DISTINCT [FA].[dimFolio_SK]) AS [Hosp Folio distinct], 
        SUM([OC].[Occurrence]) AS [Hosp Occur], 
        SUM([Hosp Land]) AS [Hosp Land], 
@@ -229,6 +229,7 @@ LEFT OUTER JOIN
 ON [FA].[dimFolio_SK] = [OC].[dimFolio_SK]
 WHERE [RD].[Regional District Code] = @p_RD
       AND [BCA Code] &lt;&gt; 'Z'
+      AND ([PC].[Property Sub Class Code] &lt;&gt; '0202' OR [PC].[Property Sub Class Code] IS NULL)
 GROUP BY [RD].[Regional District Code], 
          [RD].[Regional District desc], 
          '(AA'+[AG].[Area Code]+')', 
@@ -287,6 +288,10 @@ ORDER BY [RD].[Regional District Code],
           <DataField>Property Conversion Factor</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
+        <Field Name="Hosp_Folio">
+          <DataField>Hosp Folio</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
         <Field Name="Hosp_Folio_distinct">
           <DataField>Hosp Folio distinct</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
@@ -304,13 +309,13 @@ ORDER BY [RD].[Regional District Code],
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="ConversionFactorCalc">
-          <Value>=Fields!Property_Conversion_Factor.Value/100</Value>
+          <Value>=Fields!Property_Conversion_Factor.Value * .0001</Value>
         </Field>
       </Fields>
     </DataSet>
     <DataSet Name="qryDataUtil">
-      <SharedDataSet>
-        <SharedDataSetReference>qryDataUtil</SharedDataSetReference>
+      <Query>
+        <DataSourceName>EDW</DataSourceName>
         <QueryParameters>
           <QueryParameter Name="@p_RY">
             <Value>=Parameters!p_RY.Value</Value>
@@ -322,51 +327,95 @@ ORDER BY [RD].[Regional District Code],
             <Value>=Parameters!p_RD.Value</Value>
           </QueryParameter>
         </QueryParameters>
-      </SharedDataSet>
+        <CommandText>SELECT [AG].[Jurisdiction Code],
+       [MT].[BCA Code], 
+       [MT].[Minor Tax desc] AS [Minor Tax],
+	   [PC].[Property Conversion Factor] AS [ConvFactor],
+       SUM([Hosp Land]) AS [Hosp Land], 
+       SUM([Hosp Improvements]) AS [Hosp Improvements]
+FROM
+(
+    SELECT DISTINCT 
+           [A].[dimFolio_SK], 
+           [A].[dimAssessmentGeography_SK], 
+           [A].[dimJurisdiction_SK], 
+           [BMT].[dimMinorTaxCode_SK], 
+           [dimPropertyClass_SK], 
+           SUM(CASE [A].[dimAssessmentType_SK]
+                   WHEN 10
+                   THEN [Net Other Land Value]
+                   ELSE NULL
+               END) AS [Hosp Land], 
+           SUM(CASE [A].[dimAssessmentType_SK]
+                   WHEN 11
+                   THEN [Net Other Building Value]
+                   ELSE NULL
+               END) AS [Hosp Improvements]
+    FROM [edw].[factValuesByAssessmentCodePropertyClass] AS [A]
+         INNER JOIN [edw].[dimRollCycle] AS [B]
+         ON [A].[dimRollCycle_SK] = [B].[dimRollCycle_SK]
+         INNER JOIN [edw].[bridgeFolioMinorTax] AS [BMT]
+         ON [BMT].[dimFolio_SK] = [A].[dimFolio_SK]
+         INNER JOIN [edw].[dimFolio] AS [FO]
+         ON [FO].[dimFolio_SK] = [A].[dimFolio_SK]
+            AND [FO].[dimFolioStatus_BK] = '01'
+    WHERE [A].[dimRollYear_SK] = @p_RY
+          AND [B].[Cycle Number] = @p_CN
+          AND ([Net Other Building Value] + [Net Other Land Value]) &gt; 0
+    GROUP BY [A].[dimFolio_SK], 
+             [dimPropertyClass_SK], 
+             [A].[dimAssessmentGeography_SK], 
+             [A].[dimJurisdiction_SK], 
+             [BMT].[dimMinorTaxCode_SK]
+) AS [FA]
+INNER JOIN [edw].[dimPropertyClass] AS [PC]
+ON [FA].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
+INNER JOIN [edw].[dimAssessmentGeography] AS [AG]
+ON [FA].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
+INNER JOIN [edw].[bridgeJurisdictionRegionalDistrict] AS [BJRD]
+ON [BJRD].[dimJurisdiction_SK] = [FA].[dimJurisdiction_SK]
+INNER JOIN [edw].[dimRegionalDistrict] AS [RD]
+ON [RD].[dimRegionalDistrict_SK] = [BJRD].[dimRegionalDistrict_SK]
+INNER JOIN [edw].[dimMinorTaxCode] AS [MT]
+ON [MT].[dimMinorTaxCode_SK] = [FA].[dimMinorTaxCode_SK]
+WHERE [RD].[Regional District Code] = @p_RD
+      AND [BCA Code] &lt;&gt; 'Z'
+      AND [PC].[Property Class Code] = '02'
+GROUP BY [AG].[Jurisdiction Code], 
+         [MT].[BCA Code], 
+         [MT].[Minor Tax desc],
+		 [PC].[Property Conversion Factor]
+ORDER BY [AG].[Jurisdiction Code], 
+         [MT].[BCA Code], 
+         [MT].[Minor Tax desc]</CommandText>
+      </Query>
       <Fields>
-        <Field Name="Roll_Year">
-          <DataField>Roll_Year</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Regional_District">
-          <DataField>Regional_District</DataField>
+        <Field Name="Jurisdiction_Code">
+          <DataField>Jurisdiction Code</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Property_Class_Code">
-          <DataField>Property_Class_Code</DataField>
+        <Field Name="BCA_Code">
+          <DataField>BCA Code</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Property_Sub_Class_Desc">
-          <DataField>Property_Sub_Class_Desc</DataField>
+        <Field Name="Minor_Tax">
+          <DataField>Minor Tax</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Property_Conversion_Factor">
-          <DataField>Property_Conversion_Factor</DataField>
+        <Field Name="ConvFactor">
+          <DataField>ConvFactor</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="Gen_Folio">
-          <DataField>Gen_Folio</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Gen_Land">
-          <DataField>Gen_Land</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
-        </Field>
-        <Field Name="Gen_Improvements">
-          <DataField>Gen_Improvements</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
-        </Field>
-        <Field Name="Hosp_Folio">
-          <DataField>Hosp_Folio</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
         <Field Name="Hosp_Land">
-          <DataField>Hosp_Land</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <DataField>Hosp Land</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Hosp_Improvements">
-          <DataField>Hosp_Improvements</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <DataField>Hosp Improvements</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="ConversionFactorCalc">
+          <Value>=Fields!ConvFactor.Value * .0001</Value>
         </Field>
       </Fields>
     </DataSet>
@@ -419,19 +468,16 @@ ORDER BY [RD].[Regional District Code],
                           <TablixBody>
                             <TablixColumns>
                               <TablixColumn>
-                                <Width>1.11572in</Width>
+                                <Width>1.15986in</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.30222in</Width>
+                                <Width>0.34636in</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.17655in</Width>
+                                <Width>5.21054in</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>5.1664in</Width>
-                              </TablixColumn>
-                              <TablixColumn>
-                                <Width>6.16452in</Width>
+                                <Width>6.20866in</Width>
                               </TablixColumn>
                             </TablixColumns>
                             <TablixRows>
@@ -441,7 +487,6 @@ ORDER BY [RD].[Regional District Code],
                                   <TablixCell>
                                     <CellContents>
                                       <Textbox Name="Textbox50">
-                                        <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
@@ -473,7 +518,6 @@ ORDER BY [RD].[Regional District Code],
                                   <TablixCell>
                                     <CellContents>
                                       <Textbox Name="Regional_District_Code">
-                                        <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
@@ -506,46 +550,13 @@ ORDER BY [RD].[Regional District Code],
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox74">
-                                        <CanGrow>true</CanGrow>
-                                        <KeepTogether>true</KeepTogether>
-                                        <Paragraphs>
-                                          <Paragraph>
-                                            <TextRuns>
-                                              <TextRun>
-                                                <Value> - </Value>
-                                                <Style>
-                                                  <FontFamily>Arial</FontFamily>
-                                                </Style>
-                                              </TextRun>
-                                            </TextRuns>
-                                            <Style />
-                                          </Paragraph>
-                                        </Paragraphs>
-                                        <rd:DefaultName>Textbox74</rd:DefaultName>
-                                        <Style>
-                                          <Border>
-                                            <Color>LightGrey</Color>
-                                            <Style>None</Style>
-                                          </Border>
-                                          <PaddingLeft>2pt</PaddingLeft>
-                                          <PaddingRight>2pt</PaddingRight>
-                                          <PaddingTop>2pt</PaddingTop>
-                                          <PaddingBottom>2pt</PaddingBottom>
-                                        </Style>
-                                      </Textbox>
-                                    </CellContents>
-                                  </TablixCell>
-                                  <TablixCell>
-                                    <CellContents>
                                       <Textbox Name="Regional_District_desc">
-                                        <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=Fields!Regional_District_desc.Value</Value>
+                                                <Value>=" -   " + Fields!Regional_District_desc.Value</Value>
                                                 <Style />
                                               </TextRun>
                                             </TextRuns>
@@ -576,7 +587,6 @@ ORDER BY [RD].[Regional District Code],
                                   <TablixCell>
                                     <CellContents>
                                       <Textbox Name="Textbox60">
-                                        <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
@@ -610,7 +620,6 @@ ORDER BY [RD].[Regional District Code],
                                   <TablixCell>
                                     <CellContents>
                                       <Textbox Name="Jurisdiction_Code">
-                                        <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
@@ -643,44 +652,13 @@ ORDER BY [RD].[Regional District Code],
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox75">
-                                        <CanGrow>true</CanGrow>
-                                        <KeepTogether>true</KeepTogether>
-                                        <Paragraphs>
-                                          <Paragraph>
-                                            <TextRuns>
-                                              <TextRun>
-                                                <Value> - </Value>
-                                                <Style />
-                                              </TextRun>
-                                            </TextRuns>
-                                            <Style />
-                                          </Paragraph>
-                                        </Paragraphs>
-                                        <rd:DefaultName>Textbox75</rd:DefaultName>
-                                        <Style>
-                                          <Border>
-                                            <Color>LightGrey</Color>
-                                            <Style>None</Style>
-                                          </Border>
-                                          <PaddingLeft>2pt</PaddingLeft>
-                                          <PaddingRight>2pt</PaddingRight>
-                                          <PaddingTop>2pt</PaddingTop>
-                                          <PaddingBottom>2pt</PaddingBottom>
-                                        </Style>
-                                      </Textbox>
-                                    </CellContents>
-                                  </TablixCell>
-                                  <TablixCell>
-                                    <CellContents>
                                       <Textbox Name="Textbox64">
-                                        <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=Replace(Fields!Jurisdiction.Value,"(" + Fields!Jurisdiction_Code.Value + ")","") 
+                                                <Value>=" -   " + Replace(Fields!Jurisdiction.Value,"(" + Fields!Jurisdiction_Code.Value + ")","") 
 + Space(2) 
 + Fields!Area_Code.Value</Value>
                                                 <Style>
@@ -715,7 +693,6 @@ ORDER BY [RD].[Regional District Code],
                                   <TablixCell>
                                     <CellContents>
                                       <Textbox Name="Textbox66">
-                                        <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
@@ -749,7 +726,6 @@ ORDER BY [RD].[Regional District Code],
                                   <TablixCell>
                                     <CellContents>
                                       <Textbox Name="BCA_Code">
-                                        <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
@@ -782,44 +758,13 @@ ORDER BY [RD].[Regional District Code],
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox76">
-                                        <CanGrow>true</CanGrow>
-                                        <KeepTogether>true</KeepTogether>
-                                        <Paragraphs>
-                                          <Paragraph>
-                                            <TextRuns>
-                                              <TextRun>
-                                                <Value> - </Value>
-                                                <Style />
-                                              </TextRun>
-                                            </TextRuns>
-                                            <Style />
-                                          </Paragraph>
-                                        </Paragraphs>
-                                        <rd:DefaultName>Textbox76</rd:DefaultName>
-                                        <Style>
-                                          <Border>
-                                            <Color>LightGrey</Color>
-                                            <Style>None</Style>
-                                          </Border>
-                                          <PaddingLeft>2pt</PaddingLeft>
-                                          <PaddingRight>2pt</PaddingRight>
-                                          <PaddingTop>2pt</PaddingTop>
-                                          <PaddingBottom>2pt</PaddingBottom>
-                                        </Style>
-                                      </Textbox>
-                                    </CellContents>
-                                  </TablixCell>
-                                  <TablixCell>
-                                    <CellContents>
                                       <Textbox Name="Minor_Tax">
-                                        <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=Fields!Minor_Tax.Value</Value>
+                                                <Value>=" -   " + Fields!Minor_Tax.Value</Value>
                                                 <Style>
                                                   <FontFamily>Arial</FontFamily>
                                                 </Style>
@@ -841,6 +786,7 @@ ORDER BY [RD].[Regional District Code],
                                         </Style>
                                       </Textbox>
                                       <ColSpan>2</ColSpan>
+                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixCell>
                                   <TablixCell />
@@ -850,7 +796,6 @@ ORDER BY [RD].[Regional District Code],
                           </TablixBody>
                           <TablixColumnHierarchy>
                             <TablixMembers>
-                              <TablixMember />
                               <TablixMember />
                               <TablixMember />
                               <TablixMember />
@@ -1366,9 +1311,9 @@ ORDER BY [RD].[Regional District Code],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=(Fields!Hosp_Land.Value / Fields!ConversionFactorCalc.Value)</Value>
+                                  <Value>=(Fields!Hosp_Land.Value * Fields!ConversionFactorCalc.Value)</Value>
                                   <Style>
-                                    <Format>#,0</Format>
+                                    <Format>#,#</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1435,7 +1380,7 @@ ORDER BY [RD].[Regional District Code],
                               <TextRuns>
                                 <TextRun>
                                   <Value>=IIF(IsNothing(Fields!Hosp_Improvements.Value), Nothing, 
-(Fields!Hosp_Improvements.Value / Fields!ConversionFactorCalc.Value))</Value>
+(Fields!Hosp_Improvements.Value * Fields!ConversionFactorCalc.Value))</Value>
                                   <Style>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1503,8 +1448,8 @@ ORDER BY [RD].[Regional District Code],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum((Fields!Hosp_Land.Value /Fields!ConversionFactorCalc.Value)) 
-+ Sum((Fields!Hosp_Improvements.Value /Fields!ConversionFactorCalc.Value))</Value>
+                                  <Value>=Sum((Fields!Hosp_Land.Value * Fields!ConversionFactorCalc.Value)) 
++ Sum((Fields!Hosp_Improvements.Value * Fields!ConversionFactorCalc.Value))</Value>
                                   <Style>
                                     <Format>#,0</Format>
                                   </Style>
@@ -1684,7 +1629,7 @@ ORDER BY [RD].[Regional District Code],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!Hosp_Land.Value) / Fields!ConversionFactorCalc.Value</Value>
+                                  <Value>=Sum(Fields!Hosp_Land.Value * Fields!ConversionFactorCalc.Value)</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -1831,8 +1776,8 @@ ORDER BY [RD].[Regional District Code],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum((Fields!Hosp_Land.Value / Fields!ConversionFactorCalc.Value)) 
-+ Sum(Fields!Hosp_Improvements.Value / Fields!ConversionFactorCalc.Value)</Value>
+                                  <Value>=Sum((Fields!Hosp_Land.Value * Fields!ConversionFactorCalc.Value)) 
++ Sum(Fields!Hosp_Improvements.Value * Fields!ConversionFactorCalc.Value)</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -2013,10 +1958,11 @@ ORDER BY [RD].[Regional District Code],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Lookup(Fields!Property_Class_Code.Value
-,"06"
-,Fields!Hosp_Land.Value
-,"qryData")/Fields!ConversionFactorCalc.Value</Value>
+                                  <Value>=Sum(Fields!Hosp_Land.Value * Fields!ConversionFactorCalc.Value)
+- Lookup(Fields!Jurisdiction_Code.Value+Fields!BCA_Code.Value + Fields!Minor_Tax.Value
+,Fields!Jurisdiction_Code.Value+Fields!BCA_Code.Value + Fields!Minor_Tax.Value
+,(Fields!Hosp_Land.Value * Fields!ConversionFactorCalc.Value)
+,"qryDataUtil")</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -2087,10 +2033,11 @@ ORDER BY [RD].[Regional District Code],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Lookup(Fields!Property_Class_Code.Value
-,"02"
-,Fields!Hosp_Improvements.Value
-,"qryData"))/Fields!ConversionFactorCalc.Value</Value>
+                                  <Value>=Sum(Fields!Hosp_Improvements.Value * Fields!ConversionFactorCalc.Value)
+- Lookup(Fields!Jurisdiction_Code.Value+Fields!BCA_Code.Value + Fields!Minor_Tax.Value
+,Fields!Jurisdiction_Code.Value+Fields!BCA_Code.Value + Fields!Minor_Tax.Value
+,(Fields!Hosp_Improvements.Value * Fields!ConversionFactorCalc.Value)
+,"qryDataUtil")</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -2161,9 +2108,18 @@ ORDER BY [RD].[Regional District Code],
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum((Fields!Hosp_Land.Value  / Fields!ConversionFactorCalc.Value)) 
-+ Sum(Fields!Hosp_Improvements.Value  / Fields!ConversionFactorCalc.Value) 
-- Sum(Fields!Hosp_Improvements.Value, "qryDataUtil")</Value>
+                                  <Value>=Sum((Fields!Hosp_Land.Value * Fields!ConversionFactorCalc.Value)) 
++ Sum(Fields!Hosp_Improvements.Value * Fields!ConversionFactorCalc.Value)
+
+- Lookup(Fields!Jurisdiction_Code.Value+Fields!BCA_Code.Value + Fields!Minor_Tax.Value
+,Fields!Jurisdiction_Code.Value+Fields!BCA_Code.Value + Fields!Minor_Tax.Value
+,(Fields!Hosp_Land.Value * Fields!ConversionFactorCalc.Value)
+,"qryDataUtil")
+
+- Lookup(Fields!Jurisdiction_Code.Value+Fields!BCA_Code.Value + Fields!Minor_Tax.Value
+,Fields!Jurisdiction_Code.Value+Fields!BCA_Code.Value + Fields!Minor_Tax.Value
+,(Fields!Hosp_Improvements.Value * Fields!ConversionFactorCalc.Value)
+,"qryDataUtil")</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>#,0</Format>
@@ -2300,7 +2256,7 @@ ORDER BY [RD].[Regional District Code],
             <RepeatRowHeaders>true</RepeatRowHeaders>
             <KeepTogether>true</KeepTogether>
             <DataSetName>qryData</DataSetName>
-            <Left>0.05194in</Left>
+            <Left>0.25in</Left>
             <Height>1.60416in</Height>
             <Width>12.92542in</Width>
             <Style>
@@ -2310,7 +2266,7 @@ ORDER BY [RD].[Regional District Code],
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>1.74999in</Height>
+        <Height>1.67568in</Height>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2329,10 +2285,10 @@ ORDER BY [RD].[Regional District Code],
           </RightBorder>
         </Style>
       </Body>
-      <Width>13.0293in</Width>
+      <Width>13.51888in</Width>
       <Page>
         <PageHeader>
-          <Height>0.93in</Height>
+          <Height>1.02793in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -2389,16 +2345,15 @@ Per Sec 383(1)(a) &amp; (b) Local Government Act</Value>
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>0.00001in</Top>
-              <Left>0.125in</Left>
-              <Height>0.85292in</Height>
-              <Width>12.9043in</Width>
+              <Top>0.05in</Top>
+              <Left>2.42013in</Left>
+              <Height>0.97793in</Height>
+              <Width>8.41125in</Width>
               <Style />
             </Textbox>
             <Image Name="BCALogo">
               <Source>Embedded</Source>
               <Value>BCA_BigBlueLogo</Value>
-              <Left>0.1in</Left>
               <Height>0.37153in</Height>
               <Width>2.35069in</Width>
               <ZIndex>1</ZIndex>
@@ -2431,7 +2386,6 @@ Per Sec 383(1)(a) &amp; (b) Local Government Act</Value>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
               <Top>0.35in</Top>
-              <Left>0.1in</Left>
               <Height>0.1875in</Height>
               <Width>2.35069in</Width>
               <ZIndex>2</ZIndex>
@@ -2457,7 +2411,7 @@ Per Sec 383(1)(a) &amp; (b) Local Government Act</Value>
                 </Actions>
               </ActionInfo>
               <Top>0.43in</Top>
-              <Left>12.38521in</Left>
+              <Left>13.01021in</Left>
               <Height>0.5in</Height>
               <Width>0.5in</Width>
               <ZIndex>3</ZIndex>
@@ -2491,9 +2445,9 @@ Per Sec 383(1)(a) &amp; (b) Local Government Act</Value>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox2</rd:DefaultName>
-              <Top>0.05in</Top>
-              <Left>10.84313in</Left>
-              <Height>0.15972in</Height>
+              <Top>0in</Top>
+              <Left>11.46813in</Left>
+              <Height>0.18833in</Height>
               <Width>2.03228in</Width>
               <ZIndex>4</ZIndex>
               <Style>
@@ -2522,7 +2476,7 @@ Per Sec 383(1)(a) &amp; (b) Local Government Act</Value>
               </Paragraphs>
               <rd:DefaultName>Textbox2</rd:DefaultName>
               <Top>0.23in</Top>
-              <Left>10.84313in</Left>
+              <Left>11.46813in</Left>
               <Height>0.15972in</Height>
               <Width>2.03228in</Width>
               <ZIndex>5</ZIndex>
@@ -2550,7 +2504,7 @@ Per Sec 383(1)(a) &amp; (b) Local Government Act</Value>
           </Style>
         </PageHeader>
         <PageFooter>
-          <Height>0.85763in</Height>
+          <Height>0.27777in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -2571,9 +2525,10 @@ Per Sec 383(1)(a) &amp; (b) Local Government Act</Value>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
-              <Left>0.05194in</Left>
+              <Top>0in</Top>
+              <Left>2.67694in</Left>
               <Height>0.25in</Height>
-              <Width>12.89388in</Width>
+              <Width>8.01888in</Width>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -2604,7 +2559,7 @@ Per Sec 383(1)(a) &amp; (b) Local Government Act</Value>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
               <Top>0.01319in</Top>
-              <Left>11.48763in</Left>
+              <Left>12.11263in</Left>
               <Height>0.25in</Height>
               <Width>1.40625in</Width>
               <ZIndex>1</ZIndex>
@@ -2660,8 +2615,8 @@ Per Sec 383(1)(a) &amp; (b) Local Government Act</Value>
         </PageFooter>
         <PageHeight>8.5in</PageHeight>
         <PageWidth>14in</PageWidth>
-        <LeftMargin>0.2in</LeftMargin>
-        <RightMargin>0.4in</RightMargin>
+        <LeftMargin>0.25in</LeftMargin>
+        <RightMargin>0.2in</RightMargin>
         <TopMargin>0.1in</TopMargin>
         <BottomMargin>0.1in</BottomMargin>
         <Style>
@@ -2752,6 +2707,28 @@ Per Sec 383(1)(a) &amp; (b) Local Government Act</Value>
       </CellDefinitions>
     </GridLayoutDefinition>
   </ReportParametersLayout>
+  <Code>Public Function SumLookup(ByVal items As Object()) As Decimal 
+
+If items Is Nothing Then Return Nothing 
+
+Dim suma As Decimal = New Decimal()
+Dim ct as Integer = New Integer()
+
+suma = 0
+ct = 0
+
+For Each item As Object In items
+
+  suma += Convert.ToDecimal(item)
+  ct += 1
+
+Next
+
+If (ct = 0) Then return 0 else return suma 
+
+End Function 
+
+</Code>
   <EmbeddedImages>
     <EmbeddedImage Name="BCAlogo2">
       <MIMEType>image/jpeg</MIMEType>
