@@ -29,6 +29,10 @@
       <FullPath>qryData.rsd</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>qryDataUtil.rsd</Name>
+      <FullPath>qryDataUtil.rsd</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>qryJR.rsd</Name>
       <FullPath>qryJR.rsd</FullPath>
     </ProjectItem>
@@ -63,10 +67,6 @@
     <ProjectItem>
       <Name>qryRY.rsd</Name>
       <FullPath>qryRY.rsd</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>qryDataUtil.rsd</Name>
-      <FullPath>qryDataUtil.rsd</FullPath>
     </ProjectItem>
   </DataSets>
   <Reports>
@@ -219,6 +219,10 @@
       <FullPath>RG618_Sub3.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>RG816_Main.rdl</Name>
+      <FullPath>RG816_Main.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>RG734_Main.rdl</Name>
       <FullPath>RG734_Main.rdl</FullPath>
     </ProjectItem>
@@ -369,6 +373,14 @@
     <ProjectItem>
       <Name>RG731.rdl</Name>
       <FullPath>RG731.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RG816_Sub1.rdl</Name>
+      <FullPath>RG816_Sub1.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RG816_Sub2.rdl</Name>
+      <FullPath>RG816_Sub2.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>
