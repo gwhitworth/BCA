@@ -219,8 +219,8 @@
       <FullPath>RG618_Sub3.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>RG816_Main.rdl</Name>
-      <FullPath>RG816_Main.rdl</FullPath>
+      <Name>RG731.rdl</Name>
+      <FullPath>RG731.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>RG734_Main.rdl</Name>
@@ -237,6 +237,14 @@
     <ProjectItem>
       <Name>RG735.rdl</Name>
       <FullPath>RG735.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RG816_Main.rdl</Name>
+      <FullPath>RG816_Main.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RG816_Sub1.rdl</Name>
+      <FullPath>RG816_Sub1.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>RG930_Main.rdl</Name>
@@ -369,18 +377,6 @@
     <ProjectItem>
       <Name>Template.rdl</Name>
       <FullPath>Template.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>RG731.rdl</Name>
-      <FullPath>RG731.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>RG816_Sub1.rdl</Name>
-      <FullPath>RG816_Sub1.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>RG816_Sub2.rdl</Name>
-      <FullPath>RG816_Sub2.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>
