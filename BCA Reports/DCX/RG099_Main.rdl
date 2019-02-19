@@ -68,14 +68,19 @@
           <QueryParameter Name="@p_RY">
             <Value>=Parameters!p_RY.Value</Value>
           </QueryParameter>
+          <QueryParameter Name="@p_AR">
+            <Value>=Parameters!p_AR.Value</Value>
+          </QueryParameter>
         </QueryParameters>
-        <CommandText>SELECT [AR].[Area Code], 
-       [Jurisdiction Code]
-FROM edw.dimJurisdiction AS [JR]
-     INNER JOIN [edw].[dimArea] AS [AR] ON [JR].dimArea_SK = [AR].dimArea_SK
-WHERE([JR].dimRollYear_SK = @p_RY)
-     AND [Jurisdiction Code] &gt; '199'
-ORDER BY [AR].[Area Code], 
+        <CommandText>SELECT DISTINCT [AG].[Area Code], 
+       [JR].[Jurisdiction Code]
+FROM [edw].[dimJurisdiction] AS [JR]
+	 INNER JOIN [edw].[dimAssessmentGeography] AS [AG]
+	 ON [JR].[dimJurisdiction_SK] = [AG].[dimJurisdiction_SK]
+WHERE([JR].[dimRollYear_SK] = @p_RY)
+     AND [JR].[Jurisdiction Code] &gt; '199'
+     AND [AG].[Area Code] = @p_AR
+ORDER BY [AG].[Area Code], 
          [Jurisdiction Code];</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
@@ -536,6 +541,7 @@ ORDER BY [AR].[Area Code],
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
+              <Top>0in</Top>
               <Height>0.25in</Height>
               <Width>12.88521in</Width>
               <Style>
@@ -567,6 +573,7 @@ ORDER BY [AR].[Area Code],
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
+              <Top>0in</Top>
               <Left>11.47896in</Left>
               <Height>0.25in</Height>
               <Width>1.40625in</Width>
@@ -599,6 +606,7 @@ ORDER BY [AR].[Area Code],
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>ReportName</rd:DefaultName>
+              <Top>0in</Top>
               <Height>0.25in</Height>
               <Width>1.88784in</Width>
               <ZIndex>2</ZIndex>
