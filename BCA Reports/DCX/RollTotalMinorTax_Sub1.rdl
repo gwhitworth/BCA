@@ -48,7 +48,7 @@
             <Value>=Parameters!p_MT.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>SELECT [FA].[Roll Year], 
+        <CommandText>SELECT [FA].[dimRollYear_SK] AS [Roll Year], 
        [TC].[Regional District Code] AS [RD Code], 
        REPLACE([TC].[Regional District], [TC].[Regional District Code]+' - ', '') AS [Regional District], 
        REVERSE(RIGHT([TC].[Electoral District Code], 1)) AS [EA Code], 
@@ -63,55 +63,59 @@
        REPLACE([PC].[Property Class], [PC].[Property Class Code]+' - ', '') AS [Property Class], 
        IIF([PC].[Property Sub Class Code] = '0202', '0201', ISNULL([PC].[Property Sub Class Code], [PC].[Property Class Code])) AS [PSC Code], 
        IIF([PC].[Property Sub Class Code] = '0202', 'Utilities', ISNULL([PC].[Property Sub Class Desc], [PC].[Property Class Desc])) AS [Property Subclass], 
-       COUNT([OCRCNT]) AS [Folio Count], 
-       SUM(CASE
-               WHEN [FA].[Actual Land Value] &gt; 0
-                    OR [FA].[Actual Building Value] &gt; 0
-               THEN [OCRCNT]
-               ELSE 0
-           END) AS [Occurrence Count], 
+       --COUNT(distinct [OC].[dimFolio_SK]) AS [Occurrence],
+       COUNT(DISTINCT CASE
+                          WHEN [FA].[Actual Land Value] &gt; 0
+                               OR [FA].[Actual Building Value] &gt; 0
+                          THEN [FA].[dimFolio_SK]
+                          ELSE 0
+                      END) AS [Occurrence Count], 
        SUM([FA].[Actual Land Value]) AS [Actual - Land], 
        SUM([FA].[Actual Building Value]) AS [Actual - Impr], 
        SUM([FA].[Actual Land Value]) + SUM([FA].[Actual Building Value]) AS [Total], 
-       SUM(CASE
-               WHEN [General Net - Land] &gt; 0
-                    OR [General Net - Impr] &gt; 0
-               THEN [OCRCNT]
-               ELSE 0
-           END) AS [General Occurrences], 
+       COUNT(DISTINCT CASE
+                          WHEN [General Net - Land] &gt; 0
+                               OR [General Net - Impr] &gt; 0
+                          THEN [FA].[dimFolio_SK]
+                          ELSE 0
+                      END) AS [General Occurrences], 
        SUM([General Net - Land]) AS [General Net - Land], 
        SUM([General Net - Impr]) AS [General Net - Impr], 
-       SUM(CASE
-               WHEN [School Net - Land] &gt; 0
-                    OR [School Net - Impr] &gt; 0
-               THEN [OCRCNT]
-               ELSE 0
-           END) AS [School Occurrences], 
+       COUNT(DISTINCT CASE
+                          WHEN [School Net - Land] &gt; 0
+                               OR [School Net - Impr] &gt; 0
+                          THEN [FA].[dimFolio_SK]
+                          ELSE 0
+                      END) AS [School Occurrences], 
        SUM([School Net - Land]) AS [School Net - Land], 
        SUM([School Net - Impr]) AS [School Net - Impr], 
-       SUM(CASE
-               WHEN [Hospital Net - Land] &gt; 0
-                    OR [Hospital Net - Impr] &gt; 0
-               THEN [OCRCNT]
-               ELSE 0
-           END) AS [Hospital Occurrences], 
+       COUNT(DISTINCT CASE
+                          WHEN [Hospital Net - Land] &gt; 0
+                               OR [Hospital Net - Impr] &gt; 0
+                          THEN [FA].[dimFolio_SK]
+                          ELSE 0
+                      END) AS [Hospital Occurrences], 
        SUM([Hospital Net - Land]) AS [Hospital Net - Land], 
        SUM([Hospital Net - Impr]) AS [Hospital Net - Impr]
-FROM [edw].[FactActualAmounts] AS [FA]
-     INNER JOIN
+FROM 
+
 (
     SELECT DISTINCT 
+           [dimRollYear_SK], 
+           [dimRollCycle_SK], 
            [dimFolio_SK], 
-           SUM([Net General Land Value]) AS [General Net - Land], 
-           SUM([Net General Building Value]) AS [General Net - Impr], 
-           SUM([Net School Land Value]) AS [School Net - Land], 
-           SUM([Net School Building Value]) AS [School Net - Impr], 
-           SUM([Net Other Land Value]) AS [Hospital Net - Land], 
-           SUM([Net Other Building Value]) AS [Hospital Net - Impr]
-    FROM [edw].[FactAllAssessedAmounts]
-    GROUP BY [dimFolio_SK]
-) AS [FA2]
-     ON [FA].[dimFolio_SK] = [FA2].[dimFolio_SK]
+           [dimPropertyClass_SK], 
+           [dimAssessmentGeography_SK], 
+           [Assessed Land Value] AS [Actual Land Value], 
+           [Assessed Building Value] AS [Actual Building Value], 
+           [Net General Land Value] AS [General Net - Land], 
+           [Net General Building Value] AS [General Net - Impr], 
+           [Net School Land Value] AS [School Net - Land], 
+           [Net School Building Value] AS [School Net - Impr], 
+           [Net Other Land Value] AS [Hospital Net - Land], 
+           [Net Other Building Value] AS [Hospital Net - Impr]
+    FROM [edw].[factValuesByAssessmentCodePropertyClass]
+) AS [FA]
      INNER JOIN [edw].[dimPropertyClass] AS [PC]
      ON [FA].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
      INNER JOIN [edw].[dimAssessmentGeography] AS [AG]
@@ -124,43 +128,76 @@ FROM [edw].[FactActualAmounts] AS [FA]
      INNER JOIN [edw].[dimFolio] AS [FO]
      ON [FO].[dimFolio_SK] = [FA].[dimFolio_SK]
         AND [FO].[Folio Status Code] = '01'
-     INNER JOIN
+INNER JOIN [edw].[dimRollCycle] AS [RC]
+ON [FA].[dimRollCycle_SK] = [RC].[dimRollCycle_SK]
+INNER JOIN
 (
     SELECT DISTINCT 
-           [dimFolio_SK], 
-           SUM([Property Class Occurrence]) AS [OCRCNT]
-    FROM [edw].[FactPropertyClassOccurrenceCount]
-    GROUP BY [dimFolio_SK]
+           [FA].[dimFolio_SK], 
+           [BMT].[dimJurisdiction_SK], 
+           [BMT].[dimMinorTaxCode_SK], 
+           [FA].[dimPropertyClass_SK], 
+           [PC].[Property Class Code]
+    FROM [edw].[factValuesByAssessmentCodePropertyClass] AS [FA]
+         INNER JOIN [edw].[dimFolio] AS [FO]
+         ON [FO].[dimFolio_SK] = [FA].[dimFolio_SK]
+            AND [FO].[dimFolioStatus_BK] = '01'
+         LEFT OUTER JOIN [edw].[dimPropertyClass] AS [PC]
+         ON [FA].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
+         INNER JOIN [edw].[dimRollCycle] AS [RC]
+         ON [FA].[dimRollCycle_SK] = [RC].[dimRollCycle_SK]
+         INNER JOIN [edw].[bridgeFolioMinorTax] AS [BMT]
+         ON [BMT].[dimFolio_SK] = [FA].[dimFolio_SK]
+    WHERE [FA].[dimRollYear_SK] = @p_RY
+          AND [RC].[Cycle Number] = -1
+          AND [FA].[Assessed Total Value] &gt; 0
+          AND [BMT].[Minor Tax Code] =
+    (
+        SELECT TOP 1 [Minor Tax Code]
+        FROM [edw].[dimMinorTaxCode]
+        WHERE [dimRollYear_SK] = @p_RY
+              AND [Minor Tax Desc] = @p_MT
+    )
+          AND ([PC].[Property Class Code] &gt; '02'
+               OR [PC].[Property Sub Class Code] IS NOT NULL)
 ) AS [OC]
-     ON [FA2].[dimFolio_SK] = [OC].[dimFolio_SK]
-WHERE [FA].[Roll Year] = @p_RY
-      AND [FA].[Cycle Number] = -1
-      AND [TC].[Minor Tax Code] IN
+ON [OC].[dimFolio_SK] = [FA].[dimFolio_SK]
+   AND [OC].[dimJurisdiction_SK] = [AG].[dimJurisdiction_SK]
+   AND [oc].[dimMinorTaxCode_SK] = [TC].[dimMinorTaxCode_SK]
+   AND [OC].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
+
+WHERE [FA].[dimRollYear_SK] = @p_RY
+      AND [Cycle Number] = -1
+      AND [TC].[Minor Tax Code] =
 (
-    SELECT [Minor Tax Code]
-    FROM [EDW].[dbo].[dimMinorTaxCodeTbl]
-    WHERE [Roll Year] = @p_RY
-          AND [Minor Tax Desc] IN(@p_MT)
+    SELECT TOP 1 [Minor Tax Code]
+    FROM [edw].[dimMinorTaxCode]
+    WHERE [dimRollYear_SK] = @p_RY
+          AND [Minor Tax Desc] = @p_MT
 )
-GROUP BY [FA].[Roll Year], 
+      AND ((([PC].[Property Class Code] = '01'
+             OR [PC].[Property Class Code] = '02')
+            AND [PC].[Property Sub Class Code] IS NOT NULL)
+           OR [PC].[Property Class Code] BETWEEN '03' AND '09')
+GROUP BY [FA].[dimRollYear_SK], 
+       [TC].[Regional District Code], 
+       REPLACE([TC].[Regional District], [TC].[Regional District Code]+' - ', ''), 
+       REVERSE(RIGHT([TC].[Electoral District Code], 1)), 
+       [AG].[Area Code], 
+       REPLACE([AG].[Area], [AG].[Area Code]+' - ', ''), 
+       [TC].[Jurisdiction Code], 
+       REPLACE(REPLACE([TC].[Jurisdiction], [TC].[Jurisdiction Code]+' - ', ''), '('+[TC].[Jurisdiction Code]+')', ''), 
+       [TC].[BCA Code], 
+       [TC].[Minor Tax Desc], 
+       [TC].[Tax Base Code], 
+       [PC].[Property Class Code], 
+       REPLACE([PC].[Property Class], [PC].[Property Class Code]+' - ', ''), 
+       IIF([PC].[Property Sub Class Code] = '0202', '0201', ISNULL([PC].[Property Sub Class Code], [PC].[Property Class Code])), 
+       IIF([PC].[Property Sub Class Code] = '0202', 'Utilities', ISNULL([PC].[Property Sub Class Desc], [PC].[Property Class Desc]))
+ORDER BY [FA].[dimRollYear_SK], 
          [TC].[Regional District Code], 
-         REPLACE([TC].[Regional District], [TC].[Regional District Code]+' - ', ''), 
-         REVERSE(RIGHT([TC].[Electoral District Code], 1)), 
+         [EA Code], 
          [AG].[Area Code], 
-         REPLACE([AG].[Area], [AG].[Area Code]+' - ', ''), 
-         [TC].[Jurisdiction Code], 
-         REPLACE(REPLACE([TC].[Jurisdiction], [TC].[Jurisdiction Code]+' - ', ''), '('+[TC].[Jurisdiction Code]+')', ''), 
-         [TC].[BCA Code], 
-         [TC].[Minor Tax Desc], 
-         [TC].[Tax Base Code], 
-         [PC].[Property Class Code], 
-         REPLACE([PC].[Property Class], [PC].[Property Class Code]+' - ', ''), 
-         IIF([PC].[Property Sub Class Code] = '0202', '0201', ISNULL([PC].[Property Sub Class Code], [PC].[Property Class Code])), 
-         IIF([PC].[Property Sub Class Code] = '0202', 'Utilities', ISNULL([PC].[Property Sub Class Desc], [PC].[Property Class Desc]))
-ORDER BY [FA].[Roll Year], 
-         [TC].[Regional District Code], 
-         [EA Code],
-		 [AG].[Area Code], 
          [TC].[Jurisdiction Code], 
          [TC].[BCA Code], 
          [TC].[Minor Tax Desc], 
@@ -229,10 +266,6 @@ ORDER BY [FA].[Roll Year],
         <Field Name="Property_Subclass">
           <DataField>Property Subclass</DataField>
           <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Folio_Count">
-          <DataField>Folio Count</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="Occurrence_Count">
           <DataField>Occurrence Count</DataField>
@@ -516,6 +549,12 @@ ORDER BY [Minor Tax Label];</CommandText>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>0.65625in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>2.01042in</Width>
@@ -933,6 +972,72 @@ ORDER BY [Minor Tax Label];</CommandText>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox40</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox60">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Property Class</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox60</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox63">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>PSC Code</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox63</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -1860,6 +1965,70 @@ ORDER BY [Minor Tax Label];</CommandText>
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
+                        <Textbox Name="Property_Class">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Property_Class.Value</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Property_Class</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="PSC_Code">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!PSC_Code.Value</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>PSC_Code</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
                         <Textbox Name="Property_Subclass">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
@@ -2450,6 +2619,7 @@ ORDER BY [Minor Tax Label];</CommandText>
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -2755,6 +2925,70 @@ ORDER BY [Minor Tax Label];</CommandText>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox19</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox62">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox62</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox65">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox65</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -3344,6 +3578,8 @@ ORDER BY [Minor Tax Label];</CommandText>
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
+                <TablixMember />
+                <TablixMember />
               </TablixMembers>
             </TablixColumnHierarchy>
             <TablixRowHierarchy>
@@ -3361,7 +3597,7 @@ ORDER BY [Minor Tax Label];</CommandText>
             </TablixRowHierarchy>
             <DataSetName>qryData</DataSetName>
             <Height>0.75in</Height>
-            <Width>33.04169in</Width>
+            <Width>35.04169in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -3369,14 +3605,14 @@ ORDER BY [Minor Tax Label];</CommandText>
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>0.75in</Height>
+        <Height>0.80208in</Height>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
         </Style>
       </Body>
-      <Width>33.04169in</Width>
+      <Width>35.04169in</Width>
       <Page>
         <PageWidth>30in</PageWidth>
         <LeftMargin>0.1in</LeftMargin>
