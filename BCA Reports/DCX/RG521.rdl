@@ -71,140 +71,141 @@
           <QueryParameter Name="@p_CN">
             <Value>=Parameters!p_CN.Value</Value>
           </QueryParameter>
+          <QueryParameter Name="@p_MTC">
+            <Value>=Parameters!p_MTC.Value</Value>
+          </QueryParameter>
         </QueryParameters>
-        <CommandText>SELECT [FA].[Roll Year], 
-       [AG].[Area], 
-       [AG].[Jurisdiction Code], 
-       [AG].[Jurisdiction Desc], 
-       [FO].[School District Code], 
-       IIF([PC].[Property Sub Class Code] = '0202',999,[PC].[RowSortOrder]) AS [RowSortOrder], 
-       [PC].[Property Class Code],
-       CASE
-           WHEN [PC].[Property Class Code] = '01'
-           THEN 'RES'
-           WHEN [PC].[Property Class Code] &lt;&gt; '01'
-           THEN 'NONRES'
-       END AS [RESNONRES], 
-       ISNULL([PC].[Property Sub Class Desc], [PC].[Property Class Desc]) AS [Property Class], 
-       ISNULL(SUM([OC].[Property Class Occurrence]), 0) AS [Occurrences], 
-       IIF(COUNT(CASE
-                     WHEN [FA].[Assessment Code] = '01'
-                          AND [PC].[Property Class Code] = '01'
-                     THEN [FA].[dimFolio_SK]
-                 END) = 0, COUNT(DISTINCT [FA].dimFolio_SK), COUNT(CASE
-                                                                       WHEN [FA].[Assessment Code] = '01'
-                                                                            AND [PC].[Property Class Code] = '01'
-                                                                       THEN [FA].[dimFolio_SK]
-                                                                   END)) AS [Folio_Count], 
-       IIF(SUM([FA].[Gross Other Land Value]) = 0, NULL, SUM([FA].[Gross Other Land Value])) AS [Gross Land], 
-       IIF(SUM([FA].[Gross Other Building Value]) = 0, NULL, SUM([FA].[Gross Other Building Value])) AS [Gross_Improvements], 
-       IIF(SUM([FA].[Other Exemptions Land Value]) * -1 = 0, NULL, SUM([FA].[Other Exemptions Land Value]) * -1) AS [Exempt_Land], 
-       IIF(SUM([FA].[Other Exemptions Building Value]) * -1 = 0, NULL, SUM([FA].[Other Exemptions Building Value]) * -1) AS [Exempt_Improvements], 
-       IIF(SUM([FA].[Net Other Land Value]) = 0, NULL, SUM([FA].[Net Other Land Value])) AS [Net_Land], 
-       IIF(SUM([FA].[Net Other Building Value]) = 0, NULL, SUM([FA].[Net Other Building Value])) AS [Net_Improvements]
-FROM [edw].[FactAllAssessedAmounts] AS [FA]
-     INNER JOIN [edw].[dimPropertyClass] AS [PC] ON [FA].[dimPropertyClass_SK] = [PC].[dimPropertyClass_SK]
+        <CommandText>SELECT [RD].[Regional District Code], 
+       [RD].[Regional District desc], 
+       [MT].[BCA Code] AS [Code], 
+       [AG].[Jurisdiction Code] AS [Jur Code], 
+       [AG].[Area Code] AS [AA], 
+       [MT].[Minor Tax desc] AS [Minor Tax Title], 
+       COUNT(DISTINCT [FA].[dimFolio_SK]) AS [Folios], 
+       SUM(CASE
+               WHEN [FA].[Assessment Code] = '01'
+               THEN([FA].[Net General Value])
+               ELSE 0
+           END) AS [Net Land], 
+       SUM(CASE
+               WHEN [FA].[Assessment Code] = '02'
+               THEN([FA].[Net General Value])
+               ELSE 0
+           END) AS [Net Impr], 
+       SUM([FA].[Net General Value]) AS [Net Total]
+FROM [EDW].[edw].[FactAssessedValue] AS [FA]
      INNER JOIN [edw].[dimAssessmentGeography] AS [AG] ON [FA].[dimAssessmentGeography_SK] = [AG].[dimAssessmentGeography_SK]
-                                                          AND AG.[Roll Category Code] = '1'
-                                                          AND [AG].[Area Code] IN('01', '08', '09', '10', '11', '14', '15')
+     INNER JOIN [edw].[bridgeJurisdictionRegionalDistrict] AS [BJRD] ON [BJRD].[dimJurisdiction_SK] = [FA].[dimJurisdiction_SK]
+     INNER JOIN [edw].[dimRegionalDistrict] AS [RD] ON [RD].[dimRegionalDistrict_SK] = [BJRD].[dimRegionalDistrict_SK]
+     INNER JOIN [edw].[bridgeFolioMinorTax] AS [BFMT] ON [BFMT].[dimFolio_SK] = [FA].[dimFolio_SK]
+     INNER JOIN [edw].[dimMinorTaxCode] AS [MT] ON [MT].[dimMinorTaxCode_SK] = [BFMT].[dimMinorTaxCode_SK]
      INNER JOIN [edw].[dimFolio] AS [FO] ON [FO].[dimFolio_SK] = [FA].[dimFolio_SK]
-                                            AND FO.[Folio Status Code] = '01'
-											AND FO.[BC Transit Flag] = 'Y'
-     INNER JOIN [edw].[FactPropertyClassOccurrenceCount] AS [OC]
-     ON [FA].[dimFolio_SK] = [OC].[dimFolio_SK]
-WHERE [FA].[Roll Year] = @p_RY
+                                            AND [FO].[Folio Status Code] = '01'
+WHERE [FA].[dimRollYear_SK] = @p_RY
       AND [FA].[Cycle Number] = @p_CN
-GROUP BY [FA].[Roll Year], 
-         [AG].[Area], 
+      AND ([FA].[Net General Value]) &gt; 0
+      AND [MT].[dimMinorTaxCategory_SK] = @p_MTC
+      AND [RD].[Regional District Code] &lt; '88'
+      AND [AG].[Area Code] BETWEEN '01' AND '27'
+GROUP BY [RD].[Regional District Code], 
+         [RD].[Regional District desc], 
+         [MT].[BCA Code], 
          [AG].[Jurisdiction Code], 
-         [AG].[Jurisdiction Desc], 
-         [FO].[School District Code], 
-         IIF([PC].[Property Sub Class Code] = '0202',999,[PC].[RowSortOrder]), 
-         [PC].[Property Class Code],
-         CASE
-             WHEN [PC].[Property Class Code] = '01'
-             THEN 'RES'
-             WHEN [PC].[Property Class Code] &lt;&gt; '01'
-             THEN 'NONRES'
-         END, 
-         ISNULL([PC].[Property Sub Class Desc], [PC].[Property Class Desc])
-ORDER BY [FA].[Roll Year], 
-         [AG].[Area], 
+         [AG].[Area Code], 
+         [MT].[Minor Tax desc]
+ORDER BY [RD].[Regional District Code], 
+         [MT].[BCA Code], 
          [AG].[Jurisdiction Code], 
-         [AG].[Jurisdiction Desc], 
-         [FO].[School District Code], 
-         [RESNONRES] DESC, 
-         [RowSortOrder];</CommandText>
+         [AG].[Area Code], 
+         [MT].[Minor Tax desc];</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>
-        <Field Name="Roll_Year">
-          <DataField>Roll Year</DataField>
+        <Field Name="Regional_District_Code">
+          <DataField>Regional District Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Regional_District_desc">
+          <DataField>Regional District desc</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Code">
+          <DataField>Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Jur_Code">
+          <DataField>Jur Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="AA">
+          <DataField>AA</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Minor_Tax_Title">
+          <DataField>Minor Tax Title</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Folios">
+          <DataField>Folios</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
-        <Field Name="Area">
-          <DataField>Area</DataField>
+        <Field Name="Net_Land">
+          <DataField>Net Land</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Net_Impr">
+          <DataField>Net Impr</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Net_Total">
+          <DataField>Net Total</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="qryMTC">
+      <Query>
+        <DataSourceName>EDW</DataSourceName>
+        <CommandText>SELECT [dimMinorTaxCategory_SK], 
+       [dimMinorTaxCategory_BK], 
+       [Project Number Prefix], 
+       [Minor Tax Category Code], 
+       [Minor Tax Category Desc], 
+       [Minor Tax Category], 
+       [RowSortOrder]
+FROM [EDW].[edw].[dimMinorTaxCategory]
+WHERE [dimMinorTaxCategory_SK] &gt; 0
+      AND [Minor Tax Category Code] IN('GS', 'IT', 'ID', 'SA', 'LA')
+ORDER BY [Minor Tax Category Code];</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="dimMinorTaxCategory_SK">
+          <DataField>dimMinorTaxCategory_SK</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="dimMinorTaxCategory_BK">
+          <DataField>dimMinorTaxCategory_BK</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Jurisdiction_Code">
-          <DataField>Jurisdiction Code</DataField>
+        <Field Name="Project_Number_Prefix">
+          <DataField>Project Number Prefix</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Jurisdiction_Desc">
-          <DataField>Jurisdiction Desc</DataField>
+        <Field Name="Minor_Tax_Category_Code">
+          <DataField>Minor Tax Category Code</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="School__District_Code">
-          <DataField>School District Code</DataField>
+        <Field Name="Minor_Tax_Category_Desc">
+          <DataField>Minor Tax Category Desc</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Minor_Tax_Category">
+          <DataField>Minor Tax Category</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="RowSortOrder">
           <DataField>RowSortOrder</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Property_Class_Code">
-          <DataField>Property Class Code</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="RESNONRES">
-          <DataField>RESNONRES</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Property_Class">
-          <DataField>Property Class</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Occurrences">
-          <DataField>Occurrences</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Folio_Count">
-          <DataField>Folio_Count</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Gross_Land">
-          <DataField>Gross Land</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="Gross_Improvements">
-          <DataField>Gross_Improvements</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="Exempt_Land">
-          <DataField>Exempt_Land</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="Exempt_Improvements">
-          <DataField>Exempt_Improvements</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="Net_Land">
-          <DataField>Net_Land</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="Net_Improvements">
-          <DataField>Net_Improvements</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
       </Fields>
     </DataSet>
@@ -212,7 +213,802 @@ ORDER BY [FA].[Roll Year],
   <ReportSections>
     <ReportSection>
       <Body>
-        <Height>0.75902in</Height>
+        <ReportItems>
+          <Tablix Name="Tablix1">
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>0.55208in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>0.63542in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>0.4375in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>2.54167in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.13479in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.1623in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.10437in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>2.19771in</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>0.25in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox77">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>="Regional District " + Fields!Regional_District_Code.Value + " " + Fields!Regional_District_desc.Value</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Left</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox76</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                        <ColSpan>9</ColSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell />
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.25in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox50">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Code</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox50</rd:DefaultName>
+                          <RepeatWith>Tablix1</RepeatWith>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox48">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Jur Code</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox48</rd:DefaultName>
+                          <RepeatWith>Tablix1</RepeatWith>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox54">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>AA</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox54</rd:DefaultName>
+                          <RepeatWith>Tablix1</RepeatWith>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox5">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Switch(Parameters!p_MTC.Value = 16, "General Service", Parameters!p_MTC.Value = 14, "Improvement District", Parameters!p_MTC.Value = 17, "Islands Trust", Parameters!p_MTC.Value = 15, "Local Area", Parameters!p_MTC.Value = 12, "Service Area")</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox2</rd:DefaultName>
+                          <RepeatWith>Tablix1</RepeatWith>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox56">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Folios</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox56</rd:DefaultName>
+                          <RepeatWith>Tablix1</RepeatWith>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox58">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Net Land</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox58</rd:DefaultName>
+                          <RepeatWith>Tablix1</RepeatWith>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox60">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Net Impr</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox60</rd:DefaultName>
+                          <RepeatWith>Tablix1</RepeatWith>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox62">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Net Total</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox62</rd:DefaultName>
+                          <RepeatWith>Tablix1</RepeatWith>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox90">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontStyle>Normal</FontStyle>
+                                    <FontFamily>Calibri</FontFamily>
+                                    <FontSize>11pt</FontSize>
+                                    <FontWeight>Normal</FontWeight>
+                                    <TextDecoration>None</TextDecoration>
+                                    <Color>#000000</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox88</rd:DefaultName>
+                          <RepeatWith>Tablix1</RepeatWith>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.25in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Code">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Code.Value</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Code</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Jur_Code">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Jur_Code.Value</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Jur_Code</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="AA">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!AA.Value</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>AA</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Minor_Tax_Title">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Minor_Tax_Title.Value</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Minor_Tax_Title</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Folios">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Folios.Value</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <Format>#,0</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Folios</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Net_Land">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Net_Land.Value</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <Format>#,0</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Net_Land</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Net_Impr">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Net_Impr.Value</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <Format>#,0</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Net_Impr</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Net_Total">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Net_Total.Value</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <Format>#,0</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Net_Total</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox89">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>NO DATA </Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox89</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <Group Name="Regional_District_Code">
+                    <GroupExpressions>
+                      <GroupExpression>=Fields!Regional_District_Code.Value</GroupExpression>
+                    </GroupExpressions>
+                    <PageBreak>
+                      <BreakLocation>Between</BreakLocation>
+                    </PageBreak>
+                  </Group>
+                  <SortExpressions>
+                    <SortExpression>
+                      <Value>=Fields!Regional_District_Code.Value</Value>
+                    </SortExpression>
+                  </SortExpressions>
+                  <TablixMembers>
+                    <TablixMember>
+                      <Visibility>
+                        <Hidden>=IIf(Parameters!p_MTC.Value = 12 OR Parameters!p_MTC.Value = 16, False,True)</Hidden>
+                      </Visibility>
+                      <KeepWithGroup>After</KeepWithGroup>
+                      <RepeatOnNewPage>true</RepeatOnNewPage>
+                      <KeepTogether>true</KeepTogether>
+                    </TablixMember>
+                    <TablixMember>
+                      <KeepWithGroup>After</KeepWithGroup>
+                      <RepeatOnNewPage>true</RepeatOnNewPage>
+                      <KeepTogether>true</KeepTogether>
+                    </TablixMember>
+                    <TablixMember>
+                      <Group Name="Details" />
+                    </TablixMember>
+                  </TablixMembers>
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <RepeatColumnHeaders>true</RepeatColumnHeaders>
+            <RepeatRowHeaders>true</RepeatRowHeaders>
+            <FixedColumnHeaders>true</FixedColumnHeaders>
+            <FixedRowHeaders>true</FixedRowHeaders>
+            <KeepTogether>true</KeepTogether>
+            <DataSetName>qryData</DataSetName>
+            <Left>0.0098in</Left>
+            <Height>0.75in</Height>
+            <Width>10.76584in</Width>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Tablix>
+        </ReportItems>
+        <Height>0.75in</Height>
         <Style>
           <Border>
             <Style>None</Style>
@@ -231,10 +1027,10 @@ ORDER BY [FA].[Roll Year],
           </RightBorder>
         </Style>
       </Body>
-      <Width>12.88521in</Width>
+      <Width>10.77564in</Width>
       <Page>
         <PageHeader>
-          <Height>0.93in</Height>
+          <Height>0.99597in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -247,29 +1043,40 @@ ORDER BY [FA].[Roll Year],
                     <TextRun>
                       <Value>=Parameters!p_RY.Value</Value>
                       <Style>
-                        <FontSize>14pt</FontSize>
+                        <FontSize>12pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>
                     <TextRun>
                       <Value> NET TAXABLE VALUES - </Value>
                       <Style>
-                        <FontSize>14pt</FontSize>
+                        <FontSize>12pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>
                     <TextRun>
-                      <Value>=IIf(Parameters!P_MT.Value = "SA" OR Parameters!P_MT.Value = "GSA","REGINAL DISTRICT ", "") + UCase(Parameters!P_MT.Label)</Value>
+                      <Value>=IIf(Parameters!p_MTC.Value = 12 OR Parameters!p_MTC.Value = 16,"REGINAL DISTRICT ", "") + UCase(Parameters!p_MTC.Label)</Value>
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value xml:space="preserve">
+</Value>
                       <Style>
                         <FontSize>14pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>
                     <TextRun>
-                      <Value>
-- 383(1)(a) Local Government Act</Value>
+                      <Value>=Switch(Parameters!p_MTC.Value = 16, "- Per Sec. 341(2) and 430(4) Local Government Act"
+, Parameters!p_MTC.Value = 14, "- Per Sec. 711(3) to (9) Local Government Act"
+, Parameters!p_MTC.Value = 17, "- Per Sec. 47 (7) (a) Islands Trust Act"
+, Parameters!p_MTC.Value = 15, "- Per Sec. 8 Local Services Act"
+, Parameters!p_MTC.Value = 12, "- 383(1)(a) Local Government Act")</Value>
                       <Style>
-                        <FontSize>14pt</FontSize>
+                        <FontSize>11pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>
@@ -292,8 +1099,9 @@ ORDER BY [FA].[Roll Year],
                 </Paragraph>
               </Paragraphs>
               <Top>0.00001in</Top>
-              <Height>0.68278in</Height>
-              <Width>12.88521in</Width>
+              <Left>2.42013in</Left>
+              <Height>0.92999in</Height>
+              <Width>6.36336in</Width>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -305,7 +1113,6 @@ ORDER BY [FA].[Roll Year],
             <Image Name="BCALogo">
               <Source>Embedded</Source>
               <Value>BCA_BigBlueLogo</Value>
-              <Left>0.1in</Left>
               <Height>0.37153in</Height>
               <Width>2.35069in</Width>
               <ZIndex>1</ZIndex>
@@ -338,7 +1145,6 @@ ORDER BY [FA].[Roll Year],
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
               <Top>0.35in</Top>
-              <Left>0.1in</Left>
               <Height>0.1875in</Height>
               <Width>2.35069in</Width>
               <ZIndex>2</ZIndex>
@@ -364,7 +1170,7 @@ ORDER BY [FA].[Roll Year],
                 </Actions>
               </ActionInfo>
               <Top>0.43in</Top>
-              <Left>12.38521in</Left>
+              <Left>10.23251in</Left>
               <Height>0.5in</Height>
               <Width>0.5in</Width>
               <ZIndex>3</ZIndex>
@@ -399,7 +1205,7 @@ ORDER BY [FA].[Roll Year],
               </Paragraphs>
               <rd:DefaultName>Textbox2</rd:DefaultName>
               <Top>0.05in</Top>
-              <Left>10.84313in</Left>
+              <Left>8.69043in</Left>
               <Height>0.15972in</Height>
               <Width>2.03228in</Width>
               <ZIndex>4</ZIndex>
@@ -429,7 +1235,7 @@ ORDER BY [FA].[Roll Year],
               </Paragraphs>
               <rd:DefaultName>Textbox2</rd:DefaultName>
               <Top>0.23in</Top>
-              <Left>10.84313in</Left>
+              <Left>8.69043in</Left>
               <Height>0.15972in</Height>
               <Width>2.03228in</Width>
               <ZIndex>5</ZIndex>
@@ -457,7 +1263,7 @@ ORDER BY [FA].[Roll Year],
           </Style>
         </PageHeader>
         <PageFooter>
-          <Height>0.42777in</Height>
+          <Height>0.27083in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -478,9 +1284,10 @@ ORDER BY [FA].[Roll Year],
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
-              <Top>0in</Top>
+              <Top>0.02083in</Top>
+              <Left>1.94494in</Left>
               <Height>0.25in</Height>
-              <Width>12.88521in</Width>
+              <Width>6.52862in</Width>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -510,8 +1317,8 @@ ORDER BY [FA].[Roll Year],
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
-              <Top>0in</Top>
-              <Left>11.47896in</Left>
+              <Top>0.02083in</Top>
+              <Left>9.34439in</Left>
               <Height>0.25in</Height>
               <Width>1.40625in</Width>
               <ZIndex>1</ZIndex>
@@ -543,7 +1350,8 @@ ORDER BY [FA].[Roll Year],
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>ReportName</rd:DefaultName>
-              <Top>0in</Top>
+              <Top>0.02083in</Top>
+              <Left>0.01543in</Left>
               <Height>0.25in</Height>
               <Width>1.88784in</Width>
               <ZIndex>2</ZIndex>
@@ -566,9 +1374,9 @@ ORDER BY [FA].[Roll Year],
           </Style>
         </PageFooter>
         <PageHeight>8.5in</PageHeight>
-        <PageWidth>14in</PageWidth>
-        <LeftMargin>0.5in</LeftMargin>
-        <RightMargin>0.5in</RightMargin>
+        <PageWidth>11in</PageWidth>
+        <LeftMargin>0.05in</LeftMargin>
+        <RightMargin>0.05in</RightMargin>
         <TopMargin>0.1in</TopMargin>
         <BottomMargin>0.1in</BottomMargin>
         <Style>
@@ -619,32 +1427,15 @@ ORDER BY [FA].[Roll Year],
         </DataSetReference>
       </ValidValues>
     </ReportParameter>
-    <ReportParameter Name="P_MT">
+    <ReportParameter Name="p_MTC">
       <DataType>String</DataType>
       <Prompt>Minor Tax</Prompt>
       <ValidValues>
-        <ParameterValues>
-          <ParameterValue>
-            <Value>GSA</Value>
-            <Label>General Service Area</Label>
-          </ParameterValue>
-          <ParameterValue>
-            <Value>ID</Value>
-            <Label>Improvement District</Label>
-          </ParameterValue>
-          <ParameterValue>
-            <Value>IT</Value>
-            <Label>Islands Trust  </Label>
-          </ParameterValue>
-          <ParameterValue>
-            <Value>LSA</Value>
-            <Label>Local Service Area</Label>
-          </ParameterValue>
-          <ParameterValue>
-            <Value>SA</Value>
-            <Label>Service Area</Label>
-          </ParameterValue>
-        </ParameterValues>
+        <DataSetReference>
+          <DataSetName>qryMTC</DataSetName>
+          <ValueField>dimMinorTaxCategory_SK</ValueField>
+          <LabelField>Minor_Tax_Category_Desc</LabelField>
+        </DataSetReference>
       </ValidValues>
     </ReportParameter>
   </ReportParameters>
@@ -666,7 +1457,7 @@ ORDER BY [FA].[Roll Year],
         <CellDefinition>
           <ColumnIndex>2</ColumnIndex>
           <RowIndex>0</RowIndex>
-          <ParameterName>P_MT</ParameterName>
+          <ParameterName>p_MTC</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>
