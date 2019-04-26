@@ -6,6 +6,10 @@
       <Name>EDW.rds</Name>
       <FullPath>EDW.rds</FullPath>
     </ProjectItem>
+    <ProjectItem>
+      <Name>OLTP.rds</Name>
+      <FullPath>OLTP.rds</FullPath>
+    </ProjectItem>
   </DataSources>
   <DataSets>
     <ProjectItem>
@@ -37,6 +41,10 @@
       <FullPath>qryJR.rsd</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>qryMT.rsd</Name>
+      <FullPath>qryMT.rsd</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>qryMTC.rsd</Name>
       <FullPath>qryMTC.rsd</FullPath>
     </ProjectItem>
@@ -65,12 +73,12 @@
       <FullPath>qryRHD.rsd</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>qryRY.rsd</Name>
-      <FullPath>qryRY.rsd</FullPath>
+      <Name>qryRollYears.rsd</Name>
+      <FullPath>qryRollYears.rsd</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>qryMT.rsd</Name>
-      <FullPath>qryMT.rsd</FullPath>
+      <Name>qryRY.rsd</Name>
+      <FullPath>qryRY.rsd</FullPath>
     </ProjectItem>
   </DataSets>
   <Reports>
@@ -177,6 +185,10 @@
     <ProjectItem>
       <Name>PSCTOTS.rdl</Name>
       <FullPath>PSCTOTS.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Resorts of the Canadian Rockies Sub.rdl</Name>
+      <FullPath>Resorts of the Canadian Rockies Sub.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>RG099_Main.rdl</Name>
@@ -385,6 +397,10 @@
     <ProjectItem>
       <Name>Template.rdl</Name>
       <FullPath>Template.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Resorts of the Canadian Rockies Main.rdl</Name>
+      <FullPath>Resorts of the Canadian Rockies Main.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>
