@@ -187,6 +187,10 @@
       <FullPath>PSCTOTS.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>Resorts of the Canadian Rockies Main.rdl</Name>
+      <FullPath>Resorts of the Canadian Rockies Main.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>Resorts of the Canadian Rockies Sub.rdl</Name>
       <FullPath>Resorts of the Canadian Rockies Sub.rdl</FullPath>
     </ProjectItem>
@@ -399,8 +403,8 @@
       <FullPath>Template.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>Resorts of the Canadian Rockies Main.rdl</Name>
-      <FullPath>Resorts of the Canadian Rockies Main.rdl</FullPath>
+      <Name>Resorts of the Canadian Rockies.rdl</Name>
+      <FullPath>Resorts of the Canadian Rockies.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>
